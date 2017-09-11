@@ -1,0 +1,137 @@
+<?php
+namespace mobile;
+use DB;
+use Input;
+use Response;
+use CourierPostOfficeModel;
+use Excel;
+
+
+class PushNotificationController extends \BaseController {
+	
+	private $ios_passphrase  = "20151027";
+	//private $ios_cert_local  = "/certificates/scdev_ios.pem";
+  private $ios_cert_local  = "/certificates/scdis.pem";
+
+  
+	private $android_api_key = "" ;
+
+
+   	private function getContextIos (){
+   		$ctx = stream_context_create();
+		stream_context_set_option($ctx, 'ssl', 'local_cert', app_path().$this->ios_cert_local); 
+		stream_context_set_option($ctx, 'ssl', 'passphrase', $this->ios_passphrase );
+		$fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // production
+		//$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // developement
+		if(!$fp){
+			return false;
+		}
+		return $fp;
+   	}
+   	
+   	/*
+	* Data đơn cần xử lý : ['tracking_code'=> 'SC51234823799', 'type'=> 'order_process']
+	* Data gửi thông báo : ['url' => 'https://www.shipchung.vn/shipchung-thong-bao-ap-dung-bang-gia-moi-tu-1122015/', 'type'=> 'news']
+	* Message : 'Đơn hàng SC51234823799 lấy hàng thất bại lý do không có hàng lấy !'
+   	*/
+
+   	public function PushIos ($deviceToken, $message, $data){
+   		$context 		= $this->getContextIos();
+   		if(!$context){
+   			return false;
+   		}
+
+   		$body['aps'] = array_merge(array('alert' => $message, 'sound' => 'default'), $data);
+   		$payload 	 = json_encode($body);
+   		$msg 		 = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+		  $result 	 = fwrite($context, $msg, strlen($msg));
+      var_dump($body);
+
+		  fclose($context);
+      
+  		if (!$result){
+  			return false;
+  		}
+
+		  return true;
+
+   	}
+
+   	public function PushAndroid($device_token = NULL, $objJson, $collapse_key = NULL) {
+        if (!$device_token) { return FALSE; }
+        
+        // prep the bundle
+        $msg['message'] 	= $objJson;
+        $msg['vibrate'] 	= 1;
+        $msg['sound'] 		= 1;
+
+        $fields = array(
+            'registration_ids' => $device_token,
+            'data' => $msg
+        );
+        var_dump($fields);
+        if($collapse_key){
+            $fields['collapse_key'] = $collapse_key;
+        }
+                        
+        //$api_key = "AIzaSyC4lCKI4015hhkgmFvxtJCD1cpuw_rk4lc";
+        $api_key = "AIzaSyDe7GmJG80WcnEwTkKoEGZ9mcOl31jh22s";
+        $headers = array(
+            'Authorization: key=' . $api_key,
+            'Content-Type: application/json'
+        );
+        
+        $ch = curl_init();        
+        curl_setopt($ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // Disabling SSL Certificate support temporarly
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+        $result = curl_exec($ch);        
+        curl_close($ch);
+
+        var_dump($result);
+        return !$result ? FALSE : TRUE;
+
+    }
+
+    public function getPushNews(){
+    	$token = Input::get("token");
+    	return $this->PushIos($token, 'ShipChung thông báo áp dụng bảng giá mới từ 1/12/2015', ['url'=>'https://www.shipchung.vn/shipchung-thong-bao-ap-dung-bang-gia-moi-tu-1122015/', 'type'=> 'news']) ? "true" : "false";
+    }
+
+    public function getPush(){
+    	$token = Input::get("token");
+    	return Response::json([$this->PushIos($token, 'Đơn hàng SC51234823799 lấy hàng thất bại lý do không có hàng lấy !', ['tracking_code'=> 'SC51234823799', 'type'=> 'order_process'])]);
+
+    }
+
+    public function getPushAndroid($token){
+    	$obj = [
+    		'url' => 'https://www.shipchung.vn/shipchung-thong-bao-ap-dung-bang-gia-moi-tu-1122015/',
+    		'type'=> 'news',
+        'message' => "ShipChung thông báo áp dụng bảng giá mới từ 1/12/2015"
+    	];
+    	return Response::json([$this->PushAndroid([$token], json_encode($obj))]);
+    }
+
+    public function getPushAndroid2($token){
+      $obj = [
+        'tracking_code' => 'SC51234823799', 
+        'type'          => 'order_process',
+        'message'       => "Đơn hàng SC51234823799 lấy hàng thất bại lý do không có hàng lấy !"
+      ];
+      return Response::json([$this->PushAndroid([$token], json_encode($obj))]);
+    }
+
+    
+
+}
+
+
+
+
+
+?>

@@ -1,0 +1,192 @@
+<div ng-controller="DetailCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-inbox text-info"></i> Chi tiết bản kê số <strong>{{id}}</strong></span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <form class="form-validation form-horizontal" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Mã đơn hàng"
+                                           ng-model="search"
+                                            />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table-condensed w-full table-hover">
+                                <thead>
+                                    <td>
+                                        #
+                                    </td>
+
+                                    <td>
+                                        Mã đơn hàng
+                                    </td>
+
+                                    <td>
+                                        Tiền thu hộ
+                                    </td>
+
+                                    <td>
+                                        Phí vận chuyển
+                                    </td>
+
+                                    <td>
+                                        Phí CoD
+                                    </td>
+
+                                    <td>
+                                        Phí BH
+                                    </td>
+
+                                    <td>
+                                        Phí VK
+                                    </td>
+
+                                    <td>
+                                        Phí CH
+                                    </td>
+                                    <td>
+                                        Phí Vùng Xa
+                                    </td>
+                                    <td>
+                                        Phí Khác
+                                    </td>
+                                    <td>
+                                        Phí LK
+                                    </td>
+                                    <td>
+                                        Phí XL
+                                    </td>
+                                    <td>
+                                        Phí ĐG
+                                    </td>
+                                    <td>
+                                        Miễn phí VC
+                                    </td>
+                                    <td>
+                                        Miễn phí CoD
+                                    </td>
+                                    <td>
+                                        Miễn phí LK
+                                    </td>
+                                    <td>
+                                        Miễn phí XL
+                                    </td>
+                                    <td>
+                                        Miễn phí ĐG
+                                    </td>
+                                </thead>
+                                <tbody>
+                                    <tr ng-if="waiting">
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="totalItems == 0 && !waiting">
+                                        <td colspan="30" class="text-center">
+                                            Không có vận đơn được tìm thấy
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="item in list_data">
+                                        <td>
+                                            #{{item_stt + $index + 1}}
+                                        </td>
+
+                                        <td>
+                                            {{item.tracking_code}}
+                                        </td>
+
+                                        <td>
+                                            {{([66,67].indexOf(1*item.status) == -1) ? item.order_detail.money_collect : 0 | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{item.order_detail.sc_pvc | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{([66,67].indexOf(1*item.status) == -1) ? item.order_detail.sc_cod : 0 | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{([66,67].indexOf(1*item.status) == -1) ? item.order_detail.sc_pbh : 0 | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{item.order_detail.sc_pvk | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{([66,67].indexOf(1*item.status) != -1) ? item.order_detail.sc_pch : 0 | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{item.order_detail.sc_remote | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{item.order_detail.sc_clearance | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{item.order_fulfillment.sc_plk | vnNumber}}
+                                        </td>
+                                        <td>
+                                            {{item.order_fulfillment.sc_pxl | vnNumber}}
+                                        </td>
+                                        <td>
+                                            {{item.order_fulfillment.sc_pdg | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{item.order_detail.sc_discount_pvc | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{([66,67].indexOf(1*item.status) == -1) ? item.order_detail.sc_discount_cod : 0 | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{item.order_fulfillment.sc_discount_plk | vnNumber}}
+                                        </td>
+                                        <td>
+                                            {{item.order_fulfillment.sc_discount_pxl | vnNumber}}
+                                        </td>
+                                        <td>
+                                            {{item.order_fulfillment.sc_discount_pdg | vnNumber}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row" ng-show="totalItems > 0 && !waiting">
+                            <div class="col-sm-3 wrapper-md pull-left">
+                                <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                            </div>
+                            <div class="col-sm-4 text-right text-center-xs pull-right">
+                                <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

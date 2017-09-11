@@ -1,0 +1,104 @@
+<!-- first -->
+<ul class="nav">
+    <li ng-class="{active:$state.includes('warehouse.problem.return')}" ng-if="check_privilege('PRIVILEGE_BOXME_ORDER_PROBLEM','view')">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-retweet"></i>
+            <span translate="">Hoàn hàng</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="warehouse.problem.return">
+                    <span translate="">Hoàn Chậm</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{active:$state.includes('warehouse.problem.package') || $state.includes('warehouse.problem.package_nt')}" ng-if="check_privilege('PRIVILEGE_BOXME_ORDER_PROBLEM','view')">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-inbox"></i>
+            <span translate="">Đóng gói chậm</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="warehouse.problem.package">
+                    <span translate="">Tất cả</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="warehouse.problem.package_nt">
+                    <span translate="">Nội thành</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+    <li ng-class="{active:$state.includes('warehouse.problem.pickup') || $state.includes('warehouse.problem.pickup_nt')}" ng-if="check_privilege('PRIVILEGE_BOXME_ORDER_PROBLEM','view')">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-truck"></i>
+            <span translate="">Lấy hàng chậm</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="warehouse.problem.pickup">
+                    <span translate="">Tất cả</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="warehouse.problem.pickup_nt">
+                    <span translate="">Nội thành</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{active:$state.includes('warehouse.problem.shipmment_lost')}" ng-if="check_privilege('PRIVILEGE_BOXME_ORDER_PROBLEM','view')">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-suitcase"></i>
+            <span translate="">Nhập kho</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="warehouse.problem.shipmment_lost">
+                    <span translate="">Nhập kho thiếu</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{active:$state.includes('warehouse.problem.package_error')}" ng-if="check_privilege('PRIVILEGE_BOXME_ORDER_PROBLEM','view')">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-cubes"></i>
+            <span translate="">Đóng gói</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="warehouse.problem.package_error">
+                    <span translate="">Sai kích thước</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="line dk"></li>
+</ul>
+<!-- / third -->

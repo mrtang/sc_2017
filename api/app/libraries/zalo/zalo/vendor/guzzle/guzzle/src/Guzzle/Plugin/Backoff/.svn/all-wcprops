@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff
+END
+AbstractBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/AbstractBackoffStrategy.php
+END
+CurlBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/CurlBackoffStrategy.php
+END
+ExponentialBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/ExponentialBackoffStrategy.php
+END
+AbstractErrorCodeBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/AbstractErrorCodeBackoffStrategy.php
+END
+ConstantBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/ConstantBackoffStrategy.php
+END
+TruncatedBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/TruncatedBackoffStrategy.php
+END
+LinearBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/LinearBackoffStrategy.php
+END
+ReasonPhraseBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/ReasonPhraseBackoffStrategy.php
+END
+composer.json
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/composer.json
+END
+BackoffPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/BackoffPlugin.php
+END
+BackoffLogger.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/BackoffLogger.php
+END
+CallbackBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/CallbackBackoffStrategy.php
+END
+HttpBackoffStrategy.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/HttpBackoffStrategy.php
+END
+BackoffStrategyInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Backoff/BackoffStrategyInterface.php
+END

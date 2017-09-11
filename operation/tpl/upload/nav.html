@@ -1,0 +1,47 @@
+<!-- first -->
+<ul class="nav">
+    <li ng-class="{active:$state.includes('delivery.upload.journey') || $state.includes('delivery.upload.upload_journey')}" ng-if="check_privilege('PRIVILEGE_IMPORT_JOURNEY','view')">
+        <a ui-sref="delivery.upload.journey">
+            <i class="fa fa-recycle"></i>
+            <span translate="">Hành trình</span>
+        </a>
+    </li>
+    <li ng-class="{active:$state.includes('delivery.upload.weight') || $state.includes('delivery.upload.upload_weight')}" ng-if="check_privilege('PRIVILEGE_UPDATE_WEIGHT','view')">
+        <a ui-sref="delivery.upload.weight">
+            <i class="fa fa-won"></i>
+            <span translate="">Khối lượng</span>
+        </a>
+    </li>
+    <li>
+        <a ui-sref="delivery.upload.tracking">
+            <i class="glyphicon glyphicon-retweet"></i>
+            <span translate=""> Mã đơn hàng quốc tế</span>
+        </a>
+    </li>
+    <li ng-class="{active:$state.includes('delivery.upload.process') || $state.includes('delivery.upload.upload_process')}">
+        <a ui-sref="delivery.upload.process">
+            <i class="fa fa-retweet"></i>
+            <span translate="">Xử lý</span>
+        </a>
+    </li>
+    <li ng-class="{active:$state.includes('delivery.upload.verify') || $state.includes('delivery.upload.upload_verify')}">
+        <a ui-sref="delivery.upload.verify">
+            <i class="fa fa-check-circle"></i>
+            <span translate="">Trạng thái</span>
+        </a>
+    </li>
+    <li ng-if="check_privilege('PRIVILEGE_CONFIG','view')" ng-class="{active:$state.includes('delivery.upload.estimate') || $state.includes('delivery.upload.upload_estimate')}">
+        <a ui-sref="delivery.upload.estimate">
+            <i class="fa fa-file-text"></i>
+            <span translate="">HVC - Cam kết</span>
+        </a>
+    </li>
+    <li ng-if="check_privilege('PRIVILEGE_CONFIG','view')" ng-class="{active:$state.includes('delivery.upload.estimate_plus') || $state.includes('delivery.upload.upload_estimate_plus')}">
+        <a ui-sref="delivery.upload.estimate_plus">
+            <i class="fa fa-plus"></i>
+            <span translate="">HVC - Cam kết cộng thêm</span>
+        </a>
+    </li>
+    <li class="line dk"></li>
+</ul>
+<!-- / third -->

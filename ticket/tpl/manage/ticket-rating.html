@@ -1,0 +1,154 @@
+<div ng-controller="TicketRatingCtrl">
+    <div class="hbox hbox-auto-xs hbox-auto-sm" >
+        <!-- main -->
+        <div class="col">
+            <!-- main header -->
+            <div class="bg-light lter b-b wrapper-md">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-8">
+                        <h1 class="m-n font-thin h3 text-black">Danh sách đánh giá ticket</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="panel padder-v item padder">
+                    <div class="text-responsive"> 
+                        <tabset class=" tab-inside  text-sm" justified="false" >
+                            <tab ng-click="refresh();setPage(1, '')">
+                                <tab-heading>Tất cả
+                                    <small></small>
+                                </tab-heading>
+
+                            </tab>
+                            
+                            <tab ng-click="refresh();setPage(1, 1)">
+                                <tab-heading>Đánh giá tốt
+                                    <small></small>
+                                </tab-heading>
+                            </tab>
+
+                            <tab ng-click="refresh();setPage(1, 3)">
+                                <tab-heading>Đánh giá tệ
+                                    <small></small>
+                                </tab-heading>
+                            </tab>
+                        </tabset>
+                        <div class="tab-container">
+                            <div class="tab-content tab-fake">
+                                <form class="form-validation" role="form" ng-submit="setPage(1, current_rate, frm)" name="frmSearch">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group controls padder">
+                                                <input type="text" class="form-control" placeholder="Nhập mã ticket cần tra"
+                                                ng-model="frm.keyword"
+                                                />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-4">
+                                            <div class="form-group controls input-group">
+                                                <input type="text" class="form-control" placeholder="Từ ngày ..."
+                                                       ng-model="frm.time_start"
+                                                       datepicker-popup="dd-MM-yyyy"
+                                                       is-open="time_create_start_open"
+                                                       close-text="Đóng"
+                                                        />
+                                                <span class="input-group-btn icon-input">
+                                                    <i class="btn fa fa-calendar "></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-group controls input-group">
+                                              <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                                ng-model="frm.time_end"
+                                                datepicker-popup="dd-MM-yyyy"
+                                                is-open="time_create_end_open"
+                                                close-text="Đóng"
+                                               />
+                                              <span class="input-group-btn icon-input">
+                                                <i class="btn fa fa-calendar "></i>
+                                              </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-lg-3 padder-lg">
+                                            <button type="submit" class="btn m-b-xs  btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm &nbsp;</button>
+
+                                            <button type="button" ng-click="setPage(currentPage, current_rate, frm, 'export')" class="btn m-b-xs btn-primary" ><i class="fa fa-excel"></i> Xuất Excel &nbsp;</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <table class="table table-full">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th width="5%">Loại</th>
+                                            <th>Ticket</th>
+                                            <th>Trường hợp</th>
+                                            <th>Đánh giá</th>
+                                            <th width="35%">Nội dung đánh giá</th>
+                                            <th width="35%">Giải thích</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-show="loadingState">
+                                        <td colspan="20" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tbody>
+                                    <tbody>
+                                        <tr ng-repeat="item in list_data">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{item.source == '' ? 'Xử lý' : 'Tiếp nhận'}}</td>
+                                            <td>
+                                                <p><a href="/#/ticket/request/management/30/{{item.ticket.id}}" target="_blank"><span class="text-info">#{{item.ticket.id}} - {{item.ticket.title}} &nbsp;<span class="label  bg-light" ng-class="data_status[item.ticket.status].bg">Đã đóng </span>
+                                                </span></a></p>
+                                            </td>
+                                            <td>
+                                                <span ng-repeat="val in item.case_ticket">{{val.case_type.type_name}}<i ng-if="!$last">,</i> </span>
+                                            </td>
+                                            
+                                            <td>
+                                                <p>{{item.rate == 3 ? 'Tệ' : 'Tốt'}}</p>
+                                            </td>
+                                            <td>{{item.note}}</td>
+                                            <td ng-init="openExplainBox = false">
+
+                                            <span ng-if="!openExplainBox">{{item.explain}}</span>
+                                            <div class="form-group" ng-if="openExplainBox">
+                                                <textarea  name="" ng-model="item.explain" class="form-control"></textarea>
+                                                <button class="btn btn-success btn-sm" ng-click="openExplainBox = false;saveExplain(item.id, item.explain)">Lưu</button> 
+                                                <br/>
+                                            </div>
+                                            
+
+                                             <a  ng-click="openExplainBox = !openExplainBox" id="openExplainBox"><i class="fa fa-edit"></i></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="row" ng-show="list_data.length">
+                                    <div class="col-sm-3 wrapper-md pull-left">
+                                        <strong>Tổng số</strong> : <i class="text-danger">{{total_record || '0'}}</i> yêu cầu
+                                    </div>
+                                    <div class="col-sm-4 text-right text-center-xs pull-right m-r-md">
+                                        <pagination total-items="total_record" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage, current_rate, frm)"></pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- / main -->
+    </div>
+</div>

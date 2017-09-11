@@ -1,0 +1,68 @@
+<!-- settings -->
+  <button class="btn btn-default no-shadow pos-abt" ui-toggle-class="active" target=".settings"><i class="fa fa-gear"></i></button>
+  <div class="panel-heading">
+    Chỉnh sửa
+  </div>
+  <div class="panel-body">
+    <div ui-module="select2" class="m-b-sm" ng-show="privilege > 0">
+      <select ui-select2
+          class="form-control"
+          ng-model="detail.assign_id"
+          ng-Change="save('user_assign',detail.assign_id)"
+      >
+            <option value="">
+                Assign To
+            </option>
+            <option ng-repeat="item in list_ticket_group" value="{{item}}">{{item.name}}</option>
+            <option ng-repeat="val in list.admin" value="{{val}}">
+              {{val.user.fullname}} - {{val.user.email}}
+            </option>
+      </select>
+    </div>
+
+    <div class="m-b-sm" ng-show="privilege > 0">
+        <select class="form-control" ng-options="key as val.name for (key, val) in list_priority" ng-model="detail.priority" ng-Change="save('priority',detail.priority)">
+          <option value="">Mức độ ưu tiên</option>
+        </select>
+    </div>
+
+    <div class="m-b-sm" ng-show="privilege == 2">
+        <select class="form-control" ng-options="time.code as time.content for time in list_time_process" ng-model="detail.new_time_over" ng-Change="save('time_over',detail.new_time_over)">
+            <option value="">Thời gian xử lý</option>
+        </select>
+    </div>
+
+    <div class="m-b-sm">
+        <select class="form-control" ng-options="status.code as status.content for status in list_status" ng-model="detail.status" ng-Change="save('status',detail.status)">
+            <option value="">Trạng thái</option>
+        </select>
+    </div>
+
+    <div class="m-b-sm">
+        <select class="form-control text-sm" ng-model="detail.case_id" ng-options="case.id as case.name for case in list_case" required>
+            <option value="">Chọn loại</option>
+        </select>
+    </div>
+
+      <div class="m-b-sm">
+          <select class="form-control text-sm"
+                  ng-model="detail.type_id"
+                  case-type-ticket  = ''
+                  case-id           ="detail.case_id"
+                  type-id           = "detail.type_id"
+                  list-type         = "list_type"
+                  default-label="Chọn trường hợp"
+                  ng-Change="save('type',detail.type_id)"
+                  required >
+          </select>
+      </div>
+      <div class="m-b-sm row">
+        <div class="col-xs-8">
+            <input type="text" class="form-control text-sm" ng-model="detail.refer_code" placeholder="Mã vận đơn" />
+        </div>
+        <div class="col-xs-4">
+          <button ng-click="save('refer',detail.refer_code)" class="btn btn-primary">Lưu</button>
+        </div>
+      </div>
+  </div>
+<!-- /settings -->

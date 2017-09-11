@@ -1,0 +1,49 @@
+<div class="wrapper-md bg-light b-b">
+	<h1 class="m-n font-thin h3 text-black"><i class="fa fa-user text-info"></i> Thêm mới khách hàng thân thiết &nbsp;&nbsp;</h1>
+</div>
+<div class="col wrapper-sm">
+  <div class="panel panel-default col-md-12" ng-controller="LoyUserCtrl">
+		<form class="form-validation col-md-4 col-md-offset-4" role="form" name="frmCreate">
+			<div class="row padder m-t-md">
+				<div class="form-group ">
+					<input type="email" placeholder="Email" class="form-control" ng-model="postData.email" required>
+				</div>
+			</div>
+
+			<div class="row padder">
+				<div class="form-group">
+					<select class="form-control" ng-model="postData.level">
+						<option value="">Level</option>
+						<option ng-repeat="(key,value) in sc_loyalty_level" value="{{key}}">{{value.name}}</option>
+					</select>
+				</div>
+			</div>
+
+		  <div class="row padder">
+			  <div class="form-group ">
+				<input type="text" placeholder="Điểm tích lũy" formatnumber class="form-control" ng-model="postData.total_point" required>
+			  </div>
+		  </div>
+
+		  <div class="row padder">
+			  <div class="form-group">
+				<input type="text" placeholder="Điểm tích lũy trong kỳ" formatnumber class="form-control" ng-model="postData.current_point" required>
+			  </div>
+		  </div>
+
+			<div class="row padder">
+				<div class="form-group" data-ng-init="postData.active = 1">
+					<select class="form-control" ng-model="postData.active">
+						<option value="1">Chính thức</option>
+						<option value="0">Tiềm năng</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row padder m-b-sm ">
+				<button class="btn btn-info" ng-click="createCashin(postData)" ng-disabled="frmCreate.$invalid || waiting">Xác nhận</button>
+			</div>
+
+		</form>
+  </div>
+</div>

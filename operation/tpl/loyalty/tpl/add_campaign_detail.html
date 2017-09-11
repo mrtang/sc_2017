@@ -1,0 +1,100 @@
+<div ng-controller="LoyAddCampaignDetailCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-trophy text-info"></i> Danh sách theo chương trình {{$stateParams.id}}</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="AddDetail()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Mã thưởng ..."
+                                    ng-model="frm.keyword"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid && waiting_add"><i class="fa fa-plus"></i> Thêm mã</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table-condensed table-hover w-full">
+                                <thead>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td>
+                                        Tên chương trình
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-user"></i>&nbsp; Khách hàng
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-gift"></i> Mã thưởng
+                                    </td>
+                                </thead>
+                                <tbody ng-show="waiting">
+                                    <tr>
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-show="totalItems == 0 && !waiting">
+                                    <tr>
+                                        <td colspan="30" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-repeat="item in list_data">
+                                <tr>
+                                    <td>{{item_stt + $index + 1}}</td>
+                                    <td>
+                                        {{(item['get_campaign']['name']) | limitTo : 30}}
+                                    </td>
+                                    <td>
+                                        <p>
+                                            {{(item['get_user']['fullname']) || 'Họ tên' | limitTo : 30}}
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-envelope-o"></i> {{item['get_user']['email'] || 'email'}}
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-phone"></i>{{item['get_user']['phone'] || 'Điện thoại' | limitTo : 30}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        {{item.code}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row" ng-show="list_data.length">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> khách hàng
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

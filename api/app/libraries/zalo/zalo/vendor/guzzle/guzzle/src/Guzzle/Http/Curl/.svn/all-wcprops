@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Curl
+END
+CurlVersion.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlVersion.php
+END
+RequestMediator.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/RequestMediator.php
+END
+CurlMulti.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMulti.php
+END
+CurlHandle.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlHandle.php
+END
+CurlMultiInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMultiInterface.php
+END
+CurlMultiProxy.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Curl/CurlMultiProxy.php
+END

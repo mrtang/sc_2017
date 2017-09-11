@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Description
+END
+OperationTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Description/OperationTest.php
+END
+ParameterTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Description/ParameterTest.php
+END
+SchemaFormatterTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Description/SchemaFormatterTest.php
+END
+ServiceDescriptionTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Description/ServiceDescriptionTest.php
+END
+SchemaValidatorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Description/SchemaValidatorTest.php
+END
+ServiceDescriptionLoaderTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Description/ServiceDescriptionLoaderTest.php
+END

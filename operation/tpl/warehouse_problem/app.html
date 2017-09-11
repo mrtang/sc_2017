@@ -1,0 +1,30 @@
+  <!-- navbar -->
+  <div data-ng-include=" 'tpl/blocks/header.html' " class="app-header navbar">
+  </div>
+  <!-- / navbar -->
+
+  <div ng-controller="WareHouseProblemConfigCtrl">
+      <!-- menu -->
+      <div data-ng-include=" 'tpl/warehouse_problem/aside.html' " class="app-aside hidden-xs {{app.settings.asideColor}}">
+      </div>
+      <!-- / menu -->
+
+      <!-- content -->
+      <div class="app-content">
+        <div class="app-content-body fade-in-up" ui-view></div>
+      </div>
+      <!-- / content -->
+  </div>
+
+  <script id="ModalAdd.html" type="text/ng-template">
+      <div ng-include="'tpl/order/modal.add.html'"></div>
+  </script>
+
+  <!-- footer -->
+  <div class="app-footer wrapper b-t bg-light">
+    <span class="pull-right">{{app.version}} <a href ui-scroll="app" class="m-l-sm text-muted"><i class="fa fa-long-arrow-up"></i></a></span>
+    &copy; 2014 Copyright.
+  </div>
+  <!-- / footer -->
+
+  </div>

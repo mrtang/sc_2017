@@ -1,0 +1,158 @@
+<div class="fade-in-right" ng-controller="UploadProcessCtrl">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default">
+                    <div class="panel-heading h2">
+                        <i class="fa fa-upload text-info"></i>
+                        Cập nhật tiến trình xử lý vận đơn
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-12">
+                        <div class="col-lg-4 no-padder">
+                            <input type="file" tabindex="-1"
+                                style="position: absolute; clip: rect(0px 0px 0px 0px);"
+                                ui-jq="filestyle"
+                                nv-file-select
+                                uploader="uploader"
+                                data-icon="false"
+                                data-classbutton="btn btn-default"
+                                data-classinput="form-control inline v-middle input-s"
+                            />
+                            <p class="m-t-xs">
+                                <a ng-if="type_process == 1" target="_blank" ng-href="{{link_oms}}upload/templateprocess?cmd=export&type_process={{type_process}}" class="text-info"><i class="fa fa-upload"></i> Download Template</a>
+                                <a ng-if="type_process == 2" target="_blank" ng-href="{{link_storage}}template/Template_Process_Vip.xlsx" class="text-info"><i class="fa fa-upload"></i> Download Template</a>
+                                <a ng-if="type_process == 4" target="_blank" ng-href="{{link_storage}}template/Template_Process_Vip.xlsx" class="text-info"><i class="fa fa-upload"></i> Download Template</a>
+                                <a ng-if="type_process == 5" target="_blank" ng-href="{{link_storage}}template/Template_Process_Problem.xlsx" class="text-info"><i class="fa fa-upload"></i> Download Template</a>
+                            </p>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group controls">
+                                <select class="form-control" ng-model="type_process">
+                                    <option data-ng-repeat="(key,item) in list_type" value="{{key}}" ng-if="[1,2,4,5].indexOf(1*key) != -1">{{item}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-info m-l-md" ng-disabled="courier_id == 0" type="button" ng-click="uploader.uploadAll()"><i class="fa" ng-class="{'fa-upload': !waiting_upload ,'fa-spinner fa-spin' : waiting_upload}"></i> Upload</button>
+
+                        <div class="btn-group pull-right">
+                            <button ng-show="NewTotal > 0" type="button" class="btn m-b-xs btn-primary" ng-click="Verify()">Cập nhật</button>
+                            <button ng-show="$stateParams.id" type="button" class="btn m-b-xs btn-success" ng-click="exportExcel()"><i class="fa fa-file-excel-o"></i> Xuất Excel</button>
+                        </div>
+
+                        </div>
+
+                        <tabset class="tab-container tab-inside" ng-if="$stateParams.id">
+                            <tab ng-click="ChangeTab('ALL')">
+                                <tab-heading>
+                                    &nbsp;Tất cả&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('NOT_ACTIVE')">
+                                <tab-heading>
+                                    &nbsp;Mới tạo&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('SUCCESS')">
+                                <tab-heading>
+                                    &nbsp;Đã xử lý&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('MISMATCH')">
+                                <tab-heading>
+                                    &nbsp;Lỗi&nbsp;
+                                </tab-heading>
+                            </tab>
+                        </tabset>
+
+                        <div class="tab-container" ng-if="$stateParams.id">
+                            <progressbar ng-if="dynamic != 0 && dynamic != 100" value="dynamic" type="success">{{dynamic || '0'}}%</progressbar>
+                            <div class="tab-content tab-fake">
+                                <div class="table-responsive">
+                                    <table class="table-condensed table-hover w-full">
+                                        <thead>
+                                        <tr>
+                                            <th width="5%">
+                                                STT
+                                            </th>
+                                            <th>
+                                                Mã
+                                            </th>
+                                            <th>
+                                                Loại xử lý
+                                            </th>
+                                            <th>
+                                                Nhóm trạng thái
+                                            </th>
+                                            <th>
+                                                Trạng thái
+                                            </th>
+                                            <th>
+                                                Ghi chú
+                                            </th>
+
+                                            <th class="text-center">Trạng thái</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in list_data">
+                                                <td>
+                                                    {{item_stt + $index + 1}}
+                                                </td>
+                                                <td>
+                                                    {{item.tracking_code}}
+                                                </td>
+                                                <td>
+                                                    {{list_type[1*item.type_process]}}
+                                                </td>
+                                                <td>
+                                                    <span ng-if="item.type_process == 1">
+                                                        {{group_status[1*item.group_process]}}
+                                                    </span>
+                                                    <span ng-if="item.type_process != 1">
+                                                        {{list_process[1*item.type_process][1*item.group_process]['name']}}
+                                                    </span>
+
+                                                </td>
+                                                <td>
+                                                    {{pipe_status[1*item.type_process][1*item.group_process][1*item.pipe_status]['name']}}
+                                                </td>
+                                                <td>
+                                                    {{item.note}}
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <span class="label text-base ng-binding {{status_verify[item.status].color}}">
+                                                        {{status_verify[item.status].text}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="waiting">
+                                                <td colspan="6" class="text-center">
+                                                    <i class="text-3x fa fa-spinner fa-spin"></i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="totalItems == 0 && !waiting">
+                                                <td colspan="6" class="text-center">Không có dữ liệu</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="totalItems > 0 && !waiting">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="load(currentPage)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <!--/ Panel-->
+            </div>
+        </div>
+    </div>
+</div>

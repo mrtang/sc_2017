@@ -1,0 +1,44 @@
+
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-7 pull-left no-padder">
+                    <h5 class="modal-title">Danh sách bưu cục</h5>
+                </div>
+                <button type="button" class="pull-right close" ng-click="close()"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-body wrapper-md">
+        <form class="form-validation" name="frmAdd">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <input type="text" placeholder="Nhập địa chỉ" id="address-input" class="form-control">
+                </div>
+            </div>
+        </form>
+        <div class="clearfix"></div>
+
+        
+            <div class="col-md-8" id="map" style="height:400px;">
+                
+            </div>
+
+            <div class="col-md-4" style="overflow-y:scroll;height:400px">
+                <p ng-if="loading">Đang tải dữ liệu</p>
+                <div class="media" ng-repeat="item in list_postoffice">
+                    <div class="media-body">
+                        <h5 class="media-heading"><a href="javascript:;" ng-click="goCenter(item)">{{item.name}} - (<span class="text-info">{{item.distance}}km</span>)</a></h5>
+                        <p>Địa chỉ: {{item.address}} <br/>SĐT: {{item.phone}}</p>
+                    </div>
+                </div>
+                
+            </div>
+
+        
+    </div>
+    <div class="clearfix"></div>
+    <div class="modal-footer">
+        <button class="btn" ng-click="close()">Đóng</button>
+    </div>

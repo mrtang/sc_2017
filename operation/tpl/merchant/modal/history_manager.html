@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            Lịch sử quản lý khách hàng
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+	<p class="text-center" ng-if="loading && list_data.length == 0"><i class="text-3x fa fa-spinner fa-spin"></i></p>
+	<p class="text-center" ng-if="!loading && list_data.length == 0">Không có dữ liệu</p>
+    <p ng-repeat="item in list_data">
+    Lúc {{item.time_create * 1000 | date : "dd-MM-yyyy  HH:mm"}} : <strong>{{item.user_update.fullname}}</strong> đã đổi quyền quản lý của khách hàng <strong>{{item.customer.fullname}}</strong> từ nhân viên <strong>{{item.old_seller_id.fullname}}</strong> sang <strong>{{item.seller.fullname}}</strong>  <br/>
+	<small>Lý do : {{item.note}}</small>
+    </p> 
+</div>
+
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-disabled="submit_load" ng-click="change(seller, note)">Đồng ý</button>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Đóng</button>
+</div> -->

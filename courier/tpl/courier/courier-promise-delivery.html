@@ -1,0 +1,160 @@
+<div ng-controller="CourierPromiseDeCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    
+    <div class="row b-b no-gutter">
+        <div class="col-lg-3 no-padder b-r">
+            <div class=" padder-v">
+                <h1 class="m-n text-title text-size padder font-thick">FROM PROVINCE</h1>
+            </div>
+        </div>
+        <div class="col-lg-9 no-padder">
+            <div class=" padder-v padder">
+                <h1 class="m-n text-title text-size col-sm-5 no-padder font-thick"><i class="fa fa-map-marker text-muted"></i> {{courier['name'] || Courier | uppercase }}  SUPPORT DELIVERY</h1>
+                
+                <div class="pull-right">
+                      <button type="button" class="btn btn-default w-xs btn-rounded" ui-sref="app.courier.list"><i class="fa fa-backward"></i> Back List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row m-l-none m-r-none"> 
+        <div class="col-lg-3 bg-light dk">
+                <div class="col-lg-12 padder-lr l-h-2x m-t-md">
+                
+                    <select class="form-control m-b-md" ng-model="service_id" ng-options="service.id as service.name for service in list_service" ng-change="change_service()">
+                      <option value="">Service</option>
+                    </select>
+                    
+                     <accordion close-others="oneAtATime">
+                        <accordion-group is-open="region1.open">
+                            <accordion-heading>
+                                <span class="text-md font-thick text-title">Miền Bắc <i class="pull-right fa" ng-class="{'fa-minus': region1.open, 'fa-plus': !region1.open}"></i></span>
+                            </accordion-heading>
+                            <div class="list-group no-radius alt m-n">
+                                <a href="javascript:;" class="list-group-item" ng-class="{'b-l-m': index == '1-'+$index}" ng-repeat="(key, val) in filterCity(list_city,1)">
+                                    <label class="i-checks">
+                                        <input type="checkbox" ng-checked="val.active == 1" ng-model="list_city[val.id].active" ng-true-value="1" ng-false-value="0" ng-change="active_city(val.id,'','',list_city[val.id].active)" /><i></i>
+                                    </label>
+                                    <span ng-click="choose_city('1-'+$index,val.id)">
+                                    {{val.city_name}}
+                                    </span>
+                                </a>
+                            </div>
+                        </accordion-group>
+                      </accordion>
+                            
+                      <accordion close-others="oneAtATime">
+                        <accordion-group is-open="region2.open">
+                            <accordion-heading>
+                                <span class="text-md font-thick text-title">Miền Trung <i class="pull-right fa" ng-class="{'fa-minus': region2.open, 'fa-plus': !region2.open}"></i></span>
+                            </accordion-heading>
+                            <div class="list-group no-radius alt m-n">
+                                <a href="javascript:;" class="list-group-item" ng-class="{'b-l-m': index == '2-'+$index}" ng-repeat="(key, val) in filterCity(list_city,2)">
+                                    <label class="i-checks">
+                                        <input type="checkbox" ng-checked="val.active == 1" ng-model="list_city[val.id].active" ng-true-value="1" ng-false-value="0" ng-change="active_city(val.id,'','',list_city[val.id].active)" /><i></i> 
+                                    </label>
+                                    <span ng-click="choose_city('2-'+$index,val.id)">
+                                    {{val.city_name}}
+                                    </span>
+                                </a>
+                                  
+                            </div>
+                        </accordion-group>
+                      </accordion>
+                      
+                      
+                      <accordion close-others="oneAtATime">
+                        <accordion-group is-open="region3.open">
+                            <accordion-heading>
+                                <span class="text-md font-thick text-title">Miền Nam <i class="pull-right fa" ng-class="{'fa-minus': region3.open, 'fa-plus': !region3.open}"></i></span>
+                            </accordion-heading>
+                            <div class="list-group no-radius alt m-n">
+                                <a href="javascript:;" class="list-group-item" ng-class="{'b-l-m': index == '2-'+$index}" ng-repeat="(key, val) in filterCity(list_city,3)">
+                                    <label class="i-checks">
+                                        <input type="checkbox" ng-checked="val.active == 1" ng-model="list_city[val.id].active" ng-true-value="1" ng-false-value="0" ng-change="active_city(val.id,'','',list_city[val.id].active)" /><i></i> 
+                                    </label>
+                                    <span ng-click="choose_city('3-'+$index,val.id)">
+                                    {{val.city_name}}
+                                    </span>
+                                </a>
+                            </div>
+                        </accordion-group>
+                      </accordion>
+                </div>
+        </div>
+      
+        <div class="col-lg-9 wrapper-sm">
+            <div class="row wrapper-sm">
+                <div class="col-lg-3 no-padder">
+                    <select class="form-control"  ng-init="form.province = 0" ng-model="form.province" ng-options="value as value.city_name for value in list_city_all" ng-change="get_district_by_city(form.province)" >
+                      <option value="">To Province</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 padder-lg">
+                    <select class="form-control"  ng-init="form.district = 0" ng-model="form.district" ng-options="district as district.district_name for district in list_district_by_city">
+                      <option value="">District</option>
+                    </select>
+                </div>
+                <div class="col-lg-1 col-lg-offset-2 no-padder">
+                    <input type="text" ng-model="form.estimate_delivery" class="form-control" placeholder="Delivery" />
+                </div>
+                <div class="col-lg-1 no-padder">
+                    <input type="text" ng-model="form.estimate_return" class="form-control" placeholder="Return" />
+                </div>
+                <div class="col-lg-1 no-padder">
+                    <input type="text" ng-model="form.estimate_ward" class="form-control" placeholder="Ward" />
+                </div>
+                <div class="col-lg-1 m-t-xxs">
+                    <a href="javascript:;" class="btn btn-sm btn-success" ng-disabled="city == 0" ng-click="save_district(form)"><i class="fa fa-plus"></i>&nbsp; Save &nbsp;</a>
+                </div>
+            </div>
+            <div class="row padder-lr">
+                <div class="panel panel-default">
+                    <div class="table-responsive">
+                    <!-- table district-->
+                      <table class="table table-striped b-t b-light">
+                        <thead>
+                          <tr>
+                            <th class="text-left">To Province</th>
+                            <th class="text-left">To District</th>
+                            <th class="text-left">Estimate Delivery</th>
+                            <th class="text-left">Estimate Return</th>
+                            <th class="text-left">Estimate Ward</th>
+                            <th class="text-center">Active</th>
+                            <th class="text-center">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="val in list_district">
+                                <td class="text-left">{{val.province_name}}</td>
+                                <td class="text-left">{{val.district_name}}</td>
+                                <td class="text-left">
+                                    {{val.estimate_delivery}} hours
+                                </td>
+                                <td class="text-left">
+                                    {{val.estimate_return}} hours
+                                </td>
+                                <td class="text-left">
+                                    {{val.estimate_ward}} hours 
+                                </td>
+                                <td class="text-left">
+                                    <label class="i-switch bg-primary m-t-xs m-r">
+                                      <input type="checkbox" ng-disabled="list_city[city]['active'] != 1" ng-checked="val['active'] == 1" ng-model="list_district[val.to_district]['active']" ng-change="active_city(city,val.to_province,val.to_district,list_district[val.to_district]['active'])" ng-true-value="1" ng-false-value="0" />
+                                      <i></i>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <a href="javascript:;" class="btn btn-sm btn-danger"ng-disabled="list_city[city]['active'] != 1"  ng-click="del(val.id,val.to_district)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+                                </td>
+                              </tr>
+                        </tbody>
+                      </table>
+                      
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

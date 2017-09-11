@@ -1,0 +1,50 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="TasksController">
+  <div class="col w-md bg-light dk b-r bg-auto">
+    <div class="wrapper b-b bg">
+      <button class="btn btn-sm btn-default pull-right visible-sm visible-xs" ui-toggle-class="show" target="#email-menu"><i class="fa fa-bars"></i></button>
+      <a ng-click="AddTask()" class="btn btn-sm btn-danger font-bold">Thêm công việc</a>
+    </div>
+    <div class="wrapper hidden-sm hidden-xs" >
+      <ul class="nav nav-pills nav-stacked nav-sm">
+        <li ng-repeat="fold in folds" class="{{currentState == fold.filter ? 'active' : ''}}">
+          <a  ui-sref="shipchung.tasks.list.detail({state: fold.filter, id: ''})" ng-click="gotoState(fold.filter)">
+            {{fold.name}} <span>({{count_state[fold.filter] ? count_state[fold.filter] : '0'}})</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="wrapper">Loại công việc</div>
+      <ul class="nav nav-pills nav-stacked nav-sm">
+        <li ng-repeat="category in list_category" class="{{category_id > 0 && category_id == category.id? 'active': ''}}">
+          <a ng-click="selectCategory(category.id)">
+            <i class="fa fa-fw fa-circle text-muted" style="color:{{category.color}}" ></i>
+            {{category.name}}
+          </a>
+        </li>
+      </ul>
+      <div class="wrapper">
+        <form name="label">
+          <div class="input-group">
+            <input type="text" class="form-control input-sm" ng-model="newCategory.name" placeholder="New category" required>
+            <span class="input-group-btn">
+              <input type="hidden" id="hidden-input" class="demo" value="#db913d" ng-model="newCategory.color"> 
+              <span class="clearfix"></span>
+              <button class="btn btn-sm btn-default" type="button" ng-click="addCategory(newCategory)" ng-disabled="label.$invalid">Add</button>
+            </span>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+  
+  <div ui-view ></div>
+
+  <!-- header -->
+  
+
+  
+
+  </div>
+</div>

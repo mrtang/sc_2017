@@ -1,0 +1,204 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-shopping-cart text-info"></i> Quản lý nạp tiền &nbsp;&nbsp;<button class="btn btn-success" ui-sref="delivery.accounting.cashin.add">Tạo</button></h1>
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="CashinController">
+  <div class="col wrapper-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+        <div class="row text-center m-t-sm" data-ng-show="isShowing">
+          <div class="col-xs-6 col-sm-2 col-sm-offset-1">
+              <div class="panel padder-v item bg-info">
+                  <div class="text-white font-thin h3 block">{{orderCreated}}</div>
+                  <span class="text-xs">Giao dịch phát sinh</span>
+              </div>
+          </div>
+
+          <div class="col-xs-6 col-sm-2">
+              <div class="panel padder-v item bg-info">
+                  <div class="text-white font-thin h3 block">{{orderPaid}}</div>
+                  <span class="text-xs">Giao dịch đã thanh toán</span>
+              </div>
+          </div>
+
+          <div class="col-xs-6 col-sm-2">
+              <div class="panel padder-v item bg-info">
+                  <div class="text-white font-thin h3 block">{{orderSuccess}}</div>
+                  <span class="text-xs">Giao dịch thành công</span>
+              </div>
+          </div>
+
+          <div class="col-xs-6 col-sm-2">
+              <div class="panel padder-v item bg-info">
+                  <div class="text-white font-thin h3 block">{{orderAmount | vnNumber }}</div>
+                  <span class="text-xs">Đã thanh toán</span>
+              </div>
+          </div>
+
+          <div class="col-xs-6 col-sm-2">
+              <div class="panel padder-v item bg-info">
+                  <div class="text-white font-thin h3 block">{{orderBuyAmount | vnNumber }}</div>
+                  <span class="text-xs">Đã nạp thành công</span>
+              </div>
+          </div>
+
+      </div>
+
+      <div class="row text-center m-t-sm">
+          <span style="font-size: 30px;cursor: pointer">
+              <i class="fa fa-sort-desc" data-ng-show="!isShowing" data-ng-click="showData()"></i>
+              <i class="fa fa-sort-asc" data-ng-hide="!isShowing" data-ng-click="showData()"></i>
+          </span>
+      </div>
+
+        <form class="form-validation form-horizontal">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <input type="text" placeholder="Email khách hàng" class="form-control" ng-model="email" ng-enter="setPage(1, email, transaction_id, refer_code, status, from_date, to_date)">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <input type="text" placeholder="Mã giao dịch" class="form-control" ng-model="transaction_id"  ng-enter="setPage(1, email, transaction_id, refer_code, status, from_date, to_date)">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <p class="input-group">
+                        <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="from_date" is-open="from_date_open" placeholder="Từ ngày ..." datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" ng-enter="setPage(1, email, transaction_id, refer_code, status, from_date, to_date)"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event,'from_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <input type="text" placeholder="Mã tham chiếu" class="form-control" ng-model="refer_code" ng-enter="setPage(1, email, transaction_id, refer_code, status, from_date, to_date)">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <select class="form-control" ng-model="status">
+                          <option value="">---- Trạng thái ----</option>
+                          <option value="SUCCESS" selected="selected"> Thành công</option>
+                          <option value="PROCESSING" selected="selected"> Đã thanh toán</option>
+                          <option value="WAITING">Chưa thanh toán</option>
+                          <option value="CANCEL">Đã hủy</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <p class="input-group">
+                        <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="to_date" is-open="to_date_open" placeholder="Đến ngày ..." datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" ng-enter="setPage(1, email, transaction_id, refer_code, status, from_date, to_date)"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event,'to_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
+                  </div>
+                </div>
+              </div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group controls padder">
+					      	<select class="form-control" ng-model="type">
+						          <option value="">---- Phương thức nạp tiền ----</option>
+						          <option value="1">Ngân lượng</option>
+						          <option value="2">Ngân hàng</option>
+					      	</select>
+					  	</div>
+				  	</div>
+				</div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <button class="btn btn-info" ng-click="setPage(1, email, transaction_id, refer_code, status, from_date, to_date, type)" ><i class="fa fa-search"></i> Tìm kiếm</button>
+                  <button class="btn btn-primary" data-ng-click="showStatistic()"><i class="fa fa-bar-chart-o"></i> Thống kê</button>
+                  <a class="btn btn-success" ng-href="{{exportExcel(email, transaction_id, refer_code, status, from_date, to_date)}}">Xuất excel</a>
+                </div>
+              </div>
+                  
+          </form>
+      </div>
+
+      <div class="panel-body">
+          <table class="table table-bordered tablesorter bg-white">
+              <thead>
+                <tr>
+                    <th style="width:20px;">#</th>
+                    <th>Email</th>
+                    <th  width="300px">Mã giao dịch</th>
+                    
+                    <th>Mã tham chiếu</th>
+                    <th>Số tiền</th>
+                    <th width="350px">Thông tin chuyển khoản</th>
+                    <!-- <th>Kiểu thanh toán</th>
+                    <th>Trạng thái</th> -->
+                    <th>Ngày tạo</th>
+                    <th>Thời gian thành công</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="stateLoading">
+                  <td colspan="20" class="text-center">
+                      <i class="text-3x fa fa-spinner fa-spin"></i>
+                  </td>
+              </tr>
+              <tr ng-if="totalItems == 0 && !stateLoading">
+                  <td colspan="20" class="text-center">Không có dữ liệu</td>
+              </tr>
+              <tr ng-repeat="one in listData" ng-if="!stateLoading">
+                    <td>{{item_stt + $index + 1}}</td>
+                    <td><strong>{{one.user.fullname}}</strong> ({{one.user.phone}})<br/>{{one.user.email}}</td>
+                    <td>
+
+                    <p ng-if="one.status !== 'SUCCESS' " href="javascript:;"  editable-text="one.transaction_id" onbeforesave="editCashin(one, $data, 'transaction_id')">
+                                {{one.transaction_id | limitTo : 25}} <i class="fa fa-edit"></i>
+                    </p>
+                    
+                    <p ng-if="one.status == 'SUCCESS'">{{one.transaction_id | limitTo : 25}}</p>
+					<label class="label" ng-class="{'label-success': one.status == 'SUCCESS', 'label-default': one.status !== 'SUCCESS'}">{{checkStatus(one.status)}}</label> <span ng-show="one.status == 'WAITING' "><button class="btn btn-danger btn-xs" ng-click="cancelCashin(one.id)">Huỷ</button></span>
+                    </td>
+                    <td>{{one.refer_code}}</td>
+                    <td>{{one.amount | number}}</td>
+                    <td ng-if="one.type == 2">
+                      <strong>Chuyển vào</strong> : {{one.transfer_bank}} <br />
+                      <strong>Chủ thẻ</strong> : {{one.card_name}} <br />
+                      <strong>Số thẻ</strong> : {{one.card_number}} <br />
+                      <strong>Số bút toán</strong> : {{one.transfer_code}} <br />
+
+                      
+                      <strong>Thời gian chuyển khoản</strong> : {{one.transfer_time * 1000|date : 'dd/MM/yy'}} <br />
+                      <strong>Nội dung</strong> : {{one.transfer_body}} <br />
+                    </td>
+                    <td ng-if="one.type == 1">
+                    	Ngân lượng
+                    </td>
+                    <!-- <td>{{(one.type == 1) ? 'Ngân lượng' : 'Ngân hàng'}}</td>
+                    <td>{{checkStatus(one.status)}}</td> -->
+                <td>{{one.time_create * 1000|date : 'dd/MM/yy HH:mm'}}</td>
+                <td ng-if="one.time_success > 0">{{one.time_success * 1000|date : 'dd/MM/yy HH:mm'}}</td>
+                <td ng-if="one.time_success == 0"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- pagination -->
+          <div ng-show="listData.length > 0" class="row">
+                  <div class="col-sm-3 wrapper-md pull-left">
+                      <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                  </div>
+                  <div class="col-sm-4 text-right text-center-xs pull-right">
+                    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage, email, transaction_id, refer_code, status, from_date, to_date)" next-text="Next"></pagination>
+                  </div>
+              </div>
+      </div>
+    </div>
+  </div>
+</div>

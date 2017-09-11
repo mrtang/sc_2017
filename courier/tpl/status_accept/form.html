@@ -1,0 +1,36 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div ng-controller="StatusAcceptActionCtrl">
+	<div class="wrapper-md bg-light b-b">
+        <h1 class="m-n font-thin h3">Quản trị trạng thái duyệt</h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default" style="height:400px;">
+                	<div class="panel-body">
+                		<div class="col-md-3">
+	                        <h4>Trạng thái</h4>
+	                        <select ng-options="status.id as status.name for status in listStatus" class="form-control"
+			                      ng-model="data.status_id">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+			            <div class="col-md-3">
+			            	<h4>Trạng thái duyệt</h4>
+			            	<select ng-options="status.id as status.name for status in listStatus" class="form-control"
+			                      ng-model="data.status_accept_id">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+                	</div>
+                	<div class="panel-body">
+                		<div class="col-md-3 pull-left">
+                			<button class="btn btn-sm btn-success" ng-click="saveData(data)" ng-if="!id">Save</button>
+            				<button class="btn btn-sm btn-success" ng-click="saveEdit(data)" ng-if="id > 0">Save</button>
+			            </div>
+                	</div>
+               	</div>
+            </div>
+        </div>
+    </div>
+</div>

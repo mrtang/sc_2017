@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            Thêm/sửa câu trả lời mẫu
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+    <form ng-submit="save()" data-ng-init="onLoad()">
+        <div class="row padder m-t-md">
+            <div class="form-group col-xs-12">
+                Sử dụng <strong>{ten}</strong> để thay cho định danh + tên của khách hàng<br />
+                Sử dụng <strong>{danhxung}</strong> thay thế cho danh xưng của khách hàng
+                Sử dụng <strong>{mavandon}</strong> để thay cho danh sách mã vận đơn liên quan đến ticket<br />
+                Sử dụng <strong>{email}</strong> để thay cho email của khách hàng<br />
+                Sử dụng <strong>{sdt}</strong> để thay cho số điện thoại của khách hàng<br />
+            </div>
+            <div class="form-group col-xs-12">
+                <select class="form-control" ng-model="replyTemplate.type_id" data-ng-options="item.id as item.type_name for item in listType">
+                </select>
+            </div>
+            <div class="form-group col-xs-12">
+                <textarea placeholder="Nội dung" class="form-control" ng-model="replyTemplate.message" style="height:230px;" required></textarea>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-info" ng-click="save()">Lưu</button>
+    <button type="button" class="btn btn-default" ng-click="close()">Hủy</button>
+</div>

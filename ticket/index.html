@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app" >
+<head>
+  <meta charset="utf-8" />
+  <title>Shipchung | Tickets</title>
+  <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
+  <link rel="stylesheet" href="css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
+  <link rel="stylesheet" href="css/ng-tags-input.min.css" type="text/css" />
+  <link rel="stylesheet" href="js/modules/toaster/toaster.css" type="text/css" />
+  <link rel="stylesheet" href="css/datetimepicker.css" type="text/css" />
+  <!--link rel="stylesheet" href="js/jquery/codemirror/codemirror.css" type="text/css" /-->
+  <link rel="stylesheet" href="jssip/css/popup-session.css" type="text/css" />
+  <link rel="stylesheet" href="js/modules/hotkey/hotkeys.css" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="js/modules/date-rangpicker/daterangepicker-bs3.css">
+  <style type="text/css">
+    #overlay-bg img{
+      margin-top:100px;
+    }
+    #overlay-bg button{
+      position: fixed;
+      right:20px;
+      top:20px;
+    }
+    #overlay-bg.show{
+      display: block;
+    }
+    #overlay-bg {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        text-align: center;
+        background:rgba(0,0,0,0.2);
+    }
+  </style>
+  <meta name="robots" content="noindex, nofollow">
+
+
+</head>
+<div id="version"></div>
+<div id="loaded"></div>
+
+<body ng-controller="AppCtrl" ng-cloak ondragstart="return false">
+  <div class="app" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view></div>
+    <div ng-include="'tpl/call_popup.html'"></div>
+
+
+
+  <!-- jQuery -->
+  <!--script src="js/jquery/codemirror/codemirror.js"></script-->
+  <script src="js/jquery/jquery.min.js"></script>
+  <script src="js/libs/socket.io.js"></script>
+  <script>
+    window._socketIO = io("https://ticket.shipchung.vn", {path:'/realtime/socket.io', secure: true});
+  </script>
+
+  <!--JsSIP-->
+
+
+  <!--<script src="jssip/js/rtcninja-temasys.min.js" type="text/javascript"></script>-->
+
+
+  <!-- Angular -->
+  <script src="js/angular1.3/angular.min.js"></script>
+  <script src="js/angular1.3/angular-cookies.min.js"></script>
+  <script src="js/angular1.3/angular-animate.min.js"></script>
+  <script src="js/angular/angular-ui-router.min.js"></script>
+  <script src="js/angular/angular-translate.js"></script>
+  <script src="js/angular/ngStorage.min.js"></script>
+  <script src="js/angular/ocLazyLoad.min.js"></script>
+  <script src="js/angular/ui-load.js"></script>
+  <script src="js/angular/ui-jq.js"></script>
+  <script src="js/angular/ui-validate.js"></script>
+  <!--script src="js/angular/ui-codemirror.js"></script-->
+  <script src="js/angular/ui-bootstrap-tpls.min.js"></script>
+  <script src="js/libs/tags.min.js"></script>
+  <script src="js/libs/moment.min.js"></script>
+
+  <script src="js/modules/highchart/highstock.src.js"></script>
+  <script src="js/modules/highchart/exporting.js"></script>
+  <script src="js/modules/highchart/highcharts-ng.js"></script>
+
+  <script src="js/angular1.3/bindonce.js"></script>
+  
+  <script src="js/modules/date-rangpicker/daterangepicker.js"></script>
+  <script src="js/modules/date-rangpicker/ng-bs-daterangepicker.js"></script>
+  
+  <script src="js/jquery/timedatepicker/datetimepicker.js"></script>
+
+  <!--ng-clip-->
+  <script src="js/modules/ng-clip/ZeroClipboard.min.js"></script>
+  <script src="js/modules/ng-clip/ngClip.js"></script>
+
+  <script src="js/modules/hotkey/mousetrap.js"></script>
+  <script src="js/modules/hotkey/hotkeys.js"></script>
+
+  <script src="js/modules/async.js"></script>
+
+  <!--markdown-->
+  <script src="js/angular1.3/angular-sanitize.js"></script>
+  <script src="js/modules/markdown/showdown.js"></script>
+  <script src="js/modules/markdown/angular-markdown-text.min.js"></script>
+  <script src="js/modules/toaster/toaster.js"></script>
+  <script src="js/modules/d3.v3.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/modules/angular-charts.js"></script>
+
+  <!-- App -->
+  <script type="text/javascript" src="js/mfb-directive.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/app.config.js"></script>
+  <script src="js/route.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+  <script src="js/modules/ment/mentio.js"></script>
+  
+
+  <script src="js/controller/courier/RedeliveryCtrl.js"></script>
+  <script src="js/controller/courier/SlowDeliveryCtrl.js"></script>
+  <script src="js/controller/courier/SlowPickupCtrl.js"></script>
+  <script src="js/controller/courier/ReturnCtrl.js"></script>
+
+
+
+</body>
+</html>

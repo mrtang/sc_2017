@@ -1,0 +1,37 @@
+<div class="fade-in-right" ng-controller="CashinAddExcelController">
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="wrapper-md bg-light b-b">
+        <h1 class="m-n font-thin h3"><i class="fa fa-edit"></i> Nạp tiền từ excel</h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4>Tải file lên hệ thống</h4>
+
+                        <div class="col-lg-4 form-group" style="padding-left: 0px">
+                            <input type="file"
+                                style="position: absolute; clip: rect(0px 0px 0px 0px);"
+                                ui-jq="filestyle" 
+                                nv-file-select
+                                uploader="uploader"  
+                                data-icon="false" 
+                                data-classbutton="btn btn-default" 
+                                data-classinput="form-control inline v-middle input-s"
+                            />
+                        </div>
+
+                        <button class="btn btn-info" type="button" ng-click="uploader.uploadAll()" ng-disabled="uploadProcessing"><i class="fa fa-upload" ng-if="!uploadProcessing"></i>
+                        <i class="fa fa-circle-o-notch fa-spin" ng-if="uploadProcessing"></i> Upload</button>
+                        <a class="btn btn-success" ng-href="{{link_storage}}template/Template_Cashin.xlsx"><i class="fa fa-download"></i> Tải file</a>
+                        <p class="m-t-sm">
+                            Bạn cần tải file theo đúng định dạng cho phép xls, xlsx, csv.
+                        </p>
+                    </div>
+                </div> 
+                <!--/ Panel-->
+            </div>
+        </div>
+    </div>
+</div>

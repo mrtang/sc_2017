@@ -1,0 +1,63 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-envelope-o text-info"></i> Thống kê khách hàng theo đơn hàng ngày</h1>
+  <small class="text-muted">
+  </small>
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="UserOrderCtrl">
+  <div class="col wrapper-sm">
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+	        <form class="form-validation form-horizontal" ng-submit="setPage(num)">
+	            <div class="row">
+	                <div class="col-md-3">
+	                    <div class="form-group controls padder">
+	                        <input type="text" placeholder="Lượng vận đơn trong ngày" class="form-control" ng-model="num">
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-xs-1">
+	                  <button class="btn btn-info" type="submit">Tìm kiếm</button>
+	                </div>
+	                <div class="col-md-1">
+                        <a ng-href="{{export(num)}}" class="btn bg-orange btn-md ng-scope">Excel</a>
+                    </div>
+	            </div>
+	        </form>
+	      </div>
+
+	      <div class="panel-body table-responsive">
+	          <table class="table table-condensed table-hover w-full">
+	              <thead>
+	                <tr>
+	                    <th style="width:20px;">#</th>
+	                    <th>Họ tên</th>
+	                    <th>Email</th>
+	                    <th>Số điện thoại</th>
+	                    <th>Lượng đơn</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	              <tr ng-if="stateLoading">
+	                  <td colspan="20" class="text-center">
+	                      <i class="text-3x fa fa-spinner fa-spin"></i>
+	                  </td>
+	              </tr>
+	              <tr ng-if="totalItems == 0 && !stateLoading">
+	                  <td colspan="20" class="text-center">Không có dữ liệu</td>
+	              </tr>
+	              
+	                <tr ng-repeat="key in listData">
+	                    <td>{{ item_stt + $index + 1}}</td>
+	                    <td>{{key.fullname}}</td>
+	                    <td>{{key.email}}</td>
+	                    <td>{{key.phone}}</td>
+	                    <td>{{listCount[key.id]}}</td>
+	                </tr>
+	            </tbody>
+	          </table>
+	      </div>
+    </div>
+  </div>
+</div>

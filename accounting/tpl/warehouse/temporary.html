@@ -1,0 +1,331 @@
+<div ng-controller="WHTemporaryCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-inbox text-info"></i> Lưu kho khoang kệ tạm tính</strong></span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <form class="form-validation form-horizontal" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Mã kê ,họ tên, email ,sđt khách hàng"
+                                           ng-model="frm.keyword"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <select class="form-control" ng-model="frm.warehouse">
+                                    <option value="">Kho hàng</option>
+                                    <option ng-repeat="item in warehouse_warehouse" value="{{item.code}}">{{item.name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <select class="form-control" ng-model="frm.payment_type">
+                                    <option value="">Cấu hình lưu kho</option>
+                                    <option ng-repeat="(key,item) in list_config" value="{{key}}">{{item}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Tạo từ ngày ..."
+                                           ng-model="time.create_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="create_start_open"
+                                           datepicker-options="dateOptions"
+                                           ng-required="true"
+                                           close-text="Close"
+                                    />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                            </div>
+
+                            <div class="col-md-3">
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="create_end_open"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           close-text="Close"
+                                           ng-model="time.create_end"
+                                    />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6 btn-group" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','export')">
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn m-b-xs btn-success" ng-disabled="waiting_export" ng-click="exportExcel('export')">
+                                        <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                        <i ng-show="waiting_export" class="fa fa-spinner"></i>
+                                        Export Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table-condensed w-full table-hover">
+                            <thead>
+                                <td>
+                                    #
+                                </td>
+
+                                <td>
+                                    Khách hàng
+                                </td>
+
+                                <td>
+                                    Thời gian
+                                </td>
+
+                                <td>
+                                    Hình thức lưu kho
+                                </td>
+
+                                <td>
+                                    Kho hàng
+                                </td>
+
+                                <td colspan="3">
+                                    Chi tiết
+                                </td>
+
+                                <td colspan="2">
+                                    Phí khách hàng
+                                </td>
+                                <td colspan="2">
+                                    Phí đối tác
+                                </td>
+                            </thead>
+                            <thead>
+                            <td>
+                            </td>
+
+                            <td>
+                            </td>
+
+                            <td>
+                            </td>
+
+                            <td>
+                            </td>
+
+                            <td>
+                            </td>
+
+                            <td>
+                                Item (sp)
+                            </td>
+
+                            <td>
+                                Sku
+                            </td>
+
+                            <td>
+                                Floor
+                            </td>
+
+                            <td>
+                                Phí
+                            </td>
+                            <td>
+                                Discount
+                            </td>
+                            <td>
+                                Phí
+                            </td>
+                            <td>
+                                Discount
+                            </td>
+                            </thead>
+                            <tbody ng-repeat="item in list_data">
+                            <tr ng-class="{'success': item.show}">
+                                <td>
+                                    #{{item_stt + $index + 1}}
+                                </td>
+
+                                <td>
+                                    <i class="fa fa-user"></i> {{item.__get_user['fullname']}}<br/>
+                                    <i class="fa fa-mail"></i> {{item.__get_user['email']}}<br/>
+                                    <i class="fa fa-phone"></i> {{item.__get_user['phone']}}
+                                </td>
+
+                                <td>
+                                    {{item.date}}
+                                </td>
+
+                                <td>
+                                    {{list_config[item.payment_type] || ''}}
+                                </td>
+
+                                <td>
+                                    {{warehouse_warehouse[item.warehouse].name || ''}}
+                                </td>
+
+                                <td>
+                                    {{item.total_item  | vnNumber}}
+                                </td>
+
+                                <td>
+                                    {{ item.total_sku | vnNumber}}
+                                </td>
+
+                                <td>
+                                    {{ item.floor | vnNumber}}
+                                </td>
+
+                                <td>
+                                    {{ item.total_fee | vnNumber}}
+                                </td>
+
+                                <td>
+                                    {{item.total_discount | vnNumber}}
+                                </td>
+
+                                <td>
+                                    {{item.partner_total_fee | vnNumber}}
+                                </td>
+
+                                <td>
+                                    {{item.partner_total_discount | vnNumber}}
+                                </td>
+                            </tr>
+                            <tr ng-show="item.show">
+                                <td colspan="30" class="no-padder-l no-padder-r">
+                                    <table class="table table-striped table-hover table-condensed b">
+                                        <thead>
+                                        <tr class="success">
+                                            <th class="text-center">
+                                                Mã vận đơn
+                                            </th>
+                                            <th>
+                                                UId
+                                            </th>
+                                            <th>
+                                                Thời gian lưu kho từ
+                                            </th>
+                                            <th>
+                                                đến
+                                            </th>
+                                            <th>
+                                                Phí lưu kho
+                                            </th>
+                                            <th>
+                                                Phí xử lý
+                                            </th>
+                                            <th>
+                                                Miễn phí lưu kho
+                                            </th>
+                                            <th>
+                                                Miễn phí xử lý
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody ng-if="item.show">
+                                        <tr ng-repeat="itm in item.detail" ng-class="{'active': $odd}">
+                                            <td class="text-center">
+                                                <a class="text-info" href="javascript:;">{{itm.order_number}}</a>
+                                            </td>
+
+                                            <td>
+                                                <a class="text-info" href="javascript:;">{{itm.uid}}</a>
+                                            </td>
+
+                                            <td>
+                                                <span ng-if="itm.time_stocked > 0">{{ itm.time_stocked * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span ng-if="itm.time_packed > 0">{{ itm.time_packed * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+
+                                            <td>
+                                                {{itm.warehouse_fee | vnNumber}}
+                                            </td>
+
+                                            <td>
+                                                {{itm.handling_fee | vnNumber}}
+                                            </td>
+
+                                            <td>
+                                                {{itm.discount_warehouse | vnNumber}}
+                                            </td>
+
+                                            <td>
+                                                {{itm.discount_handling | vnNumber}}
+                                            </td>
+
+                                        </tr>
+                                        <tr ng-show="!item.detail.length && !waiting_detail">
+                                            <td colspan="30" class="text-center"> Không có dữ liệu</td>
+                                        </tr>
+                                        <tr ng-show="waiting_detail && !item.detail.length">
+                                            <td colspan="30" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+
+                            </tbody>
+                            <tbody ng-if="!list_data.length && !waiting">
+                            <tr>
+                                <td colspan="30" class="text-center">
+                                    Không có dữ liệu
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tbody ng-if="waiting">
+                            <tr>
+                                <td colspan="30" class="text-center">
+                                    <i class="text-3x fa fa-spinner fa-spin"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+
+                        <div class="row" ng-show="totalItems > 0 && !waiting">
+                            <div class="col-sm-3 wrapper-md pull-left">
+                                <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                            </div>
+                            <div class="col-sm-4 text-right text-center-xs pull-right">
+                                <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

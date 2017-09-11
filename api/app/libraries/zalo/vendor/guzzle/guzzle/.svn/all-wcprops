@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/README.md
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/build.xml
+END
+UPGRADING.md
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/UPGRADING.md
+END
+composer.json
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/composer.json
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/LICENSE
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/.gitignore
+END
+.travis.yml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/.travis.yml
+END
+CHANGELOG.md
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/CHANGELOG.md
+END
+phpunit.xml.dist
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phpunit.xml.dist
+END
+phar-stub.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phar-stub.php
+END

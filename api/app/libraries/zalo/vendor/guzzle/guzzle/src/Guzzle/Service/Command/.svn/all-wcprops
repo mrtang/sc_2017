@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn_zplatform/!svn/ver/3069/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command
+END
+DefaultRequestSerializer.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/DefaultRequestSerializer.php
+END
+CreateResponseClassEvent.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/CreateResponseClassEvent.php
+END
+ClosureCommand.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/ClosureCommand.php
+END
+OperationResponseParser.php
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/OperationResponseParser.php
+END
+ResponseParserInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/ResponseParserInterface.php
+END
+CommandInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/CommandInterface.php
+END
+OperationCommand.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/OperationCommand.php
+END
+DefaultResponseParser.php
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/DefaultResponseParser.php
+END
+AbstractCommand.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/AbstractCommand.php
+END
+RequestSerializerInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/RequestSerializerInterface.php
+END
+ResponseClassInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Command/ResponseClassInterface.php
+END

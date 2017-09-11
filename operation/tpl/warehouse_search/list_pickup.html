@@ -1,0 +1,77 @@
+<div class="tab-container">
+    <div class="tab-content tab-fake">
+        <div class="wrapper-md b-b">
+            <span class="m-n h4">Thông tin Pickup {{$stateParams.keyword}}</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table-condensed table-hover w-full">
+                <thead>
+                <td>
+                    #
+                </td>
+                <td>
+                    <i class="fa fa-barcode"></i>&nbsp; Mã
+                </td>
+                <td> <i class="fa fa-clock-o"></i> Thời gian</td>
+
+                <td>
+                    <i class="fa fa fa-inbox"></i> Sản phẩm
+                </td>
+
+                <td>
+                    <i class="fa fa-user"></i> Khách hàng
+                </td>
+                <td>
+                    <i class="fa fa-building-o"></i> Kho
+                </td>
+                <td>
+                    Trạng thái
+                </td>
+                </thead>
+                <tbody ng-repeat="it in item.list_pickup" class="b-b">
+                <tr>
+                    <td>{{item_stt + $index + 1}}</td>
+                    <td>
+                        <p>
+                            <a class="label bg-light text-base text-info" href="javascript:;">{{it.pickup_code || ''}} ({{pickup_status[it.status]['name'] || 'Trạng thái' }})</a>
+                        </p>
+                        <p>
+                            <a class="label bg-light text-base text-primary" href="javascript:;">{{it.uid || 'Mã UID'}}</a>
+                        </p>
+                        <p>
+                            <a class="label bg-light text-base text-warning" href="javascript:;">{{it.sku || 'Mã SKU'}}</a>
+                        </p>
+                        <p>
+                            <a class="label bg-light text-base text-success" href="javascript:;">{{it.order_number || 'Mã Order'}}</a>
+                        </p>
+                    </td>
+
+                    <td>
+                        <p  class="text-info"> {{ it.create_time || ''}}</p>
+                    </td>
+
+                    <td>
+                        <p><i class="fa fa-user"></i> {{it.__get_seller_product.__product.name || ''}}</p>
+                    </td>
+
+                    <td>
+                        <p><i class="fa fa-user"></i> {{it.__get_seller_product.__get_user.fullname || ''}}</p>
+                        <p><i class="fa fa fa-envelope-o"></i> {{it.__get_seller_product.__get_user.email || ''}}</p>
+                        <p><i class="fa fa-phone"></i> {{it.__get_seller_product.__get_user.phone || ''}}</p>
+                    </td>
+
+                    <td>
+                        <p> {{warehouse[it.warehouse]['name'] || ''}}</p>
+                    </td>
+                    <td>
+                        <p>
+                            <span class="label text-xs {{list_color[it.__get_seller_product.status] || ''}}">{{status[it.__get_seller_product.status]['name']}}</span>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

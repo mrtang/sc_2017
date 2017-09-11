@@ -1,0 +1,258 @@
+<div ng-controller="FollowUpCustomersCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"> Follow Up Customers</span>
+    </div>
+
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.country_id" ng-options="key as value for (key , value) in venture" ng-disabled="1">
+                                        <option value="">Venture</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3" ng-show="!frm.venture || 1*frm.venture == 237">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.team" ng-options="item.id as item.name for item in team">
+                                        <option value="">Team</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group controls padder" ui-module="select2">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Employee email"
+                                            ui-select2="select2Options"
+                                            ng-model="frm.email"
+                                            class="form-control w-md"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group controls padder" ui-module="select2">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Customer email"
+                                            ui-select2="select2Options"
+                                            ng-model="frm.customer"
+                                            class="form-control w-md"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.not_sign_in" ng-options="key as value for (key , value) in list_period">
+                                        <option value="">Not Sign In Over</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.not_approve" ng-options="key as value for (key , value) in list_period">
+                                        <option value="">Not Approve Order In Over</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="checkbox padder">
+                                    <label class="i-checks padder-md padder-xs" ng-repeat="(key,value) in list_report_status">
+                                        <input type="checkbox"
+                                               ng-model="check"
+                                               ng-checked="1"
+                                               ng-change="toggleSelection(key)" /><i></i>
+                                        {{value || 'Trạng thái'}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                    <button type="button" class="btn m-b-xs btn-success" ng-disabled="waiting_export" ng-click="exportExcelItem('export')">
+                                        <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                        <i ng-show="waiting_export" class="fa fa-spinner fa-spin"></i>
+                                        Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <tabset class="tab-container tab-inside text-xs" justified="true">
+                        <tab ng-repeat="(key, value) in list_tab" ng-click="ChangeTab(key);">
+                            <tab-heading>
+                                &nbsp;{{value}}&nbsp;
+                            </tab-heading>
+                        </tab>
+                    </tabset>
+
+
+                    <div class="tab-container">
+                        <div class="tab-content tab-fake">
+                            <div class="table-responsive">
+                                <table class="table b-light w-full table-bordered">
+                                    <thead>
+                                        <td width="2%">
+                                            No.
+                                        </td>
+                                        <td>
+                                            Orders
+                                        </td>
+                                        <td>
+                                            Customer name
+                                        </td>
+                                        <td>Due</td>
+                                        <td class="text-center">Type</td>
+                                        <td class="text-center">Verifed</td>
+                                        <td class="text-center">Orders</td>
+                                        <td class="text-center">Picked</td>
+                                        <td class="text-center">Delivered</td>
+                                        <td class="text-center">Returned</td>
+                                        <td class="text-center">CF.Payment</td>
+                                        <td class="text-center">Paid</td>
+                                        <td class="text-center">Action</td>
+                                    </thead>
+                                    <tbody >
+                                        <tr ng-show="waiting">
+                                            <td colspan="30" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+
+                                        <tr ng-show="totalItems == 0 && !waiting">
+                                            <td colspan="30" class="text-center">
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
+
+                                        <tr ng-repeat="item in list_data" class="b-b">
+                                            <td>
+                                                {{item_stt + $index + 1}}
+                                            </td>
+                                            <td>
+                                                <div
+                                                        ui-jq="sparkline"
+                                                        ui-options="{{list_statistic[item.user_id]}}, {type:'line', height:19, width:100, lineColor:'{{app.color.primary}}', fillColor:'#fff'}"
+                                                        class="sparkline inline">
+                                                    loading...
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{item.__get_user.fullname || ''}} <br />
+                                                {{item.__get_user.email || ''}}
+                                            </td>
+                                            <td class="text-center">{{__get_time(item.new_customer.last_accept_order_time)}}</td>
+                                            <td class="text-center">{{item.__get_return.user_id != undefined ? 'Return' : 'New'}}</td>
+                                            <td class="text-center">{{(item.new_customer.first_time_verifed != undefined && item.new_customer.first_time_verifed > 0) ? 'x' : '-'}}</td>
+                                            <td class="text-center">{{(item.new_customer.first_order_time   != undefined && item.new_customer.first_order_time > 0) ? 'x' : '-'}}</td>
+                                            <td class="text-center">{{(item.first_time_pickup > 0) ? 'x' : '-'}}</td>
+                                            <td class="text-center">{{(item.new_customer.first_success_order_time   != undefined && item.new_customer.first_success_order_time > 0) ? 'x' : '-'}}</td>
+                                            <td class="text-center">{{(item.new_customer.first_return_order_time   != undefined && item.new_customer.first_return_order_time > 0) ? 'x' : '-'}}</td>
+                                            <td class="text-center">{{(item.__get_userinfo.user_nl_id   != undefined && (item.__get_userinfo.user_nl_id > 0 || item.__get_userinfo.priority_payment == 2)) ? 'x' : '-'}}</td>
+                                            <td class="text-center">{{(item.new_customer.first_time_paid   != undefined && item.new_customer.first_time_paid > 0) ? 'x' : '-'}}</td>
+                                            <td class="text-center"><a data-ng-click="openSaveModal(item)" class="text-info">Update</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="row" ng-show="totalItems > 0 && !waiting">
+                                    <div class="col-sm-3 wrapper-md pull-left">
+                                        <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                                    </div>
+                                    <div class="col-sm-4 text-right text-center-xs pull-right">
+                                        <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/ng-template" id="UpdateFailReason.html">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h4>Update Activity {{item.__get_user.email || ''}} </h4>
+                    </div>
+                </div>
+            </div>
+            <form class="form-horizontal form-validation" role="form" data-ng-submit="save(frm)" name="frmUpdate">
+                <div class="modal-body wrapper-md">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label font-bold">Your activity</label>
+                        <div class="col-lg-9">
+                            <select class="form-control m-b" ng-model="frm.activity" required>
+                                <option value="">Select activity</option>
+                                <option ng-repeat="(key, value) in list_activity" value="{{key || ''}}">{{value || ''}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label font-bold">Result</label>
+                        <div class="col-lg-9">
+                            <div class="radio" >
+                                <label class="i-checks padder" data-ng-repeat="(key,value) in list_tab" data-ng-if="1*key != 0">
+                                    <input type="radio" data-ng-model="frm.result" value="{{key}}" ng-checked="$index == 0">
+                                    <i></i>
+                                    {{value || ''}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-show="frm.result == 3">
+                        <label class="col-lg-3 control-label font-bold">Fail reason</label>
+                        <div class="col-lg-9">
+                            <div class="checkbox">
+                                <label class="i-checks padder-xs padder" ng-repeat="(key,value) in list_reason">
+                                    <input type="checkbox"
+                                           ng-model="check"
+                                           ng-change="toggleSelection(key)"
+                                    /><i></i>
+                                    {{value || 'Reason'}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label font-bold">Note</label>
+                        <div class="col-lg-9">
+                            <textarea rows="5" class="form-control w-full" ng-model="frm.note" placeholder="Reason fail ..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" type="submit">Update</button>
+                    <button class="btn btn-info"    type="button" ng-click="close()">Close</button>
+                </div>
+            </form>
+        </script>
+    </div>

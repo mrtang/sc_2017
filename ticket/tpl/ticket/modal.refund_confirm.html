@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            Gia hạn yêu cầu :  <strong>#{{ticket.id}}-{{ticket.title | limitTo : 40}}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+    <form>
+        <div>
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>HVC</th>
+                    <th>Loại bồi hoàn</th>
+                    <th><button class="btn btn-sm btn-success" type="button" ng-click="addItemToListOrder()"><i class="fa fa-plus"></i></button></th>
+                </tr>
+                <tr ng-repeat="item in frm.list_order">
+                   <td><input type="text" class="form-control" ng-model="item.tracking_code"></td> 
+                   <td>{{item.courier_name}}</td> 
+                   <td>
+                        <select name="" id="" ng-model="item.refund_type">
+                            <option value="">- Loại bồi hoàn -</option>
+                            <option value="1">Miễn phí vận chuyển</option>
+                            <option value="2">Miễn phí chuyển hoàn</option>
+                            <option value="3">Miển phí vượt cân</option>
+                            <option value="4">50% phí vận chuyển</option>
+                        </select>
+                   </td> 
+                   <td><button class="btn btn-xs" type="button" ng-click="removeOrderItem($index, item)">x</button></td> 
+                </tr>
+            </table>
+        </div>
+        <div class="form-group">
+            <label>Nội dung (<span class="text-danger">*</span>)</label>
+            <textarea name="" id="" class="form-control" required ng-model="frm.note"></textarea>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="createRequest(frm)">Đồng ý</button>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Đóng</button>
+</div>

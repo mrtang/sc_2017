@@ -1,0 +1,466 @@
+@import url("flag-icon.css");
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700&subset=latin,vietnamese);
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+html {
+	-ms-touch-action: none;
+}
+body{
+    color: #666 !important;
+    background-color: transparent !important;
+    font-family: Roboto,Helvetica,Verdana,Arial,sans-serif!important;
+    -webkit-font-smoothing: antialiased;
+}
+.no-pd-l{
+    padding-left: 0 !important;
+}
+.no-pd-r{
+    padding-right: 0 !important;
+}
+.no-mg-l{
+    margin-left: 0 !important;
+}
+.no-mg-r{
+    margin-right: 0 !important;
+}
+
+
+#ShipChungModal .modal-dialog{
+    margin: 0 auto;
+}
+#ShipChungModal .modal-dialog .modal-content{
+    box-shadow: none;
+    border-radius: 0;
+} 
+#ShipChungModal .modal-header{
+    background-color: #4a4a4a;
+    padding: 4px 10px !important;
+    font-family: tahoma;
+}
+
+#ShipChungModal .modal-header a.close {
+    color: #FFFFFF !important;
+    font-size: 25px !important;
+    margin-top: 6px;
+    opacity: 1;
+}
+
+#ShipChungModal .modal-header span.modal-title {
+    color: #FFFFFF !important;
+}
+
+#ShipChungModal .modal-header span.modal-title #title{
+    position: relative;
+    top: -5px;
+	font-size: 1.2em;
+}
+
+#ShipChungModal .logo-sc {
+	position: relative;
+	background: url(../images/logoC.png) no-repeat;
+	display: inline-block;
+    width:  40px;
+	height: 32px;
+	top: 4px;
+	left: 0px;
+}
+
+@media only screen and (min-width: 768px){
+    div .modal-body{
+        padding: 0 20px 0 20px;
+        min-height: 220px;
+    }
+    
+    div#bar-left{
+        border-right:  1px solid #c8c8c8;
+    }
+    
+    form.form-horizontal div#bar-left div#div-city{
+        padding-right: 5px;
+    }
+    
+    form.form-horizontal div#bar-left div#div-district{
+        padding-left: 5px;
+    }
+    
+    div#bar-left div.form-group:nth-of-type(1){
+        margin-top: 15px;
+    }
+    
+}
+
+@media (max-width: 767px){
+    
+    #ShipChungModal .modal-header span.modal-title #title{
+		top: -8px;
+		font-size: 1em;
+	}
+
+	.modal-header span.modal-title {
+        font-size: 90% !important;
+    }
+    
+    .modal-dialog{
+	overflow: scroll!important;
+	height: 500px!important;
+	-webkit-overflow-scrolling: touch!important;
+	padding-bottom : 100px;
+    }	
+
+    form.form-horizontal div.bar-right{
+        float:none !important;
+        padding-bottom: 15px;
+    }
+    
+    form.form-horizontal div#bar-left div#div-city{
+        margin-bottom : 15px;
+    }
+    
+    div#bar-left div.checkbox{
+        border-top: 1px solid #c8c8c8;
+    }
+    
+    div#bar-left, div.bar-right{
+        width: 100% !important;
+    }
+    
+    .logo-sc {
+        background: url(../images/logo-min-C.png) no-repeat;
+        width:  30px;
+        height: 14px;
+        top: 0px;
+    }
+    
+    .modal-header button.close {
+        font-size: 20px !important;
+        margin-top: 0px;
+    }
+    
+    div#bar-left div#btn-payment button{
+        font-size: 11px !important;
+    }
+    
+    .modal-header span.modal-title #title{
+        position: relative;
+        top: 0px;
+    }
+    
+    form.form-horizontal div.bar-right  div.form-group span.price{
+        left: 215px !important;
+    }
+    
+    .form-group .col-sm-6:last-child{
+        /* margin-top: 15px !important; */
+    }
+}
+
+div#bar-left{
+    width: 55%;
+}
+
+div#bar-left div.form-group:nth-of-type(6){
+    margin-bottom: 5px;
+}
+
+div#bar-left input.form-control, div#bar-left select.form-control{
+    font-size: 13px;
+}
+
+div#bar-left div#btn-payment button, div#bar-left div#btn-payment{
+    padding: 0px !important;
+}
+
+div#bar-left div.checkbox{
+    margin-top: 10px !important;
+    padding-bottom: 15px !important;
+    font-size: 13px;
+}
+
+div#bar-left div#btn-payment button h4{
+    margin: 5px 0;
+}
+
+div#bar-left div#btn-payment button{
+    background-color: #ed9c28;
+    border-color    : #d58512;
+    color           : #FFFFFF;
+    font-size       : 11px; 
+}
+
+div#bar-left div#btn-payment button:hover{
+    background-color: #f0ad4e;
+    border-color    : #eea236;
+}
+
+div.bar-right{
+    width: 45%;
+    font-size: 13px;
+}
+
+form.form-horizontal div.bar-right-top{
+    padding-right: 10px;
+}
+
+form.form-horizontal div.bar-right-top .col-md-12 .media{
+    border-bottom: 1px solid #f2f2f2;
+    padding: 5px 0 !important;
+    margin: 0;
+}
+
+form.form-horizontal div.bar-right{
+    padding-left: 10px;
+    padding-right: 5px;
+    left: 5px;
+}
+
+form.form-horizontal div.bar-right div.form-group{
+    margin-bottom: 0px;
+}
+
+form.form-horizontal div.bar-right div.total-result{
+    border-top: 1px solid #c8c8c8;
+    margin: 0 10px 0 0 ;
+    position: relative;
+}
+
+form.form-horizontal div.bar-right div.total-result .overlay-loading{
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.04);
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+
+/** Css - ListItem **/
+ul.media-list{
+    margin-bottom: 0;
+}
+.media-list li.media .media-heading{
+    display: inline-block;
+}
+.media-list li.media:last-child{
+    border-bottom: none !important;
+}
+.media-list .media img {
+    background: #F2F2F2;
+    border: 1px solid #CCCCCC;
+    display: inline-block;
+    float: left;
+    height: 62px;
+    padding: 2px;
+    width: 62px;
+}
+/** Css- Logo Lang **/
+div.lang-area{
+    bottom: 10px;
+    position: absolute;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+div.lang-area-top{
+    /* bottom: 10px;
+    
+    right: 15px; */
+    margin-top: 7px;
+    font-size: 20px;
+    cursor: pointer;   
+}
+div.lang-area span, div.lang-area-top span {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
+    -webkit-transition: all .6s ease; /* Fade to color for Chrome and Safari */
+    -webkit-backface-visibility: hidden; /* Fix for transition flickering */
+}
+div.lang-area span:hover, div.lang-area span.active, div.lang-area-top span:hover, div.lang-area-top span.active {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
+    -webkit-filter: grayscale(0%);
+}
+
+
+/* Popup checkout success */
+
+.checkout-success .alert {
+    border-radius: 3px !important;
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-bottom: 0;
+}
+.checkout-success .alert p{
+    line-height: 15px;
+}
+.checkout-success .alert h4{
+    text-transform: uppercase;
+    line-height: 3px;
+    font-size:14px;
+    font-weight: bold;
+}
+
+.checkout-success .courier-list{
+    text-align: center;
+    margin-left:-20px!important;
+    margin-right:-20px!important;
+    border-top:1px solid #f2f2f2;
+    padding:7px 0px;
+}
+.checkout-success .courier-list div{
+    padding-left:10px!important;
+}
+.checkout-success .modal-footer .btn-buy-continue{
+    border-radius: 0;
+    background: #7BD859;
+    color:white;
+    opacity: 0.8;
+    border: none !important;
+}
+.checkout-success .modal-footer .btn-buy-continue:hover{
+    border: none !important;
+    opacity: 1;
+}
+.checkout-success .modal-footer{
+    margin-left:-20px!important;
+    margin-right:-20px!important;
+    margin-top:0;
+    padding: 8px 6px;
+    background: #EDEDED;
+}
+.checkout-success .modal-footer .pull-right a{
+    color: #ADADAD;
+    line-height: 34px;
+    text-decoration: none;
+}
+.checkout-success .modal-footer .pull-right a:hover{
+    color: #666666;
+    
+}
+.checkout-success .order-code span:last-child{
+    font-size:15px;
+    color: orange;
+    font-weight: bold;
+}
+.checkout-success .order-code a{
+    font-size:11px;
+    color:#adadad;
+}
+
+.checkout-success .order-time{
+    
+    color:#adadad;
+}
+
+.checkout-success .order-info {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.main-transition-success {    
+    -webkit-transition: 0.2s ease all;
+     transition: 0.2s ease all;
+     opacity: 1;
+} .main-transition-success.ng-enter {  
+    opacity: 0.3;
+}
+
+
+
+.main-transition {    
+    -webkit-transition: 0.2s ease all;
+     transition: 0.2s ease all;
+     opacity: 1;
+} .main-transition.ng-enter {  
+    opacity: 0.3;
+}
+
+.loading-page{
+    -webkit-transition: 0.2s ease all;
+     transition: 0.2s ease all;
+     opacity: 1;
+}
+.loading-page.ng-enter{
+     opacity: 0.3;
+}
+
+.modal-dialog{
+    min-height:600px;
+}
+.sweet-overlay{
+    display: none!important;
+}
+.showSweetAlert{
+    box-shadow: 0px 0px 26px rgb(205, 205, 205)!important;
+}
+
+
+/* Bank logo */
+
+i.VISA, i.MASTE, i.AMREX, i.JCB, i.VCB, i.TCB, i.MB, i.VIB, i.ICB, i.EXB, i.ACB, i.HDB, i.MSB, i.NVB, i.DAB, i.SHB, i.OJB, i.SEA, i.TPB, i.PGB, i.BIDV, i.AGB, i.SCB, i.VPB, i.VAB, i.GPB, i.SGB, i.NAB, i.BAB,i.CBS,i.otherbank-logo,i.ABB,i.PDB,i.GAB { width:80px; height:30px; display:block; background:url(https://www.nganluong.vn/webskins/skins/nganluong/checkout/version3.3/images/bank_logo.png) no-repeat;}
+i.MASTE { background-position:0px -31px}
+i.AMREX { background-position:0px -62px}
+i.JCB { background-position:0px -93px;}
+i.VCB { background-position:0px -124px;}
+i.TCB { background-position:0px -155px;}
+i.MB { background-position:0px -186px;}
+i.VIB { background-position:0px -217px;}
+i.ICB { background-position:0px -248px;}
+i.EXB { background-position:0px -279px;}
+i.ACB { background-position:0px -310px;}
+i.HDB { background-position:0px -341px;}
+i.MSB { background-position:0px -372px;}
+i.NVB { background-position:0px -403px;}
+i.DAB { background-position:0px -434px;}
+i.SHB { background-position:0px -465px;}
+i.OJB { background-position:0px -496px;}
+i.SEA { background-position:0px -527px;}
+i.TPB { background-position:0px -558px;}
+i.PGB { background-position:0px -589px;}
+i.BIDV { background-position:0px -620px;}
+i.AGB { background-position:0px -651px;}
+i.SCB { background-position:0px -682px;}
+i.VPB { background-position:0px -713px;}
+i.VAB { background-position:0px -744px;}
+i.GPB { background-position:0px -775px;}
+i.SGB { background-position:0px -806px;}
+i.NAB { background-position:0px -837px;}
+i.BAB { background-position:0px -868px}
+i.CBS {background-position:0px -898px}
+i.otherbank-logo {background-position:0px -930px}
+i.ABB { background-position:0px -961px}
+i.PDB { background-position:0px -992px}
+i.GAB { background-position:0px -1023px}
+
+
+
+ul.cardList{
+    list-style-position: outside;
+list-style-type: none;
+margin: 0px;
+padding: 10px 0px 5px 10px;
+}
+
+ul.cardList li, ul.cardList li.currnt, ul.cardList li.otherbank{
+    float: left;
+    text-align: center;
+    width: 84px;
+    border: 1px solid #DCDCDC;
+    border-radius: 4px;
+    background-color: #F8F8F8;
+    background-image: -moz-linear-gradient(center top , #FFF, #F8F8F8);
+    margin-bottom: 7px;
+    margin-right: 7px;
+    padding: 2px;
+    position: relative;
+}
+ul.cardList li:hover, ul.cardList li.currnt:hover, ul.cardList li.otherbank:hover{
+    border:1px solid #cdcdcd;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px #f2f2f2;
+}

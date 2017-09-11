@@ -1,0 +1,106 @@
+<div class="wrapper-md bg-light b-b">
+	<h1 class="m-n font-thin h3 text-black"><i class="fa fa-plus text-info"></i> Thêm mới sản phẩm đổi thưởng &nbsp;&nbsp;</h1>
+</div>
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+	<div class="col wrapper-sm">
+	  <div class="panel panel-default" ng-controller="LoyCampaignCtrl">
+		  <div class="panel-heading">
+			<form class="form-validation" role="form" name="frmCreate">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group controls">
+							<input type="text" placeholder="Tên" class="form-control" ng-model="postData.name" required>
+						</div>
+					</div>
+
+					<div class="col-md-4 col-md-offset-2">
+						<div class="form-group controls">
+							<select class="form-control" ng-model="postData.category_id" required>
+								<option value="">Loại đổi thưởng</option>
+								<option ng-repeat="(key,value) in sc_loyalty_category" value="{{key}}">{{value.name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group controls">
+							<input type="text" placeholder="Đường dẫn giới thiệu" class="form-control" ng-model="postData.link">
+						</div>
+					</div>
+
+					<div class="col-md-4 col-md-offset-2">
+						<div class="form-group controls">
+							<select class="form-control" ng-model="postData.level">
+								<option value="">Từ Level</option>
+								<option ng-repeat="(key,value) in sc_loyalty_level" value="{{key}}">{{value.name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group controls">
+							<input formatnumber type="text" placeholder="Giá trị" class="form-control" ng-model="postData.value" required>
+						</div>
+					</div>
+
+					<div class="col-md-4 col-md-offset-2">
+						<div class="form-group controls input-group">
+							<input type="text" class="form-control" placeholder="Từ ngày ..."
+								   ng-model="postData.time_start"
+								   datepicker-popup="dd-MM-yyyy"
+								   is-open="time_start_open"
+								   datepicker-options="dateOptions"
+								   close-text="Close"
+								   ng-required
+							/>
+					  <span class="input-group-btn icon-input">
+						<i class="btn fa fa-calendar "></i>
+					  </span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group controls">
+							<input formatnumber type="text" placeholder="Điểm quy đổi" class="form-control" ng-model="postData.point">
+						</div>
+					</div>
+
+					<div class="col-md-4 col-md-offset-2">
+						<div class="form-group controls input-group">
+							<input type="text" class="form-control" placeholder="Đến ngày ..."
+								   ng-model="postData.time_end"
+								   datepicker-popup="dd-MM-yyyy"
+								   is-open="time_end_open"
+								   datepicker-options="dateOptions"
+								   close-text="Close"
+							/>
+					  <span class="input-group-btn icon-input">
+						<i class="btn fa fa-calendar "></i>
+					  </span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group controls">
+							<input formatnumber type="text" placeholder="Số lượng" class="form-control" ng-model="postData.total">
+						</div>
+					</div>
+				</div>
+
+				<div class="row padder m-b-sm ">
+					<button class="btn btn-info" ng-click="createCampaign(postData)" ng-disabled="frmCreate.$invalid || waiting">Xác nhận</button>
+				</div>
+
+			</form>
+		  </div>
+	  </div>
+	</div>
+</div>

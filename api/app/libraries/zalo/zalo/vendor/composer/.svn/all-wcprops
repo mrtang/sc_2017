@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn_zplatform/!svn/ver/3062/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/composer
+END
+ClassLoader.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn_zplatform/!svn/ver/3062/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/composer/ClassLoader.php
+END
+installed.json
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn_zplatform/!svn/ver/3062/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/composer/installed.json
+END
+include_paths.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn_zplatform/!svn/ver/3062/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/composer/include_paths.php
+END
+autoload_namespaces.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn_zplatform/!svn/ver/3062/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/composer/autoload_namespaces.php
+END
+autoload_classmap.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn_zplatform/!svn/ver/3062/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/composer/autoload_classmap.php
+END
+autoload_real.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn_zplatform/!svn/ver/3062/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/composer/autoload_real.php
+END

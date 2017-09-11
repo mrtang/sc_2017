@@ -1,0 +1,352 @@
+<div ng-controller="PickupSlowCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-inbox text-info"></i> Lấy chậm</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1);setCountGroup()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Mã vận đơn hoặc mã hvc ..."
+                                           ng-model="frm.tracking_code"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group controls">
+                                    <input type="text" class="form-control" placeholder="Họ tên, email hoặc sđt người tạo ..."
+                                           ng-model="frm.keyword"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Duyệt từ ngày ..."
+                                           ng-model="time.accept_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_accept_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Lấy hàng từ ngày ..."
+                                           ng-model="time.pickup_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_pickup_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                    <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="chodientu.vn, shipchung.vn"
+                                           ng-model="frm.domain"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.service" ng-options="key as value for (key , value) in service">
+                                        <option value="">Dịch vụ</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_accept_end_open"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           close-text="Close"
+                                           ng-model="time.accept_end"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_pickup_end_open"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           close-text="Close"
+                                           ng-model="time.pickup_end"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.courier" ng-options="key as value.name for (key , value) in list_courier">
+                                        <option value="">Hãng vận chuyển</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.pickup_slow">
+                                        <option value="">Lấy chậm</option>
+                                        <option ng-repeat="item in pickup_slow" value="{{item.code}}">{{item.content}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control" ng-model="frm.loyalty">
+                                        <option value="">Khách hàng thân thiết</option>
+                                        <option ng-repeat="(key,value) in sc_loyalty_level" value="{{key}}">{{value.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control"
+                                            ng-model="frm.from_city"
+                                            ng-options="item.id as item.city_name for item in list_city"
+                                            ng-disabled = "userInfo.country_id != 237"
+                                    >
+                                        <option value="">Tỉnh/Thành Phố</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.no_pickup">
+                                        <option value="">Chưa lấy hàng</option>
+                                        <option value="1">1 ngày chưa lấy</option>
+                                        <option value="2">2 ngày chưa lấy</option>
+                                        <option value="3">3 ngày chưa lấy</option>
+                                        <option value="4">4 ngày chưa lấy</option>
+                                        <option value="5">5 ngày chưa lấy</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-lg-offset-6">
+                                <div class="form-group controls">
+                                    <select
+                                            boxme-district-by-province
+                                            province-id="frm.from_city"
+                                            district-id="frm.from_district"
+                                            default-label="Quận/Huyện"
+                                            ng-model="frm.from_district"
+                                            ng-disabled = "userInfo.country_id != 237"
+                                            class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs">
+                                        <input type="checkbox" ng-model="frm.global" ng-true-value="1" ng-false-value="0" /><i></i>
+                                        Chuyển phát quốc tế
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="checkbox padder">
+                                    <label class="i-checks padder-md padder-xs" ng-repeat="(key,value) in group_status" ng-if="[23,24,33].indexOf(1*key) == -1">
+                                        <input type="checkbox"
+                                               ng-model="check"
+                                               ng-change="toggleSelectionStatus(key)" /><i></i>
+                                        {{value || 'Trạng thái'}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="list_pipe_status">
+                            <div class="col-lg-12">
+                                <span class="label bg-primary inline m-l">Trạng thái xử lý</span>
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs" ng-repeat="item in list_pipe_status">
+                                        <input type="checkbox"
+                                               ng-model="check"
+                                               ng-change="toggleSelection(item.status)" /><i></i>
+                                        {{item.name || 'Trạng thái'}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="list_pipe_status">
+                            <div class="col-lg-12">
+                                <span class="label bg-primary inline m-l">Trạng thái xử lý theo đơn</span>
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs" ng-repeat="item in list_pipe_status_order">
+                                        <input type="checkbox"
+                                               ng-model="check"
+                                               ng-change="toggleSelectionOrder(item.status)" /><i></i>
+                                        {{item.name || 'Trạng thái'}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6">
+                                <a href="javascript:;" ng-if="check_privilege('PRIVILEGE_PICKUP','export')" ng-disabled="waiting_export" class="btn btn-success pull-right" ng-click="export_excel()">
+                                    <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                    <i ng-show="waiting_export" class="fa fa-spinner"></i>
+                                    Excel
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table-condensed table-hover w-full">
+                                <thead>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-user"></i> Khách hàng
+                                    </td>
+                                    <td>
+                                       <i class="fa fa-home"></i> Kho hàng
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-map-marker"></i> Địa chỉ
+                                    </td>
+                                    <td>
+                                        Số đơn lấy chậm
+                                    </td>
+                                </thead>
+                                <tbody ng-show="waiting">
+                                    <tr>
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-show="totalItems == 0 && !waiting">
+                                    <tr >
+                                        <td colspan="30" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                                <tbody ng-repeat="item in list_data | orderBy:'-num_slow'" class="b-b">
+                                <tr>
+                                    <td>{{item_stt + $index + 1}}</td>
+                                    <td>
+                                        <p>
+                                            <i class="fa" ng-class="{'fa-user' : !list_vip[item['user_id']] || list_vip[item['user_id']][level] == 0, 'fa-trophy text-lgx text-warning' : list_vip[item['user_id']]['level'] >= 2,'fa-trophy text-lgx text-muted' : list_vip[item['user_id']]['level'] == 1 }"></i>
+                                            {{(item['user']['fullname']) || 'Họ tên' | limitTo : 30}}
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-envelope-o"></i> {{item['user']['email'] || 'email'}} <i class="fa fa-phone"></i>{{(item['user']['phone']) || 'Điện thoại' | limitTo : 30}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p data-ng-if="item.name"> {{item.name || ''}}</p>
+                                        <p>
+                                            <i class="fa fa-user"></i> {{item.user_name || ''}}
+                                        </p>
+                                        <p><i class="fa fa-phone"></i>{{item.phone || 'Điện thoại'}}</p>
+                                    </td>
+                                    <td>
+                                        {{list_location.list_ward[item.ward_id] || ''}} {{list_location.list_district[item.province_id] || 'Quận huyện'}} * {{list_location.list_city[item.city_id] || 'Thành phố'}} * {{country[item.country_id] || 'Quốc gia'}}
+                                        <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="{{item.address || 'Địa chỉ'}} ,{{list_location.list_ward[item.ward_id] || ''}} {{list_location.list_district[item.province_id] || 'Quận huyện'}} * {{list_location.list_city[item.city_id] || 'Thành phố'}} * {{country[item.country_id] || 'Quốc gia'}}"></i>
+
+                                    </td>
+
+                                    <td class="text-center text-danger">
+                                        {{item.num_slow | vnNumber}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="30" class="text-left">
+                                        <ul class="breadcrumb bg-white m-n">
+                                            <li><a href="javascript:;"><i class="fa fa-flag"></i> Đơn hàng lấy chậm</a></li>
+                                            <li ng-repeat="it in item.pipe_journey" ng-class="{'active':$last}" tooltip-html-unsafe="{{it.note || ''}} <br /> {{ it.time_create * 1000 | date : 'dd-MM-yyyy  HH:mm' }}" tooltip-placement="top">
+                                                <a href="javascript:;">
+                                                    {{pipe_status[it.pipe_status] || 'Hành trình'}}
+                                                </a>
+                                            </li>
+                                            <li ng-click="action(item, list_pipe_status, pipe_priority[item.pipe_status], 5, 107)" class="pointer"><i class="text-success text-lg fa  fa-plus"></i></li>
+                                            <progressbar value="(pipe_priority[item.pipe_status]/pipe_limit)*100 || '0'" class="progress-xs bg-light m-n" animate="true" type="success">
+                                            </progressbar>
+                                        </ul>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        <div class="row" ng-show="totalItems > 0 && !waiting">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> kho hàng
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                </div>
+                        </div>
+                        <script id="ModalAdd.html" type="text/ng-template">
+                            <div ng-include="'tpl/pickup/modal.add.html'"></div>
+                        </script>
+
+                        </div>
+
+                        <div class="clearfix">&nbsp;</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

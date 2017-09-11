@@ -1,0 +1,133 @@
+
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-7 pull-left no-padder">
+                    <h4 class="modal-title">Thêm công việc</h4>
+                </div>
+                <button type="button" class="pull-right close" ng-click="close()"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-body wrapper-md">
+        <form class="form-horizontal form-validation" name="frmAdd">
+            <div class="form-group" >
+                <label class="col-lg-2 control-label">Công việc</label>
+                <div class="col-lg-10">
+                    <input type="text" placeholder="Tên công việc" ng-model="item.name" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label class="col-lg-2 control-label">Chuyên mục</label>
+                <div class="col-lg-10">
+                    <select name="" id="" ng-model="item.category" class="form-control">
+                        <option value="">Chọn chuyên mục</option>
+                        <option value="{{cat.id}}" ng-repeat="cat in list_category">{{cat.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label class="col-lg-2 control-label">Giao cho</label>
+                <div class="col-lg-10">
+                    <tags-input ng-model="assigner" display-property="text" placeholder="Giao cho.." replace-spaces-with-dashes="false" max-tags="1">
+                          <auto-complete source="getListAdmin($query)"
+                                         min-length="0"
+                                         
+                                         load-on-focus="true"
+                                         load-on-empty="true"
+                                         max-results-to-show="32"
+                                         template="my-custom-template"></auto-complete>
+                    </tags-input>
+                </div>
+            </div>
+
+
+
+            <div class="form-group" >
+                <label class="col-lg-2 control-label">Thời gian hoàn thành</label>
+                <div class="col-lg-10">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="">    
+                            <div class="input-group">
+                              <input type="text" class="form-control" data-ng-value="time.due_date | date:'yyyy-MM-dd HH:mm a'">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>    
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="time.due_date"
+                                            data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }">
+                            </datetimepicker>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Trạng thái</label>
+                <div class="col-lg-10">
+                    <span  ng-repeat="state in list_state">
+                    <button type="button" class="btn btn-xs {{item.state == state.key ? 'btn-primary': ''}}" ng-click="item.state = state.key" tooltip-placement="top" tooltip="{{state.name}}"><i class="fa {{state.icon}}"></i></button>
+                    &nbsp;
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Liên kết</label>
+                <div class="col-lg-10">
+                    <ul>
+                        <li ng-repeat="refer in refers">{{refer.name}} <a href="javascript:;" ng-click="removeRefer(refer)" class="text-danger"><i class="fa fa-times"></i></a></li>
+                    </ul>
+
+                    <input type="text"
+                        ng-model="_SuggestModel" class="form-control"
+                        typeahead="item as item.name for item in suggest($viewValue, currentType)" 
+                        typeahead-focus-first   = "false"
+                        typeahead-min-length    = '2'
+                        typeahead-wait-ms       = '300'
+                        typeahead-on-select     = "onSuggestPick($item, $model, $label)"
+                        placeholder="Nhập mã vận đơn, mã kho hàng, email khách hàng ..."
+                    />
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group" >
+                <label class="col-lg-2 control-label">Nhắc nhở</label>
+                <div class="col-lg-10">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="dropdown3" role="button" data-toggle="dropdown" data-target="#" href="">    
+                            <div class="input-group">
+                              <input type="text" class="form-control" data-ng-value="time.reminder | date:'yyyy-MM-dd HH:mm a'">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>    
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="time.reminder"
+                                            data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }">
+                            </datetimepicker>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Mô tả thêm</label>
+                <div class="col-lg-10">
+                    <textarea rows="5" class="form-control w-full" ng-model="item.description"  placeholder="Nội dung xử lý ..."></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn" ng-click="close()">Hủy bỏ</button>
+        <button class="btn btn-info" ng-disabled="frmAdd.$invalid || addTaskProcessing" ng-click="addTask(time, item)">Thêm</button>
+
+    </div>

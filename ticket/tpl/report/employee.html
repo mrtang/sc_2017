@@ -1,0 +1,184 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="EmployeesCtrl">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-8">
+                    <h1 class="m-n font-thin h3 text-black">Báo cáo cuộc gọi</h1>
+                </div>
+            </div>
+        </div>
+        <!-- / main header -->
+        <div class="wrapper">
+            <!-- stats -->
+                <div class="panel padder-v item">
+
+                    <div class="row padder">
+                        <div class="form-group col-xs-12">
+                            <button class="btn btn-info pull-right" type="submit" onclick="document.getElementById('dateRanger').click()"><i class="fa fa-filter"></i> {{moment(dateRange.startDate).format('l')}} - {{moment(dateRange.endDate).format('l')}}<input type="daterange" id="dateRanger" ng-model="dateRange" ranges="ranges" style="display:block;width:0px;height:0px;border:none;background:none;" ng-change="onDatepickedChange()"> </button>
+                            <button class="btn btn-success pull-right" ng-click="exportExcel()">
+                                <i class="fa fa-excel"></i> Xuất Excel
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row padder m-t-md">
+                        <div class="text-center sc-loading-icon" ng-show="stateLoading">
+                            <div class="loader">
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
+                            <p>Đang tải dữ liệu ...</p>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-5">
+                            <highchart id="chart1" config="ReportCallCS" ></highchart>
+                            <div class="">
+                                <table class="table table-striped b-t b-light">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:20px;">#</th>
+                                            <th>
+                                                Nhân viên
+                                            </th>
+                                            <th>
+                                                Cuộc gọi nghe
+                                            </th>
+                                            <th>Cuộc gọi hủy</th>
+                                            <th>Tổng</th>
+                                            <th>Tổng thời gian nghe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="(i,item) in ReportCallCSData">
+                                            <td>{{item_stt + i + 1}}</td>
+                                            <td><span class="text-info">{{item.employee}}</span></td>
+                                            <td>{{item.answered}}</td>
+                                            <td>{{item.no_answered}}</td>
+                                            <td>{{item.no_answered + item.answered}}</td>
+                                            <td>{{_Math.round(item.total_time / 60)}} phút</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+                            <highchart id="chart1" config="reportCallOutgoing" ></highchart>
+                            <div class="">
+                                <table class="table table-striped b-t b-light">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:20px;">#</th>
+                                            <th>
+                                                Nhân viên
+                                            </th>
+                                            <th>
+                                                Cuộc gọi đi
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="(i,item) in ReportCallOutgoingCSData">
+                                            <td>{{item_stt + i + 1}}</td>
+                                            <td><span class="text-info">{{item.employee}}</span></td>
+                                            <td>{{item.outgoing}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-7">
+                            <div class="panel  item">
+                                
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <highchart id="chart3" config="ReportCallSystem" ></highchart>  
+                                            <highchart id="chart4" config="ReportCallByHours" ></highchart>
+                                                <div class="">
+                                                    <table class="table table-striped b-t b-light">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:20px;">#</th>
+                                                                <th>
+                                                                    Thời gian
+                                                                </th>
+                                                                <th>
+                                                                    Cuộc gọi đến
+                                                                </th>
+                                                                <th>
+                                                                    Cuộc gọi đi
+                                                                </th>
+                                                                <th>
+                                                                    Cuộc gọi đi thành công
+                                                                </th>
+                                                                <th>
+                                                                    Tỷ lệ tiếp nhận thành công
+                                                                </th>
+                                                                <th>
+                                                                    Tỷ lệ tiếp nhận thất bại
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr data-ng-repeat="(i,item) in ReportCallByHoursData">
+                                                                <td>{{item_stt + i + 1}}</td>
+                                                                <td><span class="text-info">{{item.time}}</span></td>
+                                                                <td>{{item.incoming}}</td>
+                                                                <td>{{item.outgoing}}</td>
+                                                                <td>{{item.incoming_success}}</td>
+                                                                <td>{{(item.incoming_success / item.incoming )* 100 | number:0}}%</td>
+                                                                <td>{{(1 - (item.incoming_success / item.incoming )) * 100 | number:0}}%</td>
+                                                                
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            <highchart id="chart2" config="reportCallIncoming" ></highchart>
+                                                <div class="">
+                                                    <table class="table table-striped b-t b-light">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:20px;">#</th>
+                                                                <th>
+                                                                    Khách hàng
+                                                                </th>
+                                                                <th>
+                                                                    Số lần gọi
+                                                                </th>
+                                                                <th>
+                                                                    Tổng thời gian thoại
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr data-ng-repeat="(i,item) in ReportCallIncomingData">
+                                                                <td>{{item_stt + i + 1}}</td>
+                                                                <td><span class="text-info">{{item.name}}</span></td>
+                                                                <td>{{item.total}}</td>
+                                                                <td>{{_Math.round(item.total_time / 60)}} phút</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- / stats -->
+
+        </div>
+    </div>
+    <!-- / main -->
+</div>

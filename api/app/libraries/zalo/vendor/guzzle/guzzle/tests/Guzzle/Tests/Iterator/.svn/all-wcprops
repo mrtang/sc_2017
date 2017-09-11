@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Iterator
+END
+MapIteratorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Iterator/MapIteratorTest.php
+END
+ChunkedIteratorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Iterator/ChunkedIteratorTest.php
+END
+MethodProxyIteratorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Iterator/MethodProxyIteratorTest.php
+END
+FilterIteratorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Iterator/FilterIteratorTest.php
+END
+AppendIteratorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Iterator/AppendIteratorTest.php
+END

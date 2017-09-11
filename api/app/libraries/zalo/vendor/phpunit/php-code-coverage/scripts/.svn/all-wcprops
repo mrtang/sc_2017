@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/scripts
+END
+auto_prepend.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/scripts/auto_prepend.php
+END
+auto_append.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/scripts/auto_append.php
+END

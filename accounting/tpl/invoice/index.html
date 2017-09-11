@@ -1,0 +1,186 @@
+<div ng-controller="InvoiceCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-inbox text-info"></i> Hóa đơn</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal form-horizontal" ng-submit="setPage()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Thông tin khách hàng"
+                                           ng-model="frm.merchant"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group padder">
+                                    <input type="text" class="form-control" placeholder="Hóa đơn từ"
+                                           ng-model="time.create_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_create_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group padder">
+                                    <input type="text" class="form-control" placeholder="đến"
+                                           ng-model="time.create_end"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_create_end_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Sử dụng boxme từ ..."
+                                           ng-model="time.first_shipment_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_first_shipment_start"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                    />
+                                    <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6 padder-v" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_INVOICE','export')">
+                                <button type="button" class="btn m-b-xs btn-success pull-right" ng-click="exportExcel('export')"><i class="fa fa-file-excel-o"></i> Xuất Excel</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table-condensed table-hover w-full">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Khách hàng</th>
+                                        <th>Thời gian</th>
+                                        <th colspan="3" class="text-center">Kỳ này</th>
+                                        <th colspan="2" class="text-center">Tồn kỳ trước</th>
+                                        <th>Tổng phí</th>
+                                        <th>Tổng thu hộ</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3"></th>
+                                        <th>Thành công</th>
+                                        <th>Chuyển hoàn</th>
+                                        <th>Tồn</td>
+                                        <th>Thành công</th>
+                                        <th>Chuyển hoàn</th>
+                                        <th colspan="3"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-if="waiting">
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="totalItems == 0 && !waiting">
+                                        <td colspan="30" class="text-center">Không có dữ liệu</td>
+                                    </tr>
+                                    <tr class="bg-orange" ng-if="totalItems > 0 && !waiting">
+                                        <td colspan="3"></td>
+                                        <td>{{list_sum['total_success'] | vnNumber}} <br /> <i>{{(1*list_sum['total_success']/(1*list_sum['total_return'] + 1*list_sum['total_backlog'] + 1*list_sum['total_success'])*100) || '0' | number:1}} % </i></td>
+                                        <td>{{list_sum['total_return'] | vnNumber}} <br /> <i>{{(1*list_sum['total_return']/(1*list_sum['total_return'] + 1*list_sum['total_backlog'] + 1*list_sum['total_success'])*100) || '0' | number:1}} % </i></td>
+                                        <td>{{list_sum['total_backlog'] | vnNumber}} <br /> <i>{{(1*list_sum['total_backlog']/(1*list_sum['total_return'] + 1*list_sum['total_backlog'] + 1*list_sum['total_success'])*100) || '0' | number:1}} % </i></td>
+                                        <td>{{list_sum['total_lsuccess'] | vnNumber}} <br /> <i>{{(1*list_sum['total_lsuccess']/(1*list_sum['total_lsuccess'] + 1*list_sum['total_lreturn'])*100) || '0' | number:1}} % </i></td>
+                                        <td>{{list_sum['total_lreturn'] | vnNumber}} <br /> <i>{{(1*list_sum['total_lreturn']/(1*list_sum['total_lsuccess'] + 1*list_sum['total_lreturn'])*100) || '0' | number:1}} % </i></td>
+                                        <td class="text-right">{{list_sum['total_fee'] | vnNumber}}</td>
+                                        <td class="text-right">{{list_sum['total_money_collect'] | vnNumber}}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr ng-repeat="item in list_data">
+                                        <td>
+                                            {{item_stt + 1 + $index}}
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-user"></i> {{User[item.user_id].fullname}}<br />
+                                            <span ng-if="User[item.user_id].email"><i class="fa fa-envelope-o"></i> {{User[item.user_id].email}}<br /></span>
+                                            <i class="fa fa-phone"></i> {{User[item.user_id].phone}}<br />
+                                        </td>
+                                        <td>
+                                            Tháng {{item.month}}/{{item.year}}
+                                        </td>
+                                        <td>{{item.total_success}} <br /> <i class="text-success">{{(1*item.total_success/(1*item.total_return + 1*item.total_backlog + 1*item.total_success)*100) || '0' | number:1}} % </i></td>
+                                        <td>{{item.total_return}} <br /> <i class="text-success">{{(1*item.total_return/(1*item.total_return + 1*item.total_backlog + 1*item.total_success)*100) || '0' | number:1}} % </i></td>
+                                        <td>{{item.total_backlog}} <br /> <i class="text-success">{{(1*item.total_backlog/(1*item.total_return + 1*item.total_backlog + 1*item.total_success)*100) || '0' | number:1}} % </i></td>
+
+                                        <td>{{item.total_lsuccess}} <br /> <i class="text-success">{{(1*item.total_lsuccess/(1*item.total_lsuccess + 1*item.total_lreturn)*100) || '0' | number:1}} % </i></td>
+                                        <td>{{item.total_lreturn}} <br /> <i class="text-success">{{(1*item.total_lreturn/(1*item.total_lsuccess + 1*item.total_lreturn)*100) || '0' | number:1}} % </i></td>
+
+                                        <td class="text-right">{{sum_fee(item) | vnNumber}}</td>
+                                        <td class="text-right">{{item.total_money_collect + item.total_lmoney_collect | vnNumber}}</td>
+                                        <td>
+                                            <div class="btn-group dropdown">
+                                                <button class="btn btn-success btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a
+                                                                ng-href="{{link_export}}accounting/invoice/export-excel?cmd=export&id={{item.id}}&access_token={{userInfo.token}}"
+                                                                target="_blank"
+                                                                >
+                                                            <i class="fa fa-file-excel-o"></i>
+                                                            Excel
+                                                        </a>
+                                                    </li>
+                                                    <li> <a
+                                                            ui-sref="print({id: item.id})"
+                                                            target="_blank"
+                                                            >
+                                                        <i class="fa fa-print"></i>
+                                                        In
+                                                    </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row" ng-show="totalItems > 0 && !waiting">
+                            <div class="col-sm-3 wrapper-md pull-left">
+                                <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                            </div>
+                            <div class="col-sm-4 text-right text-center-xs pull-right">
+                                <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage()"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

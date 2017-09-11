@@ -1,0 +1,36 @@
+{
+    "name": "vinelab/api-manager",
+    "description": "Laravel API Manager Package - beatify and unify your responses with the least effort possible.",
+    "keywords": ["api", "laravel", "package", "response"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mahmoud Zalt",
+            "email": "mahmoud@vinelab.com"
+        },
+        {
+            "name": "Abed Halawi",
+            "email": "abed.halawi@vinelab.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "illuminate/config": "4.*",
+        "illuminate/http": "4.2.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.2.*",
+        "mockery/mockery": "0.9.*",
+        "illuminate/pagination": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "tests/Vinelab/TestCase.php"
+        ],
+        "psr-0": {
+            "Vinelab\\Api\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

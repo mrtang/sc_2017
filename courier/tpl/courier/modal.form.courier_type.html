@@ -1,0 +1,50 @@
+
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-5">
+                <h3 class="modal-title">Courier Type</h3>
+                </div>
+                <button class="pull-right close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    
+    <div class="modal-body wrapper-md">
+      <div class="row">
+        <div class="col-md-12">
+              <form role="form" name="courier-type-form" class="form-validation">
+                <div class="input-group m-b col-md-12">
+                  <input type="text" class="form-control" name="name" ng-model="type.name" placeholder="Enter new courier type... " />
+                  <span class="input-group-addon btn m-b-xs w-xs btn-default" ng-click="add(type)"><i class="fa fa-check"></i> SAVE</span>
+                </div>
+              </form>
+              
+                <div class="panel panel-default">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th colspan="2"><i class="fa fa-list"></i> ListType</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="value in list_courier_type">
+                            <td>
+                                <div class="checkbox">
+                                  <label class="i-checks" >
+                                    <input type="checkbox" ng-model="active" ng-change="change(value.id,active,'active')" ng-checked="value.active == 1" ng-true-value="1" ng-false-value="0" />
+                                    <i></i>
+                                  </label>
+                                 <span class="m-r-sm"><a href="javascript:;" editable-text="value.name" onbeforesave="change(value.id,$data,'name')">{{value.name}}</a></span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="close" ng-click="del(value.id,$index)"><i class="icon-ban"></i></span>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                </div>
+        </div>
+      </div>
+    </div>

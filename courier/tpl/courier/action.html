@@ -1,0 +1,127 @@
+<div ng-controller="CourierActionCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="bg-light lter b-b wrapper-md col-sm-12" ng-if="!CourierId">
+        <h1 class="m-n text-title text-size font-thin h3 pull-left"><i class="fa fa-truck text-muted"></i> Add Courier</h1>
+        <div class="pull-right">
+            <button class="btn btn-success btn-addon" ng-click="updateCourierType(form,services)"><i class="fa fa-plus"></i> SAVE</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    
+    <div class="bg-light lter b-b wrapper-md col-sm-12" ng-if="CourierId > 0">
+        <h1 class="m-n text-title text-size font-thin h3 pull-left"><i class="fa fa-truck text-muted"></i> Edit Courier</h1>
+        <div class="pull-right">
+            <button class="btn btn-success btn-addon" ng-click="updateCourierType(form,services)"><i class="fa fa-plus"></i> UPDATE</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    
+    <div class="wrapper-md col-sm-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <form name="form" class="form-validation">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span class="h4">Courier Infomation</span>
+                  <label class="i-switch i-switch-md bg-success pull-right" ng-if="CourierId > 0"  tooltip-placement="left" tooltip="Active">
+                      <input type="checkbox" ng-model="form.active" ng-checked="form.active == 1" ng-true-value="1" ng-false-value="0"/>
+                      <i></i>
+                  </label>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>Name <em class="text-muted">(allow 'a-zA-Z0-9', 4-30 length)</em></label>
+                            <input type="text" class="form-control" ng-model="form.name" ng-pattern="/[a-zA-Z0-9]{4,30}$/" required /> 
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Prefix <em class="text-muted">(allow 'a-zA-Z', 2-3 length)</em></label>
+                            <input type="text" class="form-control" ng-model="form.prefix" ng-pattern="/^[a-zA-Z]{2,3}$/"/>
+                        </div>
+                    </div>                    
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>Type</label>
+                            <select class="form-control" ng-model="form.type_id" ng-options="type.id as type.name for type in listCourierType |filter:{active:1}">
+                              <option value="">Select Courier Type</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-sm-6">
+            <form name="form-contact" class="form-validation">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span class="h4">Courier Config</span>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                          <label>Storage days <em class="text-muted">(max 3 length)</em></label>
+                          <input type="text" class="form-control" ng-model="form.storage" ng-pattern="/^[0-9]{1,3}$/"/> 
+                        </div>
+                        <div class="col-sm-6">
+                          <label>CoD delay days <em class="text-muted">(max 3 length)</em></label>
+                          <input type="text" class="form-control" ng-model="form.cod_delay" ng-pattern="/^[0-9]{1,3}$/"/> 
+                        </div>
+                    </div>
+                    
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                          <label>Number of attempts before storage</label>
+                          <input type="text" class="form-control" ng-model="form.number_attempt" ng-pattern="/^[0-9]{1,3}$/"/> 
+                        </div>
+                        <div class="col-sm-6">
+                          <label>Volume metric constant</label>
+                          <input type="text" class="form-control" ng-model="form.volume_metric_constant" ng-pattern="/^[0-9]{1,10}$/"/> 
+                        </div>
+                    </div>
+                    
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-4">
+                          <label>Generate tracking No</label>
+                          <br />
+                          <label class="i-switch i-switch-md bg-info">
+                              <input type="checkbox" ng-model="form.generate_tracking" ng-checked="form.generate_tracking == 1" ng-true-value="1" ng-false-value="0"/>
+                              <i></i>
+                          </label>
+                        </div>
+                        <div class="col-sm-4">
+                          <label>Schedule</label>
+                          <br />
+                          <label class="i-switch i-switch-md bg-danger">
+                              <input type="checkbox" ng-model="form.schedule" ng-checked="form.schedule == 1" ng-true-value="1" ng-false-value="0"/>
+                              <i></i>
+                          </label>
+                        </div>
+                        <div class="col-sm-4">
+                          <label>Delivery promise</label>
+                          <br />
+                          <label class="i-switch i-switch-md bg-primary">
+                              <input type="checkbox" ng-model="form.delivery_promise" ng-checked="form.delivery_promise == 1" ng-true-value="1" ng-false-value="0"/>
+                              <i></i>
+                          </label>
+                        </div>
+                    </div>  
+                    <div class="form-group pull-in clearfix">
+                      <div class="col-sm-12">
+                          <label>Service</label>
+                          <br />
+                          <label class="checkbox-inline i-checks" ng-repeat="sv in list_service">
+                            <input type="checkbox" value="{{sv.id}}" check-list="services"><i></i> {{sv.name}}
+                          </label>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+</div>

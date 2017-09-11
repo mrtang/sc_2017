@@ -1,0 +1,131 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-inbox text-info"></i> Log tạo vận đơn</h1>
+  <small class="text-muted">
+  </small>
+
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="LogCreateLadingCtrl">
+  <div class="col wrapper-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <form class="form-validation form-horizontal" ng-submit="setPage(1)">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group controls padder">
+                        <input type="text" placeholder="Mã vận đơn ..." class="form-control" ng-model="sc_code">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                  <button class="btn btn-info" type="submit">Tìm kiếm</button>
+                </div>
+            </div>
+                  
+        </form>
+      </div>
+
+      <div class="panel-body table-responsive">
+          <table class="table-condensed table-hover w-full">
+              <thead>
+                <tr>
+                    <th>#</th>
+                    <th><i class="fa fa-barcode"></i> Mã vận đơn</th>
+                    <th><i class="fa fa-user"></i> Khách hàng</th>
+                    <th><i class="fa fa-home"></i> Địa chỉ gửi</th>
+                    <th><i class="fa fa-home"></i> Địa chỉ nhận</th>
+                    <th><i class="fa fa-gift"></i> Sản phẩm</th>
+                    <th><i class="fa fa-dollar"></i> Phí - Thu hộ</th>
+                </tr>
+            </thead>
+
+            <tbody ng-if="stateLoading">
+                <tr>
+                    <td colspan="20" class="text-center">
+                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tbody ng-if="totalItems == 0 && !stateLoading">
+                <tr ng-if="totalItems == 0 && !stateLoading">
+                    <td colspan="20" class="text-center">Không có dữ liệu</td>
+                </tr>
+            </tbody>
+
+            <tbody ng-repeat="key in keys(listData)" class="b-b">
+                <tr >
+                    <td>{{ item_stt + $index + 1}}</td>
+                    <td>
+                        <p>
+                            <a ng-href="{{link_seller}}#/detail/{{listData[key]['trackingcode'] || ''}}" target="_blank"  class="label bg-light text-sm text-info">{{listData[key]['trackingcode'] || ''}}</a>
+                        </p>
+                        <p>
+                            <i class="fa" ng-class="{'fa-truck': ([1,3].indexOf(1*listData[key]['input']['Config']['Service']) != -1),'fa-plane': ([2,4].indexOf(1*listData[key]['input']['Config']['Service']) != 1)}"></i>
+                            <a class="text-info" href="{{link_hvc(1*listData[key]['input']['Courier'], listData[key]['trackingcode'], listData[key]['trackingcode'])}}" target="_blank">{{courier[1*listData[key]['input']['Courier']] || 'Hãng vận chuyển'}}</a>
+                        </p>
+                        <p ng-if="listData[key]['time_create'] > 0" class="text-primary">{{ listData[key]['time_create'] * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                    </td>
+                    <td>
+                        <span ng-show="listData[key]['datalog']['order']['from_user_id'] && listData[key]['datalog']['order']['from_user_id'] > 0">
+                            {{user[1*listData[key]['datalog']['order']['from_user_id']]['fullname'] || 'Họ tên'}}<br />
+                            {{user[1*listData[key]['datalog']['order']['from_user_id']]['email'] || 'Email'}}<br />
+                            {{user[1*listData[key]['datalog']['order']['from_user_id']]['phone'] || 'Số điện thoại'}}<br />
+                        </span>
+                    </td>
+                    <td>
+                        <span class="label bg-light text-light">{{listData[key]['input']['Domain']}}</span> -
+                        <span class="label bg-info text-light">{{listData[key]['output']['error'] || listData[key]['error']}}</span>
+                        <br />
+                    	{{listData[key]['input']['From']['Name']}} - {{listData[key]['input']['From']['Phone']}} <br />
+                        {{listData[key]['input']['From']['Address'] || 'Địa chỉ'}}<br />
+                        {{ward[1*listData[key]['input']['From']['Ward']] || ''}} {{district[1*listData[key]['input']['From']['Province']] || 'Quận Huyện'}} {{city[1*listData[key]['input']['From']['City']] || 'Thành phố'}}
+                    </td>
+                    <td>
+                        {{listData[key]['input']['To']['Name']}} - {{listData[key]['input']['To']['Phone']}} {{listData[key]['input']['To']['Email'] || ''}}<br />
+                        {{listData[key]['input']['To']['Address'] || 'Địa chỉ'}}<br />
+                        {{ward[1*listData[key]['input']['To']['Ward']] || ''}} {{district[1*listData[key]['input']['To']['Province']] || 'Quận Huyện'}} {{city[1*listData[key]['input']['To']['City']] || 'Thành phố'}}
+                    </td>
+                    <td>
+                        {{listData[key]['input']['Order']['ProductName']}}<br>
+                    	KL: {{listData[key]['input']['Order']['Weight'] || "0" | vnNumber}} Gram<br>
+                    	Giá: {{listData[key]['input']['Order']['Amount'] || "0" | vnNumber}}<br>
+                        Số lượng : {{listData[key]['input']['Order']['Quantity'] | vnNumber}}
+                    </td>
+                    <td>
+                        Thu hộ : {{listData[key]['datalog']['detail']['money_collect'] || listData[key]['datalog']['detai']['money_collect'] | vnNumber}}<br>
+                        Phí VC  : {{listData[key]['datalog']['detail']['sc_pvc'] || listData[key]['datalog']['detai']['sc_pvc'] | vnNumber}}<br>
+                        Phí CoD : {{listData[key]['datalog']['detail']['sc_cod'] || listData[key]['datalog']['detai']['sc_cod'] | vnNumber}}<br>
+                        <span ng-show="listData[key]['datalog']['detai']['sc_pbh'] > 0 || listData[key]['datalog']['detail']['sc_pbh'] > 0">Phí BH  : {{listData[key]['datalog']['detai']['sc_pbh'] || listData[key]['datalog']['detail']['sc_pbh'] | vnNumber}}<br></span>
+                        <span ng-show="listData[key]['datalog']['detai']['sc_discount_pvc'] > 0 || listData[key]['datalog']['detail']['sc_discount_pvc'] > 0">DiscountPvc  : {{listData[key]['datalog']['detai']['sc_discount_pvc'] || listData[key]['datalog']['detail']['sc_discount_pvc'] | vnNumber}}<br></span>
+                        <span ng-show="listData[key]['datalog']['detai']['sc_discount_cod'] > 0 || listData[key]['datalog']['detail']['sc_discount_cod']">DiscountPCoD  : {{listData[key]['datalog']['detai']['sc_discount_cod'] || listData[key]['datalog']['detail']['sc_discount_cod'] | vnNumber}}<br></span>
+                        <span ng-show="listData[key]['datalog']['detai']['seller_discount'] > 0 || listData[key]['datalog']['detail']['seller_discount']">DiscountSeller  : {{listData[key]['datalog']['detai']['seller_discount'] || listData[key]['datalog']['detail']['seller_discount'] | vnNumber}}<br></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="20" class="text-xs">
+                        <span class="label bg-primary pos-rlt m-r" ng-show="1*listData[key]['input']['Config']['Payment'] == 1"><i class="arrow right arrow-primary"></i> Miễn phí vc</span>
+                        <span class="label bg-orange pos-rlt m-r" ng-show="1*listData[key]['input']['Config']['CoD'] == 1"><i class="arrow right arrow-orange"></i> Thu hộ</span>
+                        <span class="label bg-warning pos-rlt m-r" ng-show="1*listData[key]['input']['Config']['Protected'] == 1"><i class="arrow right arrow-warning"></i> Bảo hiểm</span>
+
+                        <span class="label bg-info pos-rlt m-r" ng-show="1*listData[key]['input']['Config']['Checking'] == 1"><i class="arrow right arrow-info"></i> Cho xem hàng</span>
+                        <span class="label bg-info pos-rlt m-r" ng-show="1*listData[key]['input']['Config']['Fragile'] == 1"><i class="arrow right arrow-info"></i> Dễ vỡ</span>
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+
+          <!-- pagination -->
+          <div ng-show="!stateLoading && totalItems > 0" class="row">
+                  <div class="col-sm-3 wrapper-md pull-left">
+                      <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                  </div>
+                  <div class="col-sm-4 text-right text-center-xs pull-right">
+                    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)" next-text="Next"></pagination>
+                  </div>
+              </div>
+      </div>
+    </div>
+  </div>
+</div>

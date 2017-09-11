@@ -1,0 +1,42 @@
+<!-- first -->
+<ul class="nav">
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.accounting.vimo-verify">
+            <i class="glyphicon glyphicon-user"></i>
+            <span translate="">Xác thực Vimo</span>
+        </a>
+    </li>
+
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.accounting.coupons">
+            <i class="fa fa-crosshairs"></i>
+            <span translate="">Tạo coupons</span>
+        </a>
+    </li>
+
+    <li ng-class="{active:$state.includes('merchant')}" ng-if="check_privilege('PRIVILEGE_CASHIN','view')">
+        <a href class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="glyphicon glyphicon-tower"></i>       
+            <span translate="">Nạp tiền</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="delivery.accounting.cashin.show">
+                    <span translate="">Danh sách nạp tiền</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="delivery.accounting.cashin.add-excel">
+                    <span translate="">Nạp tiền qua Excel</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="line dk"></li>
+</ul>
+<!-- / third -->

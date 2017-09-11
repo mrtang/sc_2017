@@ -1,0 +1,198 @@
+      <!-- navbar header -->
+      <div class="navbar-header bg-white padder-xs-lr text-center">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href="#/" class="navbar-brand text-lt no-padder">
+          <img class="max-height-none" ng-src="img/logo.png" alt="."/>
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse navbar-collapse box-shadow box-shadow bg-white-only">
+        <div class="row bg-white-only m-r-n-sm" ng-class="{'pos-rlt pull-right w-98': app.settings.asideFolded}" style="margin-right: 2px;">
+            <ul class="nav navbar-nav ">
+                <li class="dropdown-submenu">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <span  class="" >DashBoard</span>
+                    </a>
+                </li>
+                <li class="dropdown-submenu" ng-if="check_privilege('marketing', '')">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        Marketing <span  class="caret" ></span>
+                    </a>
+                    <ul class="dropdown-menu left-none" role="menu">
+                        <li>
+                            <a ui-sref="order.list({time_start:'7day'})">
+                                Acquisition
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Retention
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Segments & Tags
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Traffic
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Campaign
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Conversion rate
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                ROI
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown-submenu" ng-if="check_privilege('sale', '')">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        Sale <span  class="caret" ></span>
+                    </a>
+                    <ul class="dropdown-menu left-none" role="menu">
+                        <li>
+                            <a ui-sref="report.sale.overview">
+                                Overview
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="report.sale.employee" >
+                                Employee Performance
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="report.sale.statistic" >
+                                Employee Statistic
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="report.sale.revenue_employee" >
+                                Employee by Period
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="report.sale.follow_up_customers" >
+                                Follow up your customers
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown-submenu" ng-if="check_privilege('cs', '')">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        CS <span  class="caret" ></span>
+                    </a>
+                    <ul class="dropdown-menu left-none" role="menu">
+                        <li>
+                            <a ui-sref="report.cs.statistic" >
+                                Employee Statistic
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="report.cs.upload" >
+                                Upload
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown-submenu">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        Operation <span  class="caret" ></span>
+                    </a>
+                    <ul class="dropdown-menu left-none" role="menu">
+                        <li>
+                            <a ui-sref="order.list({time_start:'7day'})">
+                                Fulfillment
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Pickup
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Delivery
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Ticket
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Pickup
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown-submenu">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        Financial <span  class="caret" ></span>
+                    </a>
+                    <ul class="dropdown-menu left-none" role="menu">
+                        <li>
+                            <a ui-sref="order.list({time_start:'7day'})">
+                                Revenue
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Cost
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="order.list({time_start:'14day'})" >
+                                Profit
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown-submenu">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <span  class="" >HRM</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- nabar right -->
+            <div data-ng-include=" 'tpl/blocks/user_nav.html' " data-ng-init="is_report = true">
+            <!-- / navbar right -->
+        </div>
+      </div>
+      <!-- / navbar collapse -->

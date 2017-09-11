@@ -1,0 +1,87 @@
+<div ng-controller="CreateAuditCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-file-text-o text-info"></i> Tạo đối soát giao dịch</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <form ng-submit="setPage()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3 padder">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Ngày ..."
+                                           ng-model="time.time_end"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_end"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                        <span class="input-group-btn icon-input">
+                                            <i class="btn fa fa-calendar "></i>
+                                        </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <a href="javascript:;" ng-click="ActionRun()" class="btn" ng-class="{'btn-success': !run, 'btn-danger' : run}" ><i ng-if="!run" class="fa fa-play"></i><i ng-if="run" class="fa fa-stop"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table-condensed table-hover w-full">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Mã khách hàng
+                                    </th>
+                                    <th>
+                                        Thời gian
+                                    </th>
+                                    <th>
+                                        Số dư
+                                    </th>
+                                    <th>
+                                        Số dư hệ thống
+                                    </th>
+                                    <th>
+                                        Trạng thái
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="run" ng-repeat="item in list_respond">
+                                    <td>
+                                        {{item.user_id}}
+                                    </td>
+
+                                    <td>
+                                        {{item.time}}
+                                    </td>
+                                    <td>
+                                        {{item.balance || '0' | vnNumber}}
+                                    </td>
+                                    <td>
+                                        {{item.audit || '0' | vnNumber}}
+                                    </td>
+                                    <td>
+                                        {{item.status}}
+                                    </td>
+                                </tr>
+                                <tr ng-if="!run">
+                                    <td class="text-center" colspan="5">Dừng</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

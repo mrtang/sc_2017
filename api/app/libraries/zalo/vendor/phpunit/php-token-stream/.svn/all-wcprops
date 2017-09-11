@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream
+END
+.gitattributes
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream/.gitattributes
+END
+phpunit.xml.dist
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream/phpunit.xml.dist
+END
+package.xml
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream/package.xml
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream/README.md
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream/build.xml
+END
+composer.json
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream/composer.json
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream/LICENSE
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-token-stream/.gitignore
+END

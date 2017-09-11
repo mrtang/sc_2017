@@ -1,0 +1,101 @@
+<div ng-controller="FreezeCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-inbox text-info"></i> Chi tiết tạm giữ bản kê số <strong>{{id}}</strong></span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <form class="form-validation form-horizontal" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Mã đơn hàng"
+                                           ng-model="search"
+                                            />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                        <div class="table-responsive">
+                                <table class="table-condensed w-full table-hover">
+                                    <thead>
+                                        <td>
+                                            #
+                                        </td>
+
+                                        <td>
+                                            Mã đơn hàng
+                                        </td>
+
+                                        <td>
+                                            Trạng thái
+                                        </td>
+
+                                        <td>
+                                            Tổng phí
+                                        </td>
+
+                                        <td>
+                                            Tiền thu hộ
+                                        </td>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="waiting">
+                                            <td colspan="10" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="!list_data.length && !waiting">
+                                            <td colspan="10" class="text-center">
+                                                Không có vận đơn được tìm thấy
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in list_data">
+                                            <td>
+                                                #{{item_stt + $index + 1}}
+                                            </td>
+
+                                            <td>
+                                                <a ng-href="{{link_seller}}#/detail/{{item.tracking_code}}" target="_blank" class="label bg-light text-base text-info">{{item.tracking_code}}</a><br />
+                                            </td>
+
+                                            <td>
+                                                <span class="label text-xs {{list_color[status_group[item.status]] || ''}}">
+                                                    {{(list_status[item.status].split('/').length > 1) ? list_status[item.status].split('/')[1] :  list_status[item.status]}}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                {{item.total_fee || '0' |vnNumber}}
+                                            </td>
+
+                                            <td>
+                                                {{item.money_collect  || '0' |vnNumber}}
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row" ng-show="list_data.length">
+                                    <div class="col-sm-4 text-right text-center-xs pull-right">
+                                        <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

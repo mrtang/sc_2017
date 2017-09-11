@@ -1,0 +1,91 @@
+<!-- first -->
+<ul class="nav">
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.lading">
+            <i class="fa fa-inbox"></i>
+            <span translate="">Tạo vận đơn</span>
+        </a>
+    </li>
+
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.journey">
+            <i class="fa fa-retweet"></i>
+            <span translate="">Hành trình</span>
+        </a>
+    </li>
+
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.change-lading">
+            <i class="fa fa-dot-circle-o"></i>
+            <span translate="">Thay đổi</span>
+        </a>
+    </li>
+    
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.change-payment">
+            <i class="fa fa-dollar"></i>
+            <span translate="">Thay đổi thông tin NL</span>
+        </a>
+    </li>
+    
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.sms">
+            <i class="fa fa-envelope-o"></i>
+            <span translate="">Gửi sms</span>
+        </a>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.over_weight">
+            <i class="fa fa-won"></i>
+            <span translate="">Vượt cân</span>
+        </a>
+    </li>
+
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.accept_return">
+            <i class="fa fa-refresh"></i>
+            <span translate="">Duyệt hoàn</span>
+        </a>
+    </li>
+
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.report_replay">
+            <i class="fa fa-rotate-left"></i>
+            <span translate="">Yêu cầu phát lại</span>
+        </a>
+    </li>
+
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.report_cancel">
+            <i class="fa fa-times"></i>
+            <span translate="">Báo Hủy</span>
+        </a>
+    </li>
+    <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_CREATE_SMS','view')">
+        <a ui-sref="delivery.log.createsms">
+            <i class="fa fa-comments-o"></i>
+            <span translate="">Tạo sms</span>
+        </a>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.noticeapp">
+            <i class="fa fa-tablet"></i>
+            <span translate="">Tạo notice app</span>
+        </a>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.rejectemail">
+            <i class="fa fa-warning"></i>
+            <span translate="">Email không tồn tại</span>
+        </a>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.log.statistic">
+            <i class="fa fa-file"></i>
+            <span translate="">Thống kê notify</span>
+        </a>
+    </li>
+
+    <li class="line dk"></li>
+</ul>
+<!-- / third -->

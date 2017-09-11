@@ -1,0 +1,327 @@
+
+
+<div ng-controller="ReportStatisticCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"> Employee Statistic</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.country_id"
+                                            ng-options="key as value for (key , value) in venture"
+                                            ng-disabled="1"
+                                    >
+                                        <option value="">Venture</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select ui-jq="chosen"
+                                            multiple class="w-md"
+                                            data-ng-model="frm.team"
+                                            data-placeholder="Select Team"
+                                            ng-options="item.id as item.name for item in team"
+                                    >
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group controls padder" ui-module="select2">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Employee email"
+                                            ui-select2="select2Options"
+                                            ng-model="frm.email"
+                                            class="form-control w-md"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="date" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input date-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.date"
+                                                       placeholder="Theo ngày"
+                                                ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.date"
+                                                    datetimepicker-config="{ dropdownSelector: '#date' ,startView:'day', minView:'day'}"
+                                            >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-md-offset-9">
+                                <div class="form-group controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="month" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input month-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.month"
+                                                       placeholder="Theo tháng"
+                                                ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.month"
+                                                    datetimepicker-config="{ dropdownSelector: '#month' ,startView:'month', minView:'month'}"
+                                            >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs">
+                                        <input type="checkbox" ng-model="frm.show_kpi" ng-true-value="1" ng-false-value="0" /><i></i>
+                                        Show target KPI
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs">
+                                        <input type="checkbox" ng-model="frm.show_salary" ng-true-value="1" ng-false-value="0" /><i></i>
+                                        Show salary
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                    <button type="button" class="btn m-b-xs btn-success" ng-disabled="waiting_export" ng-click="exportExcelItem('export')">
+                                        <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                        <i ng-show="waiting_export" class="fa fa-spinner fa-spin"></i>
+                                            Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table b-light w-full table-bordered">
+                                <thead>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td colspan="2" class="text-center">
+                                        Emplyoee
+                                    </td>
+                                    <td colspan="6" class="text-center">
+                                        KPI
+                                    </td>
+                                    <td colspan="6" ng-show="frm.show_kpi == 1" class="text-center">
+                                        Target KPI
+                                    </td>
+                                    <td colspan="7" class="text-center">
+                                        % KPI
+                                    </td>
+                                    <td ng-show="frm.show_salary == 1">
+                                        Total Salary
+                                    </td>
+                                </thead>
+                                <thead class="bg-gd">
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        Name
+                                    </td>
+                                    <td>
+                                        Level
+                                    </td>
+
+                                    <td>
+                                        Opps
+                                    </td>
+                                    <td>
+                                        Won
+                                    </td>
+                                    <td>
+                                        Revenue
+                                    </td>
+                                    <td>
+                                        Satisfaction
+                                    </td>
+                                    <td>
+                                        Team Qty. fulfill Customers
+                                    </td>
+                                    <td>
+                                        Team Revenue
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Opps
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Won
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Revenue
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Customer
+                                        Satisfaction
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Qty. fulfill
+                                        Customers
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Team
+                                        Revenue
+                                    </td>
+                                    <td>
+                                        Opps
+                                    </td>
+                                    <td>
+                                        Won
+                                    </td>
+                                    <td>
+                                        Revenue
+                                    </td>
+                                    <td>
+                                        Customer
+                                        Satisfaction
+                                    </td>
+                                    <td>
+                                        Qty. fulfill
+                                        Customers
+                                    </td>
+                                    <td>
+                                        Team
+                                        Revenue
+                                    </td>
+                                    <td>
+                                        Summary KPI
+                                    </td>
+                                    <td ng-show="frm.show_salary == 1"></td>
+                                </thead>
+                                <tbody >
+                                    <tr ng-show="waiting">
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-show="totalItems == 0 && !waiting">
+                                        <td colspan="30" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-repeat="item in list_data" class="b-b">
+                                        <td>{{item_stt + $index + 1}}</td>
+                                        <td>
+                                            {{item.__user.fullname || item.email}}
+                                        </td>
+                                        <td>
+                                            {{item.level || '0'}}
+                                        </td>
+
+                                        <td>{{employee_statistic['opps'][item.user_id]['succeed'] || '0' | vnNumber}}</td>
+                                        <td>{{employee_statistic['won'][item.user_id]['succeed'] || '0' | vnNumber}}</td>
+                                        <td>
+                                            {{employee_statistic['revenue'][item.user_id]['succeed'] || '0' | vnNumber}} <br />
+                                            New: <span class="text-info">{{employee_statistic['revenue'][item.user_id]['revenue_firstmonth'] || '0' | vnNumber}}</span> <br />
+                                            Cumulative: <span class="text-warning">{{employee_statistic['revenue'][item.user_id]['revenue_nextmonth'] || '0' | vnNumber}}</span>
+
+                                        </td>
+                                        <td>{{employee_statistic['satisfaction'][item.user_id]['succeed'] || '0' | vnNumber}}</td>
+                                        <td>{{employee_statistic['fulfill'][item.user_id]['succeed'] || '0' | vnNumber}}</td>
+                                        <td>{{employee_statistic['team revenue'][item.user_id]['succeed'] || '0' | vnNumber}}</td>
+
+                                        <!-- Target KPI -->
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{employee_statistic['opps'][item.user_id]['succeed_target'] || '0' | vnNumber}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{employee_statistic['won'][item.user_id]['succeed_target'] || '0' | vnNumber}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{employee_statistic['revenue'][item.user_id]['succeed_target'] || '0' | vnNumber}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{employee_statistic['satisfaction'][item.user_id]['succeed_target'] || '0' | vnNumber}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{employee_statistic['fulfill'][item.user_id]['succeed_target'] || '0' | vnNumber}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{employee_statistic['team revenue'][item.user_id]['succeed_target'] || '0' | vnNumber}}
+                                        </td>
+
+                                        <!-- % KPI -->
+                                        <td>{{employee_statistic['opps'][item.user_id]['percent'] || '0' | vnNumber}}</td>
+                                        <td>{{employee_statistic['won'][item.user_id]['percent'] || '0' | vnNumber}}</td>
+                                        <td>{{employee_statistic['revenue'][item.user_id]['percent'] || '0' | vnNumber}}</td>
+                                        <td>
+                                            <a href="javascript:;" editable-number="percent"
+                                               e-min="1" e-max="100"
+                                               onbeforesave="saveKpi(item.user_id, 'satisfaction', $data)"
+                                            >
+                                                {{(percent != undefined ? percent : employee_statistic['satisfaction'][item.user_id]['percent']) || 'empty'}}
+                                            </a>
+                                        </td>
+                                        <td>{{employee_statistic['fulfill'][item.user_id]['percent'] || '0' | vnNumber}}</td>
+                                        <td>{{employee_statistic['team revenue'][item.user_id]['percent'] || '0' | vnNumber}}</td>
+                                        <td>{{statistic[item.user_id]['percent'] || 'null'}}</td>
+                                        <td ng-show="frm.show_salary == 1">
+                                            {{(statistic[item.user_id]['salary'] + statistic[item.user_id]['bonus'] + statistic[item.user_id]['commission'] + statistic[item.user_id]['allowance']) || '0' | vnNumber}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="totalItems > 0 && !waiting">
+                        <div class="col-sm-3 wrapper-md pull-left">
+                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                        </div>
+                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="clearfix">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

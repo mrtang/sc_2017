@@ -1,0 +1,69 @@
+<div class="app-content-body fade-in-up" ng-controller="DetailPostmanCtrl">    
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+  <div class="fade-in-up" ui-view="">
+        <div class="hbox hbox-auto-xs hbox-auto-sm">
+            <div id="aside" class="col w-lg bg-light dk b-r bg-auto">
+                <div class="wrapper bg b-b">
+                    <h3 class="m-n font-thin">Detail Postman</h3>
+                </div>
+                <div class="text-center wrapper">
+                    <div class="thumb-xl">
+                      <img alt="..." class="img-circle" src="img/a8.jpg">
+                    </div>
+                    <div class="h4 m-t m-b-xs">
+                        <p class="m-b">
+                            <a class="btn btn-sm btn-bg btn-rounded btn-success btn-icon pull-left m-l-md disabled" href="#"><i class="glyphicon glyphicon-phone-alt"></i></a>
+                            <a class="btn btn-sm btn-bg btn-rounded btn-info btn-icon pull-right m-r-md disabled" href="#"><i class="fa fa-envelope"></i></a>
+                        </p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="m-l-sm m-t-md">
+                    <div class="m-b-xs"><span>Mã nhân viên</span><span class="pull-right m-r-sm"><a href="javascript:;" class="text-success" editable-text="infoPostman.code">#{{ infoPostman.code || 'empty' }}</a></span></div>
+                    <div class="m-b-xs"><span>Hãng vận chuyển</span><span class="pull-right m-r-sm"><a href="javascript:;">{{infoPostman.courier_name}}</a></span></div>
+                    <div class="m-b-xs"><span>Họ và Tên</span><span class="pull-right m-r-sm"><a href="#" editable-text="infoPostman.name" onbeforesave="updatePostman($data,'name')">{{infoPostman.name}}</a></span></div>
+                    <div class="m-b-xs"><span>Số điện thoại</span><span class="pull-right m-r-sm"><a href="#" editable-text="infoPostman.phone" onbeforesave="updatePostman($data,'phone')">{{ infoPostman.phone || 'empty' }}</a></span></div>
+                </div>
+                <div class="wrapper bg b-b hide">
+                    <span><i class="glyphicon glyphicon-star"></i></span>
+                    <span class="m-r-xs pull-right"><i class="glyphicon glyphicon-ok"></i></span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wrapper bg">
+                    <h3 class="m-n font-thin"><i class="icon-directions"> </i> {{city}} <b class="badge bg-info">{{listLocationCareTotal}}</b>
+                      <span ng-controller="ModalCreateLocationCare">
+                          <script id="ModalLocation.html" type="text/ng-template">
+                              <div ng-include="'tpl/postman/modal.form.location.care.html'"></div>
+                          </script>
+                          <button class="btn btn-sm btn-primary pull-right" ng-click="open('sm')">ADD</button>
+                      </span>
+                    </h3>
+                </div>
+                <div class="panel m-l-sm m-r-sm">
+                    <div class="wrapper">
+                        <div class="panel panel-default" ng-repeat="locate in listLocationCare">
+                            <div class="panel-heading">
+                                <b>{{locate.district_name}}</b>
+                            </div>
+                            <table class="table m-b-none">
+                                  <tbody>
+                                    <tr ng-repeat="one in locate.child">
+                                      <td>
+                                        <div class="active m-t-xs m-b-none">
+                                            {{one.ward_name}}
+                                        </div>
+                                      </td>
+                                      <td>
+                                          <div class="pull-right"><a href="javascript:;" ng-click="delLocationCare(one.care_id,$index)"><i class="glyphicon glyphicon-ban-circle"></i></a></div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

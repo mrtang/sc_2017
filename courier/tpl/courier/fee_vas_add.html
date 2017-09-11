@@ -1,0 +1,127 @@
+<div ng-controller="CourierFeeVasActionCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="bg-light lter b-b wrapper-md col-sm-12" ng-if="!CourierFeeVasId">
+        <h1 class="m-n text-title text-size font-thin h3 pull-left"><i class="fa fa-truck text-muted"></i> Add Courier Fee Vas</h1>
+        <div class="pull-right">
+            <button class="btn btn-success btn-addon" ng-click="updateCourierFeeVas(form)"><i class="fa fa-plus"></i> SAVE</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    
+    <div class="bg-light lter b-b wrapper-md col-sm-12" ng-if="CourierFeeVasId > 0">
+        <h1 class="m-n text-title text-size font-thin h3 pull-left"><i class="fa fa-truck text-muted"></i> Edit Courier Fee Vas</h1>
+        <div class="pull-right">
+            <button class="btn btn-success btn-addon" ng-click="updateCourierFeeVas(form)"><i class="fa fa-plus"></i> UPDATE</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+   
+    <div class="wrapper-md col-sm-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <form name="form" class="form-validation">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span class="h4">Advance</span>
+                  <label class="i-switch i-switch-md bg-success pull-right" tooltip-placement="left" tooltip="Active">
+                      <input type="checkbox" ng-model="form.active" ng-checked="(form.active == 1) || (!CourierFeeId)" ng-true-value="1" ng-false-value="0"/>
+                      <i></i>
+                  </label>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>Courier</label>
+                            <select class="form-control" ng-model="form.courier_id" ng-options="type.id as type.name for type in listCourier" ng-change="change_courier()">
+                              <option value="">Select Courier</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>               
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>From Area</label>
+                            <select class="form-control" ng-model="form.from_area_id" ng-options="type.id as type.name for type in listArea | filter:{courier_id:form.courier_id}" ng-change="DistrictByArea(form.from_area_id)">
+                              <option value="">Select From Area</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>From District</label>
+                            <select class="form-control" ng-model="form.from_district_id" ng-options="type.district_id as type.district_name for type in listDistrict">
+                              <option value="">Select District</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>To Area</label>
+                            <select class="form-control" ng-model="form.to_area_id" ng-options="type.id as type.name for type in listArea | filter:{courier_id:form.courier_id}">
+                              <option value="">Select To Area</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Vas</label>
+                            <select class="form-control" ng-model="form.vas_id" ng-options="type.id as type.name for type in list_courier_vas">
+                              <option value="">Select Vas</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-sm-6">
+            <form name="form-contact" class="form-validation">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span class="h4">Imposition</span>
+                </div>
+                <div class="panel-body" ng-init="form.total_amount = (((form.money*form.vat)/100) + form.surcharge)">
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>Value Type</label>
+                            <select class="form-control" ng-model="form.value_type" ng-options="type.id as type.name for type in list_value_type">
+                                <option value="">Value Type ...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                          <label>Value Start</label>
+                          <input type="text" class="form-control text-right" ng-model="form.value_start" ng-pattern="/^[0-9]$/"/> 
+                        </div>
+                        <div class="col-sm-6">
+                          <label>Value End</label>
+                          <input type="text" class="form-control text-right" ng-model="form.value_end" ng-pattern="/^[0-9]{1,10}$/"/> 
+                        </div>
+                    </div>
+                    
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                          <label>Money</label>
+                          <input type="text" class="form-control text-right" ng-model="form.money" ng-init="form.money = 0" ng-pattern="/^[0-9]{1,10}$/"/> 
+                        </div>
+                        <div class="col-sm-6">
+                          <label>VAT <em class="text-muted">(%)</em></label>
+                          <input type="text" class="form-control text-right" ng-model="form.vat" ng-init="form.vat = 10" ng-pattern="/^[0-9]{1,2}$/"/> 
+                        </div>
+                    </div>
+                    
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                          <label>Surcharge</label>
+                          <input type="text" class="form-control text-right" ng-model="form.surcharge" ng-init="form.surcharge = 0" ng-pattern="/^[0-9]{1,10}$/"/> 
+                        </div>
+                        <div class="col-sm-6">
+                          <label>Total Amount</label>
+                          <input type="text" class="form-control text-right" ng-model="form.total_amount" />
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+</div>

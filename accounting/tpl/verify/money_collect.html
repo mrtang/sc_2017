@@ -1,0 +1,119 @@
+<div ng-controller="MoneyCollectCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-check-circle text-info"></i> Đối soát tiền thu hộ</span>
+        <div class="pull-right">
+            <a  ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','add')" class="btn m-b-xs w-xs btn-success" ui-sref="app.verify.upload_money_collect({code:''})">Đối soát</a>
+        </div>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder input-group">
+                                    <input type="text" class="form-control" placeholder="Từ ngày ..."
+                                       ng-model="time_start"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       is-open="time_start_open"
+                                       datepicker-options="dateOptions"
+                                       ng-required="true"
+                                       close-text="Close"
+                                        />
+                                      <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                      </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                       ng-model="time_end"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       is-open="time_end_open"
+                                       datepicker-options="dateOptions"
+                                       ng-required="true"
+                                       close-text="Close"
+                                        />
+                                        <span class="input-group-btn icon-input">
+                                            <i class="btn fa fa-calendar "></i>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-v">
+                                <button type="button" class="btn m-b-xs btn-info" ng-click="setPage(1)"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive m-t">
+                        <table class="table-condensed table-hover w-full">
+                            <thead>
+                            <tr>
+                                <th width="5%">
+                                    STT
+                                </th>
+                                <th class="text-center">
+                                    Thời gian tạo
+                                </th>
+                                <th  class="text-center">
+                                    Người đối soát
+                                </th>
+                                <th  class="text-center">
+                                    Tên file
+                                </th>
+                                <th  class="text-center">
+                                    Trạng thái
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="waiting">
+                                    <td colspan="30" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tr>
+                                <tr ng-if="totalItems == 0 && !waiting">
+                                    <td colspan="30" class="text-center">
+                                        Không có dữ liệu
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="key in keys(list_data)">
+                                    <td>{{item_stt + $index + 1}}</td>
+                                    <td>{{list_data[key].time_create *1000 | date:"dd-MM-yyyy HH:mm"}}</td>
+                                    <td>{{list_user[list_data[key].user_id]['fullname']}}</td>
+                                    <td><a ng-href="{{link_storage}}{{list_data[key].link_download}}"><span class="text-info">{{list_data[key].name}}</span></a></td>
+                                    <td>
+                                        <a ui-sref="app.verify.upload_money_collect({code:'{{key}}'})" target="_blank">
+                                            <span class="label text-base ng-binding bg-success" ng-if="list_data[key].action.insert > 0">Đã đối soát ( Click ... )</span>
+                                            <span class="label text-base ng-binding bg-danger" ng-if="list_data[key].action.delete > 0">Đã Xóa ( Click ... )</span>
+                                            <span class="label text-base ng-binding bg-info" ng-if="list_data[key].action.del == 0 && list_data[key].action.insert == 0">Chưa đối soát ( Click ... )</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row" ng-show="totalItems > 0 && !waiting">
+                            <div class="col-sm-3 wrapper-md pull-left">
+                                <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                            </div>
+                            <div class="col-sm-4 text-right text-center-xs pull-right">
+                                <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

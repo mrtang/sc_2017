@@ -1,0 +1,48 @@
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="modal-title">Add Service</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-body wrapper-md">
+        <div class="row">
+            <div class="col-md-12 badge-empty bg-light wrapper-xs">
+                <form class="form-inline" name="AddServiceForm" role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" ng-model="data.name" placeholder="Name" />
+                    </div>
+                    <button type="button" class="btn btn-success pull-right" ng-click="SaveServiceBtn(data)" ng-disabled='AddServiceForm.$invalid'><i class="fa fa-check"></i> Save</button>
+                </form>
+            </div>
+            
+            <div class="col-md-12 no-padder m-t-md">
+                <div class="table-responsive">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr class="bg-light lt">
+                    <th class="text-left">Name</th>
+                    <th class="text-left">Status</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="value in list_service">
+                    <td class="text-left"><a href="javascript:;" editable-text="value.name" onbeforesave="changeService(value.id,$data,'name')">{{ value.name }}</a></td>
+                    <td class="text-left">
+                    	<label class="i-switch bg-primary m-t-xs m-r">
+		                    <input type="checkbox" ng-model="active" ng-change="changeService(value.id,active,'active')" ng-checked="value.active == 1" ng-true-value="1" ng-false-value="0" />
+		                    <i></i>
+		                </label>
+                    </td>
+                    <td class="text-center">
+                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="delService(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+        </div>
+    </div>

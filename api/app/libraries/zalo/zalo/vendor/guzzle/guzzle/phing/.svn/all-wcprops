@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing
+END
+build.properties.travis
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/build.properties.travis
+END
+build.properties.dist
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/build.properties.dist
+END

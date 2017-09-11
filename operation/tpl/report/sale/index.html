@@ -1,0 +1,140 @@
+
+
+<div ng-controller="ReportOverViewCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"> Sale Dashboard</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b"
+                                            ng-model="frm.country_id"
+                                            ng-options="key as value for (key , value) in venture"
+                                            ng-disabled="1"
+                                    >
+                                        <option value="">Venture</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select ui-jq="chosen"
+                                            multiple class="w-md"
+                                            data-ng-model="frm.team"
+                                            data-placeholder="Select Team"
+                                            ng-options="item.id as item.name for item in team"
+                                    >
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.interval" ng-options="key as value for (key , value) in interval">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group controls padder" ui-module="select2">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Employee email"
+                                            ui-select2="select2Options"
+                                            ng-model="frm.email"
+                                            class="form-control w-md"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                    <button type="button" class="btn m-b-xs btn-success" ng-disabled="waiting_export" ng-click="exportExcelItem('export')">
+                                        <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                        <i ng-show="waiting_export" class="fa fa-spinner fa-spin"></i>
+                                            Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body bg-light">
+                    <div class="row row-eq-height text-center">
+                        <div class="col-md-2">
+                            <div class="panel padder-v item bg-primary m-b-none">
+                                <div class="h1 text-white font-thin h1">{{employee_statistic['opps'] || '0' | vnNumber}}</div>
+                                <span class="text-muted text-xs">New Opportunities</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <a href class="block panel padder-v item m-b-none">
+                                <span class="text-info font-thin h1 block">{{employee_statistic['won'] || '0' | vnNumber}}</span>
+                                <span class="text-muted text-xs">Won</span>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="panel padder-v item bg-primary m-b-none h-full">
+                                <div class="h1 text-white font-thin h3">{{employee_statistic['revenue'] || '0' | vnNumber}}</div>
+                                <span class="text-muted text-xs">Revenue</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <a href class="block panel padder-v item m-b-none">
+                                <span class="text-info font-thin h1 block">{{employee_statistic['satisfaction']*100 || '0' | number:0}}%</span>
+                                <span class="text-muted text-xs">Customer Satisfaction</span>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="panel padder-v item bg-info m-b-none">
+                                <div class="h1 text-white font-thin h1">{{employee_statistic['fulfill'] || '0' | vnNumber}}</div>
+                                <span class="text-muted text-xs">Fulfillment Customer</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <a href class="block panel padder-v item m-b-none">
+                                <span class="text-info font-thin h1 block">{{(employee_statistic['won']/employee_statistic['opps'])*100 || '0' | number:0}}%</span>
+                                <span class="text-muted text-xs">Won Rate</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="clearfix">&nbsp;</div>
+
+                    <div class="row row-eq-height">
+                        <div class="col-md-6">
+                            <div data-ng-include=" 'tpl/report/sale/table_conversion.html' " />
+                        </div>
+                        <div class="col-md-6">
+                            <div data-ng-include=" 'tpl/report/sale/table_revenue.html' " />
+                        </div>
+                    </div>
+
+                    <div class="row row-eq-height text-center">
+                        <div class="col-md-6">
+                            <div data-ng-include=" 'tpl/report/sale/table_fail_reason.html' " />
+                        </div>
+                        <div class="col-md-6">
+                            <div data-ng-include=" 'tpl/report/sale/table_employee.html' " />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

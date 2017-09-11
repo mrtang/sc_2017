@@ -1,0 +1,110 @@
+<div class="tab-container">
+    <div class="tab-content tab-fake">
+        <div class="wrapper-md b-b">
+            <span class="m-n h4">Thông tin Package {{$stateParams.keyword}}</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table-condensed table-hover w-full">
+                <thead>
+                <td>
+                    #
+                </td>
+                <td>
+                    <i class="fa fa-barcode"></i>&nbsp; Mã
+                </td>
+                <td> <i class="fa fa-clock-o"></i> Thời gian</td>
+
+                <td>
+                    <i class="fa fa fa-inbox"></i> Sản phẩm
+                </td>
+
+                <td>
+                    <i class="fa fa-user"></i> Khách hàng
+                </td>
+                <td>
+                    <i class="fa fa-building-o"></i> Kho
+                </td>
+                <td>
+                    Trạng thái
+                </td>
+                </thead>
+                <tbody ng-show="waiting">
+                <tr>
+                    <td colspan="30" class="text-center">
+                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody ng-show="totalItems == 0 && !waiting">
+                <tr>
+                    <td colspan="30" class="text-center">
+                        Không có dữ liệu
+                    </td>
+                </tr>
+                </tbody>
+                <tbody ng-repeat="it in item.list_package" class="b-b">
+                <tr>
+                    <td>{{item_stt + $index + 1}}</td>
+                    <td>
+                        <p>
+                            <a class="label bg-light text-base text-info" href="javascript:;">{{it.package_code || ''}} ({{package_status[it.__get_package.status]['name'] || 'Trạng thái' }})</a>
+                        </p>
+                        <p>
+                            <a class="label bg-light text-base text-info" href="javascript:;">{{it.pickup_code || ''}}</a>
+                        </p>
+                        <p ng-show="it.uid">
+                            <a class="label bg-light text-base text-primary" href="javascript:;">{{it.uid || 'Mã UID'}}</a>
+                        </p>
+                        <p ng-show="it.sku">
+                            <a class="label bg-light text-base text-primary" href="javascript:;">{{it.sku || 'Mã SKU'}}</a>
+                        </p>
+                        <p ng-show="it.order_number">
+                            <a class="label bg-light text-base text-success" href="javascript:;">{{it.order_number || 'Mã Order'}}</a>
+                        </p>
+                        <p ng-show="it.tracking_code">
+                            <a class="label bg-light text-base text-success" href="javascript:;">{{it.tracking_code || 'Mã Order'}}</a>
+                        </p>
+                    </td>
+
+                    <td>
+                        <p  class="text-info"> {{ it.create || ''}}</p>
+                    </td>
+
+                    <td>
+                        <p ng-show="it.__get_seller_product.__product"><i class="fa fa-shopping-cart"></i> {{it.__get_seller_product.__product.name || ''}}</p>
+                        
+                        <p editable-select="it.__get_package.size" e-ng-options="s.volume_limit as s.volume_limit for s in volume" onbeforesave="change(it.__get_package.id, $data, 'package_size')">
+                            {{it.__get_package.size || 'empty'}}
+                        </p>
+                    </td>
+
+                    <td>
+                        <p ng-show="it.__get_seller_product.__get_user"><i class="fa fa-user"></i> {{it.__get_seller_product.__get_user.fullname || ''}}</p>
+                        <p ng-show="it.__get_seller_product.__get_user"><i class="fa fa fa-envelope-o"></i> {{it.__get_seller_product.__get_user.email || ''}}</p>
+                        <p ng-show="it.__get_seller_product.__get_user"><i class="fa fa-phone"></i> {{it.__get_seller_product.__get_user.phone || ''}}</p>
+                    </td>
+
+                    <td>
+                        <p> {{warehouse[it.warehouse]['name'] || ''}}</p>
+                    </td>
+                    <td>
+                        <p>
+                            <span class="label text-xs {{list_color[it.__get_seller_product.status] || ''}}">{{status[it.__get_seller_product.status]['name']}}</span>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="row" ng-show="list_data.length">
+                <div class="col-sm-3 wrapper-md pull-left">
+                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> đơn hàng
+                </div>
+                <div class="col-sm-4 text-right text-center-xs pull-right">
+                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

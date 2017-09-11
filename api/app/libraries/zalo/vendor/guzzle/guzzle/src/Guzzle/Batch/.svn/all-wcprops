@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch
+END
+BatchBuilder.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchBuilder.php
+END
+ExceptionBufferingBatch.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/ExceptionBufferingBatch.php
+END
+BatchRequestTransfer.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchRequestTransfer.php
+END
+BatchInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchInterface.php
+END
+BatchDivisorInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchDivisorInterface.php
+END
+HistoryBatch.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/HistoryBatch.php
+END
+BatchTransferInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchTransferInterface.php
+END
+NotifyingBatch.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/NotifyingBatch.php
+END
+AbstractBatchDecorator.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/AbstractBatchDecorator.php
+END
+composer.json
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/composer.json
+END
+BatchSizeDivisor.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchSizeDivisor.php
+END
+BatchClosureDivisor.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchClosureDivisor.php
+END
+FlushingBatch.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/FlushingBatch.php
+END
+Batch.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/Batch.php
+END
+BatchClosureTransfer.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchClosureTransfer.php
+END
+BatchCommandTransfer.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Batch/BatchCommandTransfer.php
+END

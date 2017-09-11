@@ -1,0 +1,31 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div class="bg-light lter b-b wrapper-md ng-scope">
+  <div class="row">
+    <h1 class="m-n font-thin h3 col-md-4">Create Scenario Template</h1>
+  </div>
+</div>
+<div class="panel panel-default" ng-controller="SystemScenarioConfigCtrl">
+	<form>
+		<div class="panel-body">
+			<div class="row">
+			    <div class="form-group">
+			        <label class="col-sm-1 control-label">Scenario</label>
+			         <div class="col-sm-4">
+			            <b>{{scenario.name}}</b>
+			        </div>
+			    </div>
+			</div>
+			<div class="line line-dashed b-b line-lg pull-in"></div>
+			<div class="row">
+			    <div class="form-group">
+	          		<label class="col-sm-1 control-label">Transport</label>
+	          		<div class="col-sm-10">
+			            <label class="checkbox-inline i-checks m-r-md" ng-repeat="val in sysConfig">
+			              <input type="checkbox" ng-model="val.id" ng-click="setAction(val.id)" ng-checked="val.checked == 1" ng-true-value="1" ng-false-value="0"><i></i>{{val.name}}
+			            </label>
+	                </div>
+			    </div>
+			</div>
+		</div>
+	</form>
+</div>

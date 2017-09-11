@@ -1,0 +1,122 @@
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <!-- <a href="javascript:;" class="close" ng-if="!checkoutSuccess" target="_parent" ng-click="closePopup()">&times;</a>  -->
+
+            <span class="modal-title list-inline pull-left">
+                    <span class="logo-sc"></span>
+                    <strong id="title">{{'TITLE'|translate}} {{shipchung}}</strong>
+            </span>
+            <div class="lang-area-top hidden-sm hidden-xs pull-right">
+                <span class="flag-icon flag-icon-us" ng-class='{active:lang === "en"}' ng-click="changeLanguage('en')" ></span>
+                <span class="flag-icon flag-icon-vn" ng-class='{active:lang==="vi"}' ng-click="changeLanguage('vi')" ></span>
+            </div> 
+            <div class="clearfix"></div>
+        </div>
+        
+        <div class="modal-body checkout-success">
+             <div ng-if="hasToken">
+                <div class="alert alert-success text-center" role="alert">
+                    <h4 translate>CREATE_BILL_SUCCESS_TITLE</h4>
+                    <span translate>CREATE_BILL_SUCCESS_CONTENT</span>
+                </div>
+                
+
+                <div class="order">
+                    <div class="order-desc row">
+                        <div class="pull-left order-code col-md-6 col-lg-6"><span translate>ORDER_CODE</span> : <span>{{TrackingCode}}</span> <a href="http://seller.shipchung.vn/#/detail/{{TrackingCode}}" target="_blank">[ <em translate>VIEW_DETAIL</em> ]</a></div>
+                        <div class="pull-right order-time text-right col-md-6 col-lg-6"><span translate>CREATE_AT</span>: {{convertTime(TrackingInfo.time_create)}}</div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="text-center" ng-if="stateLoading">
+                        <div class="overlay-loading" >
+                           <div class="facebook_loading"><span></span><span></span><span></span></div>
+                        </div>
+                        <br/>
+                        <span translate>LOADING</span> </br></br>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="order-info" ng-if="!stateLoading">
+                        <table>
+                            <tr>
+                                <td style="width:150px"><span translate>PRODUCT</span></td>
+                                <td><strong>: {{TrackingInfo.product_name}}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td><span translate>QUANTITY</span></td>
+                                <td><strong>: {{TrackingInfo.total_quantity}}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td><span translate>TOTAL_ITEM_PRICE</span></td>
+                                <td><strong>: {{TrackingInfo.total_amount | number}}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td><span translate>FEE_SHIPPING</span></td>
+                                <td><strong>: {{TrackingInfo.order_detail.seller_pvc | number}}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td><span translate>FEE_COD</span></td>
+                                <td><strong>: {{TrackingInfo.order_detail.seller_cod | number}}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td><span translate>TOTAL_COD</span></td>
+                                <td><strong>: {{TrackingInfo.order_detail.money_collect | number}}</strong></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="order-info" ng-if="isPaymentBanking && !stateLoading">
+                        <p><strong> Chuyển khoản trực tiếp vào tài khoản Ngân Hàng : </strong> </p>
+                        
+                        <div  style="height:75px;position: relative!important;overflow: hidden!important;margin: 10px 0px;" id="scroller">
+                            <div ng-include="'views/bank_payment_info.html'" class="scroller"></div>
+                        </div>
+                        <p>  - <i>Sau khi chuyển khoản, quý khách hàng vui lòng gọi điện đến số điện thoại của người bán <strong>{{TrackingInfo.from_name}}</strong> - SDT : <strong>{{TrackingInfo.from_phone}}</strong></i></p>
+                    </div>
+
+
+                </div> <!--/order-->
+
+                <div class="courier-list row" >
+                    <div class="col-md-2 col-lg-2 col-sm-2"><a href="http://viettelpost.com.vn/" target="_blank" title="Viettel Post"><img src="assets/images/post/viettel-small.png" alt=""></a></div>
+                    <div class="col-md-2 col-lg-2 col-sm-2"><a href="http://vnpost.vn/" target="_blank" title="Viet Nam Post"><img src="assets/images/post/vnpost_small.png" alt=""></a></div>
+                    <div class="col-md-2 col-lg-2 col-sm-2"><a href="http://netco.com.vn/" target="_blank" title="Netcol"><img src="assets/images/post/netco1_small.png" alt=""></a></div>
+                    <div class="col-md-2 col-lg-2 col-sm-2"><a href="http://ems.com.vn/" target="_blank" title="EMS"><img src="assets/images/post/ems1_small.png" alt=""></a></div>
+                    <div class="col-md-2 col-lg-2 col-sm-2"><a href="http://giaohangtietkiem.vn/" target="_blank" title="Giao hang tiet kiem"><img src="assets/images/post/giaohangtietkiem_small.png" alt=""></a></div>
+                    <div class="col-md-2 col-lg-2 col-sm-2"><a href="http://giaohangnhanh.vn/" target="_blank" title="Giao hang nhanh"><img src="assets/images/post/giaohangnhanh_small.png" alt=""></a></div>
+                </div>
+
+                <div class="modal-footer row">
+                    <div class="col-md-4 pull-left text-left">
+                        <button class="btn btn-default btn-buy-continue" ng-click="redirectUrl()" translate>CONTINUE_ORDER</button>
+                    </div>
+                    <div class="col-md-8 pull-right text-right">
+                        <a href="http://shipchung.vn" target="_blank"><i class="fa fa-pencil-square-o"></i> <span translate>GO_SHIPCHUNG</span>   &nbsp;&nbsp;</a>
+                        <a  target="_blank"><i class="fa fa-print"></i> <span translate>PRINT_ORDER</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+             </div>
+
+             <div ng-if="!hasToken">
+                <div class="alert alert-warning" role="alert" style="margin-top:20px">Token không hợp lệ !</div>
+             </div>
+             
+        </div>  <!-- ./modal-body-->
+    </div>
+</div>
+<div class="overlay"></div>
+
+
+
+
+
+
+

@@ -1,0 +1,186 @@
+<div ng-controller="KpiCtrl">
+    <div class="bg-light b-b wrapper-md">
+        <div class="row">
+            <h1 class="m-n font-thin h3 col-md-5">
+                Cấu hình KPI
+            </h1>
+            <div class="pull-right">
+                <a class="btn btn-sm btn-success" href="javascript:;" ng-click="openSaveModal(frm.group)">Tạo nhóm công việc mới</a>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="nav navbar-nav">
+                <li class="dropdown hidden-sm" is-open="true">
+                    <a href class="dropdown-toggle" data-toggle="dropdown">
+                        <h4>{{__privilege[frm.group] || ''}} <b class="caret"></b></h4>
+                    </a>
+                    <!-- dropdown -->
+                    <ul class="dropdown-menu animated fadeInRight w" style="overflow-y: auto; height: 250px">
+                        <li ng-repeat="item in list_privilege">
+                            <a ng-click="setGroup(item.id)" href>{{item.name}}</a>
+                        </li>
+                    </ul>
+                    <!-- / dropdown -->
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive" >
+                        <table class="table-condensed table-hover w-full">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Tên nhóm</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr ng-repeat="item in list_data">
+                              <td>{{$index + 1}}</td>
+                              <td><a >{{item.group_name}}</a></td>
+                              <td class="text-right">
+                                  <a class="btn btn-sm btn-info" href="javascript:;" ng-click="openEditModal(item)">Chỉnh sửa</a>
+                              </td>
+
+                                <tr>
+                                   <td colspan="4" class="text-center">
+                                        <div class="loading" ng-if="load_process">
+                                            <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i>
+                                            <p>Đang tải dữ liêu</p>
+                                        </div>
+                                        <p ng-if="list_data.length == 0 && !load_process">Không có dữ liệu</p>
+                                   </td>
+                                </tr>
+                          </tbody>
+                        </table>
+                        <div class="text-right text-center-xs pull-left m-l-sm" ng-if="list_data.length">
+                            <pagination total-items="totalItems" ng-model="page" data-max-size="max_size" items-per-page="{{item_page}}" ng-change="load(page)"></pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="FrmCreateGroupCategory.html">
+    
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              <h4>{{__privilege[item.group] || ''}} </h4>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal form-validation" name="frm_edit">
+        <div class="modal-body wrapper-md">
+
+            <div class="form-group col-md-12">
+                <label class="col-lg-4 control-label">Nhóm công việc</label>
+                <div class="col-lg-8">
+                    <input class="form-control"  ng-model="item.name"  placeholder="Nhập tên nhóm công việc" required />
+                </div>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="modal-footer">
+            <button class="btn btn-success" ng-disabled="frm_edit.$invalid || load_submit" ng-click="create(item)">Thêm</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="KPICategory.html">
+
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4>Cập nhật công việc theo nhóm </h4>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body wrapper-md">
+
+        <div class="form-group col-md-12">
+            <label class="col-lg-2 control-label" style="padding-top:0">Tên nhóm</label>
+            <div class="col-lg-10">
+                <input class="form-control"  ng-model="item.group_name" ng-disabled = "true"/>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group col-md-12">
+            <div class="table-responsive">
+                <table class="table-condensed table-hover w-full">
+                    <thead>
+                    <tr>
+                        <th>Tên công việc</th>
+                        <th>Tỉ lệ đạt yêu cầu</th>
+                        <th>Trọng số</th>
+                        <th>Chỉ tiêu (nếu có)</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <form class="form-validation">
+                        <tr ng-repeat="item in list_category" data-ng-init="percent = item.percent*100">
+
+                            <td>
+                                <a ng-if="item.id" href="javascript:;" editable-text="item.work_name" onbeforesave="saveCategory(item, 'work_name', $data)">{{item.work_name || 'chưa cấu hình'}}</a>
+                                <div ng-if="!item.id" class="form-group controls">
+                                    <input class="form-control" ng-model="item.work_name" placeholder="Tên công việc">
+                                </div>
+                            </td>
+                            <td>
+                                <a ng-if="item.id" href="javascript:;" editable-number="percent" e-min="1" e-max="100" onbeforesave="saveCategory(item, 'percent', $data)">{{percent || item.percent}} %</a>
+
+                                <div ng-if="!item.id" class="form-group controls">
+                                    <input ui-jq="TouchSpin" ng-model="item.percent" type="text" value="5" class="form-control" data-min='0' data-max="100" data-step="1" data-decimals="0" data-postfix="%">
+                                </div>
+                            </td>
+                            <td>
+                                <a ng-if="item.id" href="javascript:;" editable-number="item.weight" e-min="1" e-max="100" onbeforesave="saveCategory(item, 'weight', $data)">{{item.weight || 'chưa cấu hình'}}</a>
+
+                                <div ng-if="!item.id" class="form-group controls">
+                                    <input ui-jq="TouchSpin" ng-model="item.weight" type="text" value="5" class="form-control" data-min='0' data-max="100" data-step="1" data-decimals="0" data-postfix="">
+                                </div>
+                            </td>
+
+                            <td>
+                                <a ng-if="item.id" href="javascript:;" editable-number="item.target" e-min="0" onbeforesave="saveCategory(item, 'target', $data)">{{item.target || 'chưa cấu hình' | vnNumber}}</a>
+
+                                <div ng-if="!item.id" class="form-group controls">
+                                    <input ui-jq="TouchSpin" ng-model="item.target" type="text" value="100" class="form-control" data-min='0' data-max="100000000000" data-step="1" data-decimals="0" data-postfix="">
+                                </div>
+                            </td>
+
+                            <td>
+                                <label class="i-switch bg-primary" ng-if="item.id">
+                                    <input type="checkbox" ng-true-value="1"  ng-false-value="0" ng-model="item.active" ng-checked="item.active > 0" ng-change="saveCategory(item, 'active', item.active)">
+                                    <i></i>
+                                </label>
+                                <div class="form-group" ng-if="!item.id">
+                                    <a class="btn btn-success" ng-disabled="add_process" href="javascript:;" ng-click="action_add(item, $index)">Thêm</a>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </form>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="modal-footer">
+        <button class="btn btn-success w-sm" ng-disabled="frm_edit.$invalid || load_submit" ng-click="btn_add()">Thêm trạng thái</button>
+        <button class="btn btn-info w-sm" ng-click="close()">Đóng</button>
+    </div>
+</script>

@@ -1,0 +1,154 @@
+    <style>
+      .col-sm-36    {
+        width:36% !important;
+        float: left;
+        min-height: 1px;
+        position:relative;
+        padding: 10px 15px;
+      }
+      .col-sm-46    {
+        width:46% !important;
+        float: left;
+        min-height: 1px;
+        position:relative;
+      }
+    </style>
+  <!-- navbar -->
+
+  <div data-ng-include=" 'tpl/blocks/header_ticket.html' " class="app-header navbar">
+  </div>
+  <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+  <!-- / navbar -->
+
+  <!-- menu
+  <div data-ng-include=" 'tpl/blocks/aside.html' " class="app-aside hidden-xs {{app.settings.asideColor}}">
+  </div>
+  / menu -->
+
+  <!-- content -->
+  <div class="app-content">
+    <div ui-butterbar></div>
+    <a href class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside" ></a>
+    <div class="app-content-body fade-in-up" ui-view></div>
+  </div>
+  <!-- /content -->
+
+  <!-- footer -->
+  <div class="app-footer wrapper b-t bg-light">
+    <span class="pull-right">{{app.version}} <a href ui-scroll="app" class="m-l-sm text-muted"><i class="fa fa-long-arrow-up"></i></a></span>
+    &copy; 2014 Copyright.
+  </div>
+  <!-- <div class="cfp-hotkeys-container fade " ng-class="{in: toggleCallcenter}">
+    <div class="cfp-hotkeys block">
+    <h4 class="cfp-hotkeys-title ng-binding ng-scope" ng-if="!header">Call Center</h4>
+    <div class="wrapper">
+      <div class="row m-t-md">
+        <div class="col-md-9">
+          <div class="panel">
+              <div class="panel-heading bg-info">
+                  <span class="label bg-danger pull-right m-t-xs">4 left</span>
+                  <i class="fa fa-refresh"></i>
+                  <strong>Lịch sử cuộc gọi</strong>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-striped m-b-none">
+                    <thead>
+                    <tr>
+                        <th>Loại cuộc gọi</th>
+                        <th>Thời gian</th>
+                        <th>Người gọi</th>
+                        <th>Người nhận</th>
+                        <th>Thời gian đàm thoại</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-if="loading.call_history">
+                    <td colspan="20" class="text-center">
+                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                    </td>
+                    </tbody>
+                    <tbody ng-if="_call_history.length == 0 && !loading.call_history">
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            Không có dữ liệu
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+  
+                    <tr ng-repeat="item in _call_history |limitTo: 20">
+                        <td>
+                            <label class="label label-success" data-ng-if="islogged()['sip_account'] == item.src">Gọi đi</label>
+                            <label class="label label-info" data-ng-if="islogged()['sip_account'] !== item.src">Gọi đến</label>
+                        </td>
+                        <td>
+                            {{item.calldate}}
+                        </td>
+                        <td>
+                            {{item.src}}
+                        </td>
+                        <td>
+                            {{item.dst}}
+                        </td>
+                        <td>
+                            {{item.billsec || 0}} giây
+                        </td>
+                        <td>
+                            <label class="label label-success" ng-if="item.disposition == 'ANSWERED'">Đã trả lời</label>
+                            <label class="label label-danger" ng-if="item.disposition == 'BUSY'">Bận</label>
+                            <label class="label label-warning" ng-if="item.disposition == 'NO ANSWER'">Không trả
+                                lời</label>
+  
+                        </td>
+                    </tr>
+  
+                    </tbody>
+                </table>
+              </div> end table-reponsive
+  
+              <div class="clearfix"></div>
+              <div class="col-sm-6 text-right text-center-xs pull-right" ng-show="redelivery_total">
+                  <pagination total-items="redelivery_total" page="currentPageReDelivery" ng-model="currentPageReDelivery" max-size="5" items-per-page="{{item_page}}" ng-change="loadReDelivery(currentPageReDelivery)" next-text="Tiếp"></pagination>
+              </div>
+              <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="numberpad">
+            <input type="input" placeholder="Nhập số điện thoại" class="form-control input-lg" ng-model="frm_call.phoneNumbersInput" ng-enter="call_action(frm_call.phoneNumbersInput)">
+            <div class="button_group m-t-md">
+              <div class="row m-b-md">
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('1')">1</button></div>
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('2')">2</button></div>
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('3')">3</button></div>
+              </div>
+              <div class="row m-b-md">
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('4')">4</button></div>
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('5')">5</button></div>
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('6')">6</button></div>
+              </div>
+              <div class="row m-b-md">
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('7')">7</button></div>
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('8')">8</button></div>
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('9')">9</button></div>
+              </div>
+              <div class="row m-b-md">
+                <div class="col-md-4"><button class="btn btn-primary btn-block" type="button" name="button" ng-click="setPhoneNumber('*')">*</button></div>
+                <div class="col-md-4"><button class="btn btn-info btn-block" type="button" name="button" ng-click="setPhoneNumber('0')">0</button></div>
+                <div class="col-md-4"><button class="btn btn-primary btn-block" type="button" name="button" ng-click="setPhoneNumber('#')">#</button></div>
+              </div>
+              <div class="row m-b-md">
+                <div class="col-md-6"><button class="btn btn-success btn-block" type="button" name="button" ng-click="call_action(frm_call.phoneNumbersInput)"><i class="fa fa-phone"></i> Gọi</button></div>
+                <div class="col-md-6"><button class="btn btn-warning btn-block" type="button" name="button" ng-click="clearPhoneNumber()"><i class="fa fa-arrow-left"></i> Xóa</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="cfp-hotkeys-close" ng-click="_ToggleCallcenter()">×</div>
+  </div> -->
+</div>
+
+  <!-- / footer -->

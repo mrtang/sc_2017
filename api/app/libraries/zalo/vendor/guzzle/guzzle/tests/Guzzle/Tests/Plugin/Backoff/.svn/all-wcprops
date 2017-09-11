@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff
+END
+HttpBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/HttpBackoffStrategyTest.php
+END
+AbstractBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/AbstractBackoffStrategyTest.php
+END
+CurlBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/CurlBackoffStrategyTest.php
+END
+ExponentialBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/ExponentialBackoffStrategyTest.php
+END
+ConstantBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/ConstantBackoffStrategyTest.php
+END
+TruncatedBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/TruncatedBackoffStrategyTest.php
+END
+LinearBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/LinearBackoffStrategyTest.php
+END
+ReasonPhraseBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/ReasonPhraseBackoffStrategyTest.php
+END
+BackoffPluginTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/BackoffPluginTest.php
+END
+BackoffLoggerTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/BackoffLoggerTest.php
+END
+CallbackBackoffStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Backoff/CallbackBackoffStrategyTest.php
+END

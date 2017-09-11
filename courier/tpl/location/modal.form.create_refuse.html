@@ -1,0 +1,38 @@
+
+          <div class="panel panel-default m-b-none">
+            <div class="panel-heading font-bold"><i class="fa fa-plus-circle"></i> Create new courier refuse <button class="pull-right close" ng-click="cancel()"><i class="fa fa-times"></i></button></div>
+            
+            <div class="panel-body">
+              <form class="form-horizontal form-validation" name="create_ward">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Courier</label>
+                  <div class="col-lg-9">
+                    <input type="text" ng-model="data.courier_id" typeahead="val as val.name for val in list_courier | filter:{name:$viewValue} | limitTo:8"  placeholder="Select courier ..." class="input-sm form-control" required/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">City</label>
+                  <div class="col-lg-9">
+                    <input type="text" ng-model="data.city_id" typeahead="val as val.city_name for val in list_city | filter:{city_name:$viewValue} | limitTo:8" typeahead-on-select='loadDistrict($item, $model, $label)' placeholder="Select city ..." class="input-sm form-control" required/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">District</label>
+                  <div class="col-lg-9">
+                    <input type="text" ng-model="data.district_id" typeahead="val as val.district_name for val in list_district | filter:{district_name:$viewValue} | limitTo:8" typeahead-on-select='loadWard($item, $model, $label)' placeholder="Select district" class="input-sm form-control" required/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Ward Name</label>
+                  <div class="col-lg-9">
+                    <input type="text" class="form-control" ng-model="data.ward_id" placeholder="Select ward ... " typeahead="state as state.ward_name for state in list_ward_table | filter:{ward_name : $viewValue} | limitTo:8"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-12">
+                    <button type="button" ng-click="Create(data)" ng-disabled="create_ward.$invalid || submiting" class="btn btn-lg m-b-xs w-full btn-success"><i class="fa fa-edit"></i> Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>

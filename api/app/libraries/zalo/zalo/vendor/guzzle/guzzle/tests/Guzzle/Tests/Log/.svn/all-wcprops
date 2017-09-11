@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Log
+END
+ArrayLogAdapterTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Log/ArrayLogAdapterTest.php
+END
+Zf2LogAdapterTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Log/Zf2LogAdapterTest.php
+END
+PsrLogAdapterTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Log/PsrLogAdapterTest.php
+END
+MessageFormatterTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Log/MessageFormatterTest.php
+END
+ClosureLogAdapterTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Log/ClosureLogAdapterTest.php
+END

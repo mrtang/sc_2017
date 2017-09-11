@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            Gia hạn yêu cầu :  <strong>{{ticket.title | limitTo : 40}}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+    <p>Chọn số giờ muốn gia hạn :</p>
+    <div >
+        <div class="col-md-12">
+            <select name="" id="" class="form-control"  required ng-model="time">
+                <option value="">-- Chọn số ngày --</option>
+                <option value="{{i}}" ng-repeat="i in range(1, 31)">{{i}} Ngày</option>
+            </select>
+        </div>
+    </div>
+    <p>Ghi chú :</p>
+    <div >
+        <div class="col-md-12">
+            <textarea name="" id="" class="form-control" required ng-model="note">
+            </textarea>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="createRequest(time, note)">Đồng ý</button>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Đóng</button>
+</div>

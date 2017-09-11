@@ -1,0 +1,242 @@
+<div ng-controller="AddressInDayCtrl">
+<div class="wrapper-md bg-light b-b">
+        <label class="i-switch bg-warning pull-right">
+            <input type="checkbox" ng-true-value="1"  ng-false-value="0" ng-model="frm.vip" ng-change="setPage(1);setCountGroup()">
+            <i></i>
+        </label>
+        <span class="m-n h2"><i class="fa fa-home text-info"></i> Địa chỉ phát sinh trong ngày</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1);setCountGroup()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Họ tên, email hoặc sđt khách hàng ..."
+                                           ng-model="frm.keyword"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b"
+                                            ng-model="frm.city_id"
+                                            ng-options="item.id as item.city_name for item in list_city"
+                                            ng-disabled = "userInfo.country_id != 237"
+                                    >
+                                        <option value="">Tỉnh/Thành Phố</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                                        <div class="input-group"><input type="text" class="form-control" value="{{time.create_start | date:'dd-MM-yyyy HH:mm a'}}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker data-ng-model="time.create_start" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" required/>
+                                    </ul>
+                                </div>
+                                <!-- <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Tạo từ ngày ..."
+                                           ng-model="time.create_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_create_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                    <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                    </span>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="chodientu.vn, shipchung.vn"
+                                           ng-model="frm.domain"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select
+                                            boxme-district-by-province
+                                            province-id="frm.city_id"
+                                            district-id="frm.district_id"
+                                            default-label="Quận/Huyện"
+                                            ng-model="frm.district_id"
+                                            ng-disabled = "userInfo.country_id != 237"
+                                            class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="dropdown3" role="button" data-toggle="dropdown" >
+                                        <div class="input-group"><input type="text" class="form-control" value="{{time.create_end | date:'dd-MM-yyyy HH:mm a'}}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker data-ng-model="time.create_end" data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }" required/>
+                                    </ul>
+                                </div>
+                                <!-- <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_create_end"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           close-text="Close"
+                                           ng-model="time.create_end"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div> -->
+                            </div>
+                        </div>
+
+                       <!--  <div class="row" ng-show="list_pipe_status">
+                           <div class="col-lg-12">
+                               <div class="checkbox padder">
+                                   <label class="i-checks padder-md padder-xs" ng-repeat="item in list_pipe_status">
+                                       <input type="checkbox"
+                                              ng-model="check"
+                                              ng-change="toggleSelection(item.status)" /><i></i>
+                                       {{item.name || 'Trạng thái'}}
+                                   </label>
+                               </div>
+                           </div>
+                       </div> -->
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <button type="submit" class="btn m-b-xs w-xs btn-info"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6">
+                                <div class="dropdown">
+                                    <button class="btn pull-right dropdown-toggle btn-success" type="button" data-toggle="dropdown">Xuất excel
+                                    <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="" ng-click="exportExcel('export')">Xuất Excel</a></li>
+                                      <li><a href="" ng-click="exportExcel('export', 'not_pickup')">Xuất Excel địa chỉ không lấy</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="tab-container">
+                            <div class="table-responsive">
+                                    <table class="table-condensed table-hover w-full">
+                                        <thead>
+                                            <td>
+                                                #
+                                            </td>
+                                           
+                                            <td>
+                                                Kho hàng
+                                            </td>
+                                          
+                                            <td>
+                                                <i class="fa fa-home"></i>&nbsp; Địa chỉ
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-gift"></i> Tổng đơn hàng phát sinh
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-krw"></i> Đơn hàng lấy thành công
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-krw"></i> Đơn hàng lấy thất bại
+                                            </td>
+                                        </thead>
+                                        <tbody ng-show="waiting">
+                                            <tr>
+                                                <td colspan="6" class="text-center">
+                                                    <i class="text-3x fa fa-spinner fa-spin"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody ng-show="totalItems == 0 && !waiting">
+                                            <tr >
+                                                <td colspan="6" class="text-center">
+                                                    Không có dữ liệu
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                        <tbody ng-repeat="item in list_data" class="b-b">
+                                        <tr>
+                                            <td>{{item_stt + $index + 1}}</td>
+                                            
+                                            <td>
+                                                <p>Kho : {{item.name}} <i ng-class="{'fa fa-star text-lgx text-warning' : list_vip.indexOf(item['user_id']) != -1}"></i></p>
+                                                <span ng-show="item.user.id">
+                                                    {{item.user.email}} * {{item.user.phone}}
+                                                </span>
+                                            </td>
+                                            
+                                            <td>
+                                                {{item.address || ''}} {{item.ward.ward_name || ''}}, {{item.district.district_name || 'Quận/Huyện'}} {{item.city.city_name || 'Thành Phố'}} {{country[item.country_id] || 'Quốc gia'}}
+                                            </td>
+
+                                            <td>
+                                                {{total_group[item.id] ? total_group[item.id] : '0'}}
+                                            </td>
+
+                                            <td>
+                                                {{total_group_picked[item.id] ? total_group_picked[item.id] : '0'}}
+                                            </td>
+
+                                            <td>
+                                                {{total_group_pick_fail[item.id] ? total_group_pick_fail[item.id] : '0'}}
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" class="text-left">
+                                                <ul class="breadcrumb bg-white m-n">
+                                                    <li ng-click="openAddTask([{refer_id:item.id, name: item.name + ' - ' + item.phone + ' - ' + item.address, type: 2}], item)" class="pointer"><i class="text-success text-lg fa fa-plus"></i> Thêm công việc</li>
+                                                    <li ng-if="item.task"><a ui-sref="tasks.list.detail({state: 'ALL', id: item.task.id})" target="_blank" ><i class="fa fa-task"></i> <label class="label  {{list_task_category[item.task.category_id].color == '' ? 'label-default' : ''}}" style="background-color: {{list_task_category[item.task.category_id].color}}">{{list_task_category[item.task.category_id].name}}</label><span class="text-info" > <i class="fa {{task_state_info[item.task.state].icon}}"></i> {{item.task.name}}</span></a></li>
+                                                </ul>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="row" ng-show="list_data.length">
+                                        <div class="col-sm-3 wrapper-md pull-left">
+                                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> kho hàng
+                                        </div>
+                                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                        </div>
+                                    </div>
+                                    <script id="ModalAdd.html" type="text/ng-template">
+                                        <div ng-include="'tpl/pickup/modal.address.html'"></div>
+                                    </script>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception
+END
+DescriptionBuilderException.php
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception/DescriptionBuilderException.php
+END
+ValidationException.php
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception/ValidationException.php
+END
+ServiceNotFoundException.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception/ServiceNotFoundException.php
+END
+CommandException.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception/CommandException.php
+END
+CommandTransferException.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception/CommandTransferException.php
+END
+InconsistentClientTransferException.php
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception/InconsistentClientTransferException.php
+END
+ResponseClassException.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception/ResponseClassException.php
+END
+ServiceBuilderException.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Exception/ServiceBuilderException.php
+END

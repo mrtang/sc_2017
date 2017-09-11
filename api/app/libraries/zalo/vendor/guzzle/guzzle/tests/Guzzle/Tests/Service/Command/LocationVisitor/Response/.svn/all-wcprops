@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Command/LocationVisitor/Response
+END
+BodyVisitorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Command/LocationVisitor/Response/BodyVisitorTest.php
+END
+StatusCodeVisitorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Command/LocationVisitor/Response/StatusCodeVisitorTest.php
+END
+XmlVisitorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Command/LocationVisitor/Response/XmlVisitorTest.php
+END
+AbstractResponseVisitorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 171
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Command/LocationVisitor/Response/AbstractResponseVisitorTest.php
+END
+HeaderVisitorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Command/LocationVisitor/Response/HeaderVisitorTest.php
+END
+JsonVisitorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Command/LocationVisitor/Response/JsonVisitorTest.php
+END
+ReasonPhraseVisitorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 167
+/svn_zplatform/!svn/ver/3070/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Service/Command/LocationVisitor/Response/ReasonPhraseVisitorTest.php
+END

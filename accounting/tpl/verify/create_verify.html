@@ -1,0 +1,88 @@
+<div ng-controller="CreateVerifyCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-check-circle text-info"></i> Tạo đối soát</span>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                
+
+                <div class="panel-body">
+                    <div class="tab-container ">
+                        <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="loyalty">
+                                        <option value="0">Khách hàng thường</option>
+                                        <option value="1">Khách hàng bạc</option>
+                                        <option value="2">Khách hàng vàng</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Từ ngày ..."
+                                       ng-model="time_start"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       is-open="time_start_open"
+                                       datepicker-options="dateOptions"
+                                       ng-required="true"
+                                       close-text="Close"
+                                        />
+                                      <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                      </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                       ng-model="time_end"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       is-open="time_end_open"
+                                       datepicker-options="dateOptions"
+                                       ng-required="true"
+                                       close-text="Close"
+                                        />
+                                        <span class="input-group-btn icon-input">
+                                            <i class="btn fa fa-calendar "></i>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if="check_privilege('PRIVILEGE_VERIFY','add')">
+                            <div class="col-lg-3 ">
+                                <button type="button" class="btn m-b-xs btn-info" ng-click="createVerify()" ng-disabled="waiting">
+                                <span ng-if="waiting"><i class="fa fa-spinner fa-spin"></i> Đang chạy</span>
+                                <span ng-if="!waiting"><i class="fa fa-check"></i> Tạo đối soát </span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-lg-3 ">
+                                <button type="button" class="btn m-b-xs btn-success" ng-if="showRunAction" ng-disabled="runProcessing" ng-click="start()">
+                                <i class="fa fa-check"></i> Chạy đối soát </button>
+                            </div>
+                        </div> -->
+
+                    </form>
+						<div ng-if="resultShow.length > 0">
+							<h4>Kết quả : </h4>
+							<div class="result" style="height:300px;overflow-y:scroll" >
+								<ul>
+									<li ng-repeat="item in resultShow">{{item.time | date}} {{item.msg}}</li>
+								</ul>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

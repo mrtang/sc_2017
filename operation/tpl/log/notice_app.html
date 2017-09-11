@@ -1,0 +1,53 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-font text-info"></i> Tạo thông báo qua App</h1>
+  <small class="text-muted">
+  </small>
+</div>
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="NoticeAppCtrl">
+	<div class="col wrapper-sm">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<form class="form-validation form-horizontal ng-pristine ng-valid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group controls padder">
+                                <input type="text" class="form-control" ng-model="data.email" placeholder="Email ... (nếu nhiều email cách nhau giấu ,)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group controls padder">
+                                <input type="text" class="form-control" ng-model="data.link" placeholder="Link ...">
+                            </div>
+                        </div>
+                    </div>
+					<div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group controls padder">
+                                <select class="form-control m-b" ng-model="data.os">
+                                    <option value="">Chọn hệ điều hành</option>
+                                    <option value="all">Tất cả</option>
+                                    <option value="android">Android</option>
+                                    <option value="ios">Ios</option>
+                                </select>
+                            </div>
+                        </div>
+		            </div>
+		            <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group controls padder">
+                                <textarea class="form-control" ng-model="data.content" placeholder="Nội dung ..."></textarea>
+                            </div>
+                        </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-xs-1">
+		                  <button class="btn btn-info" ng-click="createNotice(data)" ng-disabled='onProgress'>Thực hiện</button>
+		                </div>
+		            </div>
+		        </form>
+			</div>
+		</div>
+	</div>
+</div>

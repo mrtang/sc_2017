@@ -1,0 +1,31 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div ng-controller="FeePickupActionCtrl">
+	<div class="wrapper-md bg-light b-b">
+        <h1 class="m-n font-thin h3">Cấu hình phí lấy hàng</h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4>Tải file lên hệ thống</h4>
+                        <div class="col-lg-4 form-group" style="padding-left: 0px">
+                            <input type="file"
+                                style="position: absolute; clip: rect(0px 0px 0px 0px);"
+                                ui-jq="filestyle" 
+                                nv-file-select
+                                uploader="uploader"  
+                                data-icon="false" 
+                                data-classbutton="btn btn-default" 
+                                data-classinput="form-control inline v-middle input-s"
+                            />
+                        </div>
+                        <button class="btn btn-info" type="button" ng-click="uploader.uploadAll()"><i class="fa fa-upload"></i> Upload</button>
+                        <a class="btn btn-success" ng-href="{{link_storage}}template/Template_fee_pickup.xls"><i class="fa fa-download"></i> Tải file</a>
+                    </div>
+                </div> 
+                <!--/ Panel-->
+            </div>
+        </div>
+    </div>
+</div>

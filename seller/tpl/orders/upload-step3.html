@@ -1,0 +1,303 @@
+<div class="fade-in-right" ng-controller="CreateExcelCtrl">
+    <div class="wrapper-md bg-light">
+        <h1 class="m-n font-thin h3"><i class="fa fa-edit"></i> {{'HEAD_taonhieudonExcel' | translate }}<!-- Tạo nhiều đơn hàng (xls) --></h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <tabset class="tab-container tab_type tab-inside h60 text-sm" justified="false">
+            <tab ng-click="change_tab(false)">
+                <tab-heading><!-- Tạo đơn hàng từ kho riêng -->{{'EXC_Buoc3_TaoTuKhoRieng' | translate}}
+                    <small>({{counter.own_inventory}})</small>
+                </tab-heading>
+            </tab>
+            <tab ng-click="change_tab(true)">
+                <tab-heading>{{'EXC_Buoc3_TaoTuKhoBoxme' | translate}}<!-- Tạo đơn hàng từ kho Boxme -->
+                    <small>({{counter.boxme_inventory}})</small>
+                </tab-heading>
+            </tab>
+        </tabset>
+        <div class="tab-container">
+            <div class="tab-content tab-fake">
+                <div class=" wrapper-sm">
+                    <div class="clearfix m-b">
+                        <div class="col-md-12">
+
+                        </div>
+
+                        <div class="panel" ng-class="{'panel-default' : total > 0, 'panel-info' : total == 0}">
+                            <div class="panel-heading">
+                                <div class="panel-header">
+                                    <div style="margin:7px" class="alert alert-info m-b-none text-base">
+                                        <!-- Bạn đang sử dụng mẫu tạo file excel đơn giản(nhập tỉnh thành/ quận huyện bằng tay). -->
+                                        {{'EXC_Buoc3_BanDangXuDungMauDG' | translate}}<br/>
+                                        <!--  Với mẫu này sẽ có tỷ lệ đơn hàng chưa khớp được tỉnh thành quận huyện chính xác. -->
+                                        {{'EXC_Buoc3_VoiMauNaySeCo' | translate}}<br/>
+                                        <!--  Bạn vui lòng kiểm tra kỹ đơn hàng trước khi tạo & duyệt đơn.  -->
+                                        {{'EXC_Buoc3_VuiLongKiemTra'| translate}}<br /> 
+                                       <!--  - Vui lòng chọn lại nếu hệ thống không khớp được thông tin. -->
+                                       {{'EXC_Buoc3_VuiLongChonLai' | translate}} <br /> 
+                                       {{'EXC_Buoc3_KiemTraHinhThuc' | translate}}
+                                       <!-- - Kiểm tra lại hình thức thanh toán và thu hộ bạn đang chọn. -->
+                                        <!--strong>Quý khách vui lòng tải file excel mới về để tạo đơn</strong> <a class="text-info" ng-href="{{link_storage}}template/Template_VanDon.xls">tại đây</a-->.
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <!--label ng-if="total == 0" class="control-label text-md">
+                            Bạn đã tạo đơn hàng thành công, hãy <a class="badge bg-warning" ui-sref="order.list" href="javascript:;" target="_blank">Duyệt đơn hàng ngay</a> để Shipchung thực hiện việc lấy hàng và giao đến cho người mua nhanh nhất!
+                        </label-->
+
+                                <div class="row" ng-show="total > 0">
+                                    <div class="col-lg-8">
+                                        <div class="col-lg-8">
+                                            <div class="form-group">
+                                                <label class="control-label"><h4>{{'EXC_Buoc3' | translate}}<!-- Bước 3: Chỉnh sửa và duyệt đơn hàng --></h4></label>
+
+                                                <ui-select ng-model="fee.Inventory" ng-disabled="disabled">
+                                                    <ui-select-match placeholder="Kho hàng">{{$select.selected.user_name + ' ' + $select.selected.phone + ' - ' +
+                                                        $select.selected.full_address}}
+                                                    </ui-select-match>
+                                                    <!-- refresh="loadInventory(pos, $select.search)" refresh-delay="0" -->
+                                                    <ui-select-choices group-by="'inventory'" repeat="value in list_inventory | filter: $select.search">
+                                                        <span>{{value.user_name + ' - ' + value.phone}} <br/>
+                                              <span>{{value.full_address}} <small ng-if="value.distance" class="text-info">({{'OBG_CachDay' | translate}} : {{value.distance}})</small></span></span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+
+                                                <a ng-if="fee.Inventory.post_office == true" style="color:#8a6d3b" class="help-block m-b-none text-warning"> 
+                                                <strong>{{'SETPRI_PO_LuuY' | translate}}<!-- Lưu ý: --> </strong> <!-- Bạn đang chọn phương thức gửi hàng qua bưu cục,
+                                                    vui lòng nhấn vào đây để xem hướng dẫn cách mang hàng qua bưu cục . -->
+                                                    {{'EXC_Buoc3_BandangchonPTBuuCuc' | translate}}
+                                                </a>
+                                                <a ng-if="!list_inventory.length" ui-sref="app.config.inventory" target="_blank" class="help-block m-b-none text-danger"> <!-- Bạn chưa cấu hình kho hàng, vui lòng click vào đây để nhập thông tin về địa chỉ kho lấy hàng ! -->
+                                                {{'EXC_Buoc3_BanChuaCauHinhKho' | translate}}</a>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="" class="control-label"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                                                <label class="i-checks m-t-lg" ng-if="total > 0">
+                                        <input type="checkbox" 
+                                             ng-change="toggleChecking(checkingALL);changeChecking(checkingALL)"
+                                             ng-checked="checkingALL == 1"
+                                             ng-disabled="toggleCheckingProcess"
+                                             ng-true-value="1"  
+                                             ng-false-value="2"
+                                             ng-model="checkingALL"
+                                             /><i></i>
+                                             {{ checkingALL == 1 && 'OBG_ChoKhachXemHangKhiNhan' || 'EXC_KHongChoKhachXemHangKhiNhan' | translate }}
+                                        </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 padder-lg">
+                                        <label class="control-label"><h5><!-- Nhận dạng thành công {{total - total_disabled}}/{{total}} địa chỉ đơn hàng. -->
+                                        {{'EXC_NhanDangThanhCong' | translate :{param: (total - total_disabled)/total} }}</h5></label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="pull-right">
+                                            <button ng-show="total > 0" class="btn m-b-xs btn-default btn-lg" type="button" ng-disabled="create_all || total_disabled > 0"
+                                                ng-click="action_create(check_box)">{{'ORDERC_taodonhang' | translate}}<!-- Tạo đơn hàng --></button>
+                                            <button ng-show="total > 0" class="btn m-b-xs btn-success btn-lg" type="button" ng-disabled="create_all || total_disabled > 0"
+                                                ng-click="action_create(check_box,1)">{{'EXC_BTTTaoVaDuyet' | translate}}<!-- Tạo & Duyệt đơn hàng ngay --></button>
+                                            <a ng-show="total == 0" class="btn bg-orange btn-xs" ui-sref="print_new({code:list_tracking_code.toString()})" target="_blank">
+                                        <!-- In đơn hàng -->{{'ORDERC_indonhang' | translate}}
+                                    </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="panel-body">
+                                <progressbar ng-if="create_all" max="max" value="dynamic" type="info" class="progress-sm m-t-sm"><span style="white-space:nowrap;">{{dynamic}}/{{max}}</span></progressbar>
+
+                                <table class="table table-striped b-t b-light table-hover table-condensed">
+                                    <thead>
+                                        <th>
+                                            <label class="i-checks m-b-none" ng-if="total > 0">
+                                        <input type="checkbox" 
+                                         ng-change="toggleSelectionAll(checkall)"
+                                         ng-checked="true"
+                                         ng-true-value="1"  
+                                         ng-false-value="0"
+                                         ng-model="checkall"
+                                         /><i></i>
+                                    </label>
+                                        </th>
+                                        <th>{{'ORDERL_thongtinsanpham' | translate}}<!-- Thông tin sản phẩm (SKU) --></th>
+                                        <th width="15%">{{'PO_diachi' | translate}}<!-- Địa chỉ --></th>
+                                        <th>{{'ORDERC_nguoinhan' | translate}}<!-- Người nhận --></th>
+                                        <th>{{'EXC_SoLuong_KhoiLuong' | translate}}<!-- Số lượng/Khối lượng --></th>
+                                        
+                                        <th width="15%">{{'EXC_HinhThucVanChuyen' | translate}}<!-- Hình thức vận chuyển --></th>
+                                        <th width="7%">{{'EXC_TTHang' | translate}}</th>
+                                        <th width="7%">{{'EXC_TongThuHo' | translate}}<!-- Tổng thu hộ --></th>
+                                        <th class="text-center"></th>
+                                    </thead>
+                                    <tbody class="text-sm">
+                                        <tr ng-repeat="(key,item) in list_data ">
+                                            <td class="text-center">{{$index+1}}
+                                                <label class="i-checks m-b-none" ng-if="!rowform.$visible && item.active == 0">
+                                            <input type="checkbox" 
+                                                ng-model="check"
+                                                ng-change="toggleSelection(key)"
+                                                ng-checked="check_list(key)"
+                                                ng-disabled="(item.to_district == 0) || (item.to_city == 0)"
+                                             />
+                                            <i></i>
+                                      </label>
+                                            </td>
+
+                                            <td>
+                                                <p editable-text="item.item_name" e-style="margin-bottom:10px" e-name="item_name" e-form="rowform" onbeforesave="checkdata($data)"
+                                                    e-placeholder="{{'PROV2_Tensanpham' | translate}}" e-required>
+                                                    <!--<span ng-if="item.inventory_boxme">{{(item.name_str)}}</span>-->
+                                                    <span ng-if="!item.boxme_inventory">{{item.item_name || '...'}}</span>
+                                                    <span ng-if="item.boxme_inventory " ng-bind-html="item.name_str"></span>
+                                                </p>
+
+                                                <p editable-text="item.item_desc" e-name="item_desc" e-form="rowform" onbeforesave="checkdata($data)" e-placeholder="{{'OBG_GhiChuDonHang' | translate}}">
+                                                    {{item.item_desc || '...'}}
+                                                </p>
+
+                                            </td>
+
+                                            <td>
+                                                <p editable-text="item.to_address" e-style="margin-bottom:10px" style="width: 100%" e-name="to_address" e-form="rowform" onbeforesave="checkdata($data)"
+                                                    e-required>
+                                                    {{item.to_address}}
+                                                </p>
+
+                                                <p editable-select="item.to_city" e-style="margin-bottom:10px" style="width: 100%" e-name="to_city" e-ng-change="change_city($data,item)" e-form="rowform"
+                                                    e-ng-options="val.id as val.city_name for val in list_city" onbeforesave="checkdata($data)"
+                                                    ng-class="{'text-danger' : item.to_city == 0}" e-required>
+                                                    {{item.city_name}}
+                                                </p>
+                                                <p editable-select="item.to_district" e-style="margin-bottom:10px" style="width: 100%" e-name="to_district" e-form="rowform" onshow="loadDistrict(item.to_city)"
+                                                    e-ng-options="val.id as val.district_name for val in list_district[item.to_city]"
+                                                    onbeforesave="check_district($data,item.to_city)" ng-class="{'text-danger' : item.to_district == 0}"
+                                                    e-required>
+                                                    {{item.district_name}}
+                                                </p>
+                                            </td>
+
+                                            <td>
+                                                <p editable-text="item.to_name" e-style="margin-bottom:10px" e-name="to_name" e-form="rowform" onbeforesave="checkdata($data)"
+                                                    e-required>
+                                                    {{item.to_name}}
+                                                </p>
+
+                                                <p editable-text="item.to_phone" e-style="margin-bottom:10px" e-name="to_phone" e-form="rowform" onbeforesave="checkdata($data)"
+                                                    e-required>
+                                                    {{item.to_phone}}
+                                                </p>
+                                            </td>
+
+                                            <td>
+                                                <p editable-text="item.item_qty" e-style="margin-bottom:10px" e-name="item_qty" e-form="rowform" onbeforesave="checkdata($data)"
+                                                    e-required>
+                                                    {{item.item_qty }}
+                                                </p>
+                                                <p editable-text="item.item_weight" e-style="margin-bottom:10px" e-name="item_weight" e-form="rowform" onbeforesave="checkdata($data)"
+                                                    e-required>
+                                                    {{item.item_weight | vnNumber}}(gram)
+                                                </p>
+                                     
+                                            </td>
+
+                           
+
+                                            <td>
+                                                <p editable-select="item.vas" e-name="vas" e-style="margin-bottom:10px" e-form="rowform" e-ng-options="key as item.name for item in list_pay_pvc"
+                                                    onbeforesave="checkdata($data)" e-required>
+                                                    {{pay_pvc[item.vas]}}
+                                                </p>
+
+                                                <p editable-select="item.service" e-name="service" e-form="rowform" e-ng-options="key as item.name for item in list_service"
+                                                    onbeforesave="checkdata($data)" e-required>
+                                                    {{service[item.service]}}
+                                                </p>
+
+                                                <p>
+                                                    <label class="i-checks m-b-none" ng-if="rowform.$visible">
+                                                <input type="checkbox" 
+                                                    ng-model="item.checking"
+                                                    ng-checked="item.checking == 1"
+                                                    ng-true-value="1"
+                                                    ng-false-value="2"
+                                                    ng-change="changeChecking(item.checking)"
+                                                 />
+                                                <i></i>
+                                                 {{ item.checking == 1 && 'OBG_ChoKhachXemHangKhiNhan' || 'EXC_KHongChoKhachXemHangKhiNhan' | translate }}
+                                                <!-- {{ item.checking == 1 && "Cho khách xem hàng" || "Không cho khách xem hàng" }} -->
+                                            </label>
+                                                    <span ng-if="!rowform.$visible">
+                                                     {{ item.checking == 1 && 'OBG_ChoKhachXemHangKhiNhan' || 'EXC_KHongChoKhachXemHangKhiNhan' | translate }}
+                                                    <!-- {{ item.checking == 1 && "Cho khách xem hàng" || "Không cho khách xem hàng" }} --></span>
+                                                </p>
+
+                                            </td>
+
+                                            <td>
+                                                <p editable-text="item.item_price" e-name="item_price" e-form="rowform" onbeforesave="checkdata($data)" e-required>
+                                                    {{item.item_price | vnNumber}}
+                                                </p>
+                                                <p>
+                                                    (vnd)
+                                                </p>
+                                            </td>
+
+                                            <td>
+                                                <p editable-text="item.collect" e-name="collect" e-form="rowform" onbeforesave="checkdata($data)" e-required>
+                                                    {{item.collect | vnNumber}}
+                                                </p>
+                                                <p>
+                                                    (vnd)
+                                                </p>
+                                            </td>
+
+                                            <td class="text-center" ng-show="item.active == 0">
+                                                <form class="form-buttons form-inline" editable-form name="rowform" onbeforesave="save($data,item,key)" ng-show="rowform.$visible"
+                                                    shown="inserted == item">
+                                                    <div class="btn-group-vertical w-m">
+                                                        <button type="submit" class="btn btn-success" type="button" ng-disabled="rowform.$waiting || rowform.$invalid">{{'Btt_update' | translate}}<!-- Cập nhật --></button>
+                                                        <button type="button" class="btn btn-default" ng-disabled="rowform.$waiting" ng-click="remove(key)" type="button">{{'Btt_delete' | translate}}</button>
+                                                    </div>
+                                                </form>
+
+                                                <div class="btn-group-vertical w-m" ng-show="!rowform.$visible">
+                                                    <button class="btn bg-orange" type="button" ng-click="create(key)" ng-disabled="item.to_district == 0 || item.to_city == 0 || item.has_sku_not_found">{{'HEAD_taodonhang' | translate}}<!-- Tạo đơn hàng --></button>
+                                                    <button class="btn btn-default" ng-click="rowform.$show()">{{'EXC_BTTSua' | translate}}</button>
+                                                </div>
+                                            </td>
+                                            
+                                            <td class="text-center" ng-show="item.active != 0">
+                                                <p>
+                                                    <span class="label" ng-class="{'bg-success': item.status == 'SUCCESS', 'bg-danger': item.status == 'FAIL'}">{{list_status[item.status]}}</span>
+                                                </p>
+                                                <p><a ui-sref="detail({code:item.trackingcode})" class="text-info" href="javascript:;"
+                                                        target="_blank">{{item.trackingcode}}</a></p>
+
+                                                        
+                                            </td>
+                                        </tr>
+
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--/ Panel-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

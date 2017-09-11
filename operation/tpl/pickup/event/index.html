@@ -1,0 +1,170 @@
+<<<<<<< HEAD
+<div ng-controller="EventCtrl">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal form-horizontal">
+                        <div class="row">
+                            <!--div class="col-lg-6">
+                                    <h5>{{total.order || '0' | vnNumber}}<small> Order Mang ra bưu cục</small></h5>
+                                    <small class="text-muted block">{{total.order_success || '0' | vnNumber }} Giao bưu cục thành công</small>
+                                    <div ng-if="!waiting" class="inline">
+                                        <div ui-jq="easyPieChart" ui-options="{
+                                          percent: {{total.percent_success || '0' | number:1}},
+                                          lineWidth: 10,
+                                          trackColor: '{{app.color.light}}',
+                                          barColor: '{{app.color.success}}',
+                                          scaleColor: '{{app.color.light}}',
+                                          size: 141,
+                                          lineCap: 'butt'
+                                        }">
+                                            <div>
+                                                <span class="h2 m-l-sm step">{{total.percent_success || '0' | number:1 }}</span>%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="waiting" class="m-t-xxl">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </div>
+                            </div-->
+
+                            <div class="col-lg-3 pull-right">
+                                <div class="row padder text-right">
+                                    Tổng khách hàng đăng ký mới
+                                    <div class="h4 text-black m-b">{{total.user || '0' | vnNumber}}</div>
+                                    Tổng khách hàng tạo đơn
+                                    <div class="h4 text-success">{{total.user_order || '0' | vnNumber}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <div ng-if="!waiting" ui-jq="plot" ui-options="
+                                  [
+                                    { label: 'Ngày 20'      , data: {{chart['20']}} },
+                                    { label: 'Ngày 21'      , data: {{chart['21']}} },
+                                    { label: 'Ngày 22'      , data: {{chart['22']}} },
+                                    { label: 'Ngày 23'      , data: {{chart['23']}} },
+                                    { label: 'Ngày 24'      , data: {{chart['24']}} },
+                                    { label: 'Ngày 25'      , data: {{chart['25']}} },
+                                    { label: 'Ngày 26'      , data: {{chart['26']}} }
+                                  ],
+                                  {
+                                    bars: { show: true, fill: true, lineWidth: 2,barWidth: 0.1, order: 0.05, fillColor: { colors: [{ opacity: 0.5 }, { opacity: 0.9}] } },
+                                    colors: ['{{app.color.primary}}', '{{app.color.info}}', '{{app.color.success}}', '{{app.color.warning}}', '{{app.color.danger}}', '{{app.color.light}}', '{{app.color.dark}}'],
+                                    series: { shadowSize: 1 },
+                                    xaxis:{
+                                        font: { color: '#ccc' },
+                                        position: 'bottom',
+                                        ticks: [[ 1, 'Khách hàng đăng ký mới' ], [ 2, 'Khách hàng tạo đơn' ], [ 3, 'Order mang ra bưu cục' ], [ 4, 'Mang ra bưu cục thành công' ],[ 5, 'Mang ra bưu cục thất bại' ]]
+                                    },
+                                    yaxis:{ font: { color: '#ccc' } },
+                                    grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                                    tooltip: true,
+                                    tooltipOpts: { defaultTheme: false, content: '%s : %y'}
+                                  }
+                                " style="height:400px">
+                            </div>
+                            <div ng-show="waiting" class="m-t-xxl">
+                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                            </div>
+                            <div class="text-center m-t" ng-show="!waiting">Thống kê chương trình mang hàng ra bưu cục</div>
+                            <div class="clearfix">&nbsp; </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+=======
+<div ng-controller="EventCtrl">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal form-horizontal">
+                        <div class="row">
+                            <!--div class="col-lg-6">
+                                    <h5>{{total.order || '0' | vnNumber}}<small> Order Mang ra bưu cục</small></h5>
+                                    <small class="text-muted block">{{total.order_success || '0' | vnNumber }} Giao bưu cục thành công</small>
+                                    <div ng-if="!waiting" class="inline">
+                                        <div ui-jq="easyPieChart" ui-options="{
+                                          percent: {{total.percent_success || '0' | number:1}},
+                                          lineWidth: 10,
+                                          trackColor: '{{app.color.light}}',
+                                          barColor: '{{app.color.success}}',
+                                          scaleColor: '{{app.color.light}}',
+                                          size: 141,
+                                          lineCap: 'butt'
+                                        }">
+                                            <div>
+                                                <span class="h2 m-l-sm step">{{total.percent_success || '0' | number:1 }}</span>%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="waiting" class="m-t-xxl">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </div>
+                            </div-->
+
+                            <div class="col-lg-3 pull-right">
+                                <div class="row padder text-right">
+                                    Tổng khách hàng đăng ký mới
+                                    <div class="h4 text-black m-b">{{total.user || '0' | vnNumber}}</div>
+                                    Tổng khách hàng tạo đơn
+                                    <div class="h4 text-success">{{total.user_order || '0' | vnNumber}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <div ng-if="!waiting" ui-jq="plot" ui-options="
+                                  [
+                                    { label: 'Ngày 20'      , data: {{chart['20']}} },
+                                    { label: 'Ngày 21'      , data: {{chart['21']}} },
+                                    { label: 'Ngày 22'      , data: {{chart['22']}} },
+                                    { label: 'Ngày 23'      , data: {{chart['23']}} },
+                                    { label: 'Ngày 24'      , data: {{chart['24']}} },
+                                    { label: 'Ngày 25'      , data: {{chart['25']}} },
+                                    { label: 'Ngày 26'      , data: {{chart['26']}} }
+                                  ],
+                                  {
+                                    bars: { show: true, fill: true, lineWidth: 2,barWidth: 0.1, order: 1, fillColor: { colors: [{ opacity: 0.5 }, { opacity: 0.9}] } },
+                                    colors: ['{{app.color.primary}}', '{{app.color.info}}', '{{app.color.success}}', '{{app.color.warning}}', '{{app.color.danger}}', '{{app.color.light}}', '{{app.color.dark}}'],
+                                    series: { shadowSize: 1 },
+                                    xaxis:{
+                                        font: { color: '#ccc' },
+                                        position: 'bottom',
+                                        ticks: [[ 1, 'Khách hàng đăng ký mới' ], [ 2, 'Khách hàng tạo đơn' ], [ 3, 'Order mang ra bưu cục' ], [ 4, 'Mang ra bưu cục thành công' ],[ 5, 'Mang ra bưu cục thất bại' ]]
+                                    },
+                                    yaxis:{ font: { color: '#ccc' } },
+                                    grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                                    tooltip: true,
+                                    tooltipOpts: { defaultTheme: false, content: '%s : %y'}
+                                  }
+                                " style="height:400px">
+                            </div>
+                            <div ng-show="waiting" class="m-t-xxl">
+                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                            </div>
+                            <div class="text-center m-t" ng-show="!waiting">Thống kê chương trình mang hàng ra bưu cục</div>
+                            <div class="clearfix">&nbsp; </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+>>>>>>> 3ddd673854c271c38981f38c095b70c36f2ea515
+</div>

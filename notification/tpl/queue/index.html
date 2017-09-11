@@ -1,0 +1,49 @@
+<div class="bg-light lter b-b wrapper-md ng-scope">
+  <div class="row">
+    <h1 class="m-n font-thin h3 col-md-2">List Queue</h1>
+  </div>
+</div>
+<div class="panel panel-default" ng-controller="QueueCtrl">
+    <div class="row wrapper">
+      <div class="col-sm-3">
+        <div class="input-group">
+          <input type="text" placeholder="Email, sđt nhận" class="input-sm form-control" ng-model="search">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-sm btn-info" ng-click="setPage(search)">Search</button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light">
+        <thead>
+          <tr>
+            <th style="width:20px;">#</th>
+            <th>Người nhận</th>
+            <th>Kịch bản</th>
+            <th>Mẫu</th>
+            <th>Thời gian tạo</th>
+            <th>Thời gian thành công</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="value in listQueue">
+            <td>{{ item_stt + $index + 1}}</td>
+            <td>{{ value.user_name }}</td>
+            <td>{{ value.scenario_name }}</td>
+            <td>{{ value.template_name }}</td>
+            <td>{{ value.time_create*1000|date:"d/M/y H:m" }}</td>
+            <td ng-if="value.time_success > 0">{{ value.time_success*1000|date:"d/M/y H:m" }}</td>
+            <td ng-if="value.time_success == 0"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="panel-footer">
+      <div class="row">
+        <div class="col-sm-4 text-right text-center-xs pull-right">                
+            <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(search)"></pagination>
+        </div>
+      </div>
+    </footer>
+</div>

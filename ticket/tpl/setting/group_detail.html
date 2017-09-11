@@ -1,0 +1,23 @@
+<div class="bg-light lter b-b wrapper-md ng-scope">
+  <div class="row">
+    <h1 class="m-n font-thin h3 col-md-5">Add group privilege</h1>
+  </div>
+</div>
+<div class="panel panel-default" ng-controller="GroupDetailCtrl">
+	<div class="m-l-md panel-body">
+		<label class="col-sm-2 control-label">List privilege</label>
+		<div class="col-sm-4">
+	  		<div class="checkbox m-b-sm" ng-repeat="value in listPrivilegeGroup">
+	            <label class="i-checks">
+	                <input type="checkbox" ng-click="setPrivilegeGroup(value.id)" ng-checked="value.checked == 1" ng-true-value="1" ng-false-value="0">
+	                <i></i>
+	                {{value.privilege_name}}
+	            </label>
+	        </div>
+	    </div>
+	    
+	</div>
+	<footer class="panel-footer">
+
+    </footer>
+</div>

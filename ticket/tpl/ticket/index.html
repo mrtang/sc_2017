@@ -1,0 +1,666 @@
+<style>
+    @-webkit-keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            -webkit-transform: translateY(20px);
+        }
+        
+        100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+        }
+    }
+
+    @-moz-keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            -moz-transform: translateY(20px);
+        }
+        
+        100% {
+            opacity: 1;
+            -moz-transform: translateY(0);
+        }
+    }
+
+    @-o-keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            -o-transform: translateY(20px);
+        }
+        
+        100% {
+            opacity: 1;
+            -o-transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .my-animation {
+        -webkit-animation-name: fadeInUp;
+        -moz-animation-name: fadeInUp;
+        -o-animation-name: fadeInUp;
+        animation-name: fadeInUp;
+    }
+
+    .my-animation.ng-hide {
+        opacity: 0;
+    }
+
+    .my-animation.ng-hide-add,
+    .my-animation.ng-hide-remove {
+        -webkit-transition:all linear 0.3s;
+        -moz-transition:all linear 0.3s;
+        -ms-transition:all linear 0.3s;
+        -o-transition:all linear 0.3s;
+        transition:all linear 0.3s;
+
+
+    }
+
+
+</style>
+<div ng-controller="TicketCtrl">
+<div class="col-sm-12">
+    <tabset class="tab-inside m-t">
+        <tab ng-repeat="status in nav_status" ng-click="change_tab(status.code,1,search,0,isVip)">
+            <tab-heading>&nbsp;{{::status.content}}&nbsp;
+                <small ng-if="total_group[status.code]">({{total_group[status.code]}})</small>
+                <small ng-if="!total_group[status.code]">(0)</small>
+            </tab-heading>
+        </tab>
+    </tabset>
+</div>
+
+
+<div class="col-sm-36 l-h-m">
+    <form role="form" class="form-horizontal" ng-submit="change_tab(status, 1, search, priority, isVip)" name="frmSearch">
+        <div class="input-group m-b-xs m-r-sm">
+            <input placeholder="" class="form-control" ng-model="search" placeholder="Mã vận đơn, email, điện thoại khách hàng" />
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Tìm kiếm</button>
+              </span>
+        </div>
+
+        <div class="row m-n">
+            <div class="btn-group m-b-sm">
+
+                <div class="btn-group dropdown">
+                    <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                        <span class="dropdown-label"><i class="fa fa-download"></i></span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu text-left text-sm">
+                        <li><a href="{{exportDefault() + exportAdditionUrl}}">Mặc định</a></li>
+                        <li><a ng-repeat="item in list_case track by item.id" href="{{link_export}}ticket-request/ticketbyprivilege?cmd=export&status={{status}}&time_start={{time_start}}&search={{search}}&case={{item.id}}&isVip={{isVip}}&priority={{priority}}&type_ticket={{type_ticket}}&by_assigner={{by_assigner}}{{exportAdditionUrl}}&access_token={{userInfo.token}}">{{::item.name}}</a></li>
+                    </ul>
+                </div>
+
+                <div class="btn-group dropdown">
+                    <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                        <span class="dropdown-label"><i class="fa fa-flag"></i></span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu text-left text-sm">
+                        <li><a ng-repeat="(key,item) in list_priority" ng-click="change_tab(status,1,search,key,isVip)">{{::item.name}}</a></li>
+                    </ul>
+                </div>
+
+                <div class="btn-group dropdown" ng-if="status == 'ASSIGNED'">
+                    <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                        <span class="dropdown-label"><i class="fa fa-wrench"></i></span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu text-left text-sm">
+                        <li>
+                            <a ng-click="change_tab(status,1,search,0,isVip)">Tất cả</a>
+                            <a ng-repeat="(key,item) in list_type_process" ng-click="change_tab(status,1,search,0,isVip,key)">{{::item}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+                
+
+                <div class="btn-group dropdown">
+                    <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                        <span class="dropdown-label"><i class="fa fa-user"></i></span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu text-left text-sm">
+                        <li><a ng-click="change_tab(status, 1, search, 0, key)" ng-repeat="(key, item) in vip_filter">{{::item}}</a></li>
+                    </ul>
+                </div>
+
+                <div class="btn-group m-b-sm" ng-if="privilege == 2 || userInfo.group == 15 || userInfo.id == 36264 || userInfo.id == 39270 || userInfo.id == 42061 || userInfo.id == 42464 || userInfo.id == 53956 || userInfo.id == 53988" >  <!--master all  - trưởng nhóm chăm sóc-->
+                    <a class="btn btn-default btn-sm" onclick="document.getElementById('dateRangerr').click()">
+                        <i class="fa fa-calendar"></i>
+                    </a>
+                </div>
+                <div class="btn-group m-b-sm" >  <!--master all  - trưởng nhóm chăm sóc-->
+                    <input type="daterange" ng-model="picked.datePicked" id="dateRangerr" style="display:block;width:0px;height:0px;border:none;" ng-change="onDatepickedChange(picked.datePicked)">
+                </div>
+
+                <div class="btn-group m-b-sm" ng-if="privilege == 2 || userInfo.group == 15">  <!--master all  - trưởng nhóm chăm sóc-->
+                    <a class="btn btn-default btn-sm" ng-click="openFilterAssginer(list_ticket_group, list.admin, filter_assginer)">
+                        <i class="fa fa-filter"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="form-group pull-right m-r-none">
+                <div class="col-sm-10">
+                    <div ui-module="select2">
+                        <select ui-select2 ng-model="type_ticket" ng-change="change_tab(status,1,search,0,isVip)" class="form-control w-md">
+                            <option value="0">Loại yêu cầu</option>
+                            <optgroup ng-repeat="item in list_case track by item.id" label="{{item.name}}">
+                                <option ng-repeat="it in list_type track by it.id | filter:{ case_id: item.id }" value="{{it.id}}">{{::it.type_name}}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="form-group pull-right m-r-none" ng-if="privilege == 2">
+                <div class="col-sm-10">
+
+                    <div ui-module="select2"  >
+                        <select ui-select2 class="form-control w-md" multiple="multiple" ng-model="ticket.assigner" ng-change="change_tab(status,1,search,priority,isVip)">
+                            <option ng-repeat="item in list_ticket_group" value="g-{{item.id}}">{{item.name}}</option>
+                            <option ng-repeat="val in list.admin" value="{{val.user_id}}">
+                              {{val.user.fullname}} - {{val.user.email}}
+                            </option>
+                        </select>
+                    </div>
+                    <div ui-module="select2">
+                        <select ui-select2 ng-model="type_ticket" ng-change="change_tab(status,1,search,0,isVip)" class="form-control w-md">
+                            <option value="0">Loại yêu cầu</option>
+                            <optgroup ng-repeat="item in list_case" label="{{item.name}}">
+                                <option ng-repeat="it in list_type | filter:{ case_id: item.id }" value="{{it.id}}">{{it.type_name}}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </form>
+
+
+    <div ng-if="!list_data_request.length && show_wating">
+        <center>
+            Đang tải dữ liệu...
+            <!-- <i class="text-3x fa fa-spinner fa-spin"></i> -->
+        </center>
+    </div>
+
+    <div class="form-horizontal" >
+        <div class="panel panel-info m-r-sm m-b-sm pointer animated fadeIn" ng-animate="{enter: 'repeat-enter',leave: 'repeat-leave',move: 'repeat-move'}" ng-repeat="val in list_data_request track by val.id" ng-class="{'b-l-m' : detail.id == val.id, 'badge-empty' : (log_view[val.id] && log_view[val.id] != 0)}" ng-click="show_detail(val.id)">
+            <div class="panel-body padder-xs">
+                <div class="form-group m-b-none">
+                    <div class="col-sm-10">
+                        <strong>#{{::val.id}} - {{::val.users.fullname}}</strong>
+                        <i ng-if="val.priority == 3 && val.status != 'CLOSED'" id="ball" class="fa fa-star jump text-lg {{list_priority[val.priority].text}}"></i>
+                        <i ng-if="val.priority == 2 && val.status != 'CLOSED'" id="ball" class="fa fa-star jump text-lg {{list_priority[val.priority].text}}"></i>
+                        <i ng-if="val.priority == 1 || (val.priority > 1 && val.status == 'CLOSED')" class="fa fa-star jump text-lg {{list_priority[val.priority].text}}"></i>
+                        <br />
+                        <i class="fa fa-code-fork"></i> <a class="text-info" ng-repeat="v in val.refer">{{::v.code}}<i ng-if="!$last">,</i> </a>
+                        <br />
+                        <span class="m-b-none"><i class="fa fa-edit"></i> {{::val.title | limitTo : 40}}</span>
+                        <br />
+                        <span ng-if="val.time_before" class="m-b-none" tooltip-placement="top" data-toggle="tooltip"  title="{{val.time_create * 1000 | date:'HH:mm:ss dd-MM-yyyy'}}" tooltip="{{val.time_create * 1000 | date:'HH:mm:ss dd-MM-yyyy'}}"><i class="glyphicon glyphicon-time"></i> {{val.time_before}} trước</span> <br/>
+                        <span ng-if="val.time_update_before" class="m-b-none" tooltip-placement="top"  data-toggle="tooltip"  title="{{val.time_update * 1000 | date:'HH:mm:ss dd-MM-yyyy'}}">Cập nhật : {{::val.time_update_before}} trước</span>
+                        <span ng-if="val.time_over_before && val.status != 'CLOSED'" class="m-b-none" tooltip-placement="top" data-toggle="tooltip"  title="{{val.time_over * 1000   | date:'HH:mm:ss dd-MM-yyyy'}}"> <i class="text-warning">*</i> Còn : {{::val.time_over_before}}</span>
+                        <span ng-if="!val.time_over_before && val.time_over > 0 && val.status != 'CLOSED'" class="m-b-none text-danger" data-toggle="tooltip"  tooltip-placement="top" tooltip="{{val.time_over * 1000   | date:'HH:mm:ss dd-MM-yyyy'}}"> <i class="text-warning">*</i> Đã quá hạn</span>
+                    </div>
+                    <div class="col-sm-1 pull-right">
+                        <span class="label pull-right" ng-class="data_status[val.status].bg">{{::data_status[val.status].name}} </span><span ng-if="isDuplicate(val)" class="pull-left text-danger"><i class="fa fa-files-o"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--/ Content list-->
+    <div class="text-right text-center-xs pull-left" ng-if="list_data_request.length">
+        <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" boundary-links="true" rotate="false" ng-change="change_tab(status,currentPage,search,priority,isVip)"></pagination>
+    </div>
+</div>
+    <div class="col-sm-46 no-padder">
+        <div ng-if="!detail.id && show_wating">
+            <center>
+                <!-- <i class="text-3x fa fa-spinner fa-spin"></i> -->
+                Đang tải dữ liệu...
+            </center>
+
+        </div>
+        <form class="form-validation form-horizontal animated fadeIn" role="form" ng-submit="save('feedback',detail.status)" name="frmfeedback" ng-if="detail.id">
+            <div class="col-sm-12 text-title padder-tb">
+
+
+
+            <center ng-if="!list_data_request.length && !show_wating">
+                Bạn chưa có yêu cầu nào !<br/>
+                <a ng-if="code_search != ''" href="javascript:;" class="text-info" ng-click="open_create_ticket(code_search)">Bạn muốn tạo yêu cầu cho đơn hàng này !</a>
+            </center>
+
+                <div class="form-group text-lgx m-b-none m-r-none">
+                  <div class="form-group text-base m-b-none m-r-none col-lg-8">
+                      <label class="text-black h4 no-padder">
+                          #{{detail.id}} - {{detail.title}}
+                      </label>
+                      <label ng-if="detail.status == 'ASSIGNED'" class="i-switch bg-success">
+                          <input type="checkbox" ng-true-value="1"  ng-false-value="0" ng-checked="detail.type == 1" ng-model="detail.type" ng-change="save('type_process',detail.type)">
+                          <i></i>
+                      </label>
+                    <p class="m-b-xs hide">Nguồn: {{::detail.source}}</p>
+                    <p class="m-b-xs" ng-if="detail.case_ticket">Loại yêu cầu: <span ng-repeat="val in detail.case_ticket"><i class="fa fa-times text-danger pointer" ng-click="remove('type',val.type_id,$index)"></i>{{val.case_type.type_name}}<i ng-if="!$last">,</i> </span></p>
+                    <div class="m-b-xs" ng-if="detail.refer">
+                        <div class="btn-group dropdown wrapper-xxs" ng-repeat="val in detail.refer">
+                            <button type="button" class="btn btn-default" data-clip-copy="val.code" data-clip-click-fallback="fallback(copy)">
+                                {{::val.code}}
+                                    <span ng-if="list_status_order[list_order[val.code].status]">
+                                    [{{list_status_order[list_order[val.code].status]}}]</span>
+                            </button>
+                            <button class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li ng-if="val.type == 3"><a ng-click="unRefer(val, val.id)">Hủy liên kiết</a></li>
+                                <li ng-if="val.type == 1"><a href="http://seller.shipchung.vn/#/detail/{{val.code}}" target="_blank">ShipChung</a></li>
+                                <li ng-if="list_order[val.code]">
+                                    <a href="{{link_hvc(list_order[val.code].courier_id, list_order[val.code].courier_tracking_code,val.code)}}" target="_blank">
+                                        {{::list_order[val.code].courier.name}}
+                                        <span ng-if="list_order[val.code].from_city_id == 18"> HN</span>
+                                        <span ng-if="list_order[val.code].from_city_id == 52"> HCM</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+<!--                     <p>Trạng thái vận đơn <a class="text-info" ng-click="toggleOrder = !toggleOrder">Xem chi tiết</a> </p>
+                     -->
+                    <p class="m-b-xs">
+                        <span class="label" ng-class="list_priority[detail.priority].bg" ng-if="detail.priority > 0">{{::list_priority[detail.priority].name}}</span>
+                        <span ng-if="detail.time_over > 0">Cần trước : {{(detail.time_over) * 1000 | date:'HH:mm dd-MM-yyyy'}}</span></p>
+                    <p class="m-b-xs">
+                        Giao cho:
+                        <span  class="text-info" ng-repeat="val in detail.assign track by val.id">
+                            <i ng-if="detail.status != 'CLOSED' && check_privilege('PRIVILEGE_TICKET', 'del')" class="fa fa-times text-danger pointer" ng-click="remove('user_assign',val.assign_id,$index)"></i> {{::User[val.assign_id]['fullname'] || 'Ai đó'}}<i ng-if="!$last">,</i>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-lg-4 no-padder">
+                    <span class="label pull-right" ng-class="data_status[detail.status].bg">{{data_status[detail.status].name}}</span> <br/>
+                    <button class=" pull-right btn btn-sm btn-default" type="button" ng-click="openExtendTimeModal(detail)"><i class="fa fa-clock-o"></i> Yêu cầu gia hạn</button>
+
+                    <div class="clearfix"></div> <br/>
+                    <div class="pull-right">
+                        <!-- <button class="btn btn-sm btn-default" type="button" ng-click="AssginToCourier(detail)" ng-disabled="AssginToCourierLoading"><i class="fa fa-clock-o"></i> Giao cho HVC</button> -->
+                        <button class="btn btn-sm btn-default" type="button" ng-click="AddReminder(detail)" ng-disabled="AssginToCourierLoading"><i class="fa fa-tasks"></i> Nhắc việc</button>
+                    </div>
+
+                    <div class="clearfix"></div><br/>
+                    <div class="pull-right">
+                        <button class="btn btn-sm btn-primary" type="button" ng-click="SendRefundConfirm(detail)" ng-if="userInfo.group == 14">Gửi yêu cầu bồi hoàn</button>
+                    </div>
+                </div>
+                </div>
+
+
+
+
+
+                <div ng-if="detail.status != 'CLOSED' ">
+                    <div class="form-group m-b-none m-r-none" style="position:relative;" ng-if="detail.link.length == 0">
+                        <tabset class="tab-inside col-lg-8 no-padder">
+                            <tab ng-click="change_action('web')" ng-if="userInfo.courier_id == 0">
+                                <tab-heading>&nbsp;Gửi phản hồi(Email)&nbsp;</tab-heading>
+                            </tab>
+                            <tab ng-click="change_action('sms')" ng-if="userInfo.courier_id == 0">
+                                <tab-heading>&nbsp;Nhắn SMS&nbsp;</tab-heading>
+                            </tab>
+
+                            <tab ng-click="change_action('note')" ng-if="userInfo.courier_id == 0">
+                                <tab-heading >&nbsp;Ghi chú&nbsp;</tab-heading>
+                            </tab>
+
+                            <tab ng-click="change_action('note')" ng-if="userInfo.courier_id > 0">
+                                <!--<tab-heading ng-if="userInfo.courier_id == 0">&nbsp;Ghi chú&nbsp;</tab-heading>-->
+                                <tab-heading >&nbsp;Chat với Shipchung&nbsp;</tab-heading>
+                            </tab>
+                        </tabset>
+                        <div class="pull-right">
+                            <div class="btn-group dropdown custom">
+                                <button type="button" class="btn btn-xs btn-default dropdown-toggle">
+                                    <i class="fa fa-plus"></i> Mẫu
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li data-ng-repeat="item in detail.template"><a data-ng-click="setMessage(item.message)">{{::item.message}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/ng-template" id="ticket-mentions.html">
+                        <ul class="list-group ticket-search">
+                            <li mentio-menu-item="item" ng-repeat="item in items" class="list-group-item">
+                                <span>#{{::item.id}} - {{::item.title}}
+                                    <span class="label pull-right" data-status="{{item.status}}" style="margin-left:30px;"></span>
+                                </span>
+                                <p>
+                                <span class="sc_code" ng-repeat="(k,referItem) in item.referCode"><span ng-if="k > 0">,</span>{{::referItem.code}}</span>
+                                </p>
+                            </li>
+                        </ul>
+                    </script>
+                    <div class="form-group m-r-none" ng-if="detail.link.length == 0">
+                        <textarea
+                        mentio
+                        mentio-typed-text="typedTerm"
+                        mentio-items="listTicketIDFiltered "
+                        mentio-template-url="ticket-mentions.html"
+                        mentio-trigger-char="'@'"
+                        mentio-search="searchTicket(term)"
+                        mentio-select="getTicketText(item)"
+                        rows="5" class="w-full form-control" ng-model="data_respond.content"  placeholder="Gửi thông tin hoặc phản hồi ..." ></textarea>
+                    </div>
+                    <div class="form-group m-b-none m-r-none b-a b-dashed m-t-xs" ng-if="detail.status != 'CLOSED' && detail.link.length == 0">
+                        <div class="col-sm-12 no-padder">
+                            <div nv-file-drop="" uploader="uploader">
+                                <div nv-file-over="" uploader="uploader" over-class="another-file-over-class">
+                                    <input type="file" class="w-full input-uploader" nv-file-select="" uploader="uploader" multiple />
+                                    <span class="content-uploader"><i class="fa fa-picture-o fa-lg"></i> Kéo thả tối đa 5 file (mỗi file nhỏ hơn 3mb) vào đây hoặc click để lựa chọn</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group text-xs" ng-if="uploader.queue.length > 0">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th width="50%">Tên</th>
+                                <th ng-if="uploader.isHTML5">Size</th>
+                                <th ng-if="uploader.isHTML5">Progress</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td><strong>{{ item.file.name }}</strong></td>
+                                <td ng-if="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td ng-if="uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-if="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-if="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-if="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group padder-tb ">
+
+                        <button class="btn btn-info" type="submit" ng-if="detail.link.length == 0" ng-disabled="!data_respond.content.length || show_reply">Gửi phản hồi</button>
+                        <button type="button" class="btn btn-success" ng-if="check_privilege('PRIVILEGE_TICKET', 'edit') || detail.user_id == userInfo.id" ng-click="save('status','CLOSED')">Đóng yêu cầu</button>
+                    </div>
+                </div>
+
+                <div class="form-group text-base m-n">
+
+                    <p>Lịch sử trao đổi yêu cầu này : </p>
+
+                    <div class="streamline b-l b-info m-b padder-v">
+                        <div> <!-- content request -->
+                        
+                            <a class="pull-left thumb-sm avatar m-l-n-md">
+                                <img ng-src="http://www.gravatar.com/avatar/{{User[detail.user_id].md5_email}}?s=80&d=mm&r=g" alt="avatar">
+
+                                <i class="on md b-white bottom" ng-if="User[detail.user_id].is_newbie == true" title="Khách hàng mới" tooltip-placement="top" tooltip="Khách hàng mới"></i>
+                            </a>
+
+
+                          <div class="m-l-lg">
+                            <div class="m-b-xs">
+                              <a href="" class="h4">Nội dung</a>
+                              <span class="text-muted m-l-sm pull-right" data-toggle="tooltip" title="{{detail.time_create * 1000 | date:'HH:mm dd-MM-yyyy'}}">
+                                {{detail.time_create * 1000 | date:'HH:mm dd-MM-yyyy'}}
+                              </span>
+                            </div>
+                            <div class="m-b">
+                                <div markdown="detail.content | badWords" class="ticket_content"></div>
+                                <div ng-repeat="at in detail.attach">
+                                    <p><a class="text-info" href="{{link_storage}}{{at.link_tmp}}" target="_blank"> {{::at.name || 'File Name'}}</a></p>
+                                </div>
+                            </div>
+                          </div>
+                        </div> <!-- end content request -->
+
+
+                        <div class="" >
+                            <table class="table table-condensed">
+                                <tbody ng-repeat="item in listOrderRef" style="border-top: 1px solid #ddd;" ng-if="listOrderRef.length > 0">
+                                    <tr >
+                                        <td colspan="7" class="text-left">
+                                            <div class="status-process clear row padder">
+                                                <div class="first_status">
+                                                    <section >
+                                                        <span class="status-title  ng-binding">
+                                                            <strong>{{item.tracking_code}} </strong>
+                                                        </span> <br/>
+                                                        <span class="status-time ng-binding" >
+                                                            <button class="btn btn-xs btn-success" ng-if="displayConfirmDelivery(item)" type="button" ng-disabled="waiting_status || !displayConfirmDelivery(item)" ng-click="confirm_delivery(item)">Yêu cầu giao lại</button>
+                                                            <span ng-if="!displayConfirmDelivery(item)">{{item.meta_status.name}}</span>
+                                                        </span>
+                                                    </section>
+                                                </div>
+                                                <div class="journey {{$last ? 'status-current' : ''}}"  ng-repeat="it in item.pipe_journey"  popover-placement="bottom" popover="{{it.note}}" style="cursor:pointer">
+                                                    <section >
+                                                        <span class="status-title">
+                                                            {{pipe_status[it.pipe_status] || 'Hành trình'}}
+                                                        </span>
+                                                        <span class="status-time ng-binding">
+                                                            <span ng-if='item.time_create > 0'>{{it.time_create * 1000 | date : 'dd-MM-yyyy  HH:mm' }}</span>
+                                                        </span>
+                                                    </section>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+
+                            </table>
+                        </div>
+
+                        
+
+                        <div ng-repeat="item in detail.link ">
+                            <div class="m-l-lg">
+                                <div class="panel b-a">
+                                    <div class="panel-heading pos-rlt">
+                                      <span class="arrow left pull-up"></span>
+                                      <div class="row">
+                                            <div class="col-xs-8">
+                                                <small class="text-muted m-l-sm">Liên quan đến <a ng-click="show_detail(item.id)">#{{::item.id}}</a></small><br />
+                                                <span ng-click="show_detail(item.id)">{{::item.title}} </span>
+                                            </div>
+                                            <div class="col-xs-4 text-right">
+                                                <span class="label pull-right" ng-class="data_status[item.status].bg">
+                                                    {{::data_status[item.status].name}}<br />
+                                                </span>
+                                                <br />
+                                                <small class="text-muted m-l-sm">{{::item.time_create*1000 | date : 'dd/MM/yy HH:mm'}}</small>
+                                            </div>
+                                      </div>
+
+
+                                      <div class="pull-right">
+
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-repeat="val in list_feedback track by val.id">
+                          <a class="pull-left thumb-sm avatar m-l-n-md">
+                            <img ng-src="http://www.gravatar.com/avatar/{{User[val.user_id].md5_email}}?s=80&d=mm&r=g" alt="avatar" />
+                          </a>
+
+                          <div class="m-l-lg m-b-lg panel b-a" ng-class="{'bg-light lter': val.user_id == user_id}">
+                            <div class="panel-heading pos-rlt b-light">
+                              <span class="arrow arrow-light left"></span>
+                              <a href='javascript:;' ng-if="val.user_id == user_id">Tôi : </a>
+                              <a href='javascript:;' ng-if="val.user_id != user_id">{{::User[val.user_id].fullname || 'Người lạ'}}</a>
+                              <span class="label m-l-xs {{tab_action[val.source].bg}}">{{::tab_action[val.source].content}}</span>
+                              <span class="text-muted m-l-sm pull-right" tooltip-html-unsafe="{{val.time_create * 1000 | date: 'HH:mm dd-MM-yyyy'}}" data-toggle="tooltip" title="{{val.time_create * 1000 | date:'HH:mm dd-MM-yyyy'}}">
+                                {{::val.time_create_str || '1 phút'}} trước
+                              </span>
+                            </div>
+
+                            <div class="panel-body">
+                                <span>
+                                    <div markdown="badWords(val.content)"></div>
+                                    <small class="text-muted pull-right" ng-if="detail.log_view.time_create > 0"><i class="fa fa-fw fa-clock-o"></i> Xem {{::detail.log_view.time_create_str }} trước</small>
+                                </span>
+                                <div ng-repeat="v in val.attach" ng-if="val.attach">
+                                    <p><a class="text-info" href="{{link_storage}}{{v.link_tmp}}" target="_blank"> {{::v.name || 'File Name'}}</a></p>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+       </form>
+    </div>
+
+    <div class="col-sm-2 pull-right m-r bg-light dk b-r padder-xs-lr bg-auto text-sm" ng-if="detail.id">
+        <div class="form-horizontal wrapper-sm">
+            <div class="m-b-sm">
+                <p class="font-bold text-base text-title">Người tạo yêu cầu này</p>
+            </div>
+
+            <div class="clearfix">
+                <a class="pull-left thumb-sm avatar b-3x m-r-xs m-b-xs avatar" href="javascript:;">
+                    <div class="avatar-icon"><img ng-src="http://www.gravatar.com/avatar/{{User[detail.user_id].md5_email}}?s=80&d=mm&r=g" alt="avatar"></div>
+                </a>
+                <div class="clear">
+                    <div class="m-t-xs ">
+
+                    </div>
+                    <div class="m-t-xs">
+                        <i class="fa fa-circle text-success" ng-if="User[detail.user_id].is_newbie == true" title="Khách hàng mới" data-toggle="tooltip" tooltip-placement="top" tooltip="Khách hàng mới"></i>
+                        <!-- <i class="fa fa-circle text-primary" ng-if="User[detail.user_id].is_return == true"></i> -->
+                        
+                        <span class="custom">
+                
+                            <a onbeforesave="saveIdentifier(detail.user_id,$data)" editable-text="User[detail.user_id].identifier">
+                            ({{User[detail.user_id].identifier || "..."}})
+                            </a>
+
+                        </span> <strong class="text-success" ng-if="User[detail.user_id].loyalty != null">{{User[detail.user_id].fullname}}</strong> <span ng-if="User[detail.user_id].loyalty == null">{{User[detail.user_id].fullname}}</span>
+                    </div>
+                    <div class="text-muted"><a ng-click="call_action(User[detail.user_id].phone)">{{User[detail.user_id].phone}}</a></div>
+                </div>
+            </div>
+            <span>{{User[detail.user_id].email}}</span>
+
+            <div class="m-t-xs">
+                <a class="text-info" data-ng-click="openModalListOrder(detail.user_id)">
+                    <i class="fa fa-list"></i> Các vận đơn gần đây
+                </a>
+            </div>
+                <div class="form-group text-xs m-t-sm m-l-none" ng-if="log">
+                    <span class="font-bold">Lịch sử : </span><br />
+
+                    <div class="clearfix m-t-sm animated fadeIn" ng-repeat="val in log">
+                        <a class="pull-left thumb-sm avatar b-3x m-r-xs m-b-xs" href="javascript:;">
+                            <img ng-src="http://www.gravatar.com/avatar/{{User[val.user_id].md5_email}}?s=80&d=mm&r=g" alt="avatar">
+                        </a>
+                        <div class="clear">
+                            <div class="m-t-xs">
+                                {{::User[val.user_id].fullname}}
+                            </div>
+                            <div class="text-muted">{{::val.time_create_str}} trước</div>
+                        </div>
+                        <div class="m-t-sm" ng-if="val.type == 'extend_time_over'">
+                            Đã gia hạn thêm <span class="text-info">{{::val.new.time}} ngày</span>
+                        </div>
+                        
+                         <div class="m-t-sm" ng-if="val.type == 'type_process'">
+                            {{::config_action[val.type]}} 
+                        </div>
+
+                        <div class="m-t-sm" ng-if="val.type == 'priority'">
+                            {{::config_action[val.type]}} <span class="label" ng-class="list_priority[val.new.priority].bg" ng-if="detail.priority > 0">{{::list_priority[val.new.priority].name}}</span>
+                        </div>
+                        <div class="m-t-sm" ng-if="val.type == 'assign'">
+                            {{::config_action[val.type][val.new.active]}} <span class="text-info">{{::User[val.new.assign_id].fullname}}</span>
+                        </div>
+                        <div class="m-t-sm" ng-if="val.type == 'time_over'">
+                            {{::config_action[val.type]}} <br /><span ng-if="val.new.time_over > 0">tới {{(val.new.time_over) * 1000 | date:'HH:mm dd-MM-yyyy'}}</span>
+                        </div>
+                        <div class="m-t-sm" ng-if="val.type == 'status'">
+                            {{::config_action[val.type]}} <span class="label" ng-class="data_status[val.new.status].bg">{{::data_status[val.new.status].name}}</span>
+                        </div>
+                        <div class="m-t-sm" ng-if="val.type == 'case'">
+                            {{::config_action[val.type][val.new.active]}}
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="form-group text-xs m-t-sm m-l-none" ng-if="listTicketID">
+                    <span class="font-bold">Yêu cầu gần đây : </span><br />
+
+                    <div class="clearfix m-t-sm" ng-repeat="tick in listTicketID  track by tick.id" >
+                        <div class="clear" ng-click="show_detail(tick.id)">
+                            <div class="m-t-xs">
+                                <a ><span>{{$index + 1}}. #{{::tick.id}} - {{::tick.title | limitTo : 40}}</span></a>
+                            </div>
+                            <div class="m-t-xs" ng-if="tick.referCode.length > 0">
+                                <a class="text-info" ng-repeat="v in tick.referCode" >{{v.code}}<i ng-if="!$last">,</i> </a>
+                            </div>
+
+                        </div>
+
+                        <div>
+                             <div class="text-muted pull-left">{{::tick.time_create_str}} trước</div>
+                            <span class="label pull-right m-r" ng-class="data_status[tick.status].bg" >{{::data_status[tick.status].name}}</span>
+                        </div>
+                    </div>
+                </div>
+
+
+        </div>
+    </div>
+
+    <div ng-if="detail.id && (privilege == 2 || detail.status != 'CLOSED' || userInfo.group == 15 )" data-ng-include=" 'tpl/blocks/settings.html' " class="settings panel panel-default">
+    </div>
+</div>

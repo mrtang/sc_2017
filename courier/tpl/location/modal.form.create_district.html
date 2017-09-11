@@ -1,0 +1,26 @@
+
+          <div class="panel panel-default m-b-none">
+            <div class="panel-heading font-bold"><i class="fa fa-plus-circle"></i> Create New District <button class="pull-right close" ng-click="cancel()"><i class="fa fa-times"></i></button></div>
+            
+            <div class="panel-body">
+              <form class="form-horizontal form-validation">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">City</label>
+                  <div class="col-lg-9">
+                    <input type="text" class="input-sm form-control" ng-model="data.city_id" typeahead="state as state.city_name for state in list_city | filter:{city_name:$viewValue} | limitTo:8" placeholder="Tỉnh/Thành phố" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">District Name</label>
+                  <div class="col-lg-9">
+                    <input type="text" class="form-control" ng-model="data.district_name" placeholder="Enter District Name ... " />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-12">
+                    <button type="button" ng-click="Create(data)" ng-disabled="form.$invalid" class="btn btn-lg m-b-xs w-full btn-success"><i class="fa fa-edit"></i> Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>

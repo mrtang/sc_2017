@@ -1,0 +1,132 @@
+.shipchung_pas_button,.shipchung_cod_button{
+	background:url(http://api.shipchung.vn/v1.2/shipchung_v2.png) no-repeat !important;
+	width:184px !important;
+	height:39px !important;
+	display:block !important;
+	text-indent:-9999px !important;
+	position:relative !important;
+	top:-30px !important;
+	margin-left:15px !important;
+	transition: none !important;
+}
+a.shipchung_pas_button{
+	background-position: 0 0 !important;
+}
+a.shipchung_pas_button:hover{
+	background-position: 0 -38px !important;
+}
+a.shipchung_pas_button:active{
+	background-position: 0 -76px !important;
+}
+a.shipchung_cod_button{
+	background-position: -184px 0 !important;
+}
+a.shipchung_cod_button:hover{
+	background-position: -184px -38px !important;
+}
+a.shipchung_cod_button:active{
+	background-position: -184px -76px !important;
+}
+.shipchung_frame_v2{
+	border:1px solid #cccccc !important;
+	padding:10px 5px !important;
+	width:210px !important;
+    margin: 15px 0 0 !important;
+    text-align: left !important;
+}
+.shipchung_full{
+    height:110px !important;
+}
+.shipchung_tiny{
+	height:60px !important;
+}
+.shipchung_frame_v2 .shipchung_title_v2{
+	font-family:Arial, Helvetica, sans-serif !important;
+	color:#1b3561 !important;
+	font-size:13px !important;
+	font-style:italic !important;
+	background:#fff !important;
+	height:30px !important;
+	position:relative !important;
+	top:-25px !important;
+	left:0px !important;
+	padding:0 5px !important;
+}
+.shipchung_frame_v2 .shipchung_logo{
+	background:url(shipchung_v2.png) no-repeat ;
+	height:14px !important;
+	width:14px !important;
+	background-position:-504px 0 !important;
+	text-indent:-9999px !important;
+	display:block !important;
+	position:relative !important;
+	right:-200px !important;
+	top:-27px !important;
+}
+
+.shipchung_frame_v2 .shipchung_logo_nl{
+	background:url(http://api.shipchung.vn/v1.2/shipchung_v2.png) no-repeat;
+	width:45px !important;
+	height:53px !important;
+	float:left !important;
+	display:block !important;
+	text-indent:-9999px !important;
+}
+.shipchung_frame_v2 .shipchung_diamond{
+	background-position: -368px 0 ;
+}
+.shipchung_frame_v2 .shipchung_gold{
+	background-position: -414px 0 ;
+}
+.shipchung_frame_v2 .shipchung_silver{
+	background-position: -458px 0 ;
+}
+.shipchung_frame_v2 .shipchung_nonedb
+{
+    background-position: -368px -53px;
+}
+#ship_chung_nldb{position:relative; top:-35px}
+.shipchung_frame_v2 ul.shipchung_config{
+	font-size:12px !important;
+	padding:0 0 0 50px !important;
+	font-family:Arial, Helvetica, sans-serif !important;
+    margin:10px 0 0 0 !important;
+}
+
+.shipchung_frame_v2 ul.shipchung_config li{
+	list-style:none;
+	font-style:italic;
+    font-family:Arial, Helvetica, sans-serif;
+    background: none !important;
+    padding: 0px 0 !important;
+    text-align: left;
+    line-height: 20px;
+    border: none;
+    font-size:12px !important;
+}
+.shipchung_frame_v2 .shipchung_text_free{
+	font-size:13px !important;
+	color:#ff6500 !important;
+}
+.shipchung_frame_v2 .shipcchung_slogan{
+	font-size:12px !important;
+	font-family:Arial, Helvetica, sans-serif;
+	font-style:italic;
+	color:#003fa6 !important;
+	text-align:center;
+	position:relative;
+	top:-25px;
+}
+.shipchung_frame_v2 .shipchung_checkbox{
+	border:1px solid #d1d1d1 !important;
+	width:14px;
+	height:14px;
+	display:inline-block;
+}
+.shipchung_frame_v2 .shipchung_checkbox i{
+	background:url(http://api.shipchung.vn/v1.2/shipchung_v2.png) no-repeat;
+	background-position: -525px 0;
+	height:14px;
+	width:14px;
+	display:block;
+}

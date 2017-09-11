@@ -1,0 +1,58 @@
+<div class="modal-body wrapper-md">
+  <div class="row">
+    <div class="col-md-12">
+      	<h3 class="m-t-none m-b font-thin">Cập nhật trạng thái</h3>
+      	<p> </p>
+      	<form role="form" name="postmanForm" class="form-validation">
+        	<div class="row padder m-t-md">
+              <div class="form-group ">
+                <input type="email" placeholder="Email" class="form-control" ng-model="item.user.email">
+              </div>
+          </div>
+
+          <div class="row padder">
+                <div class="form-group ">
+                  <input type="text" placeholder="Số tiền" class="form-control" ng-model="item.amount">
+                </div>
+          </div>
+
+          <div class="row padder">
+                <div class="form-group">
+                  <input type="text" placeholder="Transaction Id" class="form-control" ng-model="item.transaction_id">
+                </div>
+          </div>
+
+          <div class="row padder">
+                <div class="form-group">
+                  <input type="text" placeholder="Refer code" class="form-control" ng-model="item.refer_code">
+                </div>
+          </div>
+          <div class="row padder">
+                <div class="form-group">
+                    <select class="form-control" ng-model="item.type">
+                      <option value="">Kiểu thanh toán</option>
+                      <option value="1">Ngân lượng</option>
+                      <option value="2">Ngân hàng</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row padder">
+                <div class="form-group">
+                    <select class="form-control" ng-model="item.status" ng-init="status = 'PROCESSING'">
+                      <option value="">Trạng thái</option>
+                      <option value="PROCESSING" selected="selected"> Đã thanh toán</option>
+                      <option value="WAITING">Chưa thanh toán</option>
+                    </select>
+                </div>
+            </div>
+
+          
+            <div class="row padder m-b-sm ">
+              <button class="btn btn-info" ng-click="updateCashin(item)">Xác nhận</button>
+              <button type="clear" class="btn btn-success" >Nhập lại</a>
+            </div>
+      	</form>
+    </div>
+  </div>
+</div>

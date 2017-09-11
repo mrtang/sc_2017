@@ -1,0 +1,114 @@
+ <div class="modal-header">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                  <h4 ng-if="!selectedItem.id">Tạo campaign</h4>
+                  <h4 ng-if="selectedItem.id">Cập nhật campaign</h4>
+                </div>
+            </div>
+        </div>
+        <form class="form-horizontal form-validation" name="frm_edit">
+            <div class="modal-body wrapper-md">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Kiểu giảm giá</label>
+                    <div class="col-lg-9">
+                        <select name="" id="" class="form-control" ng-model="saveData.discount_type" ng-init="saveData.discount_type = 1">
+                            <option value="1">Số tiền cố định</option>
+                            <option value="2">Theo phần trăm</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Giảm</label>
+                    <div class="col-lg-9">
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="" ng-model="saveData.discount">
+                          <span class="input-group-addon" id="basic-addon2" ng-if="saveData.discount_type == 1"> vnđ</span>
+                          <span class="input-group-addon" id="basic-addon2" ng-if="saveData.discount_type != 1">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Mã coupon</label>
+                    <div class="col-lg-9">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Mã coupons" ng-model="saveData.code">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" ng-disabled="genCodeLoading" ng-keypress="" ng-click="generation_code()"><i class="fa fa-refresh" ng-class="genCodeLoading ? 'fa-spin' : '' "></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Số lần có thể sử dụng/Coupon</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" placeholder="" ng-model="saveData.limit_usage" ng-disabled="saveData.unlimited_usage == 1" ng-init="saveData.limit_usage = 1">
+                        <label class="i-checks m-t-sm">
+                            <input type="checkbox" 
+                                 ng-checked="saveData.unlimited_usage == 1"
+                                 ng-true-value="1"  
+                                 ng-false-value="0"
+                                 ng-model="saveData.unlimited_usage"
+                                 /><i></i>
+                                Có thể dùng nhiều lần
+                        </label>
+
+                        <label class="i-checks m-t-sm">
+                            <input type="checkbox" 
+                                 ng-checked="saveData.inapp == 1"
+                                 ng-true-value="1"  
+                                 ng-false-value="2"
+                                 ng-model="saveData.inapp"
+                                 /><i></i>
+                                Chỉ sử dụng cho ứng dụng
+                        </label>
+
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Thành viên</label>
+                    <div class="col-lg-9">
+                        <label class="i-checks " ng-init="saveData.coupon_type = 1">
+                            <input type="checkbox" 
+                                 ng-checked="saveData.coupon_type == 1"
+                                 ng-true-value="1"  
+                                 ng-false-value="2"
+                                 ng-model="saveData.coupon_type"
+                                 /><i></i>
+                                Tất cả thành viên có thể sử dụng
+                        </label>
+                        <div class="input-group" style="width: 100%" ng-if="saveData.coupon_type != 1">
+                          <tags-input ng-model="saveData.seller" add-from-autocomplete-only='true' display-property="name" style="width: 100%" placeholder="Nhập email người dùng">
+                            <auto-complete source="suggestUser($query)"></auto-complete>
+                          </tags-input>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Thời gian hết hạn</label>
+                    <div class="col-lg-9">
+                        <div class="dropdown">
+                          <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                            <div class="input-group"><input type="text" class="form-control" value="{{saveData.time_expired | date:'yyyy-MM-dd HH:mm a'}}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="saveData.time_expired" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" required/>
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" ng-disabled="frm_edit.$invalid || frm_submit" ng-click="createCoupons(saveData)"><span ng-if="selectedItem.id">Cập nhật</span><span ng-if="!selectedItem.id">Thêm mới</span></button>
+                <button class="btn btn-info" ng-click="close()">Đóng</button>
+            </div>
+        </form>

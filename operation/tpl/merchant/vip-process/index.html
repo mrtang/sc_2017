@@ -1,0 +1,334 @@
+<style>
+    .popover{
+        max-width: 600px;
+    }
+</style>
+<div ng-controller="VipProcessCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <h1 class="m-n font-thin h3 text-black"><i class="fa fa-star text-info"></i> Đơn hàng cần xử lý của khách hàng VIP</h1>
+    </div>
+    <div class="wrapper-sm">
+        <div ng-if="(total_group[41] > 0) || (total_group[20] > 0 || total_over_weight > 0) || total_group[15] > 0" class="alert alert-danger m-b-none text-base">
+            <span ng-if="total_group[20] > 0">Có {{total_group[20]}} đơn hàng Chờ Xác Nhận Chuyển hoàn cần xử lý <br /></span>
+            <span ng-if="total_group[41] > 0">Có {{total_group[41]}} đơn hàng Phát không thành công cần xử lý <br /></span>
+            <span ng-if="total_group[15] > 0">Có {{total_group[15]}} đơn hàng Lấy không thành công cần xử lý <br /></span>
+            <span ng-if="total_over_weight > 0">Có {{total_over_weight}} đơn hàng vượt cân<br /></span>
+<!--             <a ng-if="total_group[41] > 0" class="text-info" target="_blank" href="http://www.shipchung.vn/huong-dan-xu-ly-don-hang-o-trang-thai-phat-khong-thanh-cong/">Xem hướng dẫn cách xử lý</a>
+         -->        </div>
+    </div>
+
+
+    <div class="col-md-12 wrapper-sm">
+        <tabset class="tab-inside m-t m-b-none">
+            <tabset class="tab-container tab-inside text-sm" justified="true">
+                    
+                    <tab ng-click="change_tab(41,'')">
+                        <tab-heading>Phát không thành công <small>( {{total_group[41] || 0}} )</small>
+                            </tab-heading>
+                    </tab>
+                <tab ng-click="change_tab(15,'')">
+                    <tab-heading>Lấy không thành công <small>( {{total_group[15] || 0}} )</small>
+                        </tab-heading>
+                </tab>
+
+                <tab ng-click="change_tab(20,'')">
+                    <tab-heading>Chờ xác nhận chuyển hoàn <small>( {{total_group[20] || 0}} )</small>
+                    </tab-heading>
+                </tab>
+                    <tab ng-click="change_tab('OVERWEIGHT','')">
+                        <tab-heading>Vượt cân 
+                            <small>( {{total_over_weight || 0}} )</small></tab-heading>
+                    </tab>
+                </tabset>
+        </tabset>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="tab-container">
+                <div class="tab-content tab-fake">
+                <button class="btn btn-primary m-b pull-right "ng-click="exportExcel(isTabOverweight)">Xuất Excel</button>
+                <div class="clearfix"></div>
+                    <div class="panel panel-default">
+                        <!-- Single button -->
+
+                        <div class="panel-body">
+                            <div class="tab-container">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <th >
+                                            <label ng-show="list_data.length" class="i-checks i-checks-sm" ng-if="isTabOverweight">
+                                                <input type="checkbox"
+                                                   ng-change="toggleSelectionAll(checkall)"
+                                                   ng-checked="true"
+                                                   ng-true-value="1"
+                                                   ng-false-value="0"
+                                                   ng-model="checkall"
+                                                    /><i></i>
+                                            </label>
+                                        </th>
+                                        <th width="410px">
+                                           <i class="fa fa-barcode"></i>&nbsp;&nbsp;&nbsp;Mã vận đơn
+                                        </th>
+                                        <th width="220px">
+                                            <i class="fa fa-clock-o"></i> Thời gian
+                                        </th>
+                                        
+                                        <th style="min-width:230px" >
+                                            <i class="fa fa-home"></i> Nơi nhận
+                                        </th>
+                                        <!-- <th width="10%">
+                                            <i class="fa fa-info"></i> Thông tin sản phẩm
+                                        </th> -->
+                                       
+                                        <th  width="220px">
+                                            <i class="fa fa-exclamation"></i> Trạng thái
+                                        </th>
+                                        <th ng-if="isTabOverweight">
+                                            <i class="fa fa-briefcase"></i> Trọng lượng mới/ trọng lượng cũ (g)
+                                        </th>
+
+                                        
+                                        <th width="220px">
+                                            <i class="fa fa-history"></i> Lịch sử
+                                        </th>
+
+                                        
+
+                                        <th width="220px;">
+                                            <i class="fa fa-edit"></i> Xử lý
+                                        </th>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="waiting">
+                                            <td colspan="7" class="text-center">
+                                                    <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="!list_data.length && !waiting">
+                                            <td colspan="7" class="text-center">
+                                                Không có vận đơn được tìm thấy
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in list_data" >
+                                            <td>
+                                                <strong>{{item_stt + $index + 1}}</strong>
+                                                <div class="checkbox" ng-if="isTabOverweight">
+                                                    <label class="i-checks">
+                                                        <input type="checkbox"
+                                                               ng-model="check"
+                                                               ng-change="toggleSelectionOrder(item.tracking_code)"
+                                                               ng-checked="check_list(item.tracking_code)"
+                                                                />
+                                                        <i></i>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    <a class="label bg-light text-base text-info" ui-sref="app.lading_detail({sc_code:item.tracking_code})" target="_blank" tooltip-placement="bottom" tooltip-html-unsafe="{{genTooltipProductInfo(item)}}">
+                                                    {{item.tracking_code}}
+                                                    </a>
+                                                </p>
+                                                <!-- <p>
+                                                        <span class=" text-xs " popover-template="popoverTemplate" popover-trigger="mouseenter" popover-title="Lịch trình đơn hàng gần nhất" class="btn btn-default" ng-mouseover="onMouseOverPop($index)">
+                                                        Xem hành trình
+                                                    </span>
+                                                
+                                                </p> -->
+                                                <p>
+                                                    <i class="fa " ng-class="{'fa-truck': item.service.id == 1,'fa-plane': item.service.id != 1}"></i> {{courier[item.courier_id] || 'Hãng vận chuyển'}}
+                                                </p>
+                                                 
+
+                                            </td>
+                                            <td>
+                                               <p> {{ item.time_update > 0 ? (item.time_update*1000  | date:"dd-MM-yyyy  HH:mm") : ''}}</p>
+                                               <p>
+                                                    <strong style="color:rgb(255, 97, 97)" ng-if="processTimer(item).isExpired" tooltip="Shipchung sẽ tự động duyệt chuyển hoàn đơn hàng trong 24 giờ tới.">Đã quá hạn xử lý đơn hàng</strong>
+
+                                                    <strong style="color:rgb(255, 97, 97)" ng-if="!processTimer(item).isExpired" tooltip="Bạn có 24h để xử lý đơn hàng này ,tính từ thời điểm Shipchung thông báo.">Còn {{processTimer(item).diff}}h nữa để xử lý !</strong>
+                                               </p>
+                                            </td>
+                                            <td>
+                                                {{item.to_name | limitTo : 30}} <br /> {{item.to_phone | phone}}<br />
+                                                {{item.to_order_address.address}} <br/>{{district[address[item.to_address_id].province_id] || 'Quận/Huyện'}}, {{city[address[item.to_address_id].city_id] || 'Tỉnh/Thành Phố'}}
+                                            </td>
+                                            <!-- <td>
+                                                <i class="fa fa-shopping-cart"></i> {{item.product_name | limitTo : 30 || 'Tên sản phẩm'}}<br />
+                                                <i class="fa fa-tags"></i> {{item.total_amount | vnNumber}} đ<br />
+                                                <i class="fa fa-shopping-cart"></i> {{item.total_weight | vnNumber}} gram
+                                            </td> -->
+                                            
+
+                                            <td>
+                                                <p >
+
+                                                    <span class="label text-xs {{list_color[list_status[item.status]]}}" popover-template="popoverTemplate" popover-trigger="mouseenter" popover-title="Lịch trình đơn hàng gần nhất" class="btn btn-default" ng-mouseover="onMouseOverPop(item)">
+                                                        {{(item.meta_status.name.split('/').length > 1) ? item.meta_status.name.split('/')[1] :  item.meta_status.name}}&nbsp;
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </span>
+
+                                                    
+                                                </p>
+                                                <p ng-if="isTabOverweight">
+                                                    <span ng-if="(item.total_weight - item.over_weight) > 0" class="label text-xs label-info">Vận đơn vượt cân</span>
+
+                                                    <span ng-if="(item.total_weight - item.over_weight) < 0"  class="label text-xs label-info">
+                                                        Vận đơn giảm cân
+                                                    </span>
+
+                                                </p>
+                                            </td>
+
+                                            <td ng-if="isTabOverweight">
+                                                {{item.total_weight}} / {{(item.total_weight - item.over_weight)}} <br/>
+                                                <strong>Phí VC : <span ng-if="(item.total_weight - item.over_weight) < 0">-</span> {{item.order_detail.sc_pvk | number}} đ
+                                                </strong>
+                                            </td>
+                                           
+
+                                            <td>
+                                                <a tooltip-placement="bottom" tooltip-html-unsafe="{{genTooltip(item)}}"><p ng-if="item.order_process.length > 0" >
+                                                <span>{{item.order_process[0].time_create*1000 | date:"dd-MM-yyyy HH:mm"}}</span> <br>
+                                                    {{item.order_process[0].action}} <!-- ({{(item.order_process[0].status) == 1 ? 'Chưa xử lý' : 'Đã xử lý'}}) -->
+                                                </p>
+
+                                                </a>
+
+                                                <p ng-if="!item.order_process.length > 0">
+                                                    Không có lịch sử
+                                                </p>
+                                                
+                                            </td>
+                                            <td>
+                                                <div class="btn-group m-b-sm ">
+                                                    <div class="btn-group dropdown btn-action" dropdown>
+                                                            
+                                                        <button ng-if="isTabOverweight" type="button" class="btn bg-orange" ng-click="AcceptOverWeight(item)"><span ><i class="fa fa-cube icon"></i> Đồng ý vượt cân</span></button>
+
+                                                        <button ng-if="listGroupStatus[0] == 41" type="button" class="btn bg-orange" ng-click="confirm_report_cancel(item, 1)"><span ><i class="fa fa-reply-all icon"></i> Yêu cầu giao lại</span></button>
+
+                                                        <button ng-if="listGroupStatus[0] == 15" type="button" class="btn bg-orange" ng-click="confirm_pickup(item)"><span ><i class="fa fa-share icon"></i> Yêu cầu lấy lại đơn hàng</span></button>
+
+                                                        <button ng-if="listGroupStatus[0] == 20" type="button" class="btn bg-orange" ng-click="confirm_report_cancel(item, 2)"><span ><i class="fa fa-paper-plane icon"></i> Xác nhận chuyển hoàn</span></button>
+
+
+                                                        <button class="btn bg-orange dropdown-toggle" type="button" aria-haspopup="true" data-toggle="dropdown" aria-expanded="false" ng-disabled="processingAction" dropdown-toggle>
+                                                            <span class="caret"></span>
+                                                        </button>
+
+
+                                                        <ul class="dropdown-menu" ng-if="isTabOverweight">
+                                                            <!-- <li><a ng-click="AcceptOverWeight(item)"><i class="fa fa-cube icon"></i> Xác nhận vượt cân</a></li> -->
+
+                                                            <li ng-controller="TicketCreateCtrl" ><a ng-click="open_popup('', item.tracking_code)"><i class="fa fa-ticket"></i> Gửi yêu cầu / khiếu nại</a></li></ul>
+
+
+                                                        <ul class="dropdown-menu" ng-if="listGroupStatus[0] == 41">
+                                                            
+                                                            <li><a ng-if="listGroupStatus[0] == 41" ng-click="confirm_report_cancel(item, 1)"><i class="fa fa-truck"></i> Yêu cầu giao lại</a></li> 
+
+                                                            <li><a ng-if="listGroupStatus[0] == 41" ng-click="confirm_update_contact(item, 1)"><i class="fa fa-edit"></i> Cập nhật liên lạc</a></li> 
+
+                                                            <li ng-controller="TicketCreateCtrl"><a ng-click="open_popup('', item.tracking_code)"><i class="fa fa-ticket"></i> Gửi yêu cầu / khiếu nại</a></li>
+                                                                                                                     
+                                                            <li><a href="javascript:;" ng-click="confirm_report_cancel(item, 2)"><i class="fa fa-refresh"></i> Xác nhận chuyển hoàn</a></li> 
+                                                        </ul>
+
+
+                                                        <ul class="dropdown-menu" ng-if="listGroupStatus[0] == 15">
+                                                            <!-- <li><a ng-click="confirm_pickup(item)"><i class="fa fa-truck"></i> Yêu cầu lấy lại đơn hàng</a></li> -->
+
+                                                            <li><a ng-click="confirm_order_cancel(item)"><i class="fa fa-truck"></i> Hủy đơn hàng</a></li>
+
+
+                                                            <li ng-controller="TicketCreateCtrl"><a ng-click="open_popup('', item.tracking_code)"><i class="fa fa-ticket"></i> Gửi yêu cầu / khiếu nại</a></li>
+                                                        </ul>
+
+
+
+                                                        <ul class="dropdown-menu" ng-if="listGroupStatus[0] == 20">
+                                                            
+                                                            <!-- <li><a href="javascript:;" ng-click="confirm_report_cancel(item, 2)"><i class="fa fa-refresh"></i> Xác nhận chuyển hoàn</a></li>  -->
+                                                            
+                                                            <li ng-controller="TicketCreateCtrl"><a ng-click="open_popup('', item.tracking_code)"><i class="fa fa-ticket"></i> Gửi yêu cầu / khiếu nại</a></li>
+                                                            
+                                                            <li><a ng-click="confirm_report_cancel(item, 1)"><i class="fa fa-truck"></i> Yêu cầu giao lại</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <footer class="panel-footer">
+                          <div class="row" ng-show="list_data.length">
+                            <div class="col-sm-3 wrapper-md pull-left">
+
+                                <button class='btn btn-success' ng-if="isTabOverweight" ng-disabled="mutil_accept_process == true || check_box_order.length == 0  " ng-click="mutil_accept_over_weight()">Xác nhận vượt cân {{check_box_order.length}} vận đơn đã chọn</button><div class="clearfix"></div>
+                                <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> vận đơn
+                            </div>
+                            <div class="col-sm-4 text-right text-center-xs pull-right">
+                                <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(isTabOverweight)"></pagination>
+                            </div>
+                          </div>
+                        </footer>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div class="form-group">
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th width="110px">Thời gian</th>
+                  <th>Trạng thái</th>
+                  <th>Địa điểm</th>
+                  <th>Ghi chú </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr ng-repeat="item in popoverData">
+                  <td>
+                  {{item.time_create * 1000 | date:'dd-MM-yyyy  HH:mm'}}
+                  </td>
+                  <td>
+                  {{status[item.status]}}
+                  </td>
+                  <td>
+                  {{item.city_name}}
+                  </td>
+                  <td>
+                  {{item.note}}
+                  </td>
+                </tr>
+                <tr ng-if="popoverData.length == 0">
+                    <td colspan="4" class="text-center" ng-if="statusLoading"><i class="text-2x fa fa-spinner fa-spin"></i> <br/>Đang tải dữ liệu</td>
+                    <td colspan="4" class="text-center" ng-if="!statusLoading">Không có hành trình</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    </script>
+    
+    <script id="PopupCreate.html" type="text/ng-template">
+        <div ng-include="'tpl/ticket/modal.create.ticket.html'"></div>
+    </script>
+
+</div>

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator/.gitignore
+END
+.gitattributes
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator/.gitattributes
+END
+ChangeLog.markdown
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator/ChangeLog.markdown
+END
+package.xml
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator/package.xml
+END
+README.markdown
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator/README.markdown
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator/build.xml
+END
+composer.json
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator/composer.json
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn_zplatform/!svn/ver/3063/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-file-iterator/LICENSE
+END

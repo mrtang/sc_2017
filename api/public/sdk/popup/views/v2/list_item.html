@@ -1,0 +1,19 @@
+<div class="col-md-12 inner">
+
+    <ul class="media-list">
+      <li class="media" ng-repeat="item in listItems">
+        <a class="pull-left" href="{{item.link}}" rel="nofollow" target="_blank">
+            <img class="media-object" ng-src="{{item.Image}}" alt=""/>
+        </a>
+        <div class="media-body">
+          <a href="{{item.Link}}" rel="nofollow" target="_blank">
+            <h5 class="media-heading">{{item.Name}}</h5>
+          </a>
+          
+          <br/>
+          <span class="pull-left"><span translate>QUANTITY</span> : {{item.Quantity | number}}</span>
+          <span class="pull-right">{{item.Price | number}}đ</span>
+        </div>
+      </li>
+    </ul>
+</div>

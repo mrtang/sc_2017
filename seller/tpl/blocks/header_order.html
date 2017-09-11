@@ -1,0 +1,143 @@
+      <!-- navbar header -->
+      <div class="navbar-header bg-white padder-xs-lr text-center">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <style>
+        .logohedeBM{
+        margin-left: -5px;
+        }
+        .logoasia {width: 100%;}
+        </style>
+        <a href="#/" class="navbar-brand text-lt no-padder">
+          <!-- <img class="max-height-none" src="{{site.logo_heard}}" alt="." /> -->
+          <img ng-if="keyLang=='vi'"  class="max-height-none" ng-src="{{site.login.logo}}" style="max-height: 100px;max-width: 157px;" ng-class="isShipchung ? '' : BMasia ? 'logoasia' :'logohedeBM' "  alt="." />
+          <img ng-if="keyLang!='vi'" ng-src="{{site.login.logo_en}}" alt="{{app.name}}" style="max-height: 100px;max-width: 140px;"/>
+        </a>
+        <!-- / brand -->
+      </div>
+
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse navbar-collapse box-shadow bg-white-only">
+        <div class="row bg-white-only m-r-n-sm" ng-class="{'pos-rlt pull-right w-98': app.settings.asideFolded}" style="margin-right: 2px;">
+            <!-- buttons -->
+            <div class="nav navbar-nav hidden-xs">
+              <a href class="btn no-shadow navbar-btn" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
+                <i class="fa {{app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
+              </a>
+            </div>
+            <!-- / buttons -->
+            
+            <!-- link and dropdown -->
+            <ul class="nav navbar-nav ">
+
+                <li class="dropdown-submenu">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" ng-if="!$state.includes('order.management')">  
+                    <span  class="" ><i class="fa fa-list"></i> <!-- Đơn hàng -->{{'nav_donhang' | translate}} {{ keyLang == 'vi' ? list_time[time_start] : list_time_en[time_start]}} <span class="caret"></span>   </span> 
+                    <!-- <span  class="hidden-md hidden-sm" ng-if="$state.includes('order.management')"><i class="fa fa-search"></i> Tìm kiếm nâng cao</span>  -->
+                    </a>
+                    <ul class="dropdown-menu left-none" role="menu">
+                        <li>
+                            <a ng-click="change_time('7day')" ui-sref="order.list({time_start:'7day'})" ui-sref-opts="{reload: true}">
+                                <i class="fa fa-list"></i> {{'nav_donhang7ngay' | translate}}<!-- Đơn hàng 7 ngày qua --> 
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a ng-click="change_time('14day')" ui-sref="order.list({time_start:'14day'})" >
+                                <i class="fa fa-list"></i> {{'nav_donhang14ngay' | translate}} <!-- Đơn hàng 14 ngày qua -->
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a ng-click="change_time('month')" ui-sref="order.list({time_start:'month'})" ui-sref-opts="{reload: true}">
+                                <i class="fa fa-list"></i>{{'nav_donhang1thang' | translate}}<!--  Đơn hàng 1 tháng trước -->
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a ng-click="change_time('3months')" ui-sref="order.list({time_start:'3months'})" ui-sref-opts="{reload: true}">
+                                <i class="fa fa-list"></i> {{'nav_donhang3thang' | translate}}<!-- Đơn hàng 3 tháng trước -->
+                            </a>
+                        </li>
+
+                        
+                    </ul>
+                </li>
+
+                <li class="dropdown-submenu">
+                    <a tabindex="-1"><i class="fa fa-pencil fa-lg"></i> {{'HEAD_taodonhang' | translate}}<!-- Tạo đơn hàng --> <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu left-none">
+                        <li ui-sref-active="active" ng-if="userInfo.fulfillment == 1"><a ui-sref="order.create_once_global_bm">{{'ORDERC_taodonhang' | translate}}</a></li>
+                        <li ui-sref-active="active" ng-if="userInfo.fulfillment == 0"><a ui-sref="order.create_once_global">{{'ORDERC_taodonhang' | translate}}</a></li>
+                        <!-- <li ui-sref-active="active" ng-if="userInfo.fulfillment == 0"><a ui-sref="order.create_once">{{'HEAD_taodonhangCu' | translate}}</a></li> -->
+                        
+                        <li ui-sref-active="active"><a ui-sref="order.upload1"><span>{{'HEAD_taonhieudonExcel' | translate}} <!-- Tạo nhiều đơn hàng (Excel) --></span></a></li>
+                    </ul>
+                </li>
+                <!-- <li class="dropdown-submenu">
+                    <a ui-sref="order.create_multi" tabindex="-1"><i class="fa fa-pencil fa-lg"></i> Tạo nhiều đơn hàng <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu left-none">
+                        <li ui-sref-active="active"><a ui-sref="order.create">Tạo vận đơn</a></li>
+                        <li ui-sref-active="active"><a ui-sref="order.create_multi">Tạo nhiều đơn hàng</a></li>
+                        <li ui-sref-active="active"><a ui-sref="order.upload1"><span>Tạo nhiều đơn hàng (Excel)</span></a></li>
+                    </ul>
+                </li> -->
+
+                <!-- <li class="dropdown-submenu hidden-md hidden-sm">
+                    <a ui-sref="order.create" tabindex="-1"><i class="fa fa-question fa-lg text-danger"></i> Hướng dẫn <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu left-none">
+                        <li><a href="http://www.shipchung.vn/wp-content/uploads/2015/02/Quy-dinh-van-chuyen-shipchung.vn_.pdf" target="_blank">Chính sách và quy định vận chuyển <strong class="text-danger">*</strong></a></li>
+                        <li><a href="https://www.shipchung.vn/wp-content/uploads/2015/03/QuyDinhThanhToanShipChung-2015.pdf" target="_blank">Quy định thanh toán <strong class="text-danger">*</strong></a></li>
+                        <li><a href="http://www.shipchung.vn/huong-dan-nap-tien-vao-tai-khoan-shipchung-tren-thong-moi-tu-1222015/" target="_blank">Hướng dẫn nạp tiền vào tài khoản ShipChung</a></li>
+                        <li><a href="http://www.shipchung.vn/quy-dinh-duyet-van-don/" target="_blank">Quy trình duyệt đơn hàng</a></li>
+                        <li><a href="https://www.shipchung.vn/wp-content/uploads/Giai_thich_so_du_tai_khoan.pdf" target="_blank">Giải thích số dư trong tài khoản</a></li>
+                        <li><a href="http://www.shipchung.vn/huong-dan-tao-yeu-caukhieu-nai/" target="_blank">Hướng dẫn tạo yêu cầu khiếu nại</a></li>
+                        <li><a href="https://www.shipchung.vn/ket-noi-shipchung-vn-tren-haravan-vn/" target="_blank">Kết nối Shipchung trên Haravan.vn</a></li>
+                        <li><a href="http://www.shipchung.vn/wp-content/uploads/2015/03/Quy-định-xuất-hóa-đơn.pdf" >Quy định xuất hóa đơn</a></li>
+                        <li><a href="http://www.shipchung.vn/huong-dan-xu-ly-don-hang-o-trang-thai-phat-khong-thanh-cong/" target="_blank">Hướng dẫn xử lý đơn hàng không thành công</a></li>
+                    </ul>
+                </li> -->
+            </ul>
+
+
+            <!-- / link and dropdown -->
+            
+            <!-- search form -->
+            <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search" >
+              <div class="form-group">
+                <div class="input-group">
+                  <input    type="text"
+                            class="form-control input-sm bg-light no-border rounded padder"
+                            ng-model="root_search"
+                            placeholder="{{'HEAD_madonhang' | translate}}..."
+                  />
+                  
+                  <span class="input-group-btn">
+                    <a ui-sref="detail({code:root_search})" ng-disabled="!root_search" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></a>
+                  </span>
+                </div>
+              </div>
+            </form>
+            <!-- / search form -->
+
+            <!-- nabar right -->
+            <div data-ng-include=" 'tpl/blocks/user_nav.html' ">
+
+            <!-- / navbar right -->
+        </div>
+      </div>
+
+      <script id="ModalCashInCtrl.html" type="text/ng-template">
+          <div ng-include="'tpl/modal.cash_in.html'"></div>
+      </script>
+
+      </div>
+      <div data-ng-include=" 'tpl/blocks/notice_order_process.html' "></div>
+<div data-ng-include=" 'tpl/blocks/notice_verify.html' "></div>

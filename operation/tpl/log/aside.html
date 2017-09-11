@@ -1,0 +1,29 @@
+<div class="aside-wrap">
+  <div class="navi-wrap">
+    <!-- user -->
+    <div class="clearfix hidden-xs text-center hide" id="aside-user">
+      <div class="dropdown wrapper">
+        <a ui-sref="app.page.profile">
+          <span class="thumb-lg w-auto-folded avatar m-t-sm">
+            <img ng-src="{{userInfo.avatar}}" class="img-full" alt="{{userInfo.fullname}}'s Avatar" />
+          </span>
+        </a>
+        <a href class="dropdown-toggle hidden-folded">
+          <span class="clear">
+            <span class="block m-t-sm">
+              <strong class="font-bold text-lt">{{userInfo.fullname}}</strong> 
+              <b class="caret"></b>
+            </span>
+            <span class="text-muted text-xs block">Art Director</span>
+          </span>
+        </a>
+      </div>
+      <div class="line dk hidden-folded"></div>
+    </div>
+    <!-- / user -->
+
+    <!-- nav -->
+    <nav ui-nav class="navi" ng-include="'tpl/log/nav.html'"></nav>
+    <!-- nav -->
+  </div>
+</div>

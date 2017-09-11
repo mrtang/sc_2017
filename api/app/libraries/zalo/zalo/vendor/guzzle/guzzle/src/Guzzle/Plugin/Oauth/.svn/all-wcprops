@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Oauth
+END
+composer.json
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Oauth/composer.json
+END
+OauthPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Plugin/Oauth/OauthPlugin.php
+END

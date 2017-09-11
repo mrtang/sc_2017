@@ -1,0 +1,71 @@
+<div class="panel no-border" data-ng-init="verify_show == false;limit =10">
+    <div ng-click="verify_show = !verify_show;limit = 10" class="panel-heading wrapper b-b b-light bg-info text-white pointer">
+          <span class="text-xs text-white pull-right">
+                <i ng-show="!verify_show" class="fa fa-eye"></i>  <i class="fa fa-eye-slash" ng-show="verify_show"></i>
+          </span>
+        <h4 class="font-thin m-t-none m-b-none">Bảng kê đối soát</h4>
+    </div>
+    <div class="table-responsive">
+        <table class="table-condensed table-hover w-full" ng-show="verify_show">
+            <thead>
+            <tr>
+                <th class="text-center">Mã</th>
+                <th>Số dư</th>
+                <th>Phí</th>
+                <th>Thu hộ</th>
+                <th>Giữ</th>
+                <th>Thực nhận</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in item.verify" ng-show="$index <= limit" ng-init="freeze = it.balance_available - it.config_balance">
+                <td class="text-center">
+                    <strong>#{{it.id}}</strong>
+                    <p class="text-info">{{ it.time_start * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                    <p class="text-success">{{ it.time_end * 1000  | date : "dd-MM-yyyy HH:mm"}}</p>
+                </td>
+                <td>
+                    {{it.balance | vnNumber}}
+                </td>
+                <td>
+                    {{ it.total_fee | vnNumber}}
+                </td>
+                <td>
+                    {{ it.total_money_collect | vnNumber}}
+                </td>
+                <td>
+                    {{((freeze < 0 && it.type != 2) ? -1*(freeze) : 0) | vnNumber}}
+                    <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="Số dư tạm tính : {{it.balance_available | vnNumber}} <br /> Khách cấu hình tạm giữ : {{it.config_balance | vnNumber}}"></i>
+                </td>
+                <td>
+                    <span ng-if="it.type == 2">
+                        <!-- ko được thanh toán - cập nhật số dư -->
+                        {{(it.total_money_collect - it.total_fee) | vnNumber}}
+                    </span>
+                    <span ng-if="it.type != 2">
+                        <!-- Thanh toán -->
+                        {{(it.balance + it.total_money_collect - it.total_fee + ((freeze < 0) ? freeze : 0)) | vnNumber}}
+                    </span>
+                    <br />
+                    <span  class="label {{ list_status_verify[it.status].color }}"> {{list_status_verify[it.status].text || ''}}</span>
+                    <br />
+                    <span ng-show="it.type != 2 && it.type_payment == 2" class="label bg-info" > Ví Vimo </span>
+                    <span ng-show="it.type != 2 && it.type_payment == 1"  class="label bg-warning" > Ngân lượng </span>
+                    <span  ng-show="it.type == 2" class="label bg-success">Đã ghi nhận số dư</span>
+
+                </td>
+            </tr>
+            <tr ng-show="item.verify.length > 0">
+                <td colspan="4"></td>
+                <td colspan="2" class="text-right">
+                    <a class="text-info" data-ng-show="limit == 10" data-ng-click="limit = 30">Xem thêm</a>
+                    <a class="text-info" data-ng-show="limit == 30" data-ng-click="limit = 10">Thu gọn</a>
+                </td>
+            </tr>
+            <tr ng-show="item.verify.length == 0">
+                <td colspan="30">Không có dữ liệu</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

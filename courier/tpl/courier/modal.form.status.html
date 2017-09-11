@@ -1,0 +1,61 @@
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="modal-title">Courier Status</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-body wrapper-md">
+        <div class="row">
+            <div class="col-md-12 badge-empty bg-light wrapper-xs">
+                <form class="form-inline" name="AddForm" ng-submit="add(data)" role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" ng-model="data.name" placeholder="Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="code" ng-model="data.code" placeholder="Code" required />
+                    </div>
+                    <div class="checkbox m-l m-r-xs">
+                      <label class="i-checks">
+                        <input type="checkbox" ng-model="data.active" ng-checked="data.active == 1" ng-false-value="0" ng-true-value="1" /><i></i> Active
+                      </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success pull-right" ng-disabled='AddForm.$invalid || frm_add'><i class="fa fa-check"></i> Add</button>
+                    
+                </form>
+            </div>
+            
+            <div class="col-md-12 no-padder m-t-md">
+                <div class="table-responsive">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr class="bg-light lt">
+                    <th class="text-left">Status</th>
+                    <th class="text-left">Name</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="value in list_courier_status">
+                    <td class="text-left">
+                        <div class="checkbox">
+                          <label class="i-checks" >
+                            <input type="checkbox" ng-model="value.active" ng-change="change(value)" ng-checked="value.active == 1" ng-true-value="1" ng-false-value="0" />
+                            <i></i>
+                          </label>
+                         <span class="m-r-sm"><a href="javascript:;" editable-text="value.code" onbeforesave="change(value)">{{value.code}}</a></span>
+                        </div>  
+                    </td>
+                    <td class="text-left"><a href="javascript:;" editable-text="value.name" onbeforesave="change(value)">{{ value.name }}</a></td>
+                    <td class="text-center">
+                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="del(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+        </div>
+    </div>

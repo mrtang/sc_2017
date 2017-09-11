@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Http/Exception
+END
+ExceptionTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Http/Exception/ExceptionTest.php
+END
+MultiTransferExceptionTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Http/Exception/MultiTransferExceptionTest.php
+END
+CurlExceptionTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Http/Exception/CurlExceptionTest.php
+END

@@ -1,0 +1,174 @@
+<div ng-controller="CourierEstimateCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-list text-info"></i> Thời gian giao hàng dự kiến</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.service" ng-options="key as value for (key , value) in service">
+                                        <option value="">Dịch vụ</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control" ng-model="frm.from_city" ng-options="item.id as item.city_name for item in list_city">
+                                        <option value="">Tỉnh/Thành Phố gửi</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control" ng-model="frm.to_city" ng-options="item.id as item.city_name for item in list_city">
+                                        <option value="">Tỉnh/Thành Phố nhận</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.courier_id">
+                                        <option value="">Hãng vận chuyển</option>
+                                        <option ng-repeat="item in list_courier" value="{{item.id}}">{{item.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control" ng-model="frm.from_district">
+                                        <option value="">Quận/Huyện</option>
+                                        <option ng-repeat="item in list_district[frm.from_city]" value="{{item.id}}">{{item.district_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control" ng-model="frm.to_district">
+                                        <option value="">Quận/Huyện</option>
+                                        <option ng-repeat="item in list_district[frm.to_city]" value="{{item.id}}">{{item.district_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6 wrapper" ng-if="check_privilege('PRIVILEGE_CONFIG','export')">
+                                <button type="button" class="btn m-b-xs btn-success pull-right" ng-disabled="waiting_export" ng-click="exportExcel('export')">
+                                    <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                    <i ng-show="waiting_export" class="fa fa-spinner fa-spin"></i>
+                                    Xuất Excel
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="tab-container">
+                        <table class="table-condensed table-hover w-full">
+                            <thead>
+                                <td>
+                                    #
+                                </td>
+                                <td>
+                                    <i class="fa fa-truck"></i> Hãng vận chuyển
+                                </td>
+                                <td>
+                                    Dịch vụ
+                                </td>
+                                <td>
+                                    Điểm đi
+                                </td>
+                                <td>
+                                    Điểm đến
+                                </td>
+                                <td>
+                                    Cam kết HVC
+                                </td>
+                                <td>
+                                    Cam kết SC
+                                </td>
+                                <td>
+                                    Độ ưu tiên
+                                </td>
+                                <td>
+                                    Trạng thái
+                                </td>
+                            </thead>
+                            <tbody class="b-b">
+                                <tr ng-show="waiting">
+                                    <td colspan="30" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tr>
+                                <tr ng-show="totalItems == 0 && !waiting">
+                                    <td colspan="30" class="text-center">
+                                        Không có dữ liệu
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="item in list_data">
+                                    <td>{{item_stt + $index + 1}}</td>
+                                    <td>
+                                        {{courier[item.courier_id] || 'Hãng vận chuyển'}}
+                                    </td>
+                                    <td>
+                                        {{service[item.service_id] || 'Dịch vụ'}}
+                                    </td>
+                                    <td>
+                                        {{city[district[item.from_district]['city_id']] || 'Thành phố' }} <br />
+                                        {{district[item.from_district]['district_name'] || 'Quận huyện' }}
+                                    </td>
+                                    <td>
+                                        {{city[district[item.to_district]['city_id']] || 'Thành phố' }} <br />
+                                        {{district[item.to_district]['district_name'] || 'Quận huyện' }}
+                                    </td>
+                                    <td>
+                                        {{item.courier_estimate_delivery/3600 | vnNumber}} (h)
+                                    </td>
+                                    <td>
+                                        {{(item.verified == 1) ? (item.courier_estimate_delivery/3600) : 0 | vnNumber}} (h)
+                                    </td>
+                                    <td>
+                                        {{item.priority}}
+                                    </td>
+                                    <td>
+                                        {{item.active == 1 ? 'Đang sử dụng' : 'Ngưng sử dụng'}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                            <div class="row" ng-show="totalItems > 0 && !waiting">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

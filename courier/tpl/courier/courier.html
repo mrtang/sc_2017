@@ -1,0 +1,86 @@
+<div ng-controller="CourierCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="bg-light lter b-b wrapper-md col-sm-12 ">
+        <span class="m-n text-title text-size col-sm-3 no-padder font-thick"><i class="fa fa-truck text-muted"></i> Courier Managemant</span>
+        <div class="pull-right">
+            <a class="btn btn-info btn-addon" ui-sref="app.courier.add"><i class="fa fa-plus"></i> ADD</a>
+            
+            <div class="btn-group dropdown">
+              <button class="btn btn-success dropdown-toggle btn-addon" aria-haspopup="true" aria-expanded="true"><i class=" icon-arrow-down"></i> Config</button>
+              <ul class="dropdown-menu">
+                <li>
+                    <a href="javascript:;" ng-click="open_add_courier_type()">Courier Type</a>
+                </li>
+                <li>
+                    <a href="javascript:;" ng-click="open_add_service()">Service</a>
+                </li>
+              </ul>
+            </div>
+            <script id="ModalCourierType.html" type="text/ng-template">
+                <div ng-include="'tpl/courier/modal.form.courier_type.html'"></div>
+            </script>
+            <script id="ModalAddService.html" type="text/ng-template">
+                <div ng-include="'tpl/courier/modal.form.add.service.html'"></div>
+            </script>
+        </div>
+    </div>
+    
+    <div class="wrapper-md  col-sm-12">
+        <div class="panel panel-default">
+            <div class="table-responsive">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr>
+                    <th class="text-left">Name</th>
+                    <th class="text-left">Prefix</th>
+                    <th class="text-left">Type</th>
+                    <th class="text-left">Status</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="value in list_courier">
+                    <td class="text-left"><a href="#/app/courier/edit/{{value.id}}" class="text-info">{{value.name}}</a></td>
+                    <td class="text-left">{{ value.prefix }}</td>
+                    <td class="text-left">{{ value.type_id }}</td>
+                    <td class="text-left">
+                        <label class="i-switch bg-primary m-t-xs m-r">
+                          <input type="checkbox" ng-model="active" ng-change="change(value.id,active,'active')" ng-checked="value.active == 1" ng-true-value="1" ng-false-value="0" />
+                          <i></i>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        
+                        <div class="btn-group dropdown">
+                            <a href="javascript:;" class="btn btn-sm btn-danger"    ng-click="del_courier(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;Del </a>
+                        </div>
+                        
+                        <div class="btn-group dropdown">
+                            <a href="javascript:;" class="btn btn-sm btn-info"      ui-sref="app.courier.area_location({courier_id: value.id})"><i class="fa fa-gear"></i> Area Location</a>
+                        </div>
+                        
+                        <div class="btn-group dropdown">
+                          <button class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i> Promise <span class="caret"></span></button>
+                          <ul class="dropdown-menu">
+                            <li><a href="javascript:;" ui-sref="app.courier.promise({courier_id: value.id})"><i class="fa fa-gear"></i> Pickup</a></li>
+                            <li><a href="javascript:;" ui-sref="app.courier.promise_delivery({courier_id: value.id})"><i class="fa fa-gear"></i> Delivery</a></li>
+                          </ul>
+                        </div>
+                        
+                        <div class="btn-group dropdown">
+                            <a href="javascript:;" class="btn btn-sm btn-primary" ng-click="open_status('',value.id)" ><i class="icon-check"></i> Status</a>
+                        </div>
+                        
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            <script id="ModalStatus.html" type="text/ng-template">
+                <div ng-include="'tpl/courier/modal.form.status.html'"></div>
+            </script>
+            
+            </div>
+        </div>
+    </div>
+</div>

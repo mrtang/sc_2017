@@ -1,0 +1,184 @@
+<div class="fade-in-right" ng-controller="UploadFeeCtrl">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default">
+                    <div class="panel-heading h2">
+                        <i class="fa fa-upload text-info"></i>
+                        Đối soát phí
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-12">
+                            <div class="col-lg-4 no-padder">
+                                <input type="file" tabindex="-1"
+                                    style="position: absolute; clip: rect(0px 0px 0px 0px);"
+                                    ui-jq="filestyle"
+                                    nv-file-select
+                                    uploader="uploader"
+                                    data-icon="false"
+                                    data-classbutton="btn btn-default"
+                                    data-classinput="form-control inline v-middle input-s"
+                                />
+                                <p class="m-t-xs">
+                                    <a target="_blank" ng-href="{{link_storage}}template/VerifyFee.xls" class="text-info"><i class="fa fa-upload"></i> Download Template</a>
+                                </p>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control" ng-model="courier_id">
+                                        <option value="">Hãng vận chuyển</option>
+                                        <option ng-repeat="item in list_courier" value="{{item.id}}">{{item.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-info m-l-md" type="button" ng-click="uploader.uploadAll()"><i class="fa fa-upload"></i> Upload</button>
+                            <button ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','edit')" type="button" ng-show="NewTotal > 0" class="btn m-b-xs w-xs btn-primary pull-right" ng-click="Verify()">Đối soát</button>
+                            <button type="button" class="btn m-b-xs btn-success pull-right" ng-show="$stateParams.code" ng-disabled="waiting_export" ng-click="exportExcel('export')">
+                                <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                <i ng-show="waiting_export" class="fa fa-spinner fa-spin"></i>
+                                Xuất Excel
+                            </button>
+                        </div>
+                        <tabset class="tab-container tab-inside" ng-if="$stateParams.code">
+                            <tab ng-click="ChangeTab('ALL')">
+                                <tab-heading>
+                                    &nbsp;Tất cả&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('NOT_ACTIVE')">
+                                <tab-heading>
+                                    &nbsp;Mới tạo&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('SUCCESS')">
+                                <tab-heading>
+                                    &nbsp;Đã xử lý&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('MISMATCH')">
+                                <tab-heading>
+                                    &nbsp;Sai lệch&nbsp;
+                                </tab-heading>
+                            </tab>
+                        </tabset>
+
+                        <div class="tab-container" ng-if="$stateParams.code">
+                            <progressbar ng-if="dynamic != 0 && dynamic != 100" value="dynamic" type="success">{{dynamic || '0'}}%</progressbar>
+                            <div class="table-responsive">
+                                <table class="table-condensed table-hover w-full">
+                                    <thead>
+                                    <tr>
+                                        <th width="5%">
+                                            STT
+                                        </th>
+                                        <th class="text-center">
+                                            Mã vận đơn
+                                        </th>
+                                        <th class="text-center">
+                                            Mã hãng vận chuyển
+                                        </th>
+                                        <th>
+                                            Tổng Phí Hvc  <sup>(đ)</sup>
+                                        </th>
+                                        <th>Tổng Phí Sc   <sup>(đ)</sup></th>
+                                        <th>Sai lệch</th>
+                                        <th class="text-center">Trạng thái</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-if="waiting">
+                                    <tr>
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tbody class="no-border" ng-if="totalItems == 0 && !waiting">
+                                        <tr>
+                                            <td colspan="30" class="text-center">Không có dữ liệu</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody class="no-border" ng-repeat="item in list_data">
+                                        <tr class="pointer" ng-class="{'info': item.show}" ng-click="show_detail(item)">
+                                            <td>
+                                                {{item_stt + $index + 1}}
+                                            </td>
+                                            <td class="text-center text-info">
+                                                {{item.tracking_code}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{item.courier_track_code}}
+                                            </td>
+                                            <td>
+                                                {{(1*item['hvc']['pvc'] + 1*item['hvc']['cod'] + 1*item['hvc']['pbh'] + 1*item['hvc']['pch']) | vnNumber}}
+                                            </td>
+                                            <td>
+                                                {{(1*item['sc']['hvc_pvc'] + 1*item['sc']['hvc_cod'] + 1*item['sc']['hvc_pbh'] + 1*item['sc']['hvc_pch']) | vnNumber}}
+                                            </td>
+                                            <td>
+                                                <p ng-if="item['mismatch']['hvc_pvc'] == 1" class="text-danger">Phí vận chuyển</p>
+                                                <p ng-if="item['mismatch']['hvc_cod'] == 1" class="text-danger">Phí CoD</p>
+                                                <p ng-if="item['mismatch']['hvc_pbh'] == 1" class="text-danger">Phí bảo hiểm</p>
+                                                <p ng-if="item['mismatch']['hvc_pch'] == 1" class="text-danger">Phí chuyển hoàn</p>
+                                            </td>
+                                            <td class="text-center"><span class="label text-base ng-binding {{status[item.status].color}}">{{status[item.status].text}}</span></td>
+                                        </tr>
+
+                                        <tr ng-show="item.show">
+                                            <td colspan="20">
+                                                <table class="table table-striped table-hover table-condensed text-right">
+                                                    <thead>
+                                                        <tr class="info">
+                                                            <th></th>
+                                                            <th class="text-right">
+                                                                Phí vận chuyển <sup>(đ)</sup>
+                                                            </th>
+                                                            <th class="text-right">
+                                                                Phí CoD <sup>(đ)</sup>
+                                                            </th>
+                                                            <th class="text-right">
+                                                                Phí bảo hiểm <sup>(đ)</sup>
+                                                            </th>
+                                                            <th class="text-right">
+                                                                Phí chuyển hoàn <sup>(đ)</sup>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td><strong>Shipchung</strong></td>
+                                                        <td>{{item.sc.hvc_pvc  | vnNumber}}</td>
+                                                        <td>{{item.sc.hvc_cod  | vnNumber}}</td>
+                                                        <td>{{item.sc.hvc_pbh  | vnNumber}}</td>
+                                                        <td>{{item.sc.hvc_pch  | vnNumber}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td><strong>Hãng vận chuyển</strong></td>
+                                                        <td>{{item.hvc.pvc || '' | vnNumber}}</td>
+                                                        <td>{{item.hvc.cod || '' | vnNumber}}</td>
+                                                        <td>{{item.hvc.pbh || '' | vnNumber}}</td>
+                                                        <td>{{item.hvc.pch || '' | vnNumber}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row" ng-show="totalItems > 0 && !waiting">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="load(currentPage)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <!--/ Panel-->
+            </div>
+        </div>
+    </div>
+</div>

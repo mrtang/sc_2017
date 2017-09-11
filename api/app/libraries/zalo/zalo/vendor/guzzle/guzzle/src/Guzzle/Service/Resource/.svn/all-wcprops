@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource
+END
+MapResourceIteratorFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/MapResourceIteratorFactory.php
+END
+ResourceIteratorFactoryInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/ResourceIteratorFactoryInterface.php
+END
+CompositeResourceIteratorFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/CompositeResourceIteratorFactory.php
+END
+AbstractResourceIteratorFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/AbstractResourceIteratorFactory.php
+END
+ResourceIteratorClassFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/ResourceIteratorClassFactory.php
+END
+Model.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/Model.php
+END
+ResourceIterator.php
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/ResourceIterator.php
+END
+ResourceIteratorApplyBatched.php
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/ResourceIteratorApplyBatched.php
+END
+ResourceIteratorInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Service/Resource/ResourceIteratorInterface.php
+END

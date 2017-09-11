@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+    <table class="table table-striped m-b-none">
+        <thead>
+        <tr>
+            <td colspan="2">Employee</td>
+            <td colspan="4">%KPI</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Opps</th>
+            <th>Won</th>
+            <th>Revenue</th>
+            <th>Customer Satisfaction</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="item in list_employee">
+                <td>{{item.__user.fullname}}</td>
+                <td>{{item.level}}</td>
+                <td>{{employee_report['opps'][item.user_id]*100 || '0' | vnNumber}} %</td>
+                <td>{{employee_report['won'][item.user_id]*100 || '0' | vnNumber}} %</td>
+                <td>{{employee_report['revenue'][item.user_id]*100 || '0' | vnNumber}} %</td>
+                <td>{{employee_report['satisfaction'][item.user_id]*100 || '0' | vnNumber}} %</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

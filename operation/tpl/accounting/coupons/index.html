@@ -1,0 +1,83 @@
+<div data-ng-controller="CouponsCtrl">
+    <div class="wrapper-md bg-light b-b">
+      <h1 class="m-n font-thin h3 text-black pull-left"><i class="fa fa-shopping-cart text-info"></i> Danh sách campaign</h1>
+
+      <small class="text-muted pull-right">
+      <button class="btn btn-success"  ng-click="openSaveCampaign({})">Tạo campaign</button>
+      </small>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="hbox hbox-auto-xs hbox-auto-sm" >
+      <div class="col wrapper-sm">
+        <div class="panel panel-default">
+
+
+          <div class="panel-body">
+              <table class="table table-bordered tablesorter bg-white">
+                  <thead>
+                    <tr>
+                        <th style="width:20px;">#</th>
+                        <th>Tên campaign</th>
+                        <th>Mô tả</th>
+                        <th><!-- Coupons đã sử dụng/ -->Tổng số Coupons</th>
+                        <th>Thời gian bắt đầu</th>
+                        <th>Thời gian kết thúc</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="stateLoading">
+                      <td colspan="20" class="text-center">
+                          <i class="text-3x fa fa-spinner fa-spin"></i>
+                      </td>
+                  </tr>
+                  <tr ng-if="totalItems == 0 && !stateLoading">
+                      <td colspan="20" class="text-center">Không có dữ liệu</td>
+                  </tr>
+                  
+                    <tr ng-repeat="one in listData">
+                        <td>{{ item_stt + $index + 1}}</td>
+                      <td><a href="javascript:;" ui-sref="delivery.accounting.coupons-list({id: one.id})">{{one.name}}</a></td>
+                        <td>{{one.description}}</td>
+                        <td> {{one.coupons_count.total || '0'}}</td>
+                        <td>
+                            {{one.time_start * 1000 | date:'dd-MM-yyyy HH:mm a'}}
+                        </td>
+                        <td>
+                            {{one.time_end * 1000 | date:'dd-MM-yyyy HH:mm a'}}
+                            <br/>
+                            <strong ng-if="checkExpired(one.time_end * 1000)" class="text-danger">Đã hết hạn</strong>
+                        </td>
+                        <td >
+                          <!-- Split button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary" ng-click="openCreateCoupon(one)">Tạo coupons</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a  ng-click="openSaveCampaign(one)">Chỉnh sửa</a></li>
+                                    <li><a href="#">Xóa</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+
+              <!-- pagination -->
+              <div ng-show="listData.length > 0" class="row">
+                      <div class="col-sm-3 wrapper-md pull-left">
+<!--                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                       -->                      </div>
+                      <div class="col-sm-4 text-right text-center-xs pull-right">
+                        <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(page,phone)" next-text="Next"></pagination>
+                      </div>
+                  </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

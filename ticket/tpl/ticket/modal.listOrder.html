@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-left no-padder">
+                <h4 class="modal-title">Danh sách 10 vận đơn gần đây trong 3 tháng</h4>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div class="modal-body wrapper-md">
+    <div class="m-b" data-ng-repeat="item in listOrder" data-ng-if="listOrder.length > 0">
+        <span class="label text-base bg-warning pos-rlt m-r"><i class="arrow right arrow-warning"></i> <span tooltip="{{(item.time_accept > 0) ? 'Duyệt lúc ' + (item.time_accept*1000 | date : 'HH:mm dd-MM-yyyy') :  'Chưa duyệt'}}">Tạo lúc {{item.time_create*1000 | date : 'HH:mm dd-MM-yyyy'}}</span></span>
+        <a href="http://seller.shipchung.vn/#/detail/{{item.tracking_code}}" target="_blank">{{item.tracking_code}}</a>
+        <span class="label text-xs pull-right bg-info bg">
+            {{item.meta_status.name}}
+        </span>
+    </div>
+    <div class="m-b text-center">{{message}}</div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="cancel()">Đóng</button>
+</div>

@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception
+END
+TooManyRedirectsException.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/TooManyRedirectsException.php
+END
+CouldNotRewindStreamException.php
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/CouldNotRewindStreamException.php
+END
+HttpException.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/HttpException.php
+END
+MultiTransferException.php
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/MultiTransferException.php
+END
+ServerErrorResponseException.php
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/ServerErrorResponseException.php
+END
+BadResponseException.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/BadResponseException.php
+END
+CurlException.php
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/CurlException.php
+END
+ClientErrorResponseException.php
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/ClientErrorResponseException.php
+END
+RequestException.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Exception/RequestException.php
+END

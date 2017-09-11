@@ -1,0 +1,76 @@
+      <!-- navbar header -->
+      <div class="navbar-header bg-white padder-xs-lr text-center">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href="#/" class="navbar-brand text-lt no-padder">
+          <img class="max-height-none" ng-src="img/logo.png" alt="."/>
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse navbar-collapse box-shadow box-shadow bg-white-only">
+        <div class="row bg-white-only m-r-n-sm" ng-class="{'pos-rlt pull-right w-98': app.settings.asideFolded}" style="margin-right: 2px;">
+            <!-- buttons -->
+            <div class="nav navbar-nav hidden-xs">
+              <a href class="btn no-shadow navbar-btn" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
+                <i class="fa {{app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
+              </a>
+            </div>
+            <!-- / buttons -->
+
+
+            <ul class="nav navbar-nav ">
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="javascript:;" ng-click="open_post_office()"><i class="fa fa-bar-chart fa-lg"></i> Bưu cục </a>
+                </li>
+                <li class="dropdown-submenu">
+                  <a ui-sref="delivery.tasks.list.detail({state: 'ALL'})" tabindex="-1"><i class="fa fa-task fa-lg"></i> Công việc <span class="caret"></span></a>
+                  <ul role="menu" class="dropdown-menu left-none">
+                      <li ui-sref-active="active"><a ng-click="openAddTask([{refer_id:1234, name: 'acbcbcbc', type: 1}])">Thêm công việc</a></li>
+                      
+                  </ul>
+                </li>
+            </ul>
+            
+            
+
+
+
+
+
+            
+            <!-- link and dropdown -->
+            <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search" ng-submit="$state.go('delivery._search', {search:root_search})">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input    type="text"
+                                  class="form-control input-sm bg-light no-border rounded padder"
+                                  ng-model="root_search"
+                                  placeholder="Tìm kiếm ..."
+                                />
+
+                  <span class="input-group-btn">
+                    <button  ng-disabled="!root_search"  tooltip-html-unsafe="@thông tin người nhận <br />$thông tin nhân viên" tooltip-placement="bottom" class="btn btn-sm bg-light rounded" type="submit"><i class="fa fa-search"></i></button>
+                  </span>
+                    </div>
+                </div>
+            </form>
+            <!-- / link and dropdown -->
+
+            <script id="ModalChangeStatus.html" type="text/ng-template">
+                <div ng-include="'tpl/pickup/modal.change_status.html'"></div>
+            </script>
+
+            <!-- nabar right -->
+            <div data-ng-include=" 'tpl/blocks/user_nav.html' ">
+            <!-- / navbar right -->
+        </div>
+      </div>
+      <!-- / navbar collapse -->

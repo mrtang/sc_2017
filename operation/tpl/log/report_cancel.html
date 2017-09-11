@@ -1,0 +1,128 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-times text-info"></i> Log báo hủy</h1>
+  <small class="text-muted">
+  </small>
+
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="LogReportCancelCtrl">
+  <div class="col wrapper-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <form class="form-validation" ng-submit="setPage(1,'')">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group controls padder">
+                        <input type="text" placeholder="Mã vận đơn " class="form-control" ng-model="frm.tracking_code">
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group controls">
+                        <select class="form-control m-b" ng-model="frm.status">
+                            <option value="0">Trạng thái</option>
+                            <option value="1">Thành công</option>
+                            <option value="2">Cập nhật lỗi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group controls input-group">
+                        <input type="text" class="form-control" placeholder="Từ ngày ..."
+                               ng-model="time.create_start"
+                               datepicker-popup="dd-MM-yyyy"
+                               is-open="time_create_start_open"
+                               datepicker-options="dateOptions"
+                               close-text="Close"
+                                />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group controls input-group">
+                        <input type="text" class="form-control" placeholder="Đến ngày ..."
+                               datepicker-popup="dd-MM-yyyy"
+                               is-open="time_create_end_open"
+                               datepicker-options="dateOptions"
+                               date-disabled="disabled(date, mode)"
+                               close-text="Close"
+                               ng-model="time.create_end"
+                                />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-3 padder-lg">
+                  <button class="btn btn-info" type="submit">Tìm kiếm</button>
+                </div>
+                <div class="col-lg-3 col-lg-offset-6 text-right">
+                    <button ng-click="setPage(1,'export')" class="btn m-b-xs btn-success" type="button"><i class="fa fa-file-excel-o"></i> Xuất Excel</button>
+                </div>
+            </div>
+                  
+        </form>
+      </div>
+
+      <div class="panel-body table-responsive">
+          <table class="table table-condensed table-hover w-full">
+              <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Thời gian duyệt</th>
+                    <th>Hãng Vận Chuyển</th>
+                    <th>Mã vận đơn</th>
+                    <th class="text-center">Trạng Thái</th>
+                    <th>Nội dung</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="stateLoading">
+                  <td colspan="20" class="text-center">
+                      <i class="text-3x fa fa-spinner fa-spin"></i>
+                  </td>
+              </tr>
+              <tr ng-if="totalItems == 0 && !stateLoading">
+                  <td colspan="20" class="text-center">Không có dữ liệu</td>
+              </tr>
+              
+                <tr ng-repeat="key in keys(listData)" ng-class="{'bg-warning': (listData[key]['old_weight'] > 0) && listData[key]['old_weight'] != listData[key]['total_weight']}">
+                    <td>{{ item_stt + $index + 1}}</td>
+                    <td>{{listData[key]['time_create'] *1000|date : 'dd/MM/yy HH:mm'}}</td>
+                    <td>
+                        <label class="label text-info">{{courier[listData[key]['courier']] || 'Hãng vận chuyển'}}</label>
+                    </td>
+                    <td>{{listData[key]['tracking_code']}}</td>
+                    <td class="text-center">
+                        <span class="label text-base bg-success" ng-show="listData[key]['error_code'] == 'SUCCESS'">
+                            {{listData[key]['error_code']}}
+                        </span>
+                        <span class="label text-base bg-warning" ng-show="listData[key]['error_code'] != 'SUCCESS'">
+                            {{listData[key]['error_code']}}
+                        </span>
+                    </td>
+                    <td>{{listData[key]['messenger']}}</td>
+                </tr>
+            </tbody>
+          </table>
+
+          <!-- pagination -->
+          <div ng-show="totalItems > 0 && !stateLoading" class="row">
+                  <div class="col-sm-3 wrapper-md pull-left">
+                      <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                  </div>
+                  <div class="col-sm-4 text-right text-center-xs pull-right">
+                    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage,'')" next-text="Next"></pagination>
+                  </div>
+              </div>
+      </div>
+    </div>
+  </div>
+</div>

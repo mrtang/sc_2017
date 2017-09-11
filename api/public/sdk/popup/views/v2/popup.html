@@ -1,0 +1,203 @@
+
+<!-- saved from url=(0074)http://services.shipchung.vn/sdk/popup/views/v2/popup.html?t=1427966727257 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="chrome-extension://aadgmnobpdmgmigaicncghmmoeflnamj/ng-inspector.js"></script></head><body cz-shortcut-listen="true"><div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <a href="javascript:;" class="close" target="_parent" ng-click="closePopup()">×</a> 
+
+            <span class="modal-title list-inline pull-left">
+                    <span class="logo-sc"></span>
+                    <strong id="title">{{'TITLE'|translate}} {{shipchung}}</strong>
+            </span>
+
+            <!-- <div class="lang-area-top hidden-sm hidden-xs pull-right" ng-if="checkoutSuccess">
+                <span class="flag-icon flag-icon-us" ng-class='{active:lang==="en"}' ng-click="changeLanguage('en')" data-toggle="tooltip" data-placement="top" title="English"></span>
+                <span class="flag-icon flag-icon-vn" ng-class='{active:lang==="vi"}' ng-click="changeLanguage('vi')" data-toggle="tooltip" data-placement="top" title="Vietnamese"></span>
+            </div>  -->
+
+            <div class="clearfix"></div>
+        </div>
+        
+        <div class="modal-body">
+             <div ng-if="hasToken">
+                 <form class="form-horizontal" name="userForm" ng-submit="submitForm(userForm.$valid, 
+                 user)" novalidate="">
+                       <div class="row">
+                           
+
+                           <div class="col-sm-5 col-xs-5 bar-right pull-right">                                                            
+                               <div class="row bar-right-top scroller-con" data-ng-include="&#39;views/v2/list_item.html&#39;" id="scroller"></div>                        
+                               <div class="total-result hidden-xs">
+                                   <div class="overlay-loading" ng-if="stateLoading ||districtSelecting">
+                                       <div class="facebook_loading"><span></span><span></span><span></span></div>
+                                   </div>
+                                   <br>
+                                   <span translate="">TOTAL_ITEM_PRICE</span>:<span class="pull-right">{{MerchantInfo.Order.Amount | number}}đ</span><br>
+                                   <span translate="">FEE_SHIPPING</span>:<span class="pull-right">{{pvc || 0 | number}}đ</span><br>
+                                   
+                                   <span ng-if="user.ol_payment == 0 &amp;&amp; user.ol_payment_banking == 0">
+                                    <span translate="">FEE_COD</span>:<span class="pull-right">{{pcod || 0 | number}}đ</span><br>
+                                   </span>
+                                   
+                                   
+                                   <span translate="">PROMOTION</span>:<span class="pull-right">{{discount || 0 | number}}đ</span><br>
+                                   <span ng-if="user.ol_payment == 0 &amp;&amp; user.ol_payment_banking == 0">
+                                   <span translate="">TOTAL_COD</span>: <span class="pull-right" style="color: #FF0000;">{{totalAmount || 0 | number}}đ</span>
+                                   </span>
+                                    
+                                   <div class="clearfix"></div>
+                                   <span ng-if="user.ol_payment == 1 || user.ol_payment_banking== 1">
+                                   <span translate="">TOTAL_PRICE</span>: <span class="pull-right" style="color: #FF0000;">{{totalAmount || 0 | number}}đ</span>
+                                   </span>
+                                   <br>
+                               </div>
+                           </div>
+
+
+                           
+                           <div class="col-sm-7 col-xs-7" id="bar-left">
+                           
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12" ng-class="{&#39;has-error&#39; : userForm.fullname.$invalid &amp;&amp; !userForm.fullname.$pristine}">
+                                       <input type="text" class="form-control" name="fullname" value="" ng-model="user.fullname" ng-minlength="3" placeholder="{{&#39;FULLNAME&#39;|translate}}*" required="">
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12" ng-class="{&#39;has-error&#39; : userForm.email.$invalid &amp;&amp; !userForm.email.$pristine}">
+                                       <input type="email" class="form-control" ng-model="user.email" name="email" value="" placeholder="{{&#39;EMAIL&#39;|translate}}">
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12" ng-class="{&#39;has-error&#39; : userForm.phone.$invalid &amp;&amp; !userForm.phone.$pristine}">
+                                       <input type="tel" class="form-control" ng-model="user.phone" name="phone" ng-minlength="10" ng-maxlength="11" value="" placeholder="{{&#39;PHONE&#39;|translate}}*" required="">
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-6 col-xs-6">
+                                       <select name="city" class="form-control" data-ng-model="myCity.CitySelected" data-ng-change="myCity.ChangeCityFrom()" ng-class="{&#39;has-error&#39; : userForm.city.$invalid &amp;&amp; !userForm.city.$pristine}" data-ng-options="obj.id as obj.city_name for obj in myCity.options" required="">
+                                               <option value="">{{'CITY'|translate}}</option>
+                                       </select>
+                                   </div>
+                                   <div class="col-sm-6 col-xs-6">
+                                       <select name="district" class="form-control" data-ng-model="myDistrict.DistSelected" ng-change="myCity.ChangeProvinceFrom()" ng-class="{&#39;has-error&#39; : userForm.district.$invalid &amp;&amp; !userForm.district.$pristine}" data-ng-options="val.id as val.district_name for val in myDistrict.options" required="">
+                                               <option value="">{{'DISTRICT' | translate}}</option>
+                                       </select>
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12" ng-class="{&#39;has-error&#39; : userForm.address.$invalid &amp;&amp; !userForm.address.$pristine}">
+                                       <input type="text" class="form-control" ng-model="user.address" name="address" value="" placeholder="{{&#39;ADDRESS&#39;|translate}}*" required="">
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12">
+                                       <input type="text" class="form-control" ng-model="user.note" name="note" value="" placeholder="{{&#39;NOTE&#39;|translate}}">
+                                   </div>
+                               </div>
+                               
+                               <div class="hidden-sm hidden-md hidden-lg">
+                                   <br>
+                                  <span translate="">TOTAL_ITEM_PRICE</span>:<span class="pull-right">{{MerchantInfo.Order.Amount | number}}đ</span><br>
+                                   <span translate="">FEE_SHIPPING</span>:<span class="pull-right">{{pvc | number}}đ</span><br>
+                                   <span translate="">PROMOTION</span>:<span class="pull-right">0đ</span><br>
+                                   <span translate="">SUM_TOTAL</span>: <span class="pull-right" style="color: #FF0000;">{{totalAmount || 0 | number}}đ</span>
+                                   <br>
+                               </div>
+                               
+                               <div class="checkbox row" style="padding-bottom:0px!important">
+
+                                   <p class="text-center" style="
+                                      text-align: center;
+                                      font-weight: bold;
+                                      border-bottom: 1px solid #cdcdcd;
+                                      padding-bottom: 7px;
+                                      margin-right: 20px!important;
+                                  ">{{'PAYMENT_METHOD' | translate}}</p>
+
+                                  <label  for="choice-payment-cod" class="col-md-6 col-sm-12 col-xs-12">
+                                     <input type="checkbox" id="choice-payment-cod" ng-init="user.cod_payment = '1' " ng-model="user.cod_payment" ng-true-value="1" ng-false-value="0" ng-change="user.ol_payment_banking = '0';user.ol_payment = '0';myCity.ChangeProvinceFrom()"> {{'COD_PAYMENT'| translate}}
+                                   </label> 
+                                    <div class="clearfix hidden-md hidden-lg"><p style="margin: 0 !important;line-height: 10px;">&nbsp;</p></div>
+
+
+                                   <label ng-if="(!IntegrateConfig || IntegrateConfig.online_payment == 1) &amp;&amp; hasAccountNL == 1" for="choice-payment" class="col-md-6 col-sm-12 col-xs-12">
+                                     <input type="checkbox" id="choice-payment" ng-model="user.ol_payment" ng-true-value="1" ng-false-value="0" ng-change="user.ol_payment_banking = &#39;0&#39;;user.cod_payment = 0;myCity.ChangeProvinceFrom()"> {{'OL_PAYMENT'| translate}}
+                                   </label> 
+                                    <div class="clearfix hidden-md hidden-lg"><p style="margin: 0 !important;line-height: 10px;">&nbsp;</p></div>
+
+                                    <label ng-if="(!IntegrateConfig || IntegrateConfig.banking_payment == 1) &amp;&amp; hasBanking == 1" for="choice-payment-banking" class="col-md-6 col-sm-12 col-xs-12">
+                                     <input type="checkbox" id="choice-payment-banking" ng-model="user.ol_payment_banking" ng-true-value="1" ng-false-value="0" ng-change="user.ol_payment = &#39;0&#39;;user.cod_payment = 0;myCity.ChangeProvinceFrom()"> {{'OL_PAYMENT_BANKING' | translate}}</label> 
+                               </div>
+
+                               <div class="radio row" style="margin-bottom:10px" ng-if="IntegrateConfig && IntegrateConfig.choice_service == 1"> 
+
+                                   <p class="text-center" style="
+                                      text-align: center;
+                                      font-weight: bold;
+                                      border-bottom: 1px solid #cdcdcd;
+                                      padding-bottom: 7px;
+                                      margin-right: 20px!important;
+                                  ">{{'DELIVERY_SERVICE' | translate}}</p>
+
+                                  <label   class="col-md-6 col-sm-12 col-xs-12" for="service_fast">
+                                     <input type="radio"  id="service_fast" ng-model="_service" value="2" ng-change="_service = 2;myCity.ChangeProvinceFrom(_service)"> {{'FAST_DELIVERY' | translate}}
+                                   </label> 
+                                    <div class="clearfix hidden-md hidden-lg"><p style="margin: 0 !important;line-height: 10px;">&nbsp;</p></div>
+
+
+                                   <label class="col-md-6 col-sm-12 col-xs-12" for="service_save">
+                                     <input type="radio" id="service_save" ng-model="_service" value="1" ng-change="_service = 1;myCity.ChangeProvinceFrom(_service)"> {{'SAVE_DELIVERY' | translate}}
+                                   </label> 
+                                    <div class="clearfix hidden-md hidden-lg"><p style="margin: 0 !important;line-height: 10px;">&nbsp;</p></div>
+
+                                   
+                               </div>
+
+                               <div class="col-md-12 col-xs-12 " id="btn-payment">
+                                 <button type="submit" class="btn btn-block" ng-disabled="stateLoading || districtSelecting || (!userForm.$valid || saveOrderProcessing)">
+                                   <h4 ng-init="user.ol_payment=0"><!-- ng-init="user.ol_payment=0" -->
+                                       
+                                       
+                                       <div ng-if="saveOrderProcessing" class="facebook_loading"><span></span><span></span><span></span></div>
+                                       
+                                       <strong translate="" ng-if="user.ol_payment == 0 &amp;&amp; user.ol_payment_banking == 0">ORDER_NOW</strong>
+                                       <strong translate="" ng-if="user.ol_payment == 1 &amp;&amp; user.ol_payment_banking == 0">OL_PAYMENT</strong>
+                                       <strong translate="" ng-if="user.ol_payment == 0 &amp;&amp; user.ol_payment_banking == 1">OL_PAYMENT_BANKING</strong>
+
+                                   </h4>
+
+                                   <span>
+                                    <span>({{'NOTE_TIME_ESTIMATE' | translate}})</span><!-- ng-if="user.ol_payment == 0 && user.ol_payment_banking == 0" -->
+                                    <!-- &nbsp; -->
+                                   </span>
+                                 </button>
+                              </div>
+                                                     
+                              <div class="hidden-xs clearfix">&nbsp;</div>
+                           </div>
+
+
+
+                           
+                           
+                       </div>
+                    </form>
+
+                    <div class="lang-area hidden-sm hidden-xs">
+                       <span class="flag-icon flag-icon-us" ng-class="{active:lang===&quot;en&quot;}" ng-click="changeLanguage(&#39;en&#39;)" data-toggle="tooltip" data-placement="top" title="English"></span>
+                       <span class="flag-icon flag-icon-vn" ng-class="{active:lang===&quot;vi&quot;}" ng-click="changeLanguage(&#39;vi&#39;)" data-toggle="tooltip" data-placement="top" title="Vietnamese"></span>
+                    </div>
+             </div>
+
+             <div ng-if="!hasToken">
+                <div class="alert alert-warning" role="alert" style="margin-top:20px">Token không hợp lệ !</div>
+             </div>
+        </div>  <!-- ./modal-body-->
+    </div>
+</div>
+<div class="overlay"></div></body></html>

@@ -1,0 +1,101 @@
+<div ng-controller="PipeStatusSellerCtrl">
+    <div class="bg-light lter b-b wrapper-md ng-scope">
+        <div class="row">
+            <h1 class="m-n font-thin h3 col-md-5">Cấu hình trạng thái xử lý seller</h1>
+            <div class="pull-right">
+            </div>
+        </div>
+    </div>
+    <div class="col wrapper-sm ng-scope">
+        <div class="panel panel-default ">
+            <div class="table-responsive col-md-8" >
+                <h4 class="text-center">Danh sách</h4>
+                <table class="table table-striped b-t b-light">
+                  <thead>
+                    <tr>
+                      <th style="width:20px;">#</th>
+                      <th>Nhóm</th>
+                      <th>Mã trạng thái</th>
+                      <th>Độ ưu tiên</th>
+                      <th>Tên trạng thái</th>
+                      <th class="text-right">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr ng-repeat="item in list_data">
+                        <td>{{$index + 1}}</td>
+                        <td><a href="javascript:;" editable-text="value.group_name" onbeforesave="setActive($data,'group_name',value.id)" class="editable editable-click">{{item.group.name}}</a></td>
+                        <td>{{item.status}}</td>
+                        <td>{{item.priority}}</td>
+                        <td>{{item.name}}</td>
+
+                        <td class="text-right">
+                            <a class="btn btn-sm btn-info" href="javascript:;" ng-click="action_edit(item)">Chính sửa</a>
+                            <a class="btn btn-sm btn-danger" ng-disabled="load_remove" href="javascript:;" ng-click="remove(item, $index)">Xóa</a>
+                        </td>
+
+                        <tr>
+                           <td colspan="4" class="text-center">
+                                <div class="loading" ng-if="load_process">
+                                    <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i>
+                                    <p>Đang tải dữ liêu</p> 
+                                </div>
+                                <p ng-if="list_data.length == 0 && !load_process">Không có dữ liệu</p>
+                           </td> 
+                        </tr>
+                  </tbody>
+                </table>
+                <div class="text-right text-center-xs pull-left m-l-sm" ng-if="list_data.length">
+                    <pagination total-items="totalItems" ng-model="page" data-max-size="max_size" items-per-page="{{item_page}}" ng-change="load(page)"></pagination>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-4">
+                <h4 class="text-center">{{selectedItem.id ? 'Cập nhật' : 'Thêm mới'}}</h4>
+                <form role="form" name="add_group_form" class="form-horizontal form-validation">
+                    <div class="form-group form-inline row">
+                      <label class="col-sm-3 col-md-3 col-lg-2 control-label">Nhóm</label>
+                      <div class="col-sm-9 col-md-9 col-lg-10">
+                          <select name="" ng-model="group_status_selected" class="form-control" style="width:100%" ng-change="change_group_status(group_status_selected)">
+                              <option value="">- Chọn nhóm trạng thái -</option>
+                              <option value="{{item.id}}" ng-repeat="item in list_groupstatus">{{item.name}}</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="form-group form-inline row">
+                      <label class="col-sm-3 col-md-3 col-lg-2 control-label">Mã trạng thái</label>
+                      <div class="col-sm-9 col-md-9 col-lg-10">
+                          <input type="text" class="form-control" placeholder="Nhập mã trạng thái" name="status" ng-model="selectedItem.status" style="width:100%" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group form-inline row">
+                      <label class="col-sm-3 col-md-3 col-lg-2 control-label">Độ ưu tiên</label>
+                      <div class="col-sm-9 col-md-9 col-lg-10">
+                          <input type="text" class="form-control" placeholder="Nhập độ ưu tiên" name="priority" ng-model="selectedItem.priority" style="width:100%" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group form-inline row">
+                      <label class="col-sm-3 col-md-3 col-lg-2 control-label">Tên</label>
+                      <div class="col-sm-9 col-md-9 col-lg-10">
+                          <input type="text" class="form-control" placeholder="Nhập tên trạng thái" name="name" ng-model="selectedItem.name" style="width:100%" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group form-inline">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">&nbsp;</label>
+                        <div class="col-sm-6 col-md-6 col-lg-5 m-l-sm">
+                            <button type="submit" class="btn btn-md btn-success pull-left text-uc m-t-n-xs m-r-sm" ng-click="save()" ng-disabled="add_group_form.$invalid || load_submit"><i class="fa fa-spinner fa-spin fa-fw margin-bottom" ng-if="load_submit"></i> Lưu lại</button> 
+                            <button type="button" class="btn btn-md btn-danger pull-left text-uc m-t-n-xs" ng-click="reset_form()">Hủy</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div><!--end -->
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

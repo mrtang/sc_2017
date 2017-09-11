@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Thay đổi level thành viên</strong>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+    <form>
+        <div class="form-group">
+            <select ng-model="frm.level" class="form-control">
+                <option value="">Chọn level</option>
+                <option value="0">Khách hàng mới</option>
+                <option value="1">Hạng bạc</option>
+                <option value="2">Hạng vàng</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select ng-model="frm.active" class="form-control">
+                <option value="">Chọn hình thức</option>
+                <option value="0">Chưa chính thức</option>
+                <option value="1">Chính thức</option>
+            </select>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="acceptChange(frm)">Đồng ý</button>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Đóng</button>
+</div>

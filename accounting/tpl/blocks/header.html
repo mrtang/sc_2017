@@ -1,0 +1,72 @@
+      <!-- navbar header -->
+      <div class="navbar-header bg-white padder-xs-lr text-center text-sm">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href="#/" class="navbar-brand text-lt no-padder">
+          <img class="max-height-none" ng-src="img/logo.png" alt="."/>
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse navbar-collapse box-shadow box-shadow bg-white-only">
+        <div class="row bg-white-only m-r-n-sm w-98" ng-class="{'pos-rlt pull-right w-98': app.settings.asideFolded}" style="margin-right: -2px;">
+            <!-- buttons -->
+            <div class="nav navbar-nav hidden-xs">
+              <a href class="btn no-shadow navbar-btn" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
+                <i class="fa {{app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
+              </a>
+            </div>
+            <!-- / buttons -->
+            
+            <!-- link and dropdown -->
+            <ul class="nav navbar-nav hidden-sm">
+                <li ng-if="check_privilege('PRIVILEGE_VERIFY','view')">
+                    <a ui-sref="app.payment_verify">
+                        <i class="fa fa-money"></i> Đối soát bản kê
+                    </a>
+                </li>
+            </ul>
+            <!-- / link and dropdown -->
+            
+            <!-- nabar right -->
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown hidden-sm" is-open="true">
+                    <a href class="dropdown-toggle" data-toggle="dropdown">
+                        {{list_country[userInfo.country_id] || ''}} <b class="caret"></b>
+                    </a>
+                    <!-- dropdown -->
+                    <ul class="dropdown-menu animated fadeInRight w">
+                        <li ng-repeat="(langKey, label) in list_country">
+                            <a ng-click="setCountry(langKey)" href>{{label}}</a>
+                        </li>
+                    </ul>
+                    <!-- / dropdown -->
+                </li>
+              <li class="dropdown">
+                <a href class="dropdown-toggle clear" data-toggle="dropdown">
+                  <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                    <img ng-src="{{userInfo.avatar}}" alt="{{userInfo.fullname}}'s Avatar" />
+                    <i class="on md b-white bottom"></i>
+                  </span>
+                  <span class="hidden-sm hidden-md">{{userInfo.fullname}}</span> <b class="caret"></b>
+                </a>
+                <!-- dropdown -->
+                <ul class="dropdown-menu animated fadeInRight w text-sm">
+                  <li>
+                    <a ng-click="logout()"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                  </li>
+                </ul>
+                <!-- / dropdown -->
+              </li>
+            </ul>
+            <!-- / navbar right -->
+        </div>
+      </div>
+      <!-- / navbar collapse -->

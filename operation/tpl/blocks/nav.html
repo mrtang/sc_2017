@@ -1,0 +1,57 @@
+<!-- first -->
+<ul class="nav">
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.app.config.pipe_status">
+            <i class="fa fa-gears"></i>
+            <span translate="">Trạng thái xử lý</span>
+        </a>
+    </li>
+    <li ng-class="{active:$state.includes('delivery.app.config.group_user') || $state.includes('delivery.app.config.privileges')}">
+        <a href class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-users"></i>
+            <span translate="">Phân Quyền</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="delivery.app.config.group_user">
+                    <span translate="">Nhóm thành viên</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="delivery.app.config.privileges">
+                    <span translate="">Danh sách quyền</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-class="{active:$state.includes('delivery.app.config.kpi_category') || $state.includes('delivery.app.config.kpi_employee')}">
+        <a href class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-bar-chart-o"></i>
+            <span translate="">KPI</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="delivery.app.config.kpi_category">
+                    <span translate="">Cấu hình</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="delivery.app.config.kpi_employee">
+                    <span translate="">Nhân viên</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="line dk"></li>
+</ul>
+<!-- / third -->

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit-mock-objects/Tests
+END
+GeneratorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit-mock-objects/Tests/GeneratorTest.php
+END
+MockBuilderTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit-mock-objects/Tests/MockBuilderTest.php
+END
+MockObjectTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit-mock-objects/Tests/MockObjectTest.php
+END

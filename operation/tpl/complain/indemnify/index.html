@@ -1,0 +1,106 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div ng-controller="IndemnifyCtrl">
+	<div class="wrapper-md bg-light b-b">
+        <h1 class="m-n font-thin h3">Danh sách bồi hoàn</h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <form class="form-validation form-horizontal" ng-submit="setPage(1)">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group controls padder">
+                                        <input type="text" placeholder="Email khách hàng " class="form-control" ng-model="email">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group controls padder">
+                                        <input type="text" placeholder="Mã ticket " class="form-control" ng-model="ticketId">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group controls padder">
+                                        <select class="form-control" ng-model="status">
+                                            <option value="none">Trạng thái</option>
+                                            <option value="waiting">Chờ duyệt</option>
+                                            <option value="confirmed">Đã duyệt</option>
+                                            <option value="success">Thành công</option>
+                                            <option value="reject">Từ chối bồi hoàn</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group controls padder input-group">
+                                        <input type="text" class="form-control" placeholder="Từ ngày ..."
+                                               ng-model="timeStart"
+                                               datepicker-popup="dd-MM-yyyy"
+                                               is-open="time_accept_start_open"
+                                               datepicker-options="dateOptions"
+                                               close-text="Close"
+                                                />
+                                      <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <button class="btn btn-info" type="submit">Tìm kiếm</button>
+                                </div>
+                                <div class="col-md-1">
+                                    <a ng-if="check_privilege('PRIVILEGE_COMPLAIN','export')" class="btn bg-orange btn-md" ng-href="{{export(email,ticketId,status,timeStart)}}">Excel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table b-t b-light table-hover table-condensed" ng-show="!listExcelLoading">
+                            <thead>
+                                <th>#</th>
+                                <th>Email khách hàng</th>
+                                <th>Mã đơn</th>
+                                <th>Lý do</th>
+                                <th>Trạng thái</th>
+                                <th>Thời gian tạo</th>
+                                <th>TG xác nhận</th>
+                                <th>TG thành công</th>
+                                <th>Thao tác</th>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr ng-repeat="key in keys(listData)">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{listData[key].email}}</td>
+                                    <td>#<a href="http://ticket.shipchung.vn/#/ticket/request/management/30/{{listData[key].ticket_id}}" target="_blank" class="text-info">{{listData[key].ticket_id}}</a></td>
+                                    <td>{{listData[key].note}}</td>
+                                    <td>{{statusConfig[listData[key].status]}}</td>
+                                    <td>{{listData[key].time_create*1000|date : 'dd/MM/yy HH:mm'}}</td>
+                                    <td ng-if="listData[key].time_confirm > 0">{{listData[key].time_confirm*1000|date : 'dd/MM/yy HH:mm'}}</td><td ng-if="listData[key].time_confirm == 0"></td>
+                                    <td ng-if="listData[key].time_success*1000 > 0">{{listData[key].time_success*1000|date : 'dd/MM/yy HH:mm'}}</td><td ng-if="listData[key].time_success == 0"></td>
+                                    <td>
+                                        <div class="btn-group dropdown">
+                                            <button class="btn btn-success btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li ng-if="infoUser.id==830" ng-show="listData[key].status != 'CONFIRMED' && listData[key].status != 'REJECT'">
+                                                    <a class="" ng-click="acceptRefund(listData[key].id,listData[key].ticket_id)">Đồng ý</a>
+                                                </li>
+                                                <li ng-if="infoUser.id==830" ng-show="listData[key].status != 'CONFIRMED' && listData[key].status != 'REJECT'">
+                                                    <a class="" ng-click="rejectRefund(listData[key].id,listData[key].ticket_id)">Từ chối</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--/ Panel-->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            Danh sách bưu tá
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+    <form>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tỉnh/TP</label>
+                    <select name="" id="" class="form-control" ng-change="getDistrict(frm.city)" ng-model="frm.city">
+                        <option value="">Chọn Tỉnh/TP</option>
+                        <option value="{{item.id}}" ng-repeat="item in list_city">{{item.city_name}}</option>
+                    </select>
+                </div>
+            </div>      
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Quận/huyện</label>
+                    <select name="" id="" class="form-control" ng-change="getWard(frm.district)" ng-model="frm.district">
+                        <option value="">Chọn Quận/huyện</option>
+                        <option value="{{item.district_id}}" ng-repeat="item in districts">{{item.district_name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Phường/Xã</label>
+                    <select name="" id="" class="form-control" ng-model="frm.ward">
+                        <option value="">Chọn Phường/xã</option>
+                        <option value="{{item.id}}" ng-repeat="item in wards">{{item.ward_name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Hãng VC</label>
+                    <select name="" id="" class="form-control" ng-model="frm.courier">
+                        <option value="">Chọn hãng vc</option>
+                        <option value="{{item.id}}" ng-repeat="item in list_courier">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-md-offset-4 text-right">
+                <button class="btn btn-primary " ng-click="load(frm)">
+                    Tìm kiếm
+                </button>
+            </div>
+        </div>
+        <div class="row m-t-md">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr>
+                        <th>#</th>
+                        <th>Tên bưu tá</th>
+                        <th>Số điện thoại</th>
+                        <th>Tuyến</th>
+                        <th>Phường xã</th>
+                    </tr>
+                    <tr>
+                        <td colspan="20" ng-if="loading">
+                            Đang tải dữ liệu
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in list_postman">
+                        <td>{{$index + 1}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.ward_name || ""}}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </form>
+    <div class="clearfix"></div>
+</div>
+
+<div class="modal-footer">
+</div>

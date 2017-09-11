@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/imports
+END
+deploy.xml
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/imports/deploy.xml
+END
+test.xml
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/imports/test.xml
+END
+dependencies.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/imports/dependencies.xml
+END
+metrics.xml
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/imports/metrics.xml
+END

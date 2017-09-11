@@ -1,0 +1,54 @@
+<div class="bg-light lter b-b wrapper-md ng-scope">
+  <div class="row">
+    <h1 class="m-n font-thin h3 col-md-2">List Template</h1>
+    <div class="pull-right">
+        <a class="btn btn-sm btn-success" href="#/app/template/add">Create</a>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default" ng-controller="TemplateCtrl">
+    <div class="row wrapper">
+      <div class="col-sm-3">
+        <div class="input-group hide">
+          <input type="text" placeholder="Name....." class="input-sm form-control">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-sm btn-default">Go!</button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light">
+        <thead>
+          <tr>
+            <th style="width:20px;">#</th>
+            <th>Title</th>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Transport Type</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="value in listTemplate">
+            <td>{{ item_stt + $index + 1}}</td>
+            <td>{{ value.title }}</td>
+            <td>{{ value.code }}</td>
+            <td>{{ value.description }}</td>
+            <td>{{ value.transport_name }}</td>
+            <td>
+                <a class="btn btn-sm btn-info" href="#/app/template/edit/{{value.id}}">Edit</a>
+                <button class="btn btn-sm btn-danger btn-addon" ng-click="delTemplate(value.id,$index)"><i class="fa fa-trash-o"></i>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="panel-footer">
+      <div class="row">
+        <div class="col-sm-4 text-right text-center-xs pull-right">                
+            <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage()"></pagination>
+        </div>
+      </div>
+    </footer>
+</div>

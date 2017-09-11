@@ -1,0 +1,275 @@
+<div ng-controller="MerchantsReportCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-inbox text-info"></i> Báo cáo khách hàng</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal form-horizontal" ng-submit="setPage()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group padder">
+                                    <input type="text" class="form-control" placeholder="Khách hàng tạo từ."
+                                           ng-model="time.create_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_create_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-lg-offset-1">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Duyệt từ ngày ..."
+                                           ng-model="time.accept_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_accept_start_open"
+                                           datepicker-options="dateOptions"
+                                           ng-required="true"
+                                           close-text="Close"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-lg-offset-1">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Thành công từ ngày ..."
+                                        ng-model="time.success_start"
+                                        datepicker-popup="dd-MM-yyyy"
+                                        is-open="time_success_start_open"
+                                        datepicker-options="dateOptions"
+                                        close-text="Close"
+                                    />
+                                    <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group padder">
+                                    <input type="text" class="form-control" placeholder="Khách hàng tạo đến."
+                                           ng-model="time.create_end"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_create_end_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-lg-offset-1">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                        datepicker-popup="dd-MM-yyyy"
+                                        is-open="time_accept_end_open"
+                                        datepicker-options="dateOptions"
+                                        date-disabled="disabled(date, mode)"
+                                        close-text="Close"
+                                        ng-model="time.accept_end"
+                                    />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-lg-offset-1">
+                                <div class="form-group controls input-group">
+                                  <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                    datepicker-popup="dd-MM-yyyy"
+                                    is-open="time_success_end_open"
+                                    datepicker-options="dateOptions"
+                                    date-disabled="disabled(date, mode)"
+                                    close-text="Close"
+                                    ng-model="time.success_end"
+                                  />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Thông tin khách hàng"
+                                           ng-model="frm.merchant"
+                                            />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn m-b-xs w-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6 text-right" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_BALANCE','export')">
+                                <button type="button" class="btn m-b-xs btn-success" ng-disabled="!time.create_start || !time.create_end" ng-click="exportExcel('export')"><i class="fa fa-file-excel-o"></i> Xuất Excel</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="tab-container">
+                        <div class="tab-content tab-fake">
+                                <table class="table table-bordered tablesorter bg-white">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%">
+                                                STT
+                                            </th>
+                                            <th class="text-center">
+                                                Khách hàng
+                                            </th>
+                                            <th colspan="4" class="text-center">
+                                                Vận đơn
+                                            </th>
+                                            <th colspan="8" class="text-center">
+                                                Phí
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+
+                                            </th>
+                                            <th>
+
+                                            </th>
+
+                                            <!-- Vận đơn -->
+                                            <th>
+                                               PS
+                                            </th>
+                                            <th>
+                                               TC
+                                            </th>
+                                            <th>
+                                                CH
+                                            </th>
+                                            <th>
+                                                Tồn
+                                            </th>
+
+                                            <!-- Shipchung-->
+                                            <th>
+                                                PVC
+                                            </th>
+                                            <th>
+                                                PCoD
+                                            </th>
+                                            <th>
+                                                PBH
+                                            </th>
+                                            <th>
+                                                PVK
+                                            </th>
+                                            <th>
+                                                PCH
+                                            </th>
+                                            <th>
+                                                DiscountPVC
+                                            </th>
+                                            <th>
+                                                DiscountPCoD
+                                            </th>
+                                            <th>
+                                                Collect
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="waiting">
+                                            <td colspan="15" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="totalItems == 0 && !waiting">
+                                            <td colspan="15" class="text-center">Không có dữ liệu</td>
+                                        </tr>
+                                        <tr ng-repeat="item in list_data">
+                                            <td>
+                                                {{item_stt + $index + 1}}
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-user"></i> {{item.fullname}}<br/>
+                                                <i class="fa fa-mail"></i> {{item.email}}<br/>
+                                                <i class="fa fa-phone"></i> {{item.phone}}<br />
+                                                <i class="fa fa-clock-o">{{(item.time_create) * 1000 | date:'HH:mm dd-MM-yyyy'}}</i>
+                                            </td>
+
+                                            <td>
+                                               {{item.ps || '0'}}
+                                            </td>
+                                            <td>
+                                                {{item.tc || '0'}}
+                                            </td>
+                                            <td>
+                                                {{item.ch || '0'}}
+                                            </td>
+                                            <td>
+                                                {{item.ton || '0'}}
+                                            </td>
+
+                                            <td>
+                                                {{item.sc_pvc || '0' | vnNumber}}
+                                            </td>
+                                            <td>
+                                                {{item.sc_cod || '0' | vnNumber}}
+                                            </td>
+                                            <td>
+                                                {{item.sc_pbh || '0' | vnNumber}}
+                                            </td>
+                                            <td>
+                                                {{item.sc_pvk || '0' | vnNumber}}
+                                            </td>
+                                            <td>
+                                                {{item.sc_pch || '0' | vnNumber}}
+                                            </td>
+                                            <td>
+                                                {{item.sc_discount_pvc || '0' | vnNumber}}
+                                            </td>
+                                            <td>
+                                                {{item.sc_discount_cod || '0' | vnNumber}}
+                                            </td>
+                                            <td>
+                                                {{item.money_collect || '0' | vnNumber}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="row" ng-show="list_data">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> khách hàng
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage()"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="modal-header">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              <h4>Danh sách khách hàng có thể sử dụng coupons</h4>
+            </div>
+        </div>
+    </div>
+        <div class="modal-body wrapper-md">
+
+            <div class="form-group col-md-12">
+                <div class="table-responsive">
+                    <table class="table-condensed table-hover w-full">
+                        <thead>
+                          <tr>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>SĐT</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <form class="form-validation">
+                          <tr >
+                              <td colspan="20" ng-if="stateLoading ">
+                                  Đang tải dữ liệu
+                              </td>
+                              <td colspan="20" ng-if="!stateLoading && list_member.length == 0">
+                                  Không có dữ liệu
+                              </td>
+                          </tr>
+                          <tr ng-repeat="item in list_member ">
+                            
+                            <td>
+                                <a ng-if="item.id" href="javascript:;">{{item.user.fullname || 'Tên KH'}}</a>
+                            </td>
+                            <td>
+                                <a ng-if="item.id" href="javascript:;">{{item.user.email || 'Email KH'}}</a>
+                            </td>
+                            <td>
+                                <a ng-if="item.id" href="javascript:;">{{item.user.phone || 'Số điện thoại KH'}}</a>
+                            </td>
+                            
+<!--                             <td>
+    <label class="i-switch bg-primary" ng-if="item.id">
+        <input type="checkbox" ng-true-value="1"  ng-false-value="0" ng-model="item.active" ng-checked="item.active > 0" ng-change="savePipe(item, 'active', item.active)">
+        <i></i>
+    </label>
+</td>
+ -->
+                          </tr>
+                          <tr>
+                              <td colspan="20">
+                                    <p>Thêm người sử dụng</p>
+                                    <tags-input ng-model="newMembers" add-from-autocomplete-only='true' display-property="name" style="width: 100%" placeholder="Nhập email người dùng">
+                                        <auto-complete source="suggestUser($query)"></auto-complete>
+                                    </tags-input>
+                              </td>
+                          </tr>
+                        </form>
+                        </tbody>
+                    </table>
+                    </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+            <button class="btn btn-success w-sm" ng-disabled="newMembers.length == 0 || AddLoading" ng-click="addMember(newMembers)">Thêm người dùng</button>
+            <button class="btn btn-info w-sm" type="button" ng-click="close()">Đóng</button>
+        </div>

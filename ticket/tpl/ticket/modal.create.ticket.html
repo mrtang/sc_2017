@@ -1,0 +1,176 @@
+     <form name="FormCreate" class="form-horizontal form-validation" ng-submit="save(contact,frm)" role="form">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-7 pull-left no-padder">
+                    <h4 class="modal-title">Gửi yêu cầu/khiếu nại</h4>
+                </div>
+                <button type="button" class="pull-right close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-body wrapper-md">
+                <div ng-if="listTicketRefer.length > 0 " class="form-group padder" style="word-wrap: break-word;">
+                    <strong><!-- Các yêu cầu bạn đã gửi liên quan đến vận đơn : {{ids.join(',')}} . <br/> -->Bạn vui lòng kiểm tra lại các yêu cầu dưới đây, nếu đã có vui lòng nhấn vào link gửi phản hồi để được hỗ trợ tiếp </strong>
+                    <div ng-if="!referLoading">
+                        <div ng-repeat="item in listTicketRefer" style="padding: 4px 0px;"><a title="{{item.content}}" ng-click="$state.go('ticket.request.management.detail', {code: item.id});cancel()" href="" style="color:#19a9d5"> #{{item.id}} <label class="label " ng-class="data_status[item.status].bg">{{data_status[item.status].name}}</label> {{item.title}}   &nbsp; [gửi phản hồi]</a></div>
+                    </div> <br/>
+                    <div>
+                        <strong>Nếu bạn có yêu cầu khác, vui lòng nhập yêu cầu vào ô bên dưới để tạo yêu cầu mới .</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <input type="text" id="contact_input" placeholder="Mã vận đơn, Họ tên, email hoặc số điện thoại khách hàng,@ mã khách hàng" class="form-control "
+                            ng-model                 ="contact"
+                            typeahead-min-length     = '3'
+                            typeahead-wait-ms        = '500'
+                            typeahead                ="user as user.data_search for user in getUser($viewValue)"
+                            typeahead-on-select = "abc($item)"
+                            />
+                        <i ng-show="loadingUses" class="fa fa-spinner"></i>
+                    </div>
+                </div>
+                <div ng-if="!show_confirm_delivery">
+                    
+                
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" placeholder="Yêu cầu" class="form-control"
+                                   ng-model                ="frm._datacase"
+                                   typeahead-min-length    = '3'
+                                   typeahead-wait-ms       = '500'
+                                   typeahead               ="item as item.type_name for item in getCase($viewValue) | limitTo:8"
+                                   typeahead-loading       ="loadingCase"
+                                   required
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-group padder" ng-show="show_respond">
+                        <a class="pull-right" ng-click="toogle_show()">
+                          <i class="glyphicon glyphicon-transfer text-md text-muted wrapper-sm"></i>
+                        </a>
+                        <textarea rows="5" class="form-control w-full" ng-model="data.content"  placeholder="Nội dung khách hàng yêu cầu xử lý hoặc góp ý ..."></textarea>
+                    </div>
+
+                    <div class="form-group padder" ng-show="!show_respond">
+                        <a class="pull-right" ng-click="toogle_show()">
+                          <i class="glyphicon glyphicon-transfer text-md text-muted wrapper-sm"></i>
+                        </a>
+                        <div class="col-md-12 no-padder">
+                            <div class="form-control wrapper-xxs b-success b-1x scroll-y" markdown="data.content" style="height: 117px;" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <tags-input
+                            class="sc_code_tagging"
+                            ng-model="refer"
+                            placeholder="Nhập mã vận đơn liên quan ..."
+                            min-length="8"
+                            max-length="30"
+                            max-tags="6"
+                            on-tag-added="onAddedTags($tag)"
+                            on-tag-removed="onAddedTags($tag)"
+                        >
+                        </tags-input>
+                    
+
+                    </div>
+                </div>
+
+
+                <div ng-if="listOrderDelivery && show_confirm_delivery && listOrderDelivery.pipe_journey.length == 0"  class="m-b-md">
+                    
+                    <div ng-if="!confirm_delivered">
+                        <p>Có phải bạn muốn gửi yêu cầu phát lại vận đơn <strong>{{listOrderDelivery.tracking_code}}</strong> ?</p>
+                        <div class='text-center'>
+                            <button class="btn btn-success btn-md" type="button" ng-click="confirm_delivery(listOrderDelivery)" ng-disabled="confirm_delivery_loading">
+                                Yêu cầu phát lại
+                            </button>
+                            <button class="btn btn-info btn-md" type="button" ng-click="switchShowConfirm()">
+                                Không, tôi muốn gửi yêu cầu khác
+                            </button>
+                        </div>
+                    </div>
+                    <div ng-if="confirm_delivered">
+                        Đơn hàng của bạn đã được gửi yêu cầu giao lại thành công, Shipchung đã tiệp nhận và tiến hành xử lý đơn hàng này của bạn .  
+                    </div>
+                    
+                    
+
+                </div>
+                <div ng-if="show_confirm_delivery && listOrderDelivery.pipe_journey.length > 0">
+                    Đơn hàng này đã gửi yêu cầu giao lại, bạn có thể theo dõi lịch trình của đơn hàng tại <a href="http://seller.shipchung.vn/#/detail/{{listOrderDelivery.tracking_code}}" target="_blank"><span class="text-info">đây</span></a> hoặc nếu bạn muốn gửi yêu cầu khiếu nại khác, vui lòng nhấn vào đây <a ng-click="switchShowConfirm()" href=""><span class="text-info">đây</span></a>
+                    
+                </div>
+
+                
+                <div class="text-center" ng-if="referLoading">
+                    <center>
+                        <i class="text-2x fa fa-spinner fa-spin"></i>
+                    </center>
+                </div>
+                <div ng-if="!show_confirm_delivery">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="b-a b-dashed" nv-file-drop="" uploader="uploaderPopup">
+                                <div nv-file-over="" uploader="uploaderPopup" over-class="another-file-over-class">
+                                    <input type="file" class="w-full input-uploader-popup" nv-file-select="" uploader="uploaderPopup" multiple />
+                                    <span class="content-uploader-popup"><i class="fa fa-picture-o fa-lg"></i> Kéo thả tối đa 5 file (mỗi file nhỏ hơn 3mb) vào đây hoặc click để lựa chọn</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group text-xs m-b-none" ng-if="uploaderPopup.queue.length > 0">
+                        <div class="col-sm-12">
+                            <table class="table m-b-none">
+                                <thead>
+                                <tr>
+                                    <th width="50%">Tên</th>
+                                    <th ng-show="uploaderPopup.isHTML5">Size</th>
+                                    <th ng-show="uploaderPopup.isHTML5">Xử lý</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in uploaderPopup.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploaderPopup.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploaderPopup.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> Xóa
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+        
+        
+                    <div class="modal-footer" style="text-aligin:left">
+                        <button type="button" class="btn btn-default" ng-click="cancel()">Hủy bỏ</button>
+                        <button class="btn btn-info" ng-disabled="FormCreate.$invalid || frm_submit || !creater_id" >Gửi yêu cầu</button>
+                    </div>
+                </div>
+        </div>
+    </form>

@@ -1,0 +1,114 @@
+<div ng-controller="ReportOrderCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-inbox text-info"></i> Báo cáo khách hàng</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal form-horizontal" ng-submit="setPage();frm.sort_date = 0" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Thông tin khách hàng"
+                                           ng-model="frm.search"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="month" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input month-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.month"
+                                                       placeholder="Theo tháng"
+                                                        ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.month"
+                                                    datetimepicker-config="{ dropdownSelector: '#month' ,startView:'month', minView:'month'}"
+                                                    >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn m-b-xs btn-info"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6 text-right" ng-if="check_privilege('PRIVILEGE_ACCOUNTING','export')">
+                                <!--button type="button" class="btn m-b-xs btn-success" ng-click="exportExcel('export')"><i class="fa fa-file-excel-o"></i> Xuất Excel</button-->
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table-condensed table-hover w-full">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th width="10%">Khách hàng</th>
+                                    <th data-ng-repeat="i in list_date">
+                                        <span class="pointer text-center" ng-click="sort(i)" ng-class="{'text-danger' : list_bonus_day.indexOf(i) != -1}">
+                                            {{i}}
+                                            <i ng-show="frm.sort_date == i && sort_value" class="fa fa-fw fa-long-arrow-down text-info"></i>
+                                            <i ng-show="frm.sort_date == i && !sort_value" class="fa fa-fw fa-long-arrow-up text-info"></i>
+                                        </span>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="waiting">
+                                    <td colspan="50" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tr>
+                                <tr ng-show="totalItems == 0 && !waiting">
+                                    <td colspan="50" class="text-center">Không có dữ liệu</td>
+                                </tr>
+                                <tr ng-repeat="item in list_data">
+                                    <td>
+                                        {{item_stt + $index + 1}}
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-user"></i> {{item.fullname}}<br/>
+                                        <i class="fa fa-envelope-o"></i> {{item.email}}<br/>
+                                        <i class="fa fa-phone"></i> {{item.phone}}<br />
+                                    </td>
+
+                                    <td class="text-center" data-ng-repeat="i in list_date">
+                                        <span ng-class="{'text-primary': item[i]['pickup']/item[i]['generate'] < 0.8}">{{item[i]['generate'] > 0 ? item[i]['generate'] : ''}}<span ng-show="item[i]['generate'] > 0 || item[i]['pickup'] > 0">/</span><span ng-show="(!item[i]['generate'] || item[i]['generate'] == 0) && (!item[i]['pickup'] || item[i]['pickup'] == 0)">-</span>{{item[i]['pickup'] > 0 ? item[i]['pickup'] : ''}} </span><br />
+                                        <span class="text-sm" ng-if="item[i]['sub_pickup'] && item[i]['sub_pickup'] != 0" ng-class="{'text-success': item[i]['sub_pickup'] > 0,'text-danger': item[i]['sub_pickup'] < 0}" >(<span ng-show="item[i]['sub_pickup'] > 0">+ </span>{{item[i]['sub_pickup']}})</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row" ng-show="totalItems > 0 && !waiting">
+                        <div class="col-sm-3 wrapper-md pull-left">
+                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> khách hàng
+                        </div>
+                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage()"></pagination>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

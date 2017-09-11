@@ -1,0 +1,246 @@
+<div ng-controller="ReportCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-inbox text-info"></i> Báo cáo khách hàng</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal form-horizontal" ng-submit="setPage()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Thông tin khách hàng"
+                                           ng-model="frm.search"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="from_day" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input date-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.from_day"
+                                                       placeholder="Theo ngày"
+                                                        ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.from_day"
+                                                    datetimepicker-config="{ dropdownSelector: '#from_day' ,startView:'day', minView:'day'}"
+                                                    >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="to_day" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input date-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.to_day"
+                                                       placeholder="đến ngày"
+                                                        ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.to_day"
+                                                    datetimepicker-config="{ dropdownSelector: '#to_day' ,startView:'day', minView:'day'}"
+                                                    >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="month" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input month-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.month"
+                                                       placeholder="Theo tháng"
+                                                        ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.month"
+                                                    datetimepicker-config="{ dropdownSelector: '#month' ,startView:'month', minView:'month'}"
+                                                    >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn m-b-xs btn-info"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6 text-right" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_REPORT','export')">
+                                <button type="button" class="btn m-b-xs btn-success" ng-click="exportExcel('export')"><i class="fa fa-file-excel-o"></i> Xuất Excel</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table-condensed table-hover w-full">
+                            <thead>
+                                <tr>
+                                    <th width="5%">
+                                        STT
+                                    </th>
+                                    <th class="text-center">
+                                        Khách hàng
+                                    </th>
+                                    <th colspan="6" class="text-center">
+                                        Trong kỳ
+                                    </th>
+                                    <th colspan="8" class="text-center">
+                                        Kỳ trước
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+
+                                    <!-- Vận đơn -->
+                                    <th>
+                                       PS
+                                    </th>
+                                    <th>
+                                       TC
+                                    </th>
+                                    <th>
+                                        CH
+                                    </th>
+                                    <th>
+                                        Tổng phí
+                                    </th>
+                                    <th>
+                                        Khuyến mãi
+                                    </th>
+                                    <th>
+                                        Thu hộ
+                                    </th>
+
+                                    <th>
+                                        Thành công
+                                    </th>
+                                    <th>
+                                        Chuyển hoàn
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="waiting">
+                                    <td colspan="10" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tr>
+                                <tr ng-show="totalItems == 0 && !waiting">
+                                    <td colspan="10" class="text-center">Không có dữ liệu</td>
+                                </tr>
+                                <tr class="bg-orange" ng-show="totalItems > 0 && !waiting">
+                                    <td colspan="2"></td>
+                                    <td>
+                                        {{list_sum.generate || '0'}}
+                                    </td>
+                                    <td>
+                                        {{list_sum.success || '0'}}
+                                    </td>
+                                    <td>
+                                        {{list_sum.total_return || '0'}}
+                                    </td>
+                                    <td>
+                                        {{(1*list_sum.sc_pvc + 1*list_sum.sc_cod + 1*list_sum.sc_pbh) || '0' | vnNumber}}
+                                    </td>
+                                    <td>
+                                        {{(1*list_sum.sc_discount_pvc + 1*list_sum.sc_discount_cod) || '0' | vnNumber}}
+                                    </td>
+                                    <td>
+                                        {{list_sum.money_collect | vnNumber}}
+                                    </td>
+                                    <td>
+                                        {{list_sum.lsuccess || '0'}}
+                                    </td>
+                                    <td>
+                                        {{list_sum.lreturn || '0'}}
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="item in list_data">
+                                    <td>
+                                        {{item_stt + $index + 1}}
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-user"></i> {{item.user.fullname}}<br/>
+                                        <i class="fa fa-mail"></i> {{item.user.email}}<br/>
+                                        <i class="fa fa-phone"></i> {{item.user.phone}}<br />
+                                    </td>
+
+                                    <td>
+                                       {{item.generate || '0'}}
+                                    </td>
+                                    <td>
+                                        {{item.success || '0'}}
+                                    </td>
+                                    <td>
+                                        {{item.total_return || '0'}}
+                                    </td>
+
+                                    <td> <!-- Tổng phí -->
+                                        {{(1*item.sc_pvc + 1*item.sc_cod + 1*item.sc_pbh) || '0' | vnNumber}}
+                                    </td>
+                                    <td><!-- Khuyến mãi -->
+                                        {{(1*item.sc_discount_pvc + 1*item.sc_discount_cod) || '0' | vnNumber}}
+                                    </td>
+                                    <td> <!-- Thu hộ -->
+                                        {{item.money_collect || '0' | vnNumber}}
+                                    </td>
+
+                                    <td>
+                                        {{item.lsuccess || '0'}}
+                                    </td>
+                                    <td>
+                                        {{item.lreturn || '0'}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row" ng-show="totalItems > 0 && !waiting">
+                        <div class="col-sm-3 wrapper-md pull-left">
+                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> khách hàng
+                        </div>
+                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage()"></pagination>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

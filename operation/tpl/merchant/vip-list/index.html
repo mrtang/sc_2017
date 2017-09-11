@@ -1,0 +1,83 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-user text-info"></i> Danh sách khách hàng VIP</h1>
+
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="ListVipCtrl" data-ng-init="setPage()">
+  <div class="col wrapper-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <form class="form-validation form-horizontal" ng-submit="setPage(1)">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <input type="text" placeholder="Email khách hàng ..." class="form-control" ng-model="customerData.email">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button class="btn btn-info" type="submit">Tìm kiếm</button>
+                </div>
+              </div>
+                  
+          </form>
+      </div>
+
+      <div class="panel-body">
+          <table class="table table-bordered tablesorter bg-white">
+              <thead>
+                <tr>
+                    <th style="width:20px;">#</th>
+                    <th>Tên khách hàng</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Ngày tạo</th>
+                    <th>Người quản lý</th>
+                    <!-- <th>Hành động</th> -->
+                </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="stateLoading">
+                  <td colspan="20" class="text-center">
+                      <i class="text-3x fa fa-spinner fa-spin"></i>
+                  </td>
+              </tr>
+              <tr ng-if="totalItems == 0 && !stateLoading">
+                  <td colspan="20" class="text-center">Không có dữ liệu</td>
+              </tr>
+              <tr ng-repeat="one in listData">
+                    <td>{{item_stt + $index + 1}}</td>
+                    <td>{{one.fullname}}</td>
+                    <td>{{one.email}}</td>
+                    <td>{{one.phone}}</td>
+                    <td>{{one.time_create*1000 | date : "HH:mm dd-MM-yyyy"}}</td>
+                    <td>{{one.cs.fullname}}</td>
+                    <!-- <td>
+                      <div class="btn-group" dropdown>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" dropdown-toggle>
+                          Nhận quản lý khách hàng <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" >
+                          <li><a class=" text-info" data-ng-click="openModalManageCustomer(one)">Nhận quản lý khách hàng</a></li>
+                          <li><a data-ng-click="openModalManageHistory(one)">Lịch sử quản lý</a></li>
+                        </ul>
+                      </div>
+                    </td> -->
+                </tr>
+            </tbody>
+          </table>
+
+          <!-- pagination -->
+          <div ng-show="listData.length > 0" class="row">
+                  <div class="col-sm-3 wrapper-md pull-left">
+                      <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                  </div>
+                  <div class="col-sm-4 text-right text-center-xs pull-right">
+                    <pagination total-items="totalItems" ng-model="customerData.currentPage" max-size="5" items-per-page="{{customerData.itemsPerPage}}" ng-change="setPage(customerData.currentPage)" next-text="Next"></pagination>
+                  </div>
+              </div>
+      </div>
+    </div>
+  </div>
+</div>

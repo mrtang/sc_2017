@@ -1,0 +1,102 @@
+<div class="tab-container">
+    <div class="tab-content tab-fake">
+        <div class="wrapper-md b-b">
+            <span class="m-n h4">Thông tin sản phẩm {{$stateParams.keyword}}</span>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab-content tab-fake">
+                <div class="table-responsive">
+                    <table class="table-condensed table-hover w-full">
+                        <thead>
+                        <td>
+                            #
+                        </td>
+                        <td>
+                            <i class="fa fa-barcode"></i>&nbsp; Mã
+                        </td>
+                        <td> <i class="fa fa-clock-o"></i> Thời gian</td>
+
+                        <td>
+                            <i class="fa fa fa-inbox"></i> Sản phẩm
+                        </td>
+
+                        <td>
+                            <i class="fa fa-user"></i> Khách hàng
+                        </td>
+
+                        <td>
+                            <i class="fa fa-institution"></i> Kho
+                        </td>
+
+                        <td>
+                            Thời gian lưu kho
+                        </td>
+
+                        <td>
+                            Trạng thái
+                        </td>
+                        </thead>
+                        
+                        <tbody ng-repeat="it in item.list_item">
+                        <tr>
+                            <td>{{item_stt + $index + 1}}</td>
+                            <td>
+                                <p>
+                                    <a class="label bg-light text-base text-info" href="javascript:;">{{it.serial_number || ''}}</a>
+                                </p>
+                                <p ng-show="it.sku">
+                                    <a class="label bg-light text-base text-primary" href="javascript:;">{{it.sku || 'Mã SKU'}}</a>
+                                </p>
+                                <p ng-show="it.__putaway.bin">
+                                    <a class="label bg-light text-base text-primary" href="javascript:;">{{it.__putaway.bin || 'Mã BINID'}}</a>
+                                </p>
+                            </td>
+
+                            <td>
+                                <p  class="text-info"> {{ it.created || ''}}</p>
+                                <p  ng-show="it.update_stocked"   class="warning"> {{ it.update_stocked || ''}}</p>
+                                <!--p  ng-show="it.update_pickisted" class="text-warning"> {{ it.update_pickisted || ''}}</p-->
+                                <p  ng-show="it.update_picked"    class="text-primary"> {{ it.update_picked || ''}}</p>
+                                <p  ng-show="it.update_packed"    class="text-success"> {{ it.update_packed || ''}}</p>
+                            </td>
+
+                            <td>
+                                <p><i class="fa fa-shopping-cart"></i> {{it.__product.name || ''}}</p>
+                                <p editable-select="it.__product.packing_volume" e-ng-options="s.volume_limit as s.volume_limit for s in volume" onbeforesave="change(it.__product.id, $data, 'packing_volume')">
+                                    {{it.__product.packing_volume || 'empty'}}
+                                </p>
+                            </td>
+
+                            <td>
+                                <p><i class="fa fa-user"></i> {{it.__get_user.fullname || ''}}</p>
+                                <p><i class="fa fa fa-envelope-o"></i> {{it.__get_user.email || ''}}</p>
+                                <p><i class="fa fa-phone"></i> {{it.__get_user.phone || ''}}</p>
+                            </td>
+
+                            <td>
+                                <p>{{it.__inventory.address_line1 || ''}}</p>
+                                <p ng-if="it.__inventory.code"> {{warehouse[it.__inventory.code]['name'] || ''}}</p>
+                            </td>
+
+                            <td>
+                                <p ng-init="time_stock = get_time_stock(it)">
+                                    {{time_stock > 24 ? (time_stock/24) : time_stock || '0' | number:0}}
+                                    <span ng-show="time_stock > 24"> (ngày)</span>
+                                    <span ng-show="time_stock <= 24"> (h)</span></i>
+                                </p>
+                            </td>
+
+                            <td>
+                                <p>
+                                    <span class="label text-xs {{list_color[it.status] || ''}}">{{status[it.status]['name']}}</span>
+                                </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

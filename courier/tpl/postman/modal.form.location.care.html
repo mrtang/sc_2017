@@ -1,0 +1,32 @@
+<div class="modal-body wrapper-md">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="m-t-none m-b font-thin">Add New Location</h3>
+      <p> </p>
+      <form role="form" name="locationForm" class="form-validation">
+        <div class="form-group">
+          <label>City</label>
+          <select name="city"  ng-options="city.id as city.city_name for city in myCity.options" class="form-control" 
+          ng-model="myCity.CitySelected" ng-Change="myCity.loadDistrict()">
+            <option value="">Tỉnh/Thành phố</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>District</label>
+          <select class="form-control m-b" ng-options="dist.id as dist.district_name for dist in myDistrict.options" class="form-control" ng-model="myDistrict.DistSelected" ng-Change="myCity.loadWard()">
+            <option value="">Quận/Huyện</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ward</label>
+          <select class="form-control m-b" ng-options="ward.id as ward.ward_name for ward in myWard.options" class="form-control" ng-model="myWard.WardSelected">
+            <option value="">Phường/Xã</option>
+        </div>
+        <input type="hidden" ng-model="postman_id" value="{{idPostman}}">
+        <div class="checkbox m-t-lg">
+          <button type="submit" class="btn btn-sm btn-success pull-left text-uc m-t-n-xs" ng-click="saveLocation()" ng-disabled='locationForm.$invalid'>Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

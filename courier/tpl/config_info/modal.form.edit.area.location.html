@@ -1,0 +1,68 @@
+<div class="modal-body wrapper-md">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="m-t-none m-b font-thin">Edit Area Location</h3>
+      <p> </p>
+      <form role="form" name="locationForm" class="form-validation">
+      	<div class="col-md-6">
+	      	<div class="form-group">
+	          <label class="col-md-4">Area</label>
+	          <div class="row">
+	          	<div class="col-md-7">
+			          <select ng-options="area.id as area.name for area in data_area" class="form-control" 
+			          ng-model="dat.AreaSelected">
+			            <option value="">-- Area --</option>
+			          </select>
+			    </div>
+		      </div>
+	        </div>
+	        <div class="form-group">
+	          <label class="col-md-4">Location</label>
+	          <div class="row">
+	          	<div class="col-md-7">
+		          <select class="form-control m-b" ng-options="locate.id as locate.name for locate in data_locate" class="form-control" ng-model="dat.LocateSelected">
+		            <option value="">-- Location --</option></select>
+		      	</div>
+		      </div>
+	        </div>
+        </div>
+        <div class="col-md-6">
+	        <div class="form-group">
+	          <label class="col-md-3">Province</label>
+	          <div class="row">
+	          	<div class="col-md-8">
+		          <select ng-options="city.id as city.city_name for city in myCity.options" class="form-control" 
+		          ng-model="myCity.CitySelected" ng-Change="myCity.loadDistrict()">
+		            <option value="">Tỉnh/Thành phố</option>
+		          </select>
+		        </div>
+		      </div>
+	        </div>
+	        <div class="form-group">
+	          <label class="col-md-3">District</label>
+	          <div class="row">
+	          	<div class="col-md-8">
+		          <select class="form-control m-b" ng-options="dist.id as dist.district_name for dist in myDistrict.options" class="form-control" ng-model="myDistrict.DistSelected">
+		            <option value="">-- District --</option>
+		          </select>
+		        </div>
+		      </div>
+	        </div>
+	    </div>
+	    <div class="col-md-12">
+	        <div class="form-group">
+	            <label class="col-md-2">Active</label>
+	            <div class="checkbox">
+	                <label class="i-checks"> 
+	                  <input type="checkbox" value="1" checked="" ng-model="dat.active"><i></i>
+	                </label>
+	            </div>
+	        </div>
+	    </div>
+        <div class="checkbox col-md-3 m-l-sm">
+          <button class="btn btn-sm btn-success pull-left text-uc m-t-n-xs" ng-click="saveEditAreaLocation(id,dat)" ng-disabled='locationForm.$invalid'>Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

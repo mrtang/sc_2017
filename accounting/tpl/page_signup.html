@@ -1,0 +1,41 @@
+    <div class="container w-xxl w-auto-xs" ng-controller="SignupFormController" ng-init="app.settings.container = false;">
+        <a href class="navbar-brand block m-t"><img src="img/logo.png" alt="{{app.name}}" style="max-height: 100px"/></a>
+        <div class="m-b-lg">
+        <div class="wrapper text-center">
+          <strong>Đăng ký tài khoản mc.shipchung.vn</strong>
+        </div>
+        <form name="frm_register" class="form-validation">
+          <div class="text-danger wrapper text-center" ng-show="authError">
+              {{authError}}
+          </div>
+         
+          <div class="form-group">
+            
+          </div>
+          <div class="list-group list-group-sm">
+            <div class="list-group-item no-padder">
+              <input type="email" placeholder="Email" class="form-control input-lg text-md" ng-maxlength="100" ng-model="user.email" required />
+            </div>
+            <div class="list-group-item no-padder">
+              <input type="text" placeholder="Họ tên" class="form-control input-lg text-md" ng-model="user.fullname" ng-maxlength="100" required />
+            </div>
+            <div class="list-group-item no-padder">
+              <input type="password" name="password" placeholder="Mật khẩu" class="form-control input-lg text-md" ng-model="user.password" ng-maxlength="100" required />
+            </div>
+            <div class="list-group-item no-padder">
+              <input type="password" name="confirm_password" placeholder="Nhấp lại mật khẩu" class="form-control input-lg text-md" 
+                ng-model="user.confirm_password"
+                ui-validate=" '$value==user.password' "
+                ui-validate-watch=" 'password' "
+              required />
+            </div>
+            
+          </div>
+          <button type="submit" class="btn btn-lg btn-success btn-block" ng-click="signup(user)" ng-disabled='frm_register.$invalid'>Đăng ký</button>
+          <div class="line line-dashed"></div>
+          <p class="text-center"><small>Already have an account?</small></p>
+          <a ui-sref="access.signin" class="btn btn-lg btn-primary btn-block">Đăng nhập</a>
+        </form>
+        </div>
+        <div class="text-center" ng-include="'tpl/blocks/page_footer.html'"></div>
+    </div>

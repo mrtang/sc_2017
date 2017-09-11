@@ -1,0 +1,30 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <a href="javascript:;" class="close" ng-if="!checkoutSuccess" target="_parent" ng-click="closePopup()">&times;</a> 
+
+            <span class="modal-title list-inline pull-left">
+                    <span class="logo-sc"></span>
+                    <strong id="title">{{'TITLE'|translate}} {{shipchung}}</strong>
+            </span>
+            <div class="lang-area-top hidden-sm hidden-xs pull-right" ng-if="checkoutSuccess">
+                <span class="flag-icon flag-icon-us" ng-class='{active:lang==="en"}' ng-click="changeLanguage('en')" data-toggle="tooltip" data-placement="top" title="English"></span>
+                <span class="flag-icon flag-icon-vn" ng-class='{active:lang==="vi"}' ng-click="changeLanguage('vi')" data-toggle="tooltip" data-placement="top" title="Vietnamese"></span>
+            </div> 
+
+            <div class="clearfix"></div>
+        </div>
+
+        
+
+        <div class="modal-body loading-page" ng-if="!checkoutSuccess">
+            <div class="text-center" style="margin-top:75px">
+                <p>Đang tải dữ liệu !</p>
+                <div class="facebook_loading"><span></span><span></span><span></span></div>
+            </div>
+			
+           
+        </div>  <!-- ./modal-body-->
+    </div>
+</div>
+<div class="overlay"></div>

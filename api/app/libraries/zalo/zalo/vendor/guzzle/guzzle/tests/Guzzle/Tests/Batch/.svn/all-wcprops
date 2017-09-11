@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch
+END
+AbstractBatchDecoratorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/AbstractBatchDecoratorTest.php
+END
+BatchBuilderTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/BatchBuilderTest.php
+END
+ExceptionBufferingBatchTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/ExceptionBufferingBatchTest.php
+END
+NotifyingBatchTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/NotifyingBatchTest.php
+END
+BatchSizeDivisorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/BatchSizeDivisorTest.php
+END
+BatchClosureDivisorTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/BatchClosureDivisorTest.php
+END
+BatchRequestTransferTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/BatchRequestTransferTest.php
+END
+BatchTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/BatchTest.php
+END
+FlushingBatchTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/FlushingBatchTest.php
+END
+BatchClosureTransferTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/BatchClosureTransferTest.php
+END
+HistoryBatchTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/HistoryBatchTest.php
+END
+BatchCommandTransferTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Batch/BatchCommandTransferTest.php
+END

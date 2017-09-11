@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Util
+END
+ClassTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Util/ClassTest.php
+END
+ConfigurationTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Util/ConfigurationTest.php
+END
+DiffTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Util/DiffTest.php
+END
+TestTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Util/TestTest.php
+END
+XMLTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Util/XMLTest.php
+END
+TypeTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Util/TypeTest.php
+END

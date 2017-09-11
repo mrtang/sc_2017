@@ -1,0 +1,73 @@
+<div class="panel no-border" data-ng-init="verify_show == false;limit =10">
+    <div ng-click="verify_show = !verify_show;limit = 10" class="panel-heading wrapper b-b b-light bg-info text-white pointer">
+          <span class="text-xs text-white pull-right">
+                <i ng-show="!verify_show" class="fa fa-eye"></i>  <i class="fa fa-eye-slash" ng-show="verify_show"></i>
+          </span>
+        <h4 class="font-thin m-t-none m-b-none">Đối soát định kỳ</h4>
+    </div>
+    <div class="table-responsive">
+        <table class="table-condensed table-hover w-full" ng-show="verify_show">
+            <thead>
+            <tr>
+                <th>Ngày</th>
+                <th>Số dư trước kỳ</th>
+                <th>Xuất kho</th>
+                <th>Lưu kho</th>
+                <th>Đóng gói </th>
+                <th>Xử lý</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in item.verify_warehouse" ng-show="$index <= limit">
+                <td class="text-success">
+                    <p>
+                        {{it.date}}
+                        <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom"
+                           popover="{{it.type == 1 ?  '<span class=\'label text-xs bg-info\'>Đối soát hằng ngày</span>' : '<span class=\'label text-xs bg-warning\'>Đối soát thay đổi</span>' }}"></i>
+                    </p>
+                    <span class="label text-xs bg-info" ng-if="it.config_warehouse == 0">
+                        Theo sản phẩm <i class="fa fa-angle-double-down text-white pointer" popover-placement="bottom" popover="<span class='text-black font-thin'>Thời gian lưu kho  : {{it.time_stock | vnNumber}} h</span>"></i>
+                    </span>
+                    <span class="label text-xs bg-primary" ng-if="it.config_warehouse == 1">
+                        Theo m2 <i class="fa fa-angle-double-down text-white pointer" popover-placement="bottom" popover="<span class='text-black font-thin'>Tổng sản phẩm : {{it.total_uid_storage | vnNumber}} <br /> Tổng Sku : {{it.total_sku | vnNumber}} <br /> Tổng khoang : {{it.floor | vnNumber}}</span>"></i>
+                    </span>
+                    <span class="label text-xs bg-warning" ng-if="it.config_warehouse == 2">
+                        Theo m3 <i class="fa fa-angle-double-down text-white pointer" popover-placement="bottom" popover="<span class='text-black font-thin'>Tổng sản phẩm : {{it.total_uid_storage | vnNumber}} <br /> Tổng Sku : {{it.total_sku | vnNumber}} <br /> Tổng khoang : {{it.floor | vnNumber}}</span>"></i>
+                    </span>
+                </td>
+                <td>
+                    <p>
+                        {{it.balance | vnNumber}}
+                    </p>
+                </td>
+                <td>
+                    {{it.total_uid | vnNumber}} sp
+                </td>
+                <td>
+                    {{(it.warehouse_fee - it.discount_warehouse) | vnNumber}}
+                    <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="Phí : {{it.warehouse_fee | vnNumber}} <br /> Miễn Phí : {{it.discount_warehouse | vnNumber}}"></i>
+                </td>
+                <td>
+                    {{(it.package_fee - it.discount_package) | vnNumber}}
+                    <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="Phí : {{it.package_fee | vnNumber}} <br /> Miễn Phí : {{it.discount_package | vnNumber}}"></i>
+                </td>
+                <td>
+                    {{(it.handling_fee - it.discount_handling) | vnNumber}}
+                    <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="Phí : {{it.handling_fee | vnNumber}} <br /> Miễn Phí : {{it.discount_handling | vnNumber}}"></i>
+                </td>
+            </tr>
+            <tr ng-show="item.verify.length > 0">
+                <td colspan="4"></td>
+                <td colspan="2" class="text-right">
+                    <a class="text-info" data-ng-show="limit == 10" data-ng-click="limit = 30">Xem thêm</a>
+                    <a class="text-info" data-ng-show="limit == 30" data-ng-click="limit = 10">Thu gọn</a>
+                </td>
+            </tr>
+            <tr ng-show="item.verify.length == 0">
+                <td colspan="30">Không có dữ liệu</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,277 @@
+
+.effect8
+{
+  	position:relative;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.effect8:before, .effect8:after
+{
+	content:"";
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:10px;
+    bottom:10px;
+    left:0;
+    right:0;
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+}
+.effect8:after
+{
+	right:10px;
+    left:auto;
+    -webkit-transform:skew(8deg) rotate(3deg);
+       -moz-transform:skew(8deg) rotate(3deg);
+        -ms-transform:skew(8deg) rotate(3deg);
+         -o-transform:skew(8deg) rotate(3deg);
+            transform:skew(8deg) rotate(3deg);
+}
+
+#call-widget{
+	transition: 1s linear all;
+	width: 500px;
+    position: fixed;
+    bottom:41px;
+    right: 20px;
+    z-index: 9999999999;
+}
+#call-widget.ng-hide-remove{
+	bottom:40px;
+}
+#call-widget.ng-hide{
+	bottom:-500px;
+}
+/* #sessions .session {
+	background-color: #FFF;
+	display: none;
+	padding: 5px;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	width: 200px;
+	border: 2px dashed #ccc;
+}
+
+.direction {
+	color: #ccc;#4db21a
+    float: left;
+    font-size: x-small;
+    font-style: italic;
+    font-weight: bold;
+    letter-spacing: 2px;
+    width: 140px;
+}
+
+#sessions .session .close {
+	background: center top url("../images/session-close.png") no-repeat;
+	cursor: pointer;
+}
+
+#sessions .session .container {
+
+}
+
+#sessions .session .peer {
+	clear: both;
+	padding: 6px 0;
+	text-align: center;
+}
+
+#sessions .session .peer span.display-name {
+	font-size: x-large;
+	font-weight: bold;
+	color: #333;
+	letter-spacing: 2px;
+}
+
+#sessions .session .container>.call {
+	float: right;
+}
+
+#sessions .session .container>.call>.button {
+	float: left;
+	margin-right: 2px;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
+#sessions .session .container>.call>.button.dial {
+	background-image: url("../images/icon-dial.png");
+}
+
+#sessions .session .container>.call>.button.hangup {
+	background-image: url("../images/icon-hangup.png");
+}
+
+#sessions .session .container>.call>.button.hold {
+	background-image: url("../images/icon-hold.png");
+}
+
+#sessions .session .container>.call>.button.resume {
+	background-image: url("../images/icon-resume.png");
+}
+
+#sessions .session .container>.call-status {
+	clear: both;
+	float: left;
+	font-size: small;
+	font-style: italic;
+	color: #336699;
+}
+
+call inactive
+#sessions .session .container>.call.inactive .button.dial {
+
+}
+
+#sessions .session .container>.call.inactive .button.hangup {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.inactive .button.hold {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.inactive .button.resume {
+	display: none;
+}
+
+call trying
+#sessions .session .container>.call.trying .button.dial {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.trying .button.hangup {
+
+}
+
+#sessions .session .container>.call.trying .button.hold {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.trying .button.resume {
+	display: none;
+}
+
+call in-progress
+#sessions .session .container>.call.in-progress .button.dial {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.in-progress .button.hangup {
+
+}
+
+#sessions .session .container>.call.in-progress .button.hold {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.in-progress .button.resume {
+	display: none;
+}
+
+call incoming
+#sessions .session .container>.call.incoming .button.dial {
+
+}
+
+#sessions .session .container>.call.incoming .button.hangup {
+
+}
+
+#sessions .session .container>.call.incoming .button.hold {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.incoming .button.resume {
+	display: none;
+}
+
+call answered
+#sessions .session .container>.call.answered .button.dial {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.answered .button.hangup {
+
+}
+
+#sessions .session .container>.call.answered .button.hold {
+
+}
+
+#sessions .session .container>.call.answered .button.resume {
+	display: none;
+}
+
+call answered-elsewhere
+#sessions .session .container>.call.answered-elsewhere .button.dial {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.answered-elsewhere .button.hangup {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.answered-elsewhere .button.hold {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.answered-elsewhere .button.resume {
+	display: none;
+}
+
+call on-hold
+#sessions .session .container>.call.on-hold .button.dial {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.on-hold .button.hangup {
+
+}
+
+#sessions .session .container>.call.on-hold .button.hold {
+	display: none;
+}
+
+#sessions .session .container>.call.on-hold .button.resume {
+
+}
+
+call terminated
+#sessions .session .container>.call.terminated .button.dial {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.terminated .button.hangup {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.terminated .button.hold {
+	cursor: default;
+	opacity: 0.4;
+}
+
+#sessions .session .container>.call.terminated .button.resume {
+	display: none;
+} */

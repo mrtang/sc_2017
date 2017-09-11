@@ -1,0 +1,161 @@
+
+<!-- first -->
+<ul class="nav">
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="aside.nav.HEADER">Navigation</span>
+  </li>
+  <li>
+    <a ui-sref="app.dashboard">
+      <i class="glyphicon glyphicon-stats icon text"></i>
+      <span class="font-bold" translate="aside.nav.DASHBOARD">Dashboard</span>
+    </a>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="app.postman">
+      <i class="icon-user icon text"></i>
+      <span class="font-bold" translate="">Postman</span>
+    </a>
+  </li>
+  
+  <li ng-class="{active:$state.includes('app.courier')}">
+    <a ui-sref="app.courier.list">
+      <i class="fa fa-truck icon text"></i>
+      <span class="font-bold" translate="">Courier</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a ui-sref="app.courier.list">
+          <span translate="">Courier</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.courier.comission">
+          <span translate="">Comission</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.courier.config-info">
+          <span translate="">Config</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  
+  <li ng-class="{active:$state.includes('app.fee')}">
+    <a ui-sref="app.fee.list">
+      <i class="fa fa-money icon text"></i>
+      <span class="font-bold" translate="">Courier Fee</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a ui-sref="app.fee.list">
+          <span translate="">Fee</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.fee.vas">
+          <span translate="">Fee Vas</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  
+  <li ng-class="{active:$state.includes('app.discount')}">
+    <a ui-sref="app.discount.config">
+      <i class="fa fa-gift icon text"></i>
+      <span class="font-bold" translate="">Discount</span>
+    </a>
+    <ul class="nav nav-sub dk">
+        <li ui-sref-active="active">
+            <a ui-sref="app.discount.config">
+              <span translate="">Discount Config</span>
+            </a>
+        </li>
+    </ul>
+  </li>
+  
+  <li ng-class="{active:$state.includes('app.location')}">
+    <a ui-sref="app.location.city">
+      <i class="fa fa-map-marker icon text"></i>
+      <span class="font-bold" translate="">City</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a ui-sref="app.location.city">
+          <span translate="">City</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.location.district({city_id:''})">
+          <span translate="">District</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.location.ward({city_id:'',district_id:''})">
+          <span translate="">Ward</span>
+        </a>
+      </li>
+
+      <li ui-sref-active="active">
+        <a ui-sref="app.location.refuse">
+          <span translate="">Courier Refuse</span>
+        </a>
+      </li>
+
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.fee-pickup')}">
+    <a ui-sref="app.fee_pickup.list">
+      <i class="fa fa-money icon text"></i>
+      <span class="font-bold" translate="">Fee</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a ui-sref="app.fee_pickup.list">
+          <span translate="">Fee pickup</span>
+        </a>
+      </li>
+      <li class="">
+        <a ui-sref="app.fee_delivery.list">
+          <span translate="">Fee delivery</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.post-office')}">
+    <a ui-sref="app.post_office.list">
+      <i class="fa fa-university icon text"></i>
+      <span class="font-bold" translate="">Bưu cục</span>
+    </a>
+  </li>
+  <li ng-class="{active:$state.includes('app.status')}">
+    <a ui-sref="app.status.list">
+      <i class="fa fa-qrcode icon text"></i>
+      <span class="font-bold" translate="">Status</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="">
+        <a ui-sref="app.status.list">
+          <span translate="">Courier status</span>
+        </a>
+      </li>
+      <li class="">
+        <a ui-sref="app.status_accept.list">
+          <span translate="">Accept status</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.estimate')}">
+    <a ui-sref="app.estimate.list">
+      <i class="fa fa-clock-o icon text"></i>
+      <span class="font-bold" translate="">Time estimate</span>
+    </a>
+  </li>
+  
+  <li class="line dk"></li>
+
+  
+  
+</ul>
+<!-- / third -->

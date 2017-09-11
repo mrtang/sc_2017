@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Regression/783
+END
+TwoTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Regression/783/TwoTest.php
+END
+ChildSuite.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Regression/783/ChildSuite.php
+END
+OneTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Regression/783/OneTest.php
+END
+ParentSuite.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/Regression/783/ParentSuite.php
+END

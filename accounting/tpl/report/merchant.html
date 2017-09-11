@@ -1,0 +1,223 @@
+<div ng-controller="RMerchantCtrl">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="form-group controls">
+                                    <span class="m-n font-thin h3 text-black padder"><i class="fa fa-user text-info"></i> {{$stateParams.email}}</span>
+                                </div>
+                                <div class="controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="month" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input month-input type="text"
+                                                       class="form-control"
+                                                       ng-model="month"
+                                                       placeholder="Theo tháng"
+                                                        ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="month"
+                                                    datetimepicker-config="{ dropdownSelector: '#month' ,startView:'month', minView:'month'}"
+                                                    >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 pull-right">
+                                <div class="row">
+                                    <div class="col-xs-6 pull-right">
+                                        Tổng phí
+                                        <div class="h4 text-success m-b">{{data.total_fee || '0' | vnNumber}}</div>
+                                        Tổng thu hộ
+                                        <div class="h4 text-black">{{data.total_money_collect || '0' | vnNumber}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row text-center">
+                        <div class="col-md-5">
+                            <div class="col-xs-6">
+                                <a href class="block panel padder-v bg-info item">
+                                    <span class="text-white font-thin h1 block">{{data.order.total || '0' | vnNumber}}</span>
+                                    <span class="text-muted text-xs">Phát sinh</span>
+                                    <span class="top text-left">
+                                      <i class="fa fa-gift m-l-sm"></i>
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <a href class="block panel padder-v bg-success item">
+                                    <span class="text-white font-thin h1 block">{{data.order.success || '0' | vnNumber}}<i class="text-xs">({{(data.order.success/data.order.total)*100 | number:1}}%)</i></span>
+                                    <span class="text-muted text-xs">Thành công</span>
+                                    <span class="top text-left">
+                                      <i class="fa fa-check-circle m-l-sm"></i>
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <a href class="block panel padder-v bg-warning item">
+                                    <span class="text-white font-thin h1 block">{{data.order.return || '0' | vnNumber}}<i class="text-xs">({{(data.order.return/data.order.total)*100 | number:1}}%)</i></span>
+                                    <span class="text-muted text-xs">Chuyển hoàn</span>
+                                    <span class="top text-left">
+                                      <i class="fa fa-refresh m-l-sm"></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="col-xs-12 m-b-md">
+                                <div class="r bg-light dker item hbox no-border">
+                                    <div class="col w-xs v-middle hidden-md">
+                                       <i class="fa fa-home text-3x"></i> <br />
+                                        {{data.order.backlog || '0' | vnNumber}}<i class="text-xs">({{(data.order.backlog/data.order.total)*100 | number:1}}%)</i>
+                                    </div>
+                                    <div class="col dk padder-v padder r-r text-left">
+                                        <div class="m-b">
+                                            <span class="label text-base bg-success pos-rlt m-r"><i class="arrow right arrow-success"></i> {{data.order.delivering || '0' | vnNumber}}</span>
+                                            <a href>Đang giao hàng</a>
+                                        </div>
+                                        <div class="m-b">
+                                            <span class="label text-base bg-danger pos-rlt m-r"><i class="arrow right arrow-danger"></i> {{data.order.problem || '0' | vnNumber}}</span>
+                                            <a href>Giao không thành công</a>
+                                        </div>
+                                        <div class="m-b">
+                                            <span class="label text-base bg-light pos-rlt m-r"><i class="arrow right arrow-light"></i> {{data.order.confirm_return || '0' | vnNumber}}</span>
+                                            <a href>Chờ xác nhận chuyển hoàn</a>
+                                        </div>
+                                        <div class="m-b">
+                                            <span class="label text-base bg-warning pos-rlt m-r"><i class="arrow right arrow-warning"></i> {{data.order.returning || '0' | vnNumber}}</span>
+                                            <a href>Đang chuyển hoàn</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+                            <div ng-if="!waiting" ui-jq="plot" ui-options="
+                                  [
+                                    { label: 'Phát sinh'    , data: {{chart.ps}} },
+                                    { label: 'Thành Công'   , data: {{chart.tc}} },
+                                    { label: 'Chuyển Hoàn'  , data: {{chart.ch}} },
+                                    { label: 'Tồn'          , data: {{chart.ton}} }
+                                  ],
+                                  {
+                                    bars: { show: true, fill: true, lineWidth: 2,barWidth: 0.15, order: 1, fillColor: { colors: [{ opacity: 0.5 }, { opacity: 0.9}] } },
+                                    colors: ['{{app.color.info}}', '{{app.color.success}}', '{{app.color.warning}}', '{{app.color.primary}}'],
+                                    series: { shadowSize: 1 },
+                                    xaxis:{
+                                    font: { color: '#ccc' },
+                                    position: 'bottom',
+                                      ticks: date_month
+                                     },
+                                    yaxis:{ font: { color: '#ccc' } },
+                                    grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                                    tooltip: true,
+                                    tooltipOpts: { defaultTheme: false, content: '%s : %y đơn'}
+                                  }
+                                " style="height:400px">
+                            </div>
+                            <div ng-show="waiting" class="m-t-xxl">
+                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                            </div>
+                            <div class="text-center m-t" ng-show="!waiting">Thống kê vận đơn theo tháng</div>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-xxl text-center">
+                        <div class="col-md-5">
+                            <div ng-if="!waiting_location" ui-jq="plot" ui-options="
+                                  [
+                                    { label: 'Cùng tỉnh - Trung tâm'    , data: {{rlocation.cttt}} },
+                                    { label: 'Cùng tỉnh - Huyện xã'     , data: {{rlocation.cthx}} },
+                                    { label: 'Liên Tỉnh - Trung Tâm'    , data: {{rlocation.lttt}} },
+                                    { label: 'Liên Tỉnh - Huyện xã'     , data: {{rlocation.lthx}} }
+                                  ],
+                                  {
+                                    bars: { show: true, fill: true, lineWidth: 4,barWidth: 0.5, order: 1, fillColor: { colors: [{ opacity: 0.5 }, { opacity: 0.9}] } },
+                                    colors: ['{{app.color.info}}', '{{app.color.success}}', '{{app.color.warning}}', '{{app.color.primary}}'],
+                                    series: { shadowSize: 1 },
+                                    xaxis:{
+                                    font: { color: '#ccc' }
+                                     },
+                                    yaxis:{ font: { color: '#ccc' } },
+                                    grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                                    tooltip: true,
+                                    tooltipOpts: { defaultTheme: false, content: '%s : %y đơn'}
+                                  }
+                                " style="height:300px">
+                            </div>
+                            <div ng-show="waiting_location" class="m-t-xxl">
+                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                            </div>
+                            <div class="text-center m-t" ng-show="!waiting">Báo cáo theo khu vực lấy hàng</div>
+                        </div>
+
+                        <div class="col-md-7">
+                            <div class="col-xs-6">
+                                <h4>{{data.ticket.total || '0' | vnNumber}}<small> Yêu cầu</small></h4>
+                                <small class="text-muted block">{{data.ticket.closed || '0' | vnNumber }} yêu cầu đã đóng</small>
+                                <div ng-if="!waiting" class="inline">
+                                    <div ui-jq="easyPieChart" ui-options="{
+                                          percent: {{ticket || '0' | number:1}},
+                                          lineWidth: 10,
+                                          trackColor: '{{app.color.light}}',
+                                          barColor: '{{app.color.success}}',
+                                          scaleColor: '{{app.color.light}}',
+                                          size: 188,
+                                          lineCap: 'butt'
+                                        }">
+                                        <div>
+                                            <span class="h2 m-l-sm step">{{ticket || '0' | number:1 }}</span>%
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="waiting" class="m-t-xxl">
+                                    <i class="text-3x fa fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <h4>{{data.ticket.total || '0' | vnNumber}}<small> Yêu cầu</small></h4>
+                                <small class="text-muted block"><i class="text-danger">{{data.ticket.overtime || '0' | vnNumber }}</i> yêu cầu quá hạn</small>
+                                <div ng-if="!waiting" class="inline">
+                                    <div ui-jq="easyPieChart" ui-options="{
+                                          percent: {{over_time || '0' | number:1}},
+                                          lineWidth: 10,
+                                          trackColor: '{{app.color.light}}',
+                                          barColor: '{{app.color.danger}}',
+                                          scaleColor: '{{app.color.light}}',
+                                          size: 188,
+                                          lineCap: 'butt'
+                                        }">
+                                        <div>
+                                            <span class="h2 m-l-sm step">{{over_time || '0' | number:1 }}</span>%
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="waiting" class="m-t-xxl">
+                                    <i class="text-3x fa fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 m-t">
+                                Báo cáo các khiếu nại của khách hàng
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

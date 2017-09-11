@@ -1,0 +1,98 @@
+<div ng-controller="CourierDiscountCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="bg-light lter b-b wrapper-md col-sm-12 ">
+        <span class="m-n text-title text-size col-sm-3 no-padder font-thick"><i class="fa fa-cogs text-muted"></i> Courier Discount</span>
+        <div class="pull-right">
+            <a class="btn btn-success btn-addon" ng-click="open_popup('',value.id,'')" ><i class="fa fa-plus"></i> ADD</a>
+            
+            <a class="btn btn-info btn-addon" ng-click="open_popup_type('')" ><i class="fa fa-plus"></i> Discount Type</a>
+            <script id="ModalDiscountType.html" type="text/ng-template">
+                <div ng-include="'tpl/courier/modal.form.discount_type.html'"></div>
+            </script>
+        </div>
+    </div>
+    
+    <div class="wrapper-md  col-sm-12">
+        <div class="panel panel-default">
+            <div class="row wrapper">
+              <div class="col-sm-3 pull-right">
+                <div class="form-group">
+                  <select class="form-control" ng-model="search_courier" ng-options="value.id as value.name for value in list_courier" ng-change="GetCourierDiscount()">
+                    <option value="">Hãng vận chuyển ...</option>
+                  </select>
+                </div>
+                
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr>
+                    <th class="text-left">#</th>
+                    <th class="text-left">From Date</th>
+                    <th class="text-left">To Date</th>
+                    <th class="text-left">Type</th>
+                    <th class="text-left">Code</th>
+                    <th class="text-left">Value</th>
+                    <th class="text-left">Use Number</th>
+                    <th class="text-left">Active</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="value in list_discount">
+                    <td class="text-left">{{item_stt + $index + 1}}</a></td>
+                    
+                    <td class="text-left">
+                        {{ value.from_date*1000|date:"dd-MM-yyyy"}}
+                    </td>
+                    
+                    <td class="text-left">
+                        {{value.to_date*1000|date:"dd-MM-yyyy"}}
+                    </td>
+                    
+                    <td>
+                       {{value['discount_type']['name']}}
+                    </td>
+                    
+                    <td>
+                        {{value.code}}
+                    </td>
+                    
+                    <td>
+                        {{value.value}}
+                    </td>
+                    
+                    <td>
+                        {{value.use_number}}
+                    </td>
+                    
+                    <td>
+                        <label class="i-switch bg-primary m-t-xs m-r">
+                          <input type="checkbox" ng-model="active" ng-checked="value['active'] == 1" ng-true-value="1" ng-false-value="0" ng-change="change(value.id,active,'active')" />
+                          <i></i>
+                        </label>
+                    </td>
+                    
+                    <td class="text-center">
+                        <a href="javascript:;" class="btn btn-sm btn-info" ng-click="open_popup('',value.id,$index)"><i class="fa fa-gear"></i> &nbsp;EDIT </a>
+                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="del(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <script id="ModalDiscountConfig.html" type="text/ng-template">
+                <div ng-include="'tpl/courier/modal.form.discount_config.html'"></div>
+            </script>
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-4 text-right text-center-xs pull-right">                
+                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="GetCourierDiscount()"></pagination>
+                </div>
+              </div>
+            </footer>
+        </div>
+    </div>
+</div>

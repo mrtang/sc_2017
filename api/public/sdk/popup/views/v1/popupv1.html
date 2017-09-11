@@ -1,0 +1,142 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <a href="javascript:;" class="close"  target="_parent" ng-click="closePopup()">&times;</a> 
+
+            <span class="modal-title list-inline pull-left">
+                    <span class="logo-sc"></span>
+                    <strong id="title">{{'TITLE'|translate}} {{shipchung}}</strong>
+            </span>
+
+            <!-- <div class="lang-area-top hidden-sm hidden-xs pull-right" ng-if="checkoutSuccess">
+                <span class="flag-icon flag-icon-us" ng-class='{active:lang==="en"}' ng-click="changeLanguage('en')" data-toggle="tooltip" data-placement="top" title="English"></span>
+                <span class="flag-icon flag-icon-vn" ng-class='{active:lang==="vi"}' ng-click="changeLanguage('vi')" data-toggle="tooltip" data-placement="top" title="Vietnamese"></span>
+            </div>  -->
+
+            <div class="clearfix"></div>
+        </div>
+        
+        <div class="modal-body">
+             <div ng-if="hasToken">
+                 <form class="form-horizontal" name="userForm" ng-submit="submitForm(userForm.$valid, user)" novalidate >
+                       <div class="row">
+                           
+
+                           <div class="col-sm-5 col-xs-5 bar-right pull-right">                                                            
+                               <div class="row bar-right-top scroller-con" data-ng-include="'views/v1/list_itemv1.html'" id="scroller"></div>                        
+                               <div class="total-result hidden-xs">
+                                   <div class="overlay-loading" ng-if="stateLoading ||districtSelecting">
+                                       <div id="loader"></div>
+                                       
+                                   </div>
+                                   <br />
+                                   <span translate>TOTAL_ITEM_PRICE</span>:<span class="pull-right">{{MerchantInfo.total_amount | number}}đ</span><br />
+                                   <span translate>FEE_SHIPPING</span>:<span class="pull-right">{{totalFee | number}}đ</span><br />
+                                   <span translate>PROMOTION</span>:<span class="pull-right">0đ</span><br />
+                                   <span translate>SUM_TOTAL</span>: <span class="pull-right" style="color: #FF0000;">{{totalAmount || 0 | number}}đ</span>
+                                   <br />
+                               </div>
+                           </div>
+
+
+                           
+                           <div class="col-sm-7 col-xs-7" id="bar-left">
+                           
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12" ng-class="{'has-error' : userForm.fullname.$invalid && !userForm.fullname.$pristine}">
+                                       <input type="text" class="form-control" name="fullname" value="" ng-model="user.fullname" ng-minlength="6" placeholder="{{'FULLNAME'|translate}}*" required/>
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12" ng-class="{'has-error' : userForm.email.$invalid && !userForm.email.$pristine}">
+                                       <input type="email" class="form-control" ng-model="user.email" name="email" value="" placeholder="{{'EMAIL'|translate}}*"/>
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12" ng-class="{'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine}">
+                                       <input type="tel" class="form-control" ng-model="user.phone" name="phone" ng-minlength="10" ng-maxlength="11" value="" placeholder="{{'PHONE'|translate}}*" required/>
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-6 col-xs-6">
+                                       <select name="city" class="form-control" data-ng-model="myCity.CitySelected" data-ng-Change="myCity.ChangeCityFrom()"
+                                       ng-class="{'has-error' : userForm.city.$invalid && !userForm.city.$pristine}"
+                                               data-ng-options="obj.id as obj.city_name for obj in myCity.options" required>
+                                               <option value="">{{'CITY'|translate}}</option>
+                                       </select>
+                                   </div>
+                                   <div class="col-sm-6 col-xs-6">
+                                       <select name="district" class="form-control" data-ng-model="myDistrict.DistSelected" ng-change="myCity.ChangeProvinceFrom()"
+                                       ng-class="{'has-error' : userForm.district.$invalid && !userForm.district.$pristine}"
+                                               data-ng-options="val.id as val.district_name for val in myDistrict.options" required>
+                                               <option value="">{{'DISTRICT' | translate}}</option>
+                                       </select>
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12" ng-class="{'has-error' : userForm.address.$invalid && !userForm.address.$pristine}">
+                                       <input type="text" class="form-control" ng-model="user.address" name="address" value=""  placeholder="{{'ADDRESS'|translate}}*" required/>
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <div class="col-sm-12 col-xs-12">
+                                       <input type="text" class="form-control" ng-model="user.note" name="note" value="" placeholder="{{'NOTE'|translate}}"/>
+                                   </div>
+                               </div>
+                               
+                               <div class="hidden-sm hidden-md hidden-lg">
+                                   <br />
+                                  <span translate>TOTAL_ITEM_PRICE</span>:<span class="pull-right">{{MerchantInfo.Order.Amount | number}}đ</span><br />
+                                   <span translate>FEE_SHIPPING</span>:<span class="pull-right">{{totalFee | number}}đ</span><br />
+                                   <span translate>PROMOTION</span>:<span class="pull-right">0đ</span><br />
+                                   <span translate>SUM_TOTAL</span>: <span class="pull-right" style="color: #FF0000;">{{totalAmount || 0 | number}}đ</span>
+                                   <br />
+                               </div>
+                               
+                               <div class="checkbox">
+                                   <label>
+                                     <input type="checkbox" id="choice-payment" ng-model="user.ol_payment" ng-true-value="1" ng-false-value="0"/> {{'OL_PAYMENT'|translate}}
+                                   </label>
+                               </div>
+                               
+                               <div class="col-md-12 col-xs-12 " id="btn-payment">
+                                 <button type="submit" class="btn btn-block" ng-disabled="stateLoading || districtSelecting || (!userForm.$valid || saveOrderProcessing)">
+                                   <h4 ng-init="user.ol_payment = 0">
+                                       
+                                       <span id="loader" ng-if="saveOrderProcessing"></span>
+                                       
+                                       <strong translate ng-if="user.ol_payment == 0">ORDER_NOW</strong>
+                                       <strong translate ng-if="user.ol_payment == 1">OL_PAYMENT</strong>
+                                   </h4>
+                                   ({{'NOTE_TIME_ESTIMATE' | translate}})
+                                 </button>
+                              </div>
+                                                     
+                              <div class="hidden-xs clearfix">&nbsp;</div>
+                           </div>
+
+
+
+                           
+                           
+                       </div>
+                    </form>
+
+                    <div class="lang-area hidden-sm hidden-xs">
+                       <span class="flag-icon flag-icon-us" ng-class='{active:lang==="en"}' ng-click="changeLanguage('en')" data-toggle="tooltip" data-placement="top" title="English"></span>
+                       <span class="flag-icon flag-icon-vn" ng-class='{active:lang==="vi"}' ng-click="changeLanguage('vi')" data-toggle="tooltip" data-placement="top" title="Vietnamese"></span>
+                    </div>
+             </div>
+
+             <div ng-if="!hasToken">
+                <div class="alert alert-warning" role="alert" style="margin-top:20px">Token không hợp lệ !</div>
+             </div>
+        </div>  <!-- ./modal-body-->
+    </div>
+</div>
+<div class="overlay"></div>

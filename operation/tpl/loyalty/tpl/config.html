@@ -1,0 +1,119 @@
+<div ng-controller="LoyConfigCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-cogs text-info"></i> Cấu hình</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <!-- Cấu hình level -->
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold">
+                        Cấu hình hạng mức
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table-condensed table-hover w-full">
+                                <thead>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-barcode"></i>&nbsp;  Mã
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-gift"></i> Tên
+                                    </td>
+                                    <td>
+                                        Điểm thăng hạng
+                                    </td>
+                                    <td>
+                                        Điểm duy trì
+                                    </td>
+                                    <td>
+                                        Mã màu
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </thead>
+                                <tbody ng-repeat="item in sc_loyalty_level">
+                                <tr>
+                                    <td>{{$index + 1}}</td>
+                                    <td>
+                                        <a ng-if="check_privilege('PRIVILEGE_CONFIG','edit')" ng-disabled="item.waiting" href="javascript:;" editable-text="item.code" e-style="width: 100px" e-min="0" onbeforesave="changeConfig(item,$data,'code')">
+                                            {{item.code}} <i class="fa fa-edit"></i>
+                                        </a>
+                                        <span ng-if="!check_privilege('PRIVILEGE_CONFIG','edit')">{{item.code}}</span>
+                                    </td>
+                                    <td>
+                                        <a ng-if="check_privilege('PRIVILEGE_CONFIG','edit')" class="label text-xs {{item.bg_color || ''}}" href="javascript:;" editable-text="item.name" e-style="width: 100px" e-min="0" onbeforesave="changeConfig(item,$data,'name')">
+                                            {{item.name}} <i class="fa fa-edit"></i>
+                                        </a>
+                                        <span ng-if="!check_privilege('PRIVILEGE_CONFIG','edit')" class="label text-xs {{item.bg_color || ''}}">{{item.name}}</span>
+                                    </td>
+                                    <td>
+                                        <a ng-if="check_privilege('PRIVILEGE_CONFIG','edit')" href="javascript:;" editable-number="item.point" e-style="width: 100px" e-min="0" onbeforesave="changeConfig(item,$data,'point')">
+                                            {{item.point | vnNumber}} <i class="fa fa-edit"></i>
+                                        </a>
+                                        <span ng-if="!check_privilege('PRIVILEGE_CONFIG','edit')">{{item.point | vnNumber}}</span>
+                                    </td>
+                                    <td>
+                                        <a ng-if="check_privilege('PRIVILEGE_CONFIG','edit')" href="javascript:;" editable-number="item.maintain_point" e-style="width: 100px" e-min="0" onbeforesave="changeConfig(item,$data,'maintain_point')">
+                                            {{item.maintain_point | vnNumber}} <i class="fa fa-edit"></i>
+                                        </a>
+                                        <span ng-if="!check_privilege('PRIVILEGE_CONFIG','edit')">{{item.maintain_point | vnNumber}}</span>
+                                    </td>
+                                    <td>
+                                        <a ng-if="check_privilege('PRIVILEGE_CONFIG','edit')" href="javascript:;" editable-text="item.bg_color" e-style="width: 100px" e-min="0" onbeforesave="changeConfig(item,$data,'bg_color')">
+                                            {{item.bg_color}} <i class="fa fa-edit"></i>
+                                        </a>
+                                        <span ng-if="!check_privilege('PRIVILEGE_CONFIG','edit')">{{item.bg_color}}</span>
+                                    </td>
+                                    <td>
+                                        <label class="i-switch bg-primary">
+                                            <input type="checkbox" ng-disabled="item.waiting" ng-true-value="1"  ng-false-value="0" ng-model="item.active" ng-checked="item.active == 1" ng-change="changeActive(item);">
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cấu hình category -->
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading font-bold">
+                            Cấu hình loại đổi thưởng
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table-condensed table-hover w-full">
+                                    <thead>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td>
+                                        Loại
+                                    </td>
+                                    </thead>
+                                    <tbody ng-repeat="item in sc_loyalty_category">
+                                    <tr>
+                                        <td>{{$index + 1}}</td>
+                                        <td>
+                                            {{item.name}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+    </div>
+</div>

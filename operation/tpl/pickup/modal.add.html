@@ -1,0 +1,53 @@
+
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-7 pull-left no-padder">
+                    <h4 class="modal-title">Hành trình xử lý</h4>
+                </div>
+                <button type="button" class="pull-right close" ng-click="close()"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-body wrapper-md">
+        <form class="form-horizontal form-validation" name="frmAdd">
+            <div class="form-group" ng-if="type !== 2">
+                <label class="col-lg-3 control-label">Mã vận đơn</label>
+                <div class="col-lg-9">
+                    <input type="text" placeholder="Mã đơn hàng" ng-model="item.tracking_code" disabled="disabled" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="type == 2">
+                <label class="col-lg-3 control-label">Tài khoản</label>
+                <div class="col-lg-9">
+                    <p>Họ tên : {{item.user.fullname}}</p> 
+                    <p>Email  : {{item.user.email}}</p> 
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Bước</label>
+                <div class="col-lg-9">
+                    <select class="form-control m-b" ng-model="data.pipe_status" required>
+                        <option value="0">Bước xử lý </option>
+                        <option ng-repeat="itm in pipe_status" ng-if="itm.active > 0 && 1*itm.priority >= 1*step" value="{{itm.status}}">{{itm.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Nội dung</label>
+                <div class="col-lg-9">
+                    <textarea rows="5" class="form-control w-full" ng-model="data.note"  placeholder="Nội dung xử lý ..."></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn" ng-click="close()">Hủy bỏ</button>
+        <button class="btn btn-info" ng-disabled="frmAdd.$invalid || frm_submit" ng-click="save(data)">Xác nhận</button>
+
+    </div>

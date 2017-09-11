@@ -1,0 +1,76 @@
+<div class="tab-container">
+    <div class="tab-content tab-fake">
+        <div class="wrapper-md b-b">
+            <span class="m-n h4">Danh sách đơn hàng</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table-condensed table-hover w-full">
+                <thead>
+                <td>
+                    #
+                </td>
+                <td>
+                    <i class="fa fa-barcode"></i>&nbsp; Mã Đơn hàng
+                </td>
+                <td>
+                    Trạng thái
+                </td>
+                <td>
+                    <i class="fa fa-user"></i> Khách hàng
+                </td>
+                <td> Kho hàng</td>
+                <td> <i class="fa fa-clock-o"></i> Thời gian tạo</td>
+                <td> <i class="fa fa-clock-o"></i> Thời gian duyệt</td>
+                <td>
+                    <i class="fa fa fa-inbox"></i> Số lượng
+                </td>
+                <td>
+                    <i class="fa fa fa-tags"></i> Kích thước
+                </td>
+                </thead>
+                <tbody ng-repeat="it in item.list_order">
+                <tr>
+                    <td>{{item_stt + $index + 1}}</td>
+                    <td>
+                        <p>
+                            <a class="label bg-light text-base text-info" ui-sref="boxme.order.process.detail({code:it.order_number})" target="_blank">{{it.order_number || ''}}</a>
+                        </p>
+                        <p>
+                            <a ng-href="{{link_seller}}#/detail/{{it.bill_of_lading}}" target="_blank" class="label bg-light text-base text-info">{{it.bill_of_lading}}</a>
+                        </p>
+                    </td>
+                    <td>
+                        <span class="label text-xs {{list_sc_color[sc_status_group[it.status]] || ''}}">{{sc_status[it.status]}}</span>
+                    </td>
+
+                    <td>
+                        <p><i class="fa fa-user"></i> {{it.__get_user.fullname || ''}}</p>
+                        <p><i class="fa fa fa-envelope-o"></i> {{it.__get_user.email || ''}}</p>
+                        <p><i class="fa fa-phone"></i> {{it.__get_user.phone || ''}}</p>
+                    </td>
+
+                    <td>
+                        {{warehouse[it.warehouse]['name'] || ''}}
+                    </td>
+
+                    <td>
+                        <p ng-if="it.time_create_sc > 0" class="text-warning">{{ it.time_create_sc * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                    </td>
+
+                    <td>
+                        <p ng-if="it.time_accept_sc > 0" class="text-info">{{ it.time_accept_sc * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                    </td>
+
+                    <td>
+                        {{calculate_item(item) | vnNumber}}
+                    </td>
+                    <td>
+                        {{it._get_package.size || ''}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

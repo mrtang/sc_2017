@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml
+END
+Dumper.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/Dumper.php
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/LICENSE
+END
+Parser.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/Parser.php
+END
+Inline.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/Inline.php
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/.gitignore
+END
+CHANGELOG.md
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/CHANGELOG.md
+END
+Escaper.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/Escaper.php
+END
+Yaml.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/Yaml.php
+END
+phpunit.xml.dist
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/phpunit.xml.dist
+END
+Unescaper.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/Unescaper.php
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/README.md
+END
+composer.json
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3066/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/symfony/yaml/Symfony/Component/Yaml/composer.json
+END

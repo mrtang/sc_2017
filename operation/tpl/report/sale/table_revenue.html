@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Revenue</div>
+    <table class="table table-striped m-b-none">
+        <thead>
+        <tr>
+            <th style="width:60px;" class="text-center">KPI</th>
+            <th></th>
+            <th>Change</th>
+            <th>Target</th>
+            <th>% Target</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>New revenue</td>
+            <td>{{employee_statistic['new_revenue'] || '0' | vnNumber }}</td>
+            <td>{{__compare(employee_compare['new_revenue'], employee_statistic['new_revenue'])}}%</td>
+            <td>{{employee_target['revenue']['succeed_target'] || '0'}}</td>
+            <td>{{employee_target['revenue']['percent_target']*100 || '0'}}%</td>
+        </tr>
+        <tr>
+            <td>Cumulative revenue</td>
+            <td>{{employee_statistic['cum_revenue'] || '0' | vnNumber }}</td>
+            <td>{{__compare(employee_compare['cum_revenue'], employee_statistic['cum_revenue'])}}%</td>
+            <td>{{employee_target['revenue']['succeed_target'] || '0'}}</td>
+            <td>{{employee_target['revenue']['percent_target']*100 || '0'}}%</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

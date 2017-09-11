@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Header
+END
+HeaderFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Header/HeaderFactory.php
+END
+HeaderFactoryInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Header/HeaderFactoryInterface.php
+END
+CacheControl.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Header/CacheControl.php
+END
+HeaderCollection.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Header/HeaderCollection.php
+END
+HeaderInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Header/HeaderInterface.php
+END
+Link.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/src/Guzzle/Http/Message/Header/Link.php
+END

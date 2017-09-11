@@ -1,0 +1,160 @@
+
+<div ng-controller="TasksDetailController">
+
+<div class="wrapper bg-light lter b-b">
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-sm btn-bg btn-default"><i class="fa fa-chevron-left"></i></button>
+      <button type="button" class="btn btn-sm btn-bg btn-default"><i class="fa fa-chevron-right"></i></button>
+    </div>
+    <div class="btn-toolbar">
+       <div class="btn-group dropdown">
+        <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown">
+          <span class="dropdown-label">Lọc</span>                    
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu text-left text-sm">
+          <li><a ng-click="load(defaultState, {page:1})">Mặc định</a></li>
+          <li><a ng-click="load(defaultState, {filter: 'create_by_me', page: 1})">Công việc tôi tạo</a></li>
+          <li><a ng-click="load(defaultState, {filter: 'assign_me', page: 1})">Công việc tôi được giao</a></li>
+        </ul>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-sm btn-bg btn-default" data-toggle="tooltip" data-placement="bottom" data-title="Refresh" data-original-title="" title=""><i class="fa fa-refresh"></i></button>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+  <!-- / header -->
+  <div class="text-center" ng-if="stateLoading">
+    <i class="fa fa-spinner fa-spin fa-3x"></i>
+    <p>Đang tải...</p>
+  </div>
+  <!-- list -->
+  <div ng-if="id == 0">
+    <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs" ng-if="!stateLoading" >
+      <li  class="list-group-item clearfix b-l-3x ng-scope " ng-repeat="item in list_data">
+        <div class="pull-right text-sm text-muted">
+          
+          <span class="hidden-xs ng-binding {{isExpired(item.due_date) && item.state != 'SUCCESS' ? 'text-danger': ''}} "  style="display:block" ng-if="item.due_date > 0">Thời hạn: {{moment(item.due_date * 1000).fromNow()}} ({{moment(item.due_date * 1000).format('lll')}})</span> 
+          <span class="hidden-xs ng-binding " style="display:block" ng-if="item.reminder > 0">
+              <i class="fa fa-clock"></i>Nhắc lại: {{moment(item.reminder * 1000).fromNow()}}
+          </span> 
+        </div>
+        <div class="clear">
+          <div><a ui-sref="shipchung.tasks.list.detail({state: defaultState, id: item.id})" class=" text-info" ><span class="label {{item.category.color == '' ? 'label-default' : ''}}" style="background-color: {{item.category.color}}">{{item.category.name}}</span>
+ <del ng-if="item.state == 'SUCCESS'">#{{item.id}} - {{item.name}}</del><span ng-if="item.state !== 'SUCCESS'">#{{item.id}} - {{item.name}}</span></a></div>
+          <div class="text-ellipsis m-t-xs ng-binding" style="font-size:11.5px;"><strong>Trạng thái</strong>: <i class='fa {{stateInfo(item.state).icon}}'></i>
+            <a href="#" editable-select="item.state" onbeforesave="saveField(item, 'state', $data)" e-ng-options="s.key as s.name for s in list_state">{{stateInfo(item.state).name}}</a> | <strong>Liên quan</strong>: <span class="text-info" ng-repeat="ref in item.refers">{{ref.type == 1? 'Đơn: ': ''}}{{ref.type == 2? 'Kho: ': ''}}{{ref.type == 3? 'Khách hàng: ': ''}} {{ref.name}} {{!$last ? ' | ' : ''}}</span>
+          </div>
+        </div>      
+      </li>
+    </ul>
+    <!-- / list -->
+    <div class="" ng-show="list_data.length">
+        <div class="col-sm-3 wrapper-md pull-left">
+            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+        </div>
+        <div class="col-sm-4 text-right text-center-xs pull-right">
+            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+        </div>
+    </div>
+  </div>
+
+
+  <div ng-if="id > 0 && !stateLoading">
+    <div class="wrapper b-b">
+      <h3 class=" m-n"><span class="label {{item.category.color == '' ? 'label-default' : ''}}" style="background-color: {{item.category.color}}">{{item.category.name}}</span>#{{item.id}} - {{item.name}}</h3>
+    </div>
+
+    <div class="wrapper b-b">
+      <div class="row">
+        <div class="col-md-4">
+          <p><i class="fa fa-clock-o"></i> <strong>Ngày tạo</strong>: {{moment(item.time_create * 1000).fromNow()}}</p>
+          <p class="{{isExpired(item.due_date) && item.state != 'SUCCESS' ? 'text-danger': ''}}"><i class="fa fa-clock-o"></i> <strong>Thời hạn</strong>: <span ng-if="item.due_date > 0">{{moment(item.due_date * 1000).fromNow()}} ({{moment(item.due_date * 1000).format('lll')}})</span></p>
+          <p><i class="fa fa-clock-o"></i> <strong>Nhắc lại</strong>: <span ng-if="item.reminder > 0">{{moment(item.reminder * 1000).format('lll')}}</span></p>
+          <p><i class="fa fa-clock-o"></i> <strong>Người tạo</strong>: <span class="text-info">{{list_user[item.user_id].fullname}}</span></p>
+        </div>
+        <div class="col-md-4">
+          <p><i class="fa fa-clock-o"></i> <strong>Cập nhật lần cuối</strong>: <span ng-if="item.time_update > 0">{{moment(item.time_update * 1000).fromNow()}}</span></p>
+          <div class="text-ellipsis m-t-xs ng-binding" style="font-size:11.5px;"><i class="fa fa-clock-o"></i> <strong>Trạng thái</strong>: <i class='fa {{stateInfo(item.state).icon}}'></i>
+              <a href="#" editable-select="item.state" onbeforesave="saveField(item, 'state', $data)" e-ng-options="s.key as s.name for s in list_state">{{stateInfo(item.state).name}}</a>
+          </div>  
+
+          <p><i class="fa fa-clock-o"></i> <strong>Giao cho</strong>: <span ng-repeat="ass in item.assigner" class="text-info">{{list_user[ass.assign_id].fullname}}, </span> </p>
+
+          <p><i class="fa fa-user"></i> <strong>Liên quan</strong>: <span class="text-info" ng-repeat="ref in item.refers">{{ref.type_id == 1? 'Đơn: ': ''}}{{ref.type_id == 2? 'Kho: ': ''}}{{ref.type_id == 3? 'Khách hàng: ': ''}} {{ref.name}} {{!$last ? ' | ' : ''}}</span> </p>
+
+
+        </div>
+      </div>
+      <!-- <p><i class="fa fa-clock"></i>Ngày tạo: {{moment(item.time_create * 1000).fromNow()}}</p>
+      <p><i class="fa fa-clock"></i>Thời hạn: <span ng-if="item.due_date > 0">{{item.due_date * 1000 | date : "dd-MM-yyyy  HH:mm"}}</span></p>
+      <p><i class="fa fa-clock"></i>Nhắc lại: <span ng-if="item.reminder > 0">{{item.reminder * 1000 | date : "dd-MM-yyyy  HH:mm"}}</span></p> -->
+      <!-- <p><i class="fa fa-clock"></i>Nhắc lại: <span ng-if="item.reminder > 0">{{item.reminder * 1000 | date : "dd-MM-yyyy  HH:mm"}}</span></p>
+      <div class="text-ellipsis m-t-xs ng-binding" style="font-size:11.5px;">Trạng thái: <i class='fa {{stateInfo(item.state).icon}}'></i>
+            <a href="#" editable-select="item.state" onbeforesave="saveField(item, 'state', $data)" e-ng-options="s.key as s.name for s in list_state">{{stateInfo(item.state).name}}</a>
+          </div> -->
+    </div>
+    <div class="wrapper">
+      {{item.description}}
+    </div>
+    <div class="wrapper">
+      <div class="m-b b-l m-l-md streamline">
+        <div ng-repeat="comment in list_comment">
+          <a class="pull-left thumb-sm avatar m-l-n-md">
+            <img src="{{genProfileImage(list_user[comment.user_id].email)}}" class="img-circle" alt="...">
+          </a>
+          <div class="m-l-lg panel b-a">
+            <div class="panel-heading pos-rlt b-b b-light">
+              <span class="arrow left"></span>
+              <a href>{{list_user[comment.user_id].fullname}}</a>
+              <span class="text-muted m-l-sm pull-right">
+                <i class="fa fa-clock-o"></i>
+                {{moment(comment.time_create * 1000).fromNow()}}
+              </span>
+            </div>
+            <div class="panel-body">
+              <div>{{comment.content}}</div>
+              <!-- <div class="m-t-sm">
+                <a href ui-toggle-class class="btn btn-default btn-xs active">
+                  <i class="fa fa-star-o text-muted text"></i>
+                  <i class="fa fa-star text-danger text-active"></i> 
+                  Like
+                </a>
+                <a href class="btn btn-default btn-xs">
+                  <i class="fa fa-mail-reply text-muted"></i> Reply
+                </a>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      
+
+ 
+      </div>
+    </div>
+
+    
+    <div class="wrapper">
+      <div class="panel b-a">
+        <div class="panel-heading ng-show" ng-hide="reply">
+          <div class="m-b-lg">
+          Nhấn vào đây để <a href class="text-u-l" ng-click="reply=!reply">Trả lời</a>
+          </div>
+        </div>
+        <div class="ng-hide" ng-show="reply">
+          <textarea name="" id="" class="form-control wrapper" style="min-height:100px" ng-model="commentContent"></textarea>
+          
+          <div class="panel-footer bg-light lt">
+            <button class="btn btn-link pull-right" ng-click="reply=!reply"><i class="fa fa-trash-o"></i></button>
+            <button class="btn btn-info w-xs font-bold" ng-click="InsertComment(commentContent)" ng-disabled="commentSending">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

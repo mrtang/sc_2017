@@ -1,0 +1,269 @@
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files
+END
+CoverageNotPrivateTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageNotPrivateTest.php
+END
+NamespaceCoverageMethodTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageMethodTest.php
+END
+CoverageMethodParenthesesWhitespaceTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageMethodParenthesesWhitespaceTest.php
+END
+CoverageNoneTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageNoneTest.php
+END
+CoverageNotPublicTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageNotPublicTest.php
+END
+CoveredClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoveredClass.php
+END
+NamespaceCoverageClassExtendedTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageClassExtendedTest.php
+END
+CoverageClassTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageClassTest.php
+END
+source_with_oneline_annotations.php
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/source_with_oneline_annotations.php
+END
+CoveragePrivateTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoveragePrivateTest.php
+END
+CoverageNotProtectedTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageNotProtectedTest.php
+END
+source_without_ignore.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/source_without_ignore.php
+END
+NamespaceCoverageNotPublicTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageNotPublicTest.php
+END
+BankAccount.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/BankAccount.php
+END
+BankAccountTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/BankAccountTest.php
+END
+class-with-anonymous-function-clover.xml
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/class-with-anonymous-function-clover.xml
+END
+CoverageMethodTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageMethodTest.php
+END
+CoveredFunction.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoveredFunction.php
+END
+NamespaceCoverageClassTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageClassTest.php
+END
+CoverageTwoDefaultClassAnnotations.php
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageTwoDefaultClassAnnotations.php
+END
+source_with_ignore.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/source_with_ignore.php
+END
+source_without_namespace.php
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/source_without_namespace.php
+END
+CoverageFunctionTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageFunctionTest.php
+END
+NamespaceCoveragePrivateTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoveragePrivateTest.php
+END
+CoverageFunctionParenthesesTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageFunctionParenthesesTest.php
+END
+CoverageProtectedTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageProtectedTest.php
+END
+NamespaceCoveragePublicTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoveragePublicTest.php
+END
+source_with_namespace.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/source_with_namespace.php
+END
+NamespaceCoverageCoversClassPublicTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageCoversClassPublicTest.php
+END
+source_with_class_and_anonymous_function.php
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/source_with_class_and_anonymous_function.php
+END
+NamespaceCoverageCoversClassTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageCoversClassTest.php
+END
+CoverageFunctionParenthesesWhitespaceTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageFunctionParenthesesWhitespaceTest.php
+END
+CoverageNothingTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageNothingTest.php
+END
+NamespaceCoverageProtectedTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageProtectedTest.php
+END
+NamespaceCoverageNotPrivateTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageNotPrivateTest.php
+END
+BankAccount-clover.xml
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/BankAccount-clover.xml
+END
+CoveragePublicTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoveragePublicTest.php
+END
+NamespaceCoveredClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoveredClass.php
+END
+NotExistingCoveredElementTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NotExistingCoveredElementTest.php
+END
+CoverageMethodParenthesesTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageMethodParenthesesTest.php
+END
+ignored-lines-clover.xml
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/ignored-lines-clover.xml
+END
+CoverageMethodOneLineAnnotationTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageMethodOneLineAnnotationTest.php
+END
+CoverageClassExtendedTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/CoverageClassExtendedTest.php
+END
+NamespaceCoverageNotProtectedTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/php-code-coverage/Tests/_files/NamespaceCoverageNotProtectedTest.php
+END

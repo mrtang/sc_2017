@@ -1,0 +1,37 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-envelope-o text-info"></i> Tạo Sms</h1>
+  <small class="text-muted">
+  </small>
+</div>
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="NoticeSmsCtrl">
+	<div class="col wrapper-sm">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<form class="form-validation form-horizontal ng-pristine ng-valid">
+		            <div class="row">
+		                <div class="col-md-6">
+                            <div class="form-group controls padder">
+                                <input type="text" placeholder="Số điện thoại (cách nhau dấu , nếu nhiều số)" class="form-control" ng-model="data.phone">
+                            </div>
+                        </div>
+		            </div>
+		            <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group controls padder">
+                                <textarea class="form-control" ng-model="data.content" placeholder="Nội dung tin nhắn..."></textarea>
+                            </div>
+                        </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-xs-1">
+		                  <button class="btn btn-info" ng-click="createSms(data)" ng-disabled='onProgress' ng-if="check_privilege('PRIVILEGE_CREATE_SMS','edit')">Thực hiện</button>
+		                </div>
+		                <div class="col-xs-1">
+		                  <a class="btn btn-info" href="#/van-chuyen/log/excelsms">Tạo excel</a>
+		                </div>
+		            </div>
+		        </form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,162 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-retweet text-info"></i> Log lịch trình</h1>
+  <small class="text-muted">
+  </small>
+
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="LogJourneyCtrl">
+  <div class="col wrapper-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <form class="form-validation form-horizontal" ng-submit="setPage(1)">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group controls padder">
+                        <input type="text" placeholder="Mã vận đơn ..." class="form-control" ng-model="sc_code">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group controls padder">
+                        <select ng-model="status" class="form-control">
+                            <option value="">Chọn trạng thái</option>
+                            <option value="1">Chưa xử lý</option>
+                            <option value="2">Thành công</option>
+                            <option value="3">Xử lý lỗi</option>
+                        </select>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group controls padder">
+                        <input type="text" placeholder="Mã trạng thái HVC ..." class="form-control" ng-model="courier_status">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group controls padder">
+                        <select ng-model="courier_id" class="form-control" >
+                            <option value="">Chọn HVC</option>
+                            <option value="{{key}}" ng-repeat="(key, value) in courier">{{value}}</option>
+                        </select>
+                  </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group controls input-group padder">
+                        <input type="text" class="form-control" placeholder="Từ ngày ..."
+                               ng-model="time.create_start"
+                               datepicker-popup="dd-MM-yyyy"
+                               is-open="time_create_start_open"
+                               datepicker-options="dateOptions"
+                               close-text="Close"
+                                />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group controls input-group padder">
+                        <input type="text" class="form-control" placeholder="Đến ngày ..."
+                               datepicker-popup="dd-MM-yyyy"
+                               is-open="time_create_end_open"
+                               datepicker-options="dateOptions"
+                               date-disabled="disabled(date, mode)"
+                               close-text="Close"
+                               ng-model="time.create_end"
+                                />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                  <button class="btn btn-info" type="submit">Tìm kiếm</button>
+                </div>
+            </div>
+                  
+        </form>
+      </div>
+
+      <div class="panel-body">
+          <div class="table-responsive">
+              <table class="table table-condensed table-hover w-full">
+                  <thead>
+                    <tr>
+                        <th style="width:20px;">#</th>
+                        <th>Mã vận đơn</th>
+                        <th>Thời gian tạo</th>
+                        <th>Hãng vận chuyển</th>
+                        <th>Trạng thái</th>
+                        <th>Thông báo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="stateLoading">
+                      <td colspan="20" class="text-center">
+                          <i class="text-3x fa fa-spinner fa-spin"></i>
+                      </td>
+                  </tr>
+                  <tr ng-if="totalItems == 0 && !stateLoading">
+                      <td colspan="20" class="text-center">Không có dữ liệu</td>
+                  </tr>
+
+                    <tr ng-repeat="key in keys(listData)">
+                        <td>{{ item_stt + $index + 1}}</td>
+                        <td>
+                            <a ng-href="{{link_seller}}#/detail/{{listData[key]['tracking_code'] || ''}}" target="_blank"  class="label bg-light text-sm text-info">{{listData[key]['tracking_code'] || ''}}</a>
+                        </td>
+                        <td>{{listData[key]['time_create']*1000|date : 'dd/MM/yy HH:mm'}}</td>
+                        <td>
+                            <a class="text-info" href="{{link_hvc(1*listData[key]['input']['Courier'], listData[key]['tracking_code'], listData[key]['tracking_code'])}}" target="_blank">{{courier[1*listData[key]['courier']] ? courier[1*listData[key]['courier']] : listData[key]['input']['username']}}</a>
+                            <br />{{listData[key]['input']['username']}}
+                        </td>
+                        <td>
+                            {{listData[key]['UserId'] > 0 ? 'Nhân viên' : 'Hãng vận chuyển'}} {{listData[key]['input']['params']['STATUS']}} <br />
+                            City : {{listData[key]['input']['params']['CITY'] || ''}} <br />
+                            Note : {{listData[key]['input']['params']['NOTE'] || ''}}
+                        </td>
+                        <td ng-show="1*listData[key]['accept'] > 0">
+                            <span ng-show="1*listData[key]['accept'] == 1">
+                                <p><span class="label bg-success text-light">Thành công</span> </p>
+                                <span class="label text-xs pos-rlt m-r {{list_color[status_group[listData[key]['log_output']['Jouney']['old_status']]] || ''}}">{{list_status[listData[key]['log_output']['Jouney']['old_status']] || 'Trạng thái'}}</span> <i class="arrow right arrow-warning"></i>
+                                <span class="label text-xs pos-rlt m-r {{list_color[status_group[listData[key]['log_output']['Jouney']['status']]] || ''}}">{{list_status[listData[key]['log_output']['Jouney']['status']] || 'Trạng thái'}}</span>
+                            </span>
+                            <span ng-show="1*listData[key]['accept'] > 1">
+                                <p>{{listData[key]['error_log']['message']}}</p>
+                                <p><span class="label text-xs pos-rlt m-r {{list_color[status_group[listData[key]['error_log']['status_lading']]] || ''}}">{{list_status[listData[key]['error_log']['status_lading'] || 'Trạng thái']}}</span></p>
+                                <p><span class="label text-xs pos-rlt m-r {{list_color[status_group[listData[key]['error_log']['new_status_lading']]] || ''}}">{{list_status[listData[key]['error_log']['new_status_lading']] || 'Trạng thái'}}</span></p>
+                            </span>
+                        </td>
+                        <td ng-show="listData[key]['accept'] == 0">
+                            <span class="label bg-warning text-light">Chưa xử lý</span>
+                        </td>
+
+                    </tr>
+                </tbody>
+              </table>
+
+          <!-- pagination -->
+                <div ng-show="totalItems > 0 && !stateLoading" class="row">
+                  <div class="col-sm-3 wrapper-md pull-left">
+                      <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                  </div>
+                  <div class="col-sm-4 text-right text-center-xs pull-right">
+                    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)" next-text="Next"></pagination>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

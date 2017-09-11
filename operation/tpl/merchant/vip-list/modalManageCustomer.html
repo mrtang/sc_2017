@@ -1,0 +1,27 @@
+<div class="modal-body wrapper-md">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="m-t-none m-b font-thin">Cập nhật người chăm sóc khách hàng VIP</h3>
+            <p> </p>
+            <form role="form" name="postmanForm" data-ng-submit="saveData()" class="form-validation">
+                <div class="form-group">
+                    Khách hàng: {{customer.fullname}}
+                </div>
+
+                <div class="form-group">
+                    <label>Người quản lý</label>
+                    <select class="form-control" data-ng-model="postData.cs_id">
+                        <option data-ng-repeat="user in listUser" value="{{user.user.id}}">{{user.user.fullname}}</option>
+                    </select>
+                </div>
+
+                <div class="checkbox m-t-lg pull-right">
+
+                    <button type="button" class="btn btn-sm btn-default pull-left text-uc m-t-n-xs" ng-click="close()">Close</button>  
+                    <button type="submit" class="btn btn-sm btn-success pull-left text-uc m-t-n-xs">Save</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

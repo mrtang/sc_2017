@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit-mock-objects/build
+END
+phpmd.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit-mock-objects/build/phpmd.xml
+END
+travis-ci.xml
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit-mock-objects/build/travis-ci.xml
+END

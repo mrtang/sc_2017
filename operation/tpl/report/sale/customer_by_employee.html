@@ -1,0 +1,138 @@
+<div ng-controller="ReportCustomerByEmployeeCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"> Your Customer Of {{$stateParams.email}}</span>
+    </div>
+
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.period" ng-options="key as value for (key , value) in list_period | orderBy: key">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.status" ng-options="key as value for (key , value) in report_status">
+                                        <option value="">Status</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                    <button type="button" class="btn m-b-xs btn-success" ng-disabled="waiting_export" ng-click="exportExcelItem('export')">
+                                        <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                        <i ng-show="waiting_export" class="fa fa-spinner fa-spin"></i>
+                                        Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table b-light w-full table-bordered">
+                                <thead>
+                                    <td width="2%">
+                                        No.
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        Customer name
+                                    </td>
+                                    <td colspan="2" class="text-center">
+                                        Order
+                                    </td>
+                                    <td colspan="3" class="text-center">
+                                        Revenue
+                                    </td>
+                                    <td>Status</td>
+                                    <td>Last login</td>
+                                    <td>Type</td>
+                                </thead>
+                                <thead class="bg-gd">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total</td>
+                                    <td>Avg./day</td>
+                                    <td>New</td>
+                                    <td>Cumulative</td>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </thead>
+                                <tbody >
+                                    <tr ng-show="waiting">
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-show="totalItems == 0 && !waiting">
+                                        <td colspan="30" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-repeat="item in list_data" class="b-b">
+                                        <td>
+                                            {{item_stt + $index + 1}}
+                                        </td>
+                                        <td>
+                                            <div
+                                                    ui-jq="sparkline"
+                                                    ui-options="{{list_statistic[item.user_id]}}, {type:'line', height:19, width:100, lineColor:'{{app.color.primary}}', fillColor:'#fff'}"
+                                                    class="sparkline inline">
+                                                loading...
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{item.__get_user.fullname || ''}} <br />
+                                            {{item.__get_user.email || ''}}
+                                        </td>
+                                        <td>{{list_statistic[item.user_id][6]}}</td>
+                                        <td>{{(list_statistic[item.user_id][6]/period) | number : 0 || '0' }}</td>
+                                        <td>{{item.total_firstmonth | vnNumber : 0 || '0'}}</td>
+                                        <td>{{item.total_nextmonth | vnNumber : 0 || '0'}}</td>
+                                        <td></td>
+                                        <td>{{item.active == 1 ? 'Active' : 'Inactive'}}</td>
+                                        <td>
+                                            {{__get_time(item.__get_user.time_last_login)}} trước
+                                        </td>
+                                        <td>
+                                            {{check_return(item.user_id)}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="totalItems > 0 && !waiting">
+                        <div class="col-sm-3 wrapper-md pull-left">
+                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                        </div>
+                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

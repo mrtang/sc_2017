@@ -1,0 +1,19 @@
+<div class="modal-body wrapper-md">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="m-t-none m-b font-thin">Add Mailchimp</h3>
+      <p> </p>
+      <form role="form" name="" class="form-validation">
+        <div class="form-group">
+            <label>List Mailchimp</label>
+                <select class="form-control m-b" ng-model="cour.id" ng-options="cour.id as cour.name for cour in listMC" class="form-control">
+                    <option value="">-- Choice list --</option>
+                </select>
+        </div>
+        <div class="checkbox m-t-lg">
+          <button type="submit" class="btn btn-sm btn-success pull-left text-uc m-t-n-xs" ng-click="saveListMailchimp(cour.id)" ng-disabled='postmanForm.$invalid'>Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

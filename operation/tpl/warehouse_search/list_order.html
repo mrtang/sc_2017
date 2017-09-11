@@ -1,0 +1,136 @@
+<div class="tab-container">
+    <tabset class="tab-container tab-inside h60 text-xs" justified="true">
+        <tab ng-click="ChangeTab('');">
+            <tab-heading>
+                &nbsp;Tất cả ({{total_group['ALL'] || '0'}})&nbsp;
+            </tab-heading>
+        </tab>
+        <tab ng-repeat="(key,value) in warehouse" ng-click="ChangeTab(key);">
+            <tab-heading>
+                &nbsp;{{value.name}} ({{total_group[value.code] || '0'}})&nbsp;
+            </tab-heading>
+        </tab>
+    </tabset>
+
+    <div class="tab-container">
+        <div class="tab-content tab-fake">
+            <div class="table-responsive">
+                <table class="table-condensed table-hover w-full">
+                    <thead>
+                    <td>
+                        #
+                    </td>
+                    <td>
+                        <i class="fa fa-barcode"></i>&nbsp; Mã Đơn hàng
+                    </td>
+                    <td>
+                        Trạng thái
+                    </td>
+                    <td>
+                        <i class="fa fa-user"></i> Khách hàng
+                    </td>
+                    <td> Kho hàng</td>
+                    <td>
+                        <i class="fa fa-home"></i> Địa chỉ nhận
+                    </td>
+                    <td> <i class="fa fa-clock-o"></i> Đóng gói</td>
+                    <td>
+                        <i class="fa fa fa-inbox"></i> Số lượng
+                    </td>
+                    </thead>
+                    <tbody ng-show="waiting_item">
+                    <tr>
+                        <td colspan="30" class="text-center">
+                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody ng-show="totalItems == 0 && !waiting_item">
+                    <tr>
+                        <td colspan="30" class="text-center">
+                            Không có dữ liệu
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody ng-repeat="it in item.list_order" ng-show="totalItems > 0 && !waiting_item">
+                    <tr>
+                        <td>{{item_stt + $index + 1}}</td>
+                        <td>
+                            <p>
+                                <a ng-href="{{link_seller}}#/detail/{{it.tracking_code}}" target="_blank" class="label bg-light text-base text-info">{{it.tracking_code}}</a>
+                            </p>
+                            <p ng-if="it.time_create > 0" class="text-primary">{{ it.time_create * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                            <p ng-if="it.time_accept > 0" class="text-info">{{ it.time_accept * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                            <p ng-if="it.time_pickup > 0" class="text-warning">{{ it.time_pickup * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                        </td>
+
+                        <td>
+                            <span class="label text-xs {{color[sc_status_group[it.status]] || ''}}">{{sc_status[it.status]}}</span>
+                        </td>
+
+                        <td>
+                            <p>
+                                <i class="fa" ng-class="{'fa-user' : list_vip.indexOf(item['from_user_id']) == -1, 'fa-star text-lgx text-warning' : list_vip.indexOf(item['from_user_id']) != -1}"></i>
+                                {{(list_location.list_from_address[it.from_address_id] ? list_location.list_from_address[it.from_address_id]['user_name'] : item['from_user']['fullname']) || 'Họ tên' | limitTo : 30}}
+                            </p>
+                            <p>
+                                <i class="fa fa-envelope-o"></i> {{item['from_user']['email'] || 'email'}} <i class="fa fa-phone"></i>{{(list_location.list_from_address[it.from_address_id] ? list_location.list_from_address[it.from_address_id]['phone'] : item['from_user']['phone']) || 'Điện thoại' | limitTo : 30}}
+                            </p>
+                            <p>
+                                <span>
+                                    <i class="fa fa-home"></i>
+                                    {{list_location['list_district'][1*it.from_district_id] || 'Quận huyện'}} *
+                                    {{list_location['list_city'][1*it.from_city_id] || 'Thành phố' }} *
+                                    {{country[it.from_country_id] || 'Quốc gia'}}
+                                    <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="{{it.from_address || 'Địa chỉ'}} {{list_location['list_ward'][1*it.from_ward_id] || ''}}"></i>
+                                </span>
+                            </p>
+                        </td>
+
+                        <td>
+                            {{warehouse[it.warehouse]['name'] || ''}}
+                        </td>
+
+                        <td>
+                            <p>
+                                <i class="fa fa-user"></i> {{it.to_name || 'Người nhận'}}
+                            </p>
+                            <p>
+                                <span ng-show="item['to_email']"><i class="fa fa-envelope-o"></i> {{item['to_email'] || ''}}</span> <a href="callto:{{item['to_phone'] || 'Điện thoại'}}">
+                                <i class="fa fa-phone"></i>{{item['to_phone'] || 'Điện thoại'}}
+                            </a>
+                            </p>
+                            <p>
+                                <i class="fa fa-home"></i>
+                                {{list_location['list_district'][1*it.to_district_id] || 'Quận huyện'}} *
+                                {{list_location['list_city'][1*it.to_city_id] || 'Thành phố'}} *
+                                {{country[it.to_country_id] || 'Quốc gia'}}
+                                <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="{{list_location['list_to_address'][it.to_address_id]['address'] || 'Địa chỉ'}} {{list_location['list_to_address'][it.to_address_id] ? list_location['list_ward'][1*list_location['list_to_address'][it.to_address_id].ward_id] : '' || ''}}"></i>
+                            </p>
+                        </td>
+
+                        <td>
+                            {{it._get_package.size || ''}}
+                            <p class="text-warning">{{ it._get_package.create || ''}}</p>
+                        </td>
+
+                        <td>
+                            {{it.total_quantity | vnNumber}}
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="row" ng-show="totalItems > 0 && !waiting_item">
+                    <div class="col-sm-3 wrapper-md pull-left">
+                        <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> vận đơn
+                    </div>
+                    <div class="col-sm-4 text-right text-center-xs pull-right">
+                        <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="getListOrder(currentPage)"></pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

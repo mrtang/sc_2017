@@ -1,0 +1,233 @@
+<div ng-controller="PipeStatusCtrl">
+    <div class="bg-light lter b-b wrapper-md ng-scope">
+        <div class="row">
+            <h1 class="m-n font-thin h3 col-md-5">Cấu hình trạng thái xử lý</h1>
+            <div class="pull-right">
+            <button class="btn btn-success btn-sm" ng-click="openCreateGroupProcessUser({})" ng-if="current_tab_type !== 1">Thêm trạng thái</button>
+            </div>
+        </div>
+    </div>
+    <div class="col wrapper-sm ng-scope">
+        <div class="panel panel-default ">
+            
+            <div class="table-responsive col-md-12" >
+                <h4 class="text-center">&nbsp;</h4>
+                <tabset class="tab-container tab-inside text-xs">
+                  <tab ng-click="change_tab(1)">
+                      <tab-heading>
+                          &nbsp;Đơn hàng&nbsp;
+                      </tab-heading>
+                  </tab>
+                    <tab ng-click="change_tab(5)">
+                        <tab-heading>
+                            &nbsp;Đơn hàng xử lý&nbsp;
+                        </tab-heading>
+                    </tab>
+                    <tab ng-click="change_tab(2)">
+                        <tab-heading>
+                            &nbsp;Khách hàng&nbsp;
+                        </tab-heading>
+                    </tab>
+                    <tab ng-click="change_tab(4)">
+                        <tab-heading>
+                            &nbsp;Khách hàng Vip&nbsp;
+                        </tab-heading>
+                    </tab>
+                    <tab ng-click="change_tab(3)">
+                        <tab-heading>
+                            &nbsp;Địa chỉ&nbsp;
+                        </tab-heading>
+                    </tab>
+                    <tab ng-click="change_tab(10)">
+                        <tab-heading>
+                            &nbsp;Boxme - Order&nbsp;
+                        </tab-heading>
+                    </tab>
+                    <tab ng-click="change_tab(11)">
+                        <tab-heading>
+                            &nbsp;Boxme - Inventory&nbsp;
+                        </tab-heading>
+                    </tab>
+                    <tab ng-click="change_tab(12)">
+                        <tab-heading>
+                            &nbsp;Boxme - Shipment&nbsp;
+                        </tab-heading>
+                    </tab>
+                    <tab ng-click="change_tab(13)">
+                        <tab-heading>
+                            &nbsp;Boxme - Cần xử lý&nbsp;
+                        </tab-heading>
+                    </tab>
+                </tabset>
+                <table class="table table-striped b-t b-light">
+                  <thead>
+                    <tr>
+                      <th style="width:20px;">#</th>
+                      <th>Tên</th>
+                      <th class="text-right">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr ng-repeat="(key,item) in list_data">
+                        <td>{{$index + 1}}</td>
+                        <td>{{item}}</td>
+
+                        <td class="text-right">
+                            <a class="btn w-sm btn-info" href="javascript:;" ng-click="openSaveModal(key,item)">Chỉnh sửa</a>
+                        </td>
+
+                        <tr>
+                           <td colspan="3" class="text-center">
+
+                                <div class="loading" ng-if="_load_process">
+                                    <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i>
+                                    <p>Đang tải dữ liêu</p> 
+                                </div>
+                                <p ng-if="list_data.length == 0 && !_load_process">Không có dữ liệu </p>
+                           </td> 
+                        </tr>
+                  </tbody>
+                </table>
+                <div class="text-right text-center-xs pull-left m-l-sm" ng-if="list_data.length">
+                    <pagination total-items="totalItems" ng-model="page" data-max-size="max_size" items-per-page="{{item_page}}" ng-change="load(page)"></pagination>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="PipeStatusSave.html">
+
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              <h4>Cập nhật trạng thái xử lý </h4>
+            </div>
+        </div>
+    </div>
+        <div class="modal-body wrapper-md">
+            
+            <div class="form-group col-md-12">
+                <label class="col-lg-2 control-label" style="padding-top:0">Tên nhóm</label>
+                <div class="col-lg-10">
+                    <input class="form-control"  ng-model="name" ng-disabled = "true"/>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-12" ng-if="current_tab_type == 2">
+                <label class="col-lg-2 control-label" style="padding-top:0">Mã nhóm</label>
+                <div class="col-lg-10">
+                    <input class="form-control"  ng-model="selectedItem.name" placeholder="Nhập mã nhóm"/>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-12">
+                <div class="table-responsive">
+                    <table class="table-condensed table-hover w-full">
+                        <thead>
+                          <tr>
+
+                            <th>Tên trạng thái</th>
+                            <th>Mã trạng thái</th>
+                            <th>Độ ưu tiên</th>
+                            <th>Thời gian</th>
+                            <th>Hành động</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <form class="form-validation">
+                          <tr ng-repeat="item in list_proccess ">
+                            
+                            <td>
+                                <a ng-if="item.id" href="javascript:;" editable-text="item.name" onbeforesave="savePipe(item, 'name', $data)">{{item.name || 'chưa cấu hình'}}</a>
+                                <div ng-if="!item.id" class="form-group controls">
+                                    <input class="form-control" ng-model="item.name" placeholder="Tên trạng thái">
+                                </div>
+                            </td>
+                            <td>
+                                <a ng-if="item.id" href="javascript:;" editable-text="item.status" onbeforesave="savePipe(item, 'status', $data)">{{item.status || 'chưa cấu hình'}}</a>
+
+                                <div ng-if="!item.id" class="form-group controls">
+                                    <input class="form-control" ng-model="item.status" placeholder="Mã trạng thái">
+                                </div>
+                            </td>
+                            <td>
+                                <a ng-if="item.id" href="javascript:;" editable-text="item.priority" onbeforesave="savePipe(item, 'priority', $data)">{{item.priority || 'chưa cấu hình'}}</a>
+
+                                <div ng-if="!item.id" class="form-group controls">
+                                    <input class="form-control" ng-model="item.priority" placeholder="Độ ưu tiên">
+                                </div>
+                            </td>
+                            <td>
+                                <a ng-if="item.id" href="#" editable-select="item.estimate_time" e-ng-options="s.value as s.text for s in estimates" onbeforesave="savePipe(item, 'estimate_time', $data)">
+                                    {{ showEstimate(item) }}
+                                </a>
+
+                                <div ng-if="!item.id" class="form-group controls">
+                                    <select class="form-control" ng-model="item.estimate_time" ng-options="s.value as s.text for s in estimates">
+
+                                    </select>
+                                </div>
+                            </td>
+                              
+                            <td>
+                                <label class="i-switch bg-primary" ng-if="item.id">
+                                    <input type="checkbox" ng-true-value="1"  ng-false-value="0" ng-model="item.active" ng-checked="item.active > 0" ng-change="savePipe(item, 'active', item.active)">
+                                    <i></i>
+                                </label>
+                              <div class="form-group" ng-if="!item.id">
+                                  <a class="btn btn-success" ng-disabled="add_process" href="javascript:;" ng-click="action_add(item, $index)">Thêm</a>
+                              </div>
+                            </td>
+
+                          </tr>
+                        </form>
+                        </tbody>
+                    </table>
+                    </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+            <button class="btn btn-success w-sm" ng-disabled="frm_edit.$invalid || load_submit" ng-click="btn_add()">Thêm trạng thái</button>
+            <button class="btn btn-info w-sm" ng-click="close()">Đóng</button>
+        </div>
+</script>
+
+<script type="text/ng-template" id="CreateGroupProcessUserModal.html">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              <h4>Tạo mới</h4>
+            </div>
+        </div>
+    </div>
+        <div class="modal-body wrapper-md">
+            
+            <div class="form-group col-md-12">
+                <label class="col-lg-2 control-label" style="padding-top:0">Tên nhóm</label>
+                <div class="col-lg-10">
+                    <input class="form-control"  ng-model="selectedItem.name"  placeholder="Nhập tên nhóm"/>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-12" >
+                <label class="col-lg-2 control-label" style="padding-top:0">Mã nhóm</label>
+                <div class="col-lg-10">
+                    <input class="form-control"  ng-model="selectedItem.code" placeholder="Nhập mã nhóm"/>
+                </div>
+            </div>
+            
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="modal-footer">
+            <button class="btn btn-success" ng-disabled="frm_edit.$invalid || load_submit" ng-click="create(selectedItem)">Thêm</button>
+            <button class="btn btn-info" ng-click="close()">Đóng</button>
+        </div>
+</script>

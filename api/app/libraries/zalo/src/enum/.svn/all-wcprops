@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn_zplatform/!svn/ver/3572/Oauth/SDK/Web/PHP/ZaloPageSDK/src/enum
+END
+ZPUserGender.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn_zplatform/!svn/ver/3572/Oauth/SDK/Web/PHP/ZaloPageSDK/src/enum/ZPUserGender.php
+END
+ZPTypeFeed.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn_zplatform/!svn/ver/3572/Oauth/SDK/Web/PHP/ZaloPageSDK/src/enum/ZPTypeFeed.php
+END
+Enum.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn_zplatform/!svn/ver/3358/Oauth/SDK/Web/PHP/ZaloPageSDK/src/enum/Enum.php
+END
+ZaloMessageDataType.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn_zplatform/!svn/ver/3358/Oauth/SDK/Web/PHP/ZaloPageSDK/src/enum/ZaloMessageDataType.php
+END

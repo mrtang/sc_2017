@@ -1,0 +1,199 @@
+<div ng-controller="LoyCampaignDetailCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-edit text-info"></i> Lịch sử đổi thưởng</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Khách hàng"
+                                    ng-model="frm.keyword"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control" ng-model="frm.level">
+                                        <option value="">Level</option>
+                                        <option ng-repeat="(key,value) in sc_loyalty_level" value="{{key}}">{{value.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Mã đổi thưởng"
+                                           ng-model="frm.code"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Từ ngày ..."
+                                           ng-model="time.time_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                    />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-3 col-lg-offset-9">
+                                <div class="form-group controls input-group ">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_end"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           close-text="Close"
+                                           ng-model="time.time_end"
+                                    />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+
+                            <div class="col-lg-4 col-lg-offset-5" ng-if="check_privilege('PRIVILEGE_CONFIG','export')">
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn btn-success" ng-disabled="waiting_export" ng-click="exportExcel()">
+                                        <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                        <i ng-show="waiting_export" class="fa fa-spinner"></i>
+                                        Xuất Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table-condensed table-hover w-full">
+                                <thead>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td>
+                                        Thời gian
+                                    </td>
+                                    <td>
+                                        Khách hàng
+                                    </td>
+                                    <td>
+                                        Loại đổi thưởng
+                                    </td>
+                                    <td>
+                                        Hạng người dùng
+                                    </td>
+                                    <td> Giá trị đổi thưởng</td>
+                                    <td>Số điểm tương ứng</td>
+                                    <td>Số điện thoại</td>
+                                    <td>
+                                        Mã đổi thưởng
+                                    </td>
+                                </thead>
+                                <tbody ng-show="waiting">
+                                    <tr>
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-show="totalItems == 0 && !waiting">
+                                    <tr>
+                                        <td colspan="30" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-repeat="item in list_data">
+                                <tr>
+                                    <td>{{item_stt + $index + 1}}</td>
+                                    <td>
+                                        <p ng-if="item.time_create > 0" class="text-info">{{ item.time_create * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            {{(item['get_user']['fullname']) || 'Họ tên' | limitTo : 30}}
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-envelope-o"></i> {{item['get_user']['email'] || 'email'}}
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-phone"></i>{{item['get_user']['phone'] || 'Điện thoại' | limitTo : 30}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        {{item.get_campaign.name || ''}}
+                                    </td>
+                                    <td>
+                                        <span class="label text-xs {{sc_loyalty_level[item.level]['bg_color'] || ''}}">{{sc_loyalty_level[item.level]['name'] || 'Thứ hạng'}}</span>
+                                    </td>
+                                    <td>
+                                        {{item.get_campaign.value | vnNumber}}
+                                    </td>
+                                    <td>
+                                        {{item.get_campaign.point | vnNumber}}
+                                    </td>
+                                    <td>
+                                        {{item.phone}}
+                                        <br />
+                                        {{type_phone[item.phone_type] || ''}}
+                                    </td>
+                                    <td>
+                                        <p>
+                                            <a ng-if="check_privilege('PRIVILEGE_CONFIG','edit') && !item.code_number && item.get_campaign && item.get_campaign.category_id == 2" href="javascript:;" editable-text="item.code_number" e-style="width: 100px" e-min="0" onbeforesave="changeCampaign(item, $data, 'code_number')">
+                                                {{item.code_number || 'empty'}} <i class="fa fa-edit"></i>
+                                            </a>
+                                            <span ng-if="!check_privilege('PRIVILEGE_CONFIG','edit') || item.code_number">{{item.code_number || ''}}</span>
+                                        </p>
+
+                                        <p>
+                                            <a ng-if="check_privilege('PRIVILEGE_CONFIG','edit') && !item.code && item.get_campaign && item.get_campaign.category_id == 2" href="javascript:;" editable-text="item.code" e-style="width: 100px" e-min="0" onbeforesave="changeCampaign(item, $data, 'code')">
+                                                {{item.code || 'empty'}} <i class="fa fa-edit"></i>
+                                            </a>
+                                            <span ng-if="!check_privilege('PRIVILEGE_CONFIG','edit') || item.code">{{item.code || ''}}</span>
+                                        </p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row" ng-show="list_data.length">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> khách hàng
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

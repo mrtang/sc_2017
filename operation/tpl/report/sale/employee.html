@@ -1,0 +1,288 @@
+
+
+<div ng-controller="ReportEmployeeCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"> Employee Report</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.country_id" ng-options="key as value for (key , value) in venture">
+                                        <option value="">Venture</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select ui-jq="chosen"
+                                            multiple class="w-md"
+                                            data-ng-model="frm.team"
+                                            data-placeholder="Select Team"
+                                            ng-options="item.id as item.name for item in team"
+                                    >
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.interval" ng-options="key as value for (key , value) in interval">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group controls padder" ui-module="select2">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Employee email"
+                                            ui-select2="select2Options"
+                                            ng-model="frm.email"
+                                            class="form-control w-md"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs">
+                                        <input type="checkbox" ng-model="frm.show_kpi" ng-true-value="1" ng-false-value="0" /><i></i>
+                                        Show target KPI
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                    <button type="button" class="btn m-b-xs btn-success" ng-disabled="waiting_export" ng-click="exportExcelItem('export')">
+                                        <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                        <i ng-show="waiting_export" class="fa fa-spinner fa-spin"></i>
+                                            Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table b-light w-full table-bordered">
+                                <thead>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td colspan="2" class="text-center">
+                                        Emplyoee
+                                    </td>
+                                    <td colspan="2" class="text-center">
+                                        Opportunities
+                                    </td>
+                                    <td colspan="2" class="text-center">
+                                        Won
+                                    </td>
+                                    <td colspan="3" class="text-center">
+                                        Revenue
+                                    </td>
+                                    <td colspan="6" ng-show="frm.show_kpi == 1" class="text-center">
+                                        Target KPI
+                                    </td>
+                                    <td colspan="7" class="text-center">
+                                        % KPI
+                                    </td>
+                                    <td ng-show="frm.show_salary == 1">
+                                        Salary
+                                    </td>
+                                </thead>
+                                <thead class="bg-gd">
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        Name
+                                    </td>
+                                    <td>
+                                        Level
+                                    </td>
+
+                                    <td>
+                                        New
+                                    </td>
+                                    <td>
+                                        Return
+                                    </td>
+
+                                    <td>
+                                        # Won
+                                    </td>
+                                    <td>
+                                        % Won
+                                    </td>
+                                    <td>
+                                        New
+                                    </td>
+                                    <td>
+                                        Cumulative
+                                    </td>
+                                    <td>
+                                        Total
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Opps
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Won
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Revenue
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Customer
+                                        Satisfaction
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Qty. fulfill
+                                        Customers
+                                    </td>
+                                    <td ng-show="frm.show_kpi == 1">
+                                        Team
+                                        Revenue
+                                    </td>
+                                    <td>
+                                        Opps
+                                    </td>
+                                    <td>
+                                        Won
+                                    </td>
+                                    <td>
+                                        Revenue
+                                    </td>
+                                    <td>
+                                        Customer
+                                        Satisfaction
+                                    </td>
+                                    <td>
+                                        Qty. fulfill
+                                        Customers
+                                    </td>
+                                    <td>
+                                        Team
+                                        Revenue
+                                    </td>
+                                </thead>
+                                <tbody >
+                                    <tr ng-show="waiting">
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-show="totalItems == 0 && !waiting">
+                                        <td colspan="30" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-repeat="item in list_data" class="b-b">
+                                        <td>{{item_stt + $index + 1}}</td>
+                                        <td>
+                                            {{item.__user.fullname || item.email}}
+                                        </td>
+                                        <td>
+                                            {{item.level || '0'}}
+                                        </td>
+                                        <td>
+                                            {{__get_value(employee_statistic['opps'], item.user_id)}}
+                                        </td>
+                                        <td>
+                                            {{__get_value(employee_statistic['return'], item.user_id)}}
+                                        </td>
+                                        <td>
+                                            {{__get_value(employee_statistic['won'], item.user_id)}}
+                                        </td>
+                                        <td>
+                                            <span ng-if="__get_value(employee_statistic['opps'], item.user_id) != null && __get_value(employee_statistic['won'], item.user_id) != null">
+                                                {{(__get_value(employee_statistic['won'], item.user_id)/__get_value(employee_statistic['opps'], item.user_id))*100 || '0' | number:0}}%
+                                            </span>
+                                            <span ng-if="__get_value(employee_statistic['won'], item.user_id) == null || __get_value(employee_statistic['opps'], item.user_id) == null">
+                                                null
+                                            </span>
+                                        </td>
+
+                                        <!-- Revenue -->
+                                        <td>
+                                            {{__get_value(employee_statistic['firstmonth'], item.user_id) || '0' | vnNumber}}
+                                        </td>
+                                        <td>
+                                            {{__get_value(employee_statistic['nextmonth'], item.user_id) || '0' | vnNumber}}
+                                        </td>
+                                        <td>
+                                            {{__get_value(employee_statistic['revenue'], item.user_id) || '0' | vnNumber}}
+                                        </td>
+
+                                        <!-- Target KPI -->
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{list_category[item.user_id]['opps'] || 'null'}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{list_category[item.user_id]['won'] || 'null'}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{list_category[item.user_id]['revenue'] || 'null'}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{list_category[item.user_id]['satisfaction'] || 'null'}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{list_category[item.user_id]['fulfill'] || 'null'}}
+                                        </td>
+                                        <td ng-show="frm.show_kpi == 1">
+                                            {{list_category[item.user_id]['team revenue'] || 'null'}}
+                                        </td>
+
+                                        <!-- % KPI -->
+                                        <td>
+                                            {{__get_value(employee_statistic['opps_p'], item.user_id) || '0' | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{__get_value(employee_statistic['won_p'], item.user_id) || '0' | vnNumber}}
+                                        </td>
+
+                                        <td>
+                                            {{__get_value(employee_statistic['revenue_p'], item.user_id) || '0' | vnNumber}}
+                                        </td>
+
+                                        <td>{{__get_value(employee_statistic['satisfaction_p'], item.user_id) || '0' | vnNumber}}</td>
+                                        <td>{{__get_value(employee_statistic['fulfill_p'], item.user_id) || '0' | vnNumber}}</td>
+                                        <td>
+                                            {{__get_value(employee_statistic['team_revenue_p'], item.user_id) || '0' | vnNumber}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="clearfix">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

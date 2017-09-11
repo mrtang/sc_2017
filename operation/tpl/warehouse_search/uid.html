@@ -1,0 +1,160 @@
+<div class="tab-container">
+    <div class="tab-content tab-fake">
+        <div class="wrapper-md b-b">
+            <span class="m-n h4">Thông tin UID {{$stateParams.keyword}}</span>
+        </div>
+
+        <div class="tab-container">
+            <div class="clearfix">&nbsp;</div>
+            <form class="form-horizontal pos-rlt">
+                <div style="top: 0px;right: 3%" class="form-group pos-abt">
+                    <img style="width: 300px" class="img-responsive" ng-src="data:image/png;base64,{{item.uid.barcode_value}}">
+                    <p style="margin-bottom: -5px;" class="text-center">{{item.uid.serial_number}}</p>
+                    <p class="text-center">{{item.uid.__putaway.bin || ''}}</p>
+                </div>
+
+                <div class="form-group item-first">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">BSIN</label>
+                    <div class="col-sm-4 col-md-3 col-lg-3">
+                        <input type="text" value="{{item.uid.sku}}" class="form-control" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Tên sản phẩm</label>
+                    <div class="col-sm-4 col-md-3 col-lg-3">
+                        <input type="text" value="{{item.uid.__product.name || ''}}" class="form-control" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Description</label>
+                    <div class="col-sm-6 col-md-6 col-lg-5">
+                        <textarea rows="3" class="form-control" value="{{item.uid.__product.desc || ''}}" readonly=""></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Model</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="{{item.uid.__product.product_model_name || ''}}" class="form-control"  readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Danh mục</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="{{item.uid.__product.category || ''}}" class="form-control"  readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Thương hiệu</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="{{item.uid.__product.brand || ''}}" class="form-control"  readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Mã vạch nhà sản xuất</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="{{item.uid.__product.barcode_manufacturer || ''}}" class="form-control" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Nhà sản xuất(Updating)</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="" class="form-control" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Tag</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="{{item.uid.__product.tag || ''}}" class="form-control" readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Số lượng</label>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <input type="text" value="{{item.uid.__product.quantity || '' | vnNumber}}" class="form-control " readonly="">
+                    </div>
+                    <div class="col-sm-1 col-md-1 col-lg-1">
+                        <select class="form-control" readonly="">
+                            <option value=""> Cái </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Khối lượng (gram)</label>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <input type="text" value="{{item.uid.__product.weight || '' | vnNumber}}" class="form-control" readonly="">
+                    </div>
+                    <div class="col-sm-1 col-md-1 col-lg-1">
+                        <select class="form-control" readonly="">
+                            <option value=""> G </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Thể tích (cm3)</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="{{item.uid.volume}}" class="form-control"  readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Khách hàng</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="{{item.uid.__user.fullname || ''}}" class="form-control"  readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Vị trí BinID</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="{{item.uid.__putaway.bin || ''}}" class="form-control"  readonly="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Ngày hết hạn (Updating)</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <input type="text" value="" class="form-control"  readonly="">
+                    </div>
+                </div>
+                <div ng-show="item.uid.__product.__image.url" class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-2 control-label">Hình ảnh</label>
+                    <div class="col-sm-6 col-md-6 col-lg-3 b">
+                        <img class="img-responsive" alt="image" ng-src="{{item.uid.__product.__image.url}}">
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+            </form>
+        </div>
+
+        <div class="tab-container">
+            <!-- History -->
+            <div class="wrapper-md b-b">
+                <span class="m-n h4">Lịch sử cập nhật UID</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-condensed table-hover w-full">
+                    <thead>
+                    <tr>
+                        <th>STT.</th>
+                        <th>Ngày tạo</th>
+                        <th>Người tạo</th>
+                        <th>Mã tham chiếu</th>
+                        <th>Lịch sử</th>
+                        <th>Vị trí</th>
+                    </tr>
+                    </thead>
+                    <tbody>{{item.__history}}
+                        <tr ng-show="!item.uid.__history"><td colspan="30" class="text-center">Không có dữ liệu</td></tr>
+                        <tr ng-repeat="it in item.uid.__history">
+                            <td>#{{$index + 1}}</td>
+                            <td>{{it.created}}</td>
+                            <td>{{it.__employee.fullname || ''}}</td>
+                            <td>
+                                <a class="label bg-light text-base text-info" ui-sref="boxme.order.process.detail({code:it.order_number})" target="_blank">{{it.order_number || ''}}</a>
+                            </td>
+                            <td>{{it.history}}</td>
+                            <td>{{it.location}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

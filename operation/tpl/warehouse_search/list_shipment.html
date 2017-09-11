@@ -1,0 +1,114 @@
+<div class="tab-container">
+    <div class="tab-content tab-fake">
+        <div class="wrapper-md b-b">
+            <span class="m-n h4">Thông tin Shipment {{$stateParams.keyword}}</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table-condensed table-hover w-full">
+                <thead>
+                <td>
+                    #
+                </td>
+                <td>
+                    <i class="fa fa-barcode"></i>&nbsp; Mã Shipment
+                </td>
+                <td> Kho nhập hàng</td>
+                <td>Trạng thái Shipment</td>
+                <td>
+                    <i class="fa fa-barcode"></i>&nbsp; Mã SC
+                </td>
+                <td>Trạng thái vận đơn</td>
+                <td> <i class="fa fa-clock-o"></i> Thời gian duyệt</td>
+                <td> <i class="fa fa-clock-o"></i> Thời gian giao tới kho</td>
+                <td> <i class="fa fa-clock-o"></i> Thời gian kho nhận</td>
+
+                <td>
+                    <i class="fa fa fa-inbox"></i> Số lượng
+                </td>
+
+                <td>
+                    <i class="fa fa fa-inbox"></i> Điều chỉnh
+                </td>
+
+                <td>
+                    <i class="fa fa-user"></i> Khách hàng
+                </td>
+
+                <td>
+                    Tỉnh thành lấy
+                </td>
+                <td>
+                    Quận huyện lấy
+                </td>
+                </thead>
+                <tbody ng-repeat="it in item.list_shipment">
+                <tr>
+                    <td>{{item_stt + $index + 1}}</td>
+                    <td>
+                        <p>
+                            <a class="label bg-light text-base text-info" ui-sref="boxme.shipment.listing({code:it.request_code})" target="_blank">{{it.request_code || ''}}</a>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{warehouse[it.warehouse]['name'] || ''}}
+                        </p>
+                    </td>
+
+                    <td>
+                        <p>
+                            {{shipment_status[it.status]['name'] || ''}}
+                        </p>
+                    </td>
+
+                    <td>
+                        <p>
+                            <a class="label bg-light text-base text-info" href="javascript:;">{{it.tracking_number || ''}}</a>
+                        </p>
+                    </td>
+
+                    <td> <!-- Trạng thái SC -->
+
+                    </td>
+
+                    <td>
+
+                    </td>
+
+                    <td> <!-- Thời gian giao tới kho -->
+
+                    </td>
+
+                    <td>
+
+                    </td>
+
+                    <td>
+
+                    </td>
+
+                    <td>
+
+                    </td>
+
+                    <td>
+                        <p><i class="fa fa-user"></i> {{it.__get_user.fullname || ''}}</p>
+                        <p><i class="fa fa fa-envelope-o"></i> {{it.__get_user.email || ''}}</p>
+                        <p><i class="fa fa-phone"></i> {{it.__get_user.phone || ''}}</p>
+                    </td>
+
+                    <td>
+                        {{city[it.__get_outbound.city_id]}}
+                    </td>
+
+                    <td>
+                        {{district[it.__get_outbound.province_id]['district_name']}}
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

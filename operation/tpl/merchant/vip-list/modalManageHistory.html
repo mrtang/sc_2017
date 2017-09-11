@@ -1,0 +1,19 @@
+<div class="modal-body wrapper-md">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="m-t-none m-b font-thin">Lịch sử người chăm sóc khách hàng {{customer.fullname}}</h3>
+            <p> </p>
+            <form role="form" name="postmanForm" data-ng-submit="saveData()" class="form-validation">
+                <div class="form-group" data-ng-repeat=
+                "item in listData">
+                    <label>Nhân viên <b>{{item.cs.fullname}}</b> đã nhận quản lý khách hàng lúc {{item.time_create*1000 | date : 'HH:mm dd/MM/yyyy'}} bởi <b>{{item.user_update.fullname}}</b></label>
+                </div>
+
+                <div class="checkbox m-t-lg pull-right">
+
+                    <button type="button" class="btn btn-sm btn-default pull-left text-uc m-t-n-xs" ng-click="close()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

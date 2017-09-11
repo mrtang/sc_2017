@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/tasks
+END
+ComposerLintTask.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/tasks/ComposerLintTask.php
+END
+GuzzlePearPharPackageTask.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/tasks/GuzzlePearPharPackageTask.php
+END
+GuzzleSubSplitTask.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/tasks/GuzzleSubSplitTask.php
+END
+NodeServerTask.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/phing/tasks/NodeServerTask.php
+END

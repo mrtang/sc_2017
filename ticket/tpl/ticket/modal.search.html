@@ -1,0 +1,60 @@
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-11 pull-left no-padder">
+                    <h4 class="modal-title">Khiếu nại liên quan đến <strong>{{order_code | uppercase}}</strong></h4>
+                </div>
+                <button type="button" class="pull-right close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-body">
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>Yêu cầu</th>
+                <th>Người được giao</th>
+                <th>Tiêu đề</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-show="waiting">
+                <td colspan="5" class="text-center">
+                    <i class="text-3x fa fa-spinner fa-spin"></i>
+                </td>
+            </tr>
+            <tr ng-show="!waiting && !list_data.length">
+                <td colspan="5" class="text-center">
+                    Không có dữ liệu
+                </td>
+            </tr>
+            <tr ng-repeat="item in list_data">
+                <td class="text-center">
+                    #{{item.id}}<br />
+                </td>
+                <td>
+                    {{User[item.user_id].fullname}}<br />
+                    {{(item.time_create) * 1000 | date:'HH:mm dd-MM-yyyy'}}
+                </td>
+                <td>
+                    <span ng-repeat="i in item.assign">{{User[i.assign_id].fullname}}<i ng-if="!$last">,</i> </span>
+                </td>
+                <td>
+                    {{item.title}}
+                </td>
+                <td>
+                    <button ng-if="item.status != 'CLOSED'" class="btn m-b-xs btn-info" ng-if="item.action == 1" ng-click="save(item)">Tiếp nhận</button>
+                    <label ng-if="item.status == 'CLOSED'" class="label bg-light">Đã đóng</label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="modal-footer">
+        <button type="button" ng-if="!list_data.length && !waiting" class="btn btn-success" ng-click="create()">Tạo yêu cầu mới</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>

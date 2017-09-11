@@ -1,0 +1,758 @@
+<!-- navbar -->
+<div data-ng-include=" 'tpl/blocks/header.html' " class="app-header navbar" ng-init="app.settings.asideFolded = false">
+</div>
+<!-- / navbar -->
+
+<div class="app-content-body fade-in-up">
+    <div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="SearchCtrl"><!-- data-ng-controller="SearchCtrl" -->
+        <div class="col wrapper-sm " ng-if="stateReady == 2">
+
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="clearfix">
+                                <a href="" class="pull-left thumb-md avatar b-3x m-r">
+                                    <img ng-src="{{user.avatar}}" title="{{user.fullname}}'s Avatar" />
+                                </a>
+                                <div class="clear">
+                                    <div class="h3 m-t-xs m-b-xs">
+                                    {{user.fullname}}
+                                        <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                                    </div>
+                                    <small class="text-muted" ng-if="user.is_vip == 1">Thành viên VIP</small>
+                                    <small class="text-muted" ng-if="user.is_vip != 1">Thành viên thường</small> <br/>
+                                    <small class="text-muted">Ngày đăng ký : {{ user.time_create * 1000  | date : "dd-MM-yyyy  HH:mm"}}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-group no-radius alt">
+                        
+                            <li class="list-group-item" href="">
+                                <i class="fa fa-phone fa-fw text-muted"></i> 
+                                SĐT : <a href="callto:{{user.phone}}">{{user.phone}}</a>
+                            </li>
+
+                            <li class="list-group-item" href="">
+                                <!-- <span class="badge bg-info">16</span> -->
+                                <i class="fa fa-envelope fa-fw text-muted"></i> 
+                                Email : <a target="_blank" ui-sref="_search({search:user.email})">{{user.email}}</a>
+                            </li>
+
+                            <li class="list-group-item" href="" ng-if="userInfo.id==45438">
+                                <!-- <span class="badge bg-info">16</span> -->
+                                <i class="fa fa-book fa-fw text-muted"></i> 
+                                Số hợp đồng : <span editable-text="user.contract" onbeforesave="saveContract($data,'num_contract',user.id)" e-required>
+                                    {{ user.contract || 'empty' }}
+                                </span><br>
+                                <span ng-if="user.time_contract > 0">Ngày kích hoạt : {{user.time_contract*1000|date : "dd-MM-yyyy  HH:mm"}}</span>
+                            </li>
+                            <li class="list-group-item" href="" ng-if="userInfo.id!=45438">
+                                <!-- <span class="badge bg-info">16</span> -->
+                                <i class="fa fa-book fa-fw text-muted"></i> 
+                                Số hợp đồng : {{ user.contract }}<br>
+                                <span ng-if="user.time_contract > 0">Ngày kích hoạt : {{user.time_contract*1000|date : "dd-MM-yyyy  HH:mm"}}</span>
+                            </li>
+
+                            <li class="list-group-item" href="">
+                                <!-- <span class="badge bg-info">16</span> -->
+                                <i class="fa fa-envelope fa-fw text-muted"></i> 
+                                Email nhận thông báo : <a target="_blank" ui-sref="_search({search:user.email})">{{user.email_notice || 'Không có dữ liệu'}}</a>
+                            </li>
+
+                            
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-dot-circle-o fa-fw text-muted"></i> 
+                                Ngân lượng : {{user.email_nl}} (<span class="text-info">{{user.user_nl_id || '0'}}</span>)
+                            </li>
+
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-university fa-fw text-muted"></i> 
+                                Ngân hàng : {{bank[user.bank_code]}}
+                            </li>
+                            <li class="list-group-item" href="" tooltip-html-unsafe="{{user.note}}">
+                                <i class="fa fa-user fa-fw text-muted"></i> 
+                                Chủ thẻ : {{user.account_name}} <i class="fa fa-check-circle {{user.vimo_active == 1 ? 'text-success' : ''}}" ></i>
+                            </li>
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1" tooltip-html-unsafe="Ảnh ATM : {{user.atm_image ? 'có' : 'chưa có'}}<br/>Ảnh mặt trước CMTND : {{user.cmnd_before_image ? 'có' : 'chưa có'}}<br/>Ảnh mặt sau CMTND: {{user.cmnd_after_image ? 'có' : 'chưa có'}}<br/>" tooltip-placement="top" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-barcode fa-fw text-muted"></i> 
+                                Số thẻ : {{user.account_number}}
+                            </li>
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-code-fork fa-fw text-muted"></i> 
+                                Phương thức TT : {{user.priority_payment == 1 ? 'Ngân hàng' : 'Ngân lượng'}}
+                            </li>
+
+
+                             <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-eye fa-fw text-muted"></i> 
+                                Số dư hiện tại : <strong class="text-danger">{{user.balance || '0' | vnNumber}} đ</strong>
+                            </li>
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-eye fa-fw text-muted"></i> 
+                                Phí vận chuyển tạm tính : <strong class="text-danger">{{user.freeze || '0' | vnNumber}} đ</strong>
+                            </li>
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-eye fa-fw text-muted"></i> 
+                                Thu hộ tạm tính : <strong class="text-danger">{{user.provisional || '0' | vnNumber}} đ</strong>
+                            </li>
+
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                    <i class="fa fa-eye fa-fw text-muted"></i> 
+                                    Số dư khả dụng : <strong class="text-danger"> {{(+user.balance + user.provisional - user.freeze) || '0' | vnNumber}}đ</strong><br/>
+                                    <!--span class="text-info">(Xem chi tiết)</span-->
+                                
+                            </li>
+
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-eye fa-fw text-muted"></i> 
+                                Hạn mức : <strong class="text-danger">{{user.quota || '0' | vnNumber}} đ</strong>
+                            </li>
+
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-eye fa-fw text-muted"></i> 
+                                Trạng thái hiện tại : <strong>{{user.currentStatus }} </strong>
+                            </li>
+
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <i class="fa fa-eye fa-fw text-muted"></i> 
+                                Nhân viên QL : <strong>{{user.manager.fullname || 'Chưa ai quản lý khách hàng này'}}</strong> <span ng-if="user.time_manager  &&  user.time_manager > 0 && user.manager.fullname">({{user.time_manager * 1000  | date : "dd-MM-yyyy  HH:mm" }})</span>
+                            </li>
+                            <li class="list-group-item" href="" ng-if="user.manager.fullname && user.first_time_incomings > 0">
+                                <i class="fa fa-calendar fa-fw text-muted"></i>
+                                Tính doanh thu :
+                                <a href="#" editable-bsdate="user.first_time_incomings"
+                                   e-is-open="opened.$data"
+                                   e-ng-click="open($event,'$data')"
+                                   onaftersave="UpdateIncomingsTime($data, user)"
+                                   e-datepicker-popup="dd-MM-yyyy">
+                                    {{ (user.first_time_incomings | date:"dd/MM/yyyy") || 'empty' }}
+                                </a>
+                            </li>
+                            <li class="list-group-item" href="" ng-if="['sender','order'].indexOf(object) != -1 && (userInfo.group == 10 || userInfo.privilege == 2)">
+                                <div class="checkbox padder m-t-xs" ng-if="user.fulfillment == 0">
+                                    <label class="i-checks padder-md padder-xs">
+                                        <input type="checkbox" ng-model="user.fulfillment" ng-true-value="1" ng-false-value="0" ng-change="ActiveWarehouse(user)" /><i></i>
+                                        Kích hoạt Boxme
+                                    </label>
+                                </div>
+
+                                <span ng-if="user.fulfillment == 1">
+                                    <i class="fa fa-eye fa-fw text-muted"></i>
+                                    Đã kích hoạt Boxme
+                                </span>
+                            </li>
+
+                            <!-- <li class="list-group-item text-center" href="" ng-if="object == 'seller' && user.group == 3 && userInfo.id == 2">
+                                <div class="btn-group">
+                                    <button class="btn btn-warning" ng-click="removeSalePermission(user)" ng-disabled="load_submit_remove_p">Hủy quyền quản lý toàn bộ KH</button>
+                                </div>
+                            </li>
+                            
+                            
+                            <li class="list-group-item text-center" href="" ng-if="['sender','order'].indexOf(object) != -1">
+                                <div class="btn-group ">
+                                    <button class="btn btn-success " ng-disabled="user.manager.fullname || loading.manage_process" ng-click="OpenModalManager()"><i class="fa fa-spinner fa-spin" ng-if="loading.manage_process"></i> {{!user.manager.fullname ? 'Nhận quản lý khách hàng này' : 'Khách hàng đã có người quản lý'}}</button>
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-if="check_privilege('PRIVILEGE_SELLER','edit')">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                            <li><a ng-click="removeSalePermission(user)" ng-if="user.group == 3">Hủy quyền</a></li>                                        
+                                         <li><a ng-click="OpenChangeManager()">Đổi quyền quản lý</a></li>
+                                        <li><a ng-click="OpenHistoryManager()">Lịch sử quản lý</a></li>
+                                        <li><a ng-click="updateVip('update')" ng-if="user.is_vip != 1">Cập nhật thành viên VIP</a></li>
+                                        <li><a ng-click="updateVip('remove')" ng-if="user.is_vip == 1">Hủy thành viên VIP</a></li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                        </ul>
+                    </div> <!-- End profile -->
+                </div> <!--End row -->
+
+
+                <div class="col-lg-9" ng-if="['sender', 'seller'].indexOf(object) == -1">
+                    <div class="panel panel-default" ng-if="1== 2">
+                        <div class="panel-heading">Thông tin đơn hàng</div>
+                        
+                    </div>
+                    <tabset class="tab-container tab-inside h80 text-sm" justified="true" >
+
+                        <tab ng-click="ChangeTab('ALL')">
+                            <tab-heading>Tất cả
+                                <small>({{total_all || 0}})</small>
+                            </tab-heading>
+                        </tab>
+
+                        <tab ng-repeat="(key,item) in group_status" ng-click="ChangeTab(key)">
+                            <tab-heading>{{item}}
+                                <small>({{total_group[key] || 0}})</small>
+                            </tab-heading>
+                        </tab>
+                    </tabset>
+                    <div ng-include="'OrderTable.html'"></div>
+                </div>
+
+                <div class="col-lg-9" ng-if="object == 'seller'">
+                    <div class="tab-container">
+                        <div class="tab-content tab-fake">
+                            <form class="form-validation" role="form" ng-submit="getMerchant(currentPage)" name="frmSearch">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group controls padder">
+                                            <input type="text" class="form-control" placeholder="Email hoặc SĐT khách hàng"
+                                            ng-model="frm.keyword"
+                                            />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group controls input-group">
+                                            <input type="text" class="form-control" placeholder="Thời gian tính doanh thu từ ..."
+                                                   ng-model="time.time_create_start"
+                                                   datepicker-popup="dd-MM-yyyy"
+                                                   is-open="time_create_start_open"
+                                                   
+                                                   close-text="Close"
+                                                    />
+                                            <span class="input-group-btn icon-input">
+                                                <i class="btn fa fa-calendar "></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-4">
+                                        <div class="form-group controls input-group">
+                                          <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                            ng-model="time.time_create_end"
+                                            datepicker-popup="dd-MM-yyyy"
+                                            is-open="time_create_end_open"
+                                            
+                                            close-text="Close"
+                                           />
+                                          <span class="input-group-btn icon-input">
+                                            <i class="btn fa fa-calendar "></i>
+                                          </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 padder-lg">
+                                        <button type="submit" class="btn m-b-xs  btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm &nbsp;</button>
+
+                                        <button type="button" ng-click="getMerchant(1, 'export')" class="btn m-b-xs  btn-primary" ><i class="fa fa-excel"></i> Xuất Excel &nbsp;</button>
+                                    </div>
+                                    
+                                 </div>
+
+                            </form>
+                            <div class="table-responsive">
+                                <table class="table table-hover w-full" >
+                                    <thead>
+                                        <th>#</th>
+                                        <th><i class="fa fa-user"></i> Khách hàng</th>
+                                        <th><i class="fa fa-clock-o"></i> Thời gian</th>
+                                        <th>TG Doanh thu từ</th>
+                                        <th>Vận đơn lấy đầu tiên</th>
+                                        <th>Vận đơn lấy cuối cùng</th>
+                                        <th>Doanh thu đầu tháng</th>
+                                        <th>Doanh thu lũy kế</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="list_waiting">
+                                            <td colspan="8" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="totalItems == 0 && !list_waiting">
+                                            <td colspan="8" class="text-center">
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in list_data">
+                                            <td>{{item_stt + $index + 1}}</td>
+                                            <td>
+                                                <p ng-show="list_user[item.user_id].fullname">
+                                                    {{list_user[item.user_id].fullname}}
+                                                </p>
+                                                <p ng-show="list_user[item.user_id].email">
+                                                    {{list_user[item.user_id].email}}
+                                                </p>
+                                                <p ng-show="list_user[item.user_id].phone">
+                                                    {{list_user[item.user_id].phone}}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <span ng-if="item.time_create > 0" class="text-info">{{ item.time_create * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+                                            <td>
+                                                <span ng-if="item.first_time_incomings > 0" class="text-primary">{{ item.first_time_incomings * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+                                            <td>
+                                                <span ng-if="item.first_time_pickup > 0" class="text-success">{{ item.first_time_pickup * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+                                            <td>
+                                                <span ng-if="item.last_time_pickup > 0" class="text-success">{{ item.last_time_pickup * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+                                            <td>
+                                                {{item.total_firstmonth  || '0' | vnNumber}} vnđ
+                                            </td>
+                                            <td>
+                                                {{item.total_nextmonth || '0' | vnNumber}} vnđ
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-sm-3 wrapper-md pull-left">
+                                        <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> {{(object == 'seller') ? 'khách hàng' : 'đơn hàng'}}
+                                    </div>
+                                    <div class="col-sm-4 text-right text-center-xs pull-right">
+                                        <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="getMerchant(currentPage)"></pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9" >
+                    
+                    <div class="no-gutter bg-info col-md-12 col-sm-12 no-padder m-b-sm" ng-if="['sender'].indexOf(object) != -1">
+                        <div class="col-xs-3">
+                            <div class="wrapper">
+                                <span class="m-b-xs h2 block text-white">{{order_statistic.order_return || 0 }} / {{round(order_statistic.percent_order_return) || 0}} %</span>
+                                <small class="text-muted">Số đơn CH / tỷ lệ CH</small>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 dk">
+                            <div class="wrapper">
+                                <span class="m-b-xs h2 block text-white">{{order_statistic.order_pickuping || 0}}</span>
+                                <small class="text-muted">Đang lấy hàng</small>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="wrapper">
+                                <span class="m-b-xs h2 block text-white">{{order_statistic.total_cod | number}} đ</span>
+                                <small class="text-muted">Doanh thu</small>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 dk">
+                            <div class="wrapper">
+                                <span class="m-b-xs h2 block text-white">{{order_statistic.total_fee | number}} đ</span>
+                                <small class="text-muted">Phí VC</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-6" ng-if="['sender'].indexOf(object) != -1">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <!-- <span class="label bg-danger pull-right m-t-xs">4 left</span> -->
+                                    5 bản kê gần nhất
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped m-b-none">
+                                        <thead>
+                                        <tr>
+                                            <th>Mã BK</th>
+                                            <th>Số dư ĐK</th>
+                                            <th>T.Hộ</th>
+                                            <th>Phí</th>
+                                            <th>Giữ</th>
+                                            <th>Nhận</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody ng-show="loading.newest_verify">
+                                        <td colspan="20" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                        </tbody>
+                                        <tbody ng-show="newest_verify.length == 0 && !loading.newest_verify">
+                                            <tr >   
+                                                <td colspan="7" class="text-center">
+                                                    Không có dữ liệu
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody ng-repeat="item in newest_verify |limitTo: 5">
+                                            <tr 
+                                            popover-trigger="mouseenter"
+                                            popover-placement="top"
+                                            popover="{{genHTMLVerify(item)}}" 
+                                          >
+                                                <td > 
+                                                    <a href="javascript:;" tooltip-html-unsafe="Thời gian tạo : {{item.time_create * 1000 | date : 'dd-MM-yyyy  HH:mm'}} <br/>Bắt đầu từ : {{item.time_start * 1000 | date : 'dd-MM-yyyy  HH:mm'}} </br>Đến : {{item.time_end * 1000 | date : 'dd-MM-yyyy  HH:mm'}}" tooltip-placement="top">
+                                                        {{item.id}}
+                                                    </a>
+                                                </td>
+                                                <td>{{item.balance | vnNumber}}</td>
+                                                <td>{{item.total_money_collect|vnNumber}}</td>
+                                                <td>- {{item.total_fee | vnNumber}}</td>
+                                                <td><strong>{{((item.balance_available - item.config_balance) < 0 && item.type != 2) ? (item.balance_available - item.config_balance) : 0 | vnNumber}}</strong></td>
+                                                <td>
+                                                    <span ng-if="item.type == 2">
+                                                        {{(item.total_money_collect - item.total_fee) |vnNumber}} đ
+                                                    </span>
+                                                    <span ng-if="item.type != 2">
+                                                        {{item.total_money_collect + item.balance - item.total_fee + ((item.balance_available - item.config_balance) < 0 ? (item.balance_available - item.config_balance) : 0) |vnNumber}} đ
+                                                    </span>
+                                                </td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div> <!-- end table-reponsive-->
+                            </div>
+                            <div >
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <!-- <span class="label bg-danger pull-right m-t-xs">4 left</span> -->
+                                        5 email gần nhất
+                                    </div>
+                                    <table class="table table-striped m-b-none">
+                                        <thead>
+                                        <tr>
+                                        <th>Loại</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thời gian</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody ng-show="loading.newest_email">
+                                            <td colspan="20" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tbody>
+                                         <tbody ng-show="newest_email.length == 0 && !loading.newest_email">
+                                            <tr>
+                                                <td colspan="7" class="text-center">
+                                                    Không có dữ liệu
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr ng-repeat="item in newest_email |limitTo: 5">
+                                                <td>
+                                                    <a>{{item.scenario.name || 'Loại'}}</a>
+                                                </td>
+                                                <td>
+                                                    <a>{{item.status == 1 ? 'Đã gửi' : 'Chưa gửi'}}</a>
+                                                </td>
+                                                <td>
+                                                    <a ng-if="item.time_create > 0">{{ (item.time_create * 1000)   | date : "dd-MM-yyyy  HH:mm" }}</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end newest ticket-->
+                        </div> <!-- end newest ticket-->
+
+                        <div class="{{['order'].indexOf(object) != -1 ? 'col-md-12' : 'col-md-6'}}"  ng-if="['sender', 'order'].indexOf(object) != -1">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <!-- <span class="label bg-danger pull-right m-t-xs">4 left</span> -->
+                                    10 yêu cầu gần nhất
+                                </div>
+                                <table class="table table-striped m-b-none">
+                                    <thead>
+                                    <tr>
+                                    <th>Yêu cầu</th>
+                                    <th>Trạng thái</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-show="loading.newest_ticket">
+                                    <td colspan="20" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                    </tbody>
+                                    <tbody ng-show="newest_ticket.length == 0 && !loading.newest_ticket">
+                                        <tr >
+                                            <td colspan="7" class="text-center">
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <tr ng-repeat="item in newest_ticket |limitTo: 10">
+                                            <td>
+                                                <a ng-href="http://ticket.shipchung.vn/#/ticket/request/management/7day/{{item.id}}" target="_blank">#{{item.id}} - {{item.title}}</a>
+                                            </td>
+                                            <td>
+                                                <span class="label ng-binding " ng-class="ticket_btn[item.status].bg">{{ticket_btn[item.status].name}}</span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> <!-- end newest ticket-->
+                            
+                    </div>
+                </div>
+
+                
+            </div> <!-- end row-->
+
+            <div class="row padder" ng-if="['sender'].indexOf(object) != -1">
+                <tabset class="tab-container tab-inside h80 text-sm" justified="true" >
+
+                    <tab ng-click="ChangeTab('ALL')">
+                        <tab-heading>Tất cả
+                            <small>({{total_all || 0}})</small>
+                        </tab-heading>
+                    </tab>
+
+                    <tab ng-repeat="(key,item) in group_status" ng-click="ChangeTab(key)">
+                        <tab-heading>{{item}}
+                            <small>({{total_group[key] || 0}})</small>
+                        </tab-heading>
+                    </tab>
+                </tabset>
+
+                <div ng-include="'OrderTable.html'"></div>
+            </div> <!-- end row-->
+        </div>
+        <div class="col wrapper-sm " ng-if="stateReady !== 2">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="alert alert-warning" role="alert" ng-if="stateReady == 3">
+                    Không tìm thấy kết quả với từ khóa : <strong>{{$stateParams.search}}</strong>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-md-offset-4" ng-if="stateReady == 1">
+                <div class="text-center">
+                    <i class="text-3x fa fa-spinner fa-spin"></i><br/>
+                    Đang tìm kiếm
+                </div>
+            </div>
+        </div>
+    </div>
+            
+</div>
+
+
+
+<script id="OrderTable.html" type="text/ng-template">
+    <div class="tab-container">
+        <div class="tab-content tab-fake">
+            <div class="table-responsive">
+                    <table class="table-condensed table-hover w-full">
+                        <thead>
+                            <td>
+                                #
+                            </td>
+                            <td>
+                                <i class="fa fa-barcode"></i>&nbsp; Đơn hàng
+                            </td>
+                            <td>
+                               Trạng thái
+                            </td>
+                            <td>
+                                <i class="fa fa-gift"></i>&nbsp; Sản phẩm
+                            </td>
+                            <td>
+                                <i class="fa fa-home"></i> Người gửi
+                            </td>
+                            <td>
+                                <i class="fa fa-home"></i> Người nhận
+                            </td>
+
+                            <td>
+                                <i class="fa fa-home"></i> Bưu cục phát
+                            </td>
+
+
+                            <td>
+                                <i class="fa fa-dollar"></i> Phí & Thu hộ
+                            </td>
+
+                        </thead>
+                        <tbody ng-show="waiting">
+                            <td colspan="20" class="text-center">
+                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                            </td>
+                        </tbody>
+                        <tbody ng-show="list_data.length == 0 && !waiting">
+                            <tr >
+                                <td colspan="7" class="text-center">
+                                    Không có dữ liệu
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        <tbody ng-repeat="item in list_data" class="b-b">
+                      
+                        <tr>
+                            <td>{{item_stt + $index + 1}}</td>
+                            <td>
+                                <p>
+                                    <a class="label bg-light text-base text-info" target="_blank" ng-href="http://seller.shipchung.vn/#/detail/{{item.tracking_code}}">{{item.tracking_code}}</a>
+                                </p>
+                                <p ng-if="item.time_create > 0" class="text-primary">{{ item.time_create * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                                <p ng-if="item.time_accept > 0" class="text-info">{{ item.time_accept * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                                <p>{{item.domain}}</p>
+                            </td>
+                            <td>
+                                <p ng-if="item.status == 38"> 
+                                    <span class="label text-xs pointer {{list_color[status_group[item.status]] || ''}}" ng-mouseover="getReponse(item)" popover-trigger="mouseenter"
+                                          popover-placement="top" popover="{{(item.waiting) ? 'Đang tải dữ liệu ...' : list_reponse[item.id]  || 'Không có dữ liệu'}}" >
+                                        {{list_status[item.status]}} 
+                                    </span>
+                                </p>
+
+                                <p ng-if="item.status != 38">
+                                    <span class="label text-xs {{list_color[status_group[item.status]] || ''}}">{{list_status[item.status]}}</span>
+                                </p>
+                                <p>
+                                    <i class="fa" ng-class="{'fa-truck': ([1,3].indexOf(item.service_id) != -1),'fa-plane': ([2,4].indexOf(item.service_id) != -1)}"></i>
+                                    <a class="text-info" href="{{link_hvc(item.courier_id, item.courier_tracking_code, item.tracking_code)}}" target="_blank">{{courier[item.courier_id] || 'Hãng vận chuyển'}}</a>
+                                     <i class="fa fa-edit pointer" ng-if="check_privilege('PRIVILEGE_CHANGE_COURIER','edit')" ng-click="change_courier(item)"></i>
+                                </p>
+                                <p ng-show="item.courier_tracking_code">
+                                    <a ng-href="{{link_hvc(item.courier_id, item.courier_tracking_code, item.tracking_code)}}" target="_blank" class="label bg-light text-base text-warning">{{item.courier_tracking_code}}</a> <button class="btn btn-xs btn-info" type="button" ng-if="status_group[item.status] == 33 && item.courier_id == 1 && !item.requested" ng-click="return_pickup(item)"><i class="fa fa-reply-all"></i></button>
+                                </p>
+                                <button class="btn btn-rounded btn-sm btn-icon btn-success ng-scope" ng-if="item.postman_id > 0 && check_privilege()" ng-click="get_postman(item)" popover-trigger="mouseenter" popover="Lấy thông tin bưu tá!"> <i class="fa fa-phone" ng-class="{'fa-phone': !item.waiting_postman, 'fa-spinner fa-spin' : item.waiting_postman}"></i></button>
+                                <button class="btn btn-rounded btn-sm btn-icon btn-danger ng-scope" ng-click="storeStock(item.id);" ng-if="status_group[item.status] == 29 || status_group[item.status] == 28" popover-trigger="mouseenter" popover="Yêu cầu lưu kho!"> <i class="fa fa-home"></i></button>
+                                 &nbsp;
+                                <span ng-if="item.postman">Bưu tá: {{item.postman.name}} - {{item.postman.phone}} <br/></span>
+                                <span ng-show="item.waiting_postman == false && item.postman.length == 0" class="text-sm">Không tìm thấy thông tin bưu tá !<br/>
+                                </span>
+
+                                <div class="btn-group dropdown" ng-controller="PostmanActionCtrl" >
+                                        <button class="btn btn-default btn-xs dropdown-toggle" aria-haspopup="true" aria-expanded="false">Danh sách bưu tá<span class="caret"></span></button>
+                                        <ul class="dropdown-menu pull-right scroll-y" style="max-height: 200px !important;">
+                                            
+                                            <li><a href="" ng-click="OpenListPostMan(list_to_address[item.to_address_id].city_id, list_to_address[item.to_address_id].province_id, list_to_address[item.to_address_id].ward_id, item.courier_id)">Danh sách bưu tá</a></li>
+                                            
+                                        </ul>
+                                    </div>
+
+
+                            </td>
+                            <td>
+                                <p ng-show="item.order_code" >
+                                    <i class="fa fa-code" ></i> {{item.order_code || ''}}
+                                </p>
+                                <p><i class="fa fa-shopping-cart"></i> {{item.product_name | limitTo : 30 || 'Tên sản phẩm'}}</p>
+                                <p>
+                                    <i class="fa fa-tags"></i> {{item.total_amount | vnNumber}} đ
+                                </p>
+                                <p>
+                                    <i class="fa fa-shopping-cart"></i> {{item.total_weight | vnNumber}} gram
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+
+                                    <i class="fa" ng-class="{'fa-user' : list_vip.indexOf(item['from_user_id']) == -1, 'fa-star text-lgx text-warning' : list_vip.indexOf(item['from_user_id']) != -1}"></i>
+                                    {{(list_from_address[item.from_address_id] ? list_from_address[item.from_address_id]['user_name'] : item['from_user']['fullname']) || 'Họ tên' | limitTo : 30}}
+                                </p>
+                                <p>
+                                    <i class="fa fa-envelope-o"></i> {{item['from_user']['email'] || 'email'}} <i class="fa fa-phone"></i>{{(list_from_address[item.from_address_id] ? list_from_address[item.from_address_id]['phone'] : item['from_user']['phone']) || 'Điện thoại' | limitTo : 30}}
+                                </p>
+                                <p>
+                                    <span>
+                                        <i class="fa fa-home" ng-if="item.post_office_id == 0"></i>
+                                        <i class="fa fa-archive text-info" ng-if="item.post_office_id != 0"></i>
+                                        {{list_district[item.from_district_id] || 'Quận huyện'}} *
+                                        {{list_city[item.from_city_id] || 'Thành phố' }} *
+                                        {{country[item.from_country_id] || 'Quốc gia'}}
+                                        <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="{{item.from_address || 'Địa chỉ'}} {{list_ward[item.from_ward_id] || ''}}"></i>
+                                    </span>
+                                </p>
+                                
+                            </td>
+                            <td>
+                                <p>
+                                    <i class="fa fa-user"></i> {{item.to_name || 'Người nhận'}}
+                                </p>
+                                <p>
+                                    <span ng-show="item['to_email']"><i class="fa fa-envelope-o"></i> {{item['to_email'] || ''}}</span> <i class="fa fa-phone"></i><a href="callto:{{item['to_phone']}}">{{item['to_phone'] || 'Điện thoại'}}</a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-home"></i>
+                                    {{'('+list_to_address[item.to_address_id]['zip_code']+')' || ''}}
+                                    {{list_to_address[item.to_address_id] ? list_district[list_to_address[item.to_address_id].province_id] : 'Quận huyện' || 'Quận huyện'}} *
+                                    {{list_to_address[item.to_address_id] ? list_city[list_to_address[item.to_address_id].city_id] : 'Thành phố' || 'Thành phố'}} *
+                                    {{country[item.to_country_id] || 'Quốc gia'}}
+                                    <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="{{list_to_address[item.to_address_id]['address'] || 'Địa chỉ'}} {{list_to_address[item.to_address_id] ? list_ward[list_to_address[item.to_address_id].ward_id] : '' || ''}}"></i>
+                                </p>
+                            </td>
+
+                            <td>
+                                <p>
+                                    <i class="fa fa-user"></i> {{courier[list_post_office[item.id].courier_id] || ''}} - {{list_post_office[item.id].name || ''}}
+                                </p>
+                                <p>
+                                <a href="callto:{{list_post_office[item.id].phone || 'Điện thoại'}}">
+                                        <i class="fa fa-phone"></i>{{list_post_office[item.id].phone || ''}}
+                                    </a>
+                                </p>
+                                <p>
+                                    <i class="fa fa-home"></i>
+                                    {{list_post_office[item.id].address}}
+                                    <!-- <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="{{list_to_address[item.to_address_id]['address'] || 'Địa chỉ'}} {{list_to_address[item.to_address_id] ? list_ward[list_to_address[item.to_address_id].ward_id] : '' || ''}}"></i> -->
+                                </p>
+                                <p ng-if="list_post_office[item.id]">
+                                    <i class="fa fa-globe"></i>
+                                    <a ng-click="open_post_office(list_post_office[item.id])"><span class="text-info">(bản đồ)</span></a>
+                                </p>
+                            </td>
+
+                            
+                            <td tooltip-html-unsafe="Phí VC: {{item.order_detail.sc_pvc || 0}} <br/> Phí CoD: {{item.order_detail.sc_cod || 0}} <br/> Phí BH : {{item.order_detail.sc_pbh || 0}} <br/> Phí VK: {{item.order_detail.sc_pvk || 0}} <br/> Phí CH : {{item.order_detail.sc_pch || 0}} <br/> Phí vùng xa : {{item.order_detail.sc_remote}} <br/> Phí khác : {{item.order_detail.sc_clearance}} <br/> Miễn PVC: {{item.order_detail.sc_discount_pvc || 0}} <br/> Miễn CoD: {{item.order_detail.sc_discount_cod || 0}} <br/> Người bán KM: {{item.order_detail.seller_discount || 0}}" tooltip-placement="top">
+                                <p >
+                                    Tổng phí  : {{(item.order_detail.sc_pvc + item.order_detail.sc_cod + item.order_detail.sc_pbh + item.order_detail.sc_pvk + item.order_detail.sc_pch - item.order_detail.sc_discount_pvc - item.order_detail.sc_discount_cod + item.order_detail.sc_remote + item.order_detail.sc_clearance) || '0' | vnNumber}}
+                                </p>
+
+                                <p>
+                                    Thu hộ : {{item.order_detail.money_collect || '0' | vnNumber}}
+                                </p>
+                                <p ng-if="item.verify_id > 0" ><span class="text-warning"><i class="fa fa-lock " ></i> </span>Đã đối soát <strong>#{{item.verify_id}}</strong></p>
+                                <p ng-if="item.verify_id == 0" ><i class="fa fa-lock "></i> Chưa được đối soát <strong>#{{item.verify_id}}</strong></p>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td colspan="20" class="text-left">
+                                <ul class="breadcrumb bg-white m-n" ng-init="last_pipe_status = 0">
+                                    <li><a href="javascript:;"><i class="fa fa-flag"></i> {{list_status[item.status] || 'Trạng thái'}}</a></li>
+                                    <li ng-repeat="it in item.pipe_journey"  ng-class="{'active':$last}" ng-init="last_pipe_status = it.pipe_status" tooltip-html-unsafe="{{it.note || ''}} <br /> <span ng-show='it.time_create > 0'>{{ it.time_create * 1000 | date : 'dd-MM-yyyy  HH:mm' }}</span>" tooltip-placement="top">
+                                        <a href="javascript:;">
+                                            {{pipe_status[it.pipe_status] || 'Hành trình'}}
+                                        </a>
+                                    </li>
+                                    <li ng-if="check_privilege('PRIVILEGE_OPERATION_SYSTEM','edit')" ng-click="action(item, list_pipe_status_current(status_group[item.status]), pipe_priority_current(item.pipe_journey, status_group[item.status]), 1, status_group[item.status])" class="pointer"><i class="text-success text-lg fa  fa-plus"></i></li>
+                                </ul>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <div class="row" ng-show="list_data.length">
+                        <div class="col-sm-3 wrapper-md pull-left">
+                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> đơn hàng
+                        </div>
+                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                        </div>
+                    </div>
+
+                    <script id="ModalAdd.html" type="text/ng-template">
+                        <div ng-include="'tpl/pickup/modal.add.html'"></div>
+                    </script>
+                    <script id="ModalChangeCourier.html" type="text/ng-template">
+                        <div ng-include="'tpl/pickup/modal.change_courier.html'"></div>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

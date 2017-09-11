@@ -1,0 +1,78 @@
+<div ng-controller="CourierFeeVasCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="bg-light lter b-b wrapper-md col-sm-12 ">
+        <span class="m-n text-title text-size col-sm-3 no-padder font-thick"><i class="fa fa-cogs text-muted"></i> Courier Fee Vas Managemant</span>
+        <div class="pull-right">
+            <a class="btn btn-info btn-addon" ui-sref="app.fee.add_vas({id: ''})" ><i class="fa fa-plus"></i> ADD</a>
+        </div>
+    </div>
+    
+    <div class="wrapper-md  col-sm-12">
+        <div class="panel panel-default">
+            <div class="row wrapper">
+              <div class="col-sm-3 pull-right">
+                <div class="form-group">
+                  <select class="form-control" ng-model="search_courier" ng-options="value.id as value.name for value in list_courier" ng-change="GetCourierFee()">
+                    <option value="">Hãng vận chuyển ...</option>
+                  </select>
+                </div>
+                
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr>
+                    <th class="text-left">#</th>
+                    <th class="text-left">Area</th>
+                    <th class="text-left">Value</th>
+                    <th class="text-left">Other</th>
+                    <th class="text-left">Active</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="value in list_courier_fee">
+                    <td class="text-left">{{item_stt + $index + 1}}</a></td>
+                    
+                    <td>
+                       <p>From : {{list_area[value.from_area_id]}}-{{value.from_district_name}}</p>
+                       <p>To   : {{list_area[value.to_area_id]}}</p>
+                    </td>
+                    
+                    <td>
+                        <p>Value Start : {{value.value_start || 0}} gram</p>
+                        <p>Value End   : {{value.value_end || 0}} gram</p>
+                    </td>
+                    <td>
+                        <p>Money        : {{value.money || 0}} vnd</p>
+                        <p>Vat          : {{value.vat || 0}} %</p>
+                        <p>Surcharge    : {{value.surcharge || 0}} vnd</p>
+                        <p>Total        : {{value.total_amount || 0}} vnd</p>
+                    </td>
+                    <td>
+                        <label class="i-switch bg-primary m-t-xs m-r">
+                          <input type="checkbox" ng-model="active" ng-checked="value['active'] == 1" ng-true-value="1" ng-false-value="0" ng-change="change(value.id,active,'active')" />
+                          <i></i>
+                        </label>
+                    </td>
+                    <td>
+                        <a href="javascript:;" class="btn btn-sm btn-info" ui-sref="app.fee.add_vas({id: value.id})"><i class="fa fa-gear"></i> &nbsp;EDIT </a>
+                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="del(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-4 text-right text-center-xs pull-right">                
+                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="GetCourierFee()"></pagination>
+                </div>
+              </div>
+            </footer>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-init="
+    app.settings.asideFolded = false; 
+    app.settings.asideDock = false;
+  ">
+    <!-- main -->
+    <div class="col" ng-controller='ArtworkCtrl'>
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">Đăng tác phẩm</h1>
+                </div>
+                <!-- <div class="col-sm-6 text-right hidden-xs">
+                    <div class="inline text-left">
+                        <button class="btn btn-success"><i class='fa fa-television'></i> Tải lên sản phẩm</button>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <!-- / main header -->
+        <div class="clearfix"></div>
+        <div class="padder artworks-create-page ">
+            <div class="bg-white m-t-md">
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-muted">Please fill the information to continue</p>
+
+                                <div class="form-group">
+                                    <label>Username <em class="text-muted">(allow 'a-zA-Z0-9', 4-10 length)</em></label>
+                                    <input type="text"
+                                           class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern"
+                                           ng-model="user.name" ng-pattern="/^[a-zA-Z0-9]{4,10}$/" required=""
+                                           tabindex="0"
+                                           aria-required="true" aria-invalid="true">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email"
+                                           class="form-control ng-pristine ng-valid-email ng-invalid ng-invalid-required ng-touched"
+                                           ng-model="user.email" required="" tabindex="0" aria-required="true"
+                                           aria-invalid="true">
+                                </div>
+                                <div class="form-group pull-in clearfix">
+                                    <div class="col-sm-6">
+                                        <label>Enter password</label>
+                                        <input type="password"
+                                               class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+                                               name="password" ng-model="password" required="" tabindex="0"
+                                               aria-required="true"
+                                               aria-invalid="true">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Confirm password</label>
+                                        <input type="password"
+                                               class="form-control ng-pristine ng-untouched ng-valid-validator ng-invalid ng-invalid-required"
+                                               name="confirm_password" required="" ng-model="confirm_password"
+                                               ui-validate=" '$value==password' " ui-validate-watch=" 'password' "
+                                               tabindex="0"
+                                               aria-required="true" aria-invalid="true">
+                                <span ng-show="form.confirm_password.$error.validator" aria-hidden="true"
+                                      class="ng-hide">Passwords do not match!</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="text"
+                                           class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern"
+                                           placeholder="(XXX) XXXX XXX" ng-model="phone"
+                                           ng-pattern="/\([0-9]{3}\) ([0-9]{3}) ([0-9]{3})$/" required="" tabindex="0"
+                                           aria-required="true" aria-invalid="true">
+                                </div>
+                                <div class="checkbox">
+                                    <label class="i-checks">
+                                        <input type="checkbox" ng-model="agree" required=""
+                                               class="ng-pristine ng-untouched ng-invalid ng-invalid-required"
+                                               tabindex="0"
+                                               aria-checked="false" aria-required="true" aria-invalid="true"><i></i> I
+                                        agree to
+                                        the <a href="" class="text-info">Terms of Service</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <footer class="panel-footer text-right bg-light lter">
+                        <button type="submit" class="btn btn-success" ng-disabled="form.$invalid" aria-disabled="true"
+                                disabled="disabled">Submit
+                        </button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / main -->
+</div>

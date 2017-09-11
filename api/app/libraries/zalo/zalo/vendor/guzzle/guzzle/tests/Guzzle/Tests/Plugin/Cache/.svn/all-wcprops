@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Cache
+END
+DenyRevalidationTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Cache/DenyRevalidationTest.php
+END
+CachePluginTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Cache/CachePluginTest.php
+END
+CallbackCanCacheStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Cache/CallbackCanCacheStrategyTest.php
+END
+DefaultRevalidationTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Cache/DefaultRevalidationTest.php
+END
+SkipRevalidationTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Cache/SkipRevalidationTest.php
+END
+DefaultCacheStorageTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Cache/DefaultCacheStorageTest.php
+END
+DefaultCanCacheStrategyTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Plugin/Cache/DefaultCanCacheStrategyTest.php
+END

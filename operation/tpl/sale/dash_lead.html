@@ -1,0 +1,52 @@
+<div class="row text-center">
+    <div class="col-md-5">
+        <div class="col-xs-6" ng-repeat="item in user">
+            <a href="javascript:;" class="block panel padder-v item bg-info dker">
+                <span class="text-white font-thin h3 block">{{((list['first'][item.id] ? 1*list['first'][item.id] : 0) + (list['pre'][item.id] ? 1*list['pre'][item.id] : 0)) || '0' | vnNumber}}</span>
+                <span class="text-white text-xs">
+                    {{list['first'][item.id] || '0' | vnNumber}} * {{list['pre'][item.id] || '0' | vnNumber}} <br />
+                    {{item.fullname || item.email}}
+                </span>
+                <span class="top text-left">
+                  <i class="fa fa-user m-l-sm"></i>
+                </span>
+            </a>
+        </div>
+        <div class="col-xs-12 m-b-md">
+            <div class="r bg-light dker item hbox no-border">
+                <div class="col dk padder-v r-r">
+                    <div class="text-primary-dk font-thin h1">{{data.total  || '0' | vnNumber }} đ</div>
+                    <!--div class="text-primary-dk font-thin h1">{{data.money  || '0' | vnNumber }} đ</div>
+                    <div class="text-primary-dk text-base">
+                        {{data.total  || '0' | vnNumber }} đ
+                    </div-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div ng-if="!waiting" ui-jq="plot" ui-options="
+                                  {{chart_sale}},
+                                  {
+                                    bars: { show: true, fill: true, lineWidth: 2,barWidth: 0.15, order: 1, fillColor: { colors: [{ opacity: 0.5 }, { opacity: 0.9}] } },
+                                    colors: {{label_color}},
+                                    series: { shadowSize: 1 },
+                                    xaxis:{
+                                    font: { color: '#ccc' },
+                                    position: 'bottom',
+                                      ticks: date_month
+                                     },
+                                    yaxis:{ font: { color: '#ccc' } },
+                                    grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                                    tooltip: true,
+                                    tooltipOpts: { defaultTheme: false, content: '%s'}
+                                  }
+                                " style="height:400px">
+        </div>
+        <div ng-show="waiting" class="m-t-xxl">
+            <i class="text-3x fa fa-spinner fa-spin"></i>
+        </div>
+        <div class="text-center m-t" ng-show="!waiting && chart_sale">Thống kê doanh thu</div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<div ng-controller="KpiEmployeeCtrl">
+    <div class="bg-light b-b wrapper-md">
+        <div class="row">
+            <h1 class="m-n font-thin h3 col-md-5">
+                Cấu hình KPI nhân viên
+            </h1>
+        </div>
+        <div class="row">
+            <ul class="nav navbar-nav">
+                <li class="dropdown hidden-sm" is-open="true">
+                    <a href class="dropdown-toggle" data-toggle="dropdown">
+                        <h4>{{__privilege[frm.group] || ''}} <b class="caret"></b></h4>
+                    </a>
+                    <!-- dropdown -->
+                    <ul class="dropdown-menu animated fadeInRight w" style="overflow-y: auto; height: 250px">
+                        <li ng-repeat="item in list_privilege">
+                            <a ng-click="setGroup(item.id)" href>{{item.name}}</a>
+                        </li>
+                    </ul>
+                    <!-- / dropdown -->
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive" >
+                        <table class="table-condensed table-hover w-full">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Tên thành viên</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr ng-repeat="item in list_data">
+                              <td>{{$index + 1}}</td>
+                              <td><a >{{item.user.fullname}} - {{item.user.email}} -{{item.user.phone}}</a></td>
+                              <td class="text-right">
+                                  <a class="btn btn-sm btn-info" href="javascript:;" ng-click="openEditModal(item)">Chỉnh sửa</a>
+                              </td>
+
+                                <tr>
+                                   <td colspan="4" class="text-center">
+                                        <div class="loading" ng-if="load_process">
+                                            <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i>
+                                            <p>Đang tải dữ liêu</p>
+                                        </div>
+                                        <p ng-if="list_data.length == 0 && !load_process">Không có dữ liệu</p>
+                                   </td>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="FrmEmployee.html">
+    
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              <h4>{{item.user.fullname || ''}} - {{item.user.email || ''}} </h4>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal form-validation" name="frm_edit">
+        <div class="modal-body wrapper-md">
+
+            <div class="form-group col-md-12">
+                <div class="table-responsive">
+                    <table class="table-condensed table-hover w-full">
+                        <thead>
+                        <tr>
+
+                            <th>Tên công việc</th>
+                            <th>Tỉ lệ đạt</th>
+                            <th>Trọng số</th>
+                            <th>Chỉ tiêu</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <form class="form-validation">
+                            <tr ng-repeat="item in list_category">
+                                <td>{{item.__group_category.group_name}} - {{item.work_name}}</td>
+                                <td>{{item.percent*100}} %</td>
+                                <td>{{item.weight}}</td>
+                                <td>{{item.target | vnNumber}}</td>
+                                <td>
+                                    <label class="i-switch bg-primary" ng-if="item.id">
+                                        <input type="checkbox" ng-true-value="1"  ng-false-value="0" ng-model="item.active" ng-checked="item.active > 0" ng-change="saveCategory(item, 'active', item.active)">
+                                        <i></i>
+                                    </label>
+                                </td>
+
+                            </tr>
+                        </form>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="clearfix">&nbsp;</div>
+        </div>
+    </form>
+</script>

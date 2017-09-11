@@ -1,0 +1,105 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div ng-controller="PostOfficeActionCtrl">
+	<div class="wrapper-md bg-light b-b">
+        <h1 class="m-n font-thin h3">Quản trị bưu cục</h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default">
+                	<div class="panel-body">
+
+                		<div class="col-md-3 pull-right">
+            				<button class="btn btn-md btn-success pull-right" ng-click="saveData(data)" ng-if="!id">Save</button>
+            				<button class="btn btn-md btn-success pull-right" ng-click="saveEdit(data)" ng-if="id > 0">Save</button>
+            				<div class="clearfix"></div>
+            				<h4 class="pull-right">Đã xác nhận</h4>
+	                        <label class="i-switch bg-primary m-t-xs m-r pull-right">
+			                    <input type="checkbox" ng-model="data.verified" ng-checked="value.active == 1" ng-true-value="1" ng-false-value="2" />
+			                    <i></i>
+			                </label> 
+			            </div>
+                	</div>
+
+                	<div class="panel-body">
+                		<div class="col-md-2">
+	                        <h4>Hãng vận chuyển</h4>
+	                        <select ng-options="courier.id as courier.name for courier in listCourier" class="form-control"
+			                      ng-model="data.courier_id" ng-change="loadFee(data.courier)">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+
+			            <!-- <div class="col-md-2">
+			            	                        <h4>Mã bưu cục</h4>
+			            	                        <input type="text" class="form-control" ng-model="data.code">
+			            </div> -->
+
+			            <div class="col-md-3">
+	                        <h4>Tên bưu cục</h4>
+	                        <input type="text" class="form-control" ng-model="data.name">
+			            </div>
+			            <div class="col-md-3">
+	                        <h4>Điện thoại</h4>
+	                        <input type="text" class="form-control" ng-model="data.phone">
+			            </div>
+                	</div>
+                	<!-- <div class="panel-body">
+                		<div class="col-md-10">
+                		                        <h4>Mô tả</h4>
+                		                        <textarea class="form-control" ng-model="data.description"></textarea>
+                				            </div>
+                	</div> -->
+                	<div class="panel-body">
+                		<div class="col-md-2">
+	                        <h4>Tỉnh thành</h4>
+	                        <select ng-options="city.id as city.city_name for city in listCity" class="form-control"
+			                      ng-model="data.city_id" ng-change="loadDistrict(data.city_id);">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+			            <div class="col-md-2">
+	                        <h4>Quận huyện</h4>
+	                        <select ng-options="district.id as district.district_name for district in listDistrict" class="form-control"
+			                      ng-model="data.district_id" ng-change="loadWard(data.district_id);">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+			            <div class="col-md-3">
+	                        <h4>Phường xã</h4>
+	                        <select ng-options="ward.id as ward.ward_name for ward in listWard" class="form-control"
+			                      ng-model="data.ward_id">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+			            <div class="col-md-3">
+	                        <h4>Địa chỉ</h4>
+	                        <input type="text" class="form-control" ng-model="data.address" id="address_input">
+			            </div>
+                	</div>
+					
+					<div class="panel-body">
+                		<div class="col-md-6">
+                			<h4>Kinh độ</h4>
+	                        <input type="text" class="form-control" ng-model="data.lat">
+			            </div>
+			            <div class="col-md-6">
+			            	<h4>Vĩ độ</h4>
+	                        <input type="text" class="form-control" ng-model="data.lng">
+			            </div>
+                	</div>
+
+                	<div class="panel-body">
+                		<div class="col-md-12">
+	                        <div id="map" style="width:100%;height:400px;">
+	                        </div>
+			            </div>
+                	</div>
+
+                	
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

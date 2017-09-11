@@ -1,0 +1,269 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI
+END
+debug.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/debug.phpt
+END
+filter-class-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/filter-class-isolation.phpt
+END
+help.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/help.phpt
+END
+filter-class.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/filter-class.phpt
+END
+log-json.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/log-json.phpt
+END
+testdox.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/testdox.phpt
+END
+group-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/group-isolation.phpt
+END
+group.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/group.phpt
+END
+testdox-html.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/testdox-html.phpt
+END
+filter-no-results.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/filter-no-results.phpt
+END
+dataprovider-log-xml-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dataprovider-log-xml-isolation.phpt
+END
+test-suffix-single.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/test-suffix-single.phpt
+END
+dataprovider-log-xml.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dataprovider-log-xml.phpt
+END
+strict-incomplete.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/strict-incomplete.phpt
+END
+dependencies2-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dependencies2-isolation.phpt
+END
+empty-testcase.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/empty-testcase.phpt
+END
+dependencies2.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dependencies2.phpt
+END
+test-suffix-multiple.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/test-suffix-multiple.phpt
+END
+dataprovider-testdox.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dataprovider-testdox.phpt
+END
+exclude-group-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/exclude-group-isolation.phpt
+END
+concrete-test-class.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/concrete-test-class.phpt
+END
+exclude-group.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/exclude-group.phpt
+END
+abstract-test-class.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/abstract-test-class.phpt
+END
+default-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/default-isolation.phpt
+END
+default.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/default.phpt
+END
+tap.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/tap.phpt
+END
+dependencies-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dependencies-isolation.phpt
+END
+fatal-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/fatal-isolation.phpt
+END
+failure-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/failure-isolation.phpt
+END
+dependencies.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dependencies.phpt
+END
+fatal.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/fatal.phpt
+END
+failure.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/failure.phpt
+END
+list-groups.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/list-groups.phpt
+END
+exception-stack.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/exception-stack.phpt
+END
+filter-method-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/filter-method-isolation.phpt
+END
+filter-method.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/filter-method.phpt
+END
+log-tap.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/log-tap.phpt
+END
+strict-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/strict-isolation.phpt
+END
+strict.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/strict.phpt
+END
+dependencies3-isolation.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dependencies3-isolation.phpt
+END
+dependencies3.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/dependencies3.phpt
+END
+help2.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/help2.phpt
+END
+testdox-text.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/testdox-text.phpt
+END
+log-xml.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/Tests/TextUI/log-xml.phpt
+END

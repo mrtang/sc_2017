@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Parser/UriTemplate
+END
+UriTemplateTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Parser/UriTemplate/UriTemplateTest.php
+END
+AbstractUriTemplateTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Parser/UriTemplate/AbstractUriTemplateTest.php
+END
+PeclUriTemplateTest.php
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn_zplatform/!svn/ver/3068/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/guzzle/guzzle/tests/Guzzle/Tests/Parser/UriTemplate/PeclUriTemplateTest.php
+END

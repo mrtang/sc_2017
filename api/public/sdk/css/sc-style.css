@@ -1,0 +1,112 @@
+*{
+	margin  : 0;
+	padding : 0;
+}
+
+
+/* 
+	For Button
+ */
+
+
+
+.sc-button.btn-size-small{
+	width: 125px;
+	font-size: 13px;
+	padding: 8px 0px !important;
+}
+
+.sc-button.btn-size-medium{
+	width: 170px;
+	font-size: 14px;
+	padding: 10px 0px !important;
+
+}
+
+.sc-button.btn-size-large, .sc-button.btn-size-default{
+	width: 240px;
+	font-size: 14px;
+}
+
+.sc-button {
+	border: medium none;
+	border-radius: 3px;
+	color: #FFF;
+	padding: 12px 0px !important;
+	margin: 5px 0px;
+	position: relative;
+	outline: medium none;
+	opacity: 1;
+	font-weight: bold;
+	-moz-user-select: none;
+}
+
+.sc-button:hover{
+	opacity: 0.8;
+  	outline: none;
+  	-webkit-box-shadow: none;
+  	box-shadow: none;
+	cursor: pointer;
+}
+.sc-button-image:hover{
+	cursor: pointer;	
+}
+
+/* 
+	For images
+ */
+
+.sc-button-image.btn-size-small{
+	max-width: 80px;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.sc-button-image.btn-size-medium{
+	max-width: 100px;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.sc-button-image.btn-size-large{
+	overflow: hidden;
+	display: inline-block;
+}
+
+
+
+
+
+/* Popup */
+
+.sc-popup-hidden{
+	visibility: hidden!important;
+	transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+}
+.sc-popup-wrap{
+	/* border: 1px solid #f2f2f2; */
+	/* border-radius: 3px; */
+	position: fixed;
+	top:0;
+	/* left: 200px; */
+	z-index: 1000002;
+	/* ?background:white; */
+	visibility: visible;
+	transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+}
+
+.sc-popup-backdrop{
+	position: fixed;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	background: rgba(0,0,0,0.2);
+	height:999999;
+	z-index: 1000001;
+	-webkit-transition: all 0.1s;
+	-o-transition: all 0.1s;
+	transition: all 0.1s;
+}

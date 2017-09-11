@@ -1,0 +1,14 @@
+<table style="" class="table  animate-show m-l-xs text-xs"><!-- table-striped -->
+     <tbody>
+        <tr ng-repeat="bank in bankingInfo">
+            <td>
+                {{$index + 1}}. <strong>Chủ tài khoản</strong>: {{bank.account_name}} <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Số tài khoản</strong> : {{bank.account_number}}<br>
+                <span class="font-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{bankName(bank.bank_code)}} - {{bank.bank_address}}</span>
+            </td>
+        </tr>
+
+        
+
+     </tbody>
+</table>

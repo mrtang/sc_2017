@@ -1,0 +1,135 @@
+<div ng-controller="ApiKeyCtrl" tour-step order="17" content="Cấu hình Api Key" placement="top" on-next="onTourEnd()">
+    <!-- header -->
+    <div class="wrapper bg-light lter b-b" tour-step order="18" content="Phân quyền và quản lý tài khoản con" placement="top">
+        <div class="row">
+            <div class="col-lg-5 padder-lg">
+                 <h2 class="font-thin m-n">API KEY</h2>
+            </div>
+            <div class="col-lg-7">
+                <button class="btn btn-lg btn-success pull-right" ng-click="add_key()"><i class="fa fa-plus"></i>{{'Api_TaoKey' | translate}}<!--  Tạo Key --></button>
+            </div>
+        </div>
+        <div class="row m-t-lg m-b-lg">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label class="control-label padder text-lgx">{{'Api_GioiThieuAPI' | translate}}<!-- Giới thiệu về API --></label>
+                    <div class="col-lg-12">
+                        <span>
+                            {{'Api_SCChoPhepKetNoiTrucTiep' | translate:{isShipchung : isShipchung} }}<!-- Shipchung api cho phép lập trình viên kết nối trực tiếp với hệ thống Shipchung để có thể tạo đơn hàng và lấy  các thông tin về đơn hàng của bạn -->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / header -->
+    <!--Content-->
+    <div class="wrapper b-b bg-white text-center">
+        <span ng-show="!list_data.length && !wating">{{'Api_BanChuaTaoAPI' | translate}}<!-- Bạn chưa tạo Api key nào cho phép việc kết nối --></span>
+        <span ng-show="wating" class="text-center"> <i class="text-3x fa fa-spinner fa-spin"></i></span>
+        <form name="form_config_accounting" role="form" class="form-horizontal form-validation" ng-show="list_data.length && !wating">
+            <table class="table table-condensed">
+                <thead>
+                    <th>
+                      {{'Api_ThoiGianTao' | translate}}  <!-- Thời gian tạo -->
+                    </th>
+                    <th>
+                        API KEY
+                    </th>
+                    <th>
+                        {{'Api_TuDongDuyet' | translate}}<!-- Tự động duyệt đơn -->
+                    </th>
+                    <th>
+                        Active
+                    </th>
+                </thead>
+                <tbody> 
+                    <tr ng-repeat="item in list_data">
+                        <td class="text-left">
+                            {{ item.time_create*1000|date:"dd-MM-yyyy  HH:mm"}}
+                        </td>
+                        <td class="text-left">
+                            {{item.key}}
+                        </td>
+                        <td class="text-left">
+                            <label class="i-switch i-switch-md bg-info m-t-xs m-r">
+                              <input type="checkbox" 
+                                ng-model="item.auto" 
+                                ng-checked="item.auto == 1"
+                                ng-true-value="1"  
+                                ng-false-value="0" 
+                                ng-change="edit_auto(item)"  
+                              />
+                              <i></i>
+                        </td>
+                        <td class="text-left">
+                            <label class="i-switch i-switch-md bg-info m-t-xs m-r">
+                              <input type="checkbox" 
+                                ng-model="item.active" 
+                                ng-checked="item.active == 1"
+                                ng-true-value="1"  
+                                ng-false-value="0" 
+                                ng-change="edit_key(item)"  
+                              />
+                              <i></i>
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <!--/ Content-->
+    <div class="wrapper"> </div>
+    <div class="wrapper bg-light lter b-b" tour-step order="18" content="Phân quyền và quản lý tài khoản con" placement="top">
+        <div class="row">
+            <div class="col-lg-5 padder-lg">
+                 <h2 class="font-thin m-n">Webhooks API</h2>
+            </div>
+            <div class="col-lg-7">
+                <button class="btn btn-lg btn-success pull-right" ng-click="add_api()"><i class="fa fa-plus"></i>Thêm Webhook</button>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper b-b bg-white text-center">
+        <span ng-show="!list_api.length && !wating">{{'Api_BanChuaTaoAPI' | translate}}</span>
+        <span ng-show="wating" class="text-center"> <i class="text-3x fa fa-spinner fa-spin"></i></span>
+        <form name="form_config_accounting" role="form" class="form-horizontal form-validation" ng-show="list_api.length && !wating">
+            <table class="table table-condensed">
+                <thead>
+                    <th>
+                        Event
+                    </th>
+                    <th>
+                        Endpoint
+                    </th>
+                    <th>
+                        Active
+                    </th>
+                </thead>
+                <tbody> 
+                    <tr ng-repeat="item in list_api">
+                        <td class="text-left">
+                            {{item.status_name}}
+                        </td>
+                        <td class="text-left">
+                           {{item.link}}
+                        </td>
+                        <td class="text-left">
+                            <label class="i-switch i-switch-md bg-info m-t-xs m-r">
+                              <input type="checkbox" 
+                                ng-model="item.active" 
+                                ng-checked="item.active == 1"
+                                ng-true-value="1"  
+                                ng-false-value="0" 
+                                ng-change="edit_api(item)"  
+                              />
+                              <i></i>
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

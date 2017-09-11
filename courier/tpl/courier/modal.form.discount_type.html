@@ -1,0 +1,46 @@
+
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-5">
+                <h3 class="modal-title">Discount Type</h3>
+                </div>
+                <button class="pull-right close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+
+    <div class="modal-body wrapper-md">
+      <div class="row">
+        <div class="col-md-12">
+              <form role="form" name="courier-type-form" class="form-validation">
+                <div class="input-group m-b col-md-12">
+                  <input type="text" class="form-control" ng-model="data.name" placeholder="Enter new discount type... " />
+                  <span class="input-group-addon btn m-b-xs w-xs btn-default" ng-click="add()"><i class="fa fa-check"></i> SAVE</span>
+                </div>
+              </form>
+              
+                <div class="panel panel-default">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th colspan="2"><i class="fa fa-list"></i> ListType</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="value in list_discount_type">
+                            <td>
+                                <div class="checkbox">
+                                 <span class="m-r-sm"><a href="javascript:;" editable-text="value.name" onbeforesave="change(value.id,$data,'name')">{{value.name}}</a></span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="close" ng-click="del(value.id,$index)"><i class="icon-ban"></i></span>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,174 @@
+<div ng-controller="WmsTypeCtrl">
+    <div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-file-text-o text-info"></i> Lịch sử hình thức lưu kho</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-horizontal form-horizontal" ng-submit="setPage()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Tên, Email hoặc Số điện thoại ..."
+                                           ng-model="frm.search"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control" ng-model="frm.type">
+                                        <option value="">Hình thức lưu kho</option>
+                                        <option data-ng-repeat="(key,item) in typewms" value="{{key}}">{{item}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="time_start" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input datetime-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.time_start"
+                                                       placeholder="Từ ngày"
+                                                        ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.time_start"
+                                                    datetimepicker-config="{ dropdownSelector: '#time_start' }"
+                                                    >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="time_end" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input datetime-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.time_end"
+                                                       placeholder="Từ ngày"
+                                                        ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.time_end"
+                                                    datetimepicker-config="{ dropdownSelector: '#time_end' }"
+                                                    >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control" ng-model="frm.active">
+                                        <option value="">Hình thức sử dụng</option>
+                                        <option data-ng-repeat="(key,item) in is_active" value="{{key}}">{{item}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6 text-right">
+                                <button type="button" class="btn m-b-xs btn-success pull-right" ng-disabled="waiting_export || frmSearch.$invalid" ng-click="exportExcel('export')">
+                                    <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                    <i ng-show="waiting_export" class="fa fa-spinner"></i>
+                                    Xuất Excel
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table-condensed table-hover w-full">
+                            <thead>
+                                <tr>
+                                    <th width="5%">
+                                        STT
+                                    </th>
+                                    <th>
+                                        Khách hàng
+                                    </th>
+                                    <th>Hình thức</th>
+                                    <th>
+                                        <i class="fa fa-clock-o"></i> Thời gian bắt đầu
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-clock-o"></i> Thời gian kết thúc
+                                    </th>
+                                    <th>
+                                        Trạng thái
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="waiting">
+                                    <td colspan="30" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tr>
+                                <tr ng-if="totalItems == 0 && !waiting">
+                                    <td colspan="30" class="text-center">Không có dữ liệu</td>
+                                </tr>
+                                <tr ng-repeat="item in list_data">
+                                    <td>
+                                        {{item_stt + $index + 1}}
+                                    </td>
+                                    <td>
+                                        <p ng-show="item.__get_user"><i class="fa fa-user"></i> {{item.__get_user.fullname || ''}}</p>
+                                        <p ng-show="item.__get_user"><i class="fa fa fa-envelope-o"></i> {{item.__get_user.email || ''}}</p>
+                                        <p ng-show="item.__get_user"><i class="fa fa-phone"></i> {{item.__get_user.phone || ''}}</p>
+                                    </td>
+                                    <td>
+                                        <strong>{{typewms[item.wms_type] || ''}}</strong>
+                                    </td>
+                                    <td>
+                                        <span ng-if="item.start_date > 0">{{ item.start_date * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                    </td>
+                                    <td>
+                                        <span ng-if="item.end_date > 0">{{ item.end_date * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                    </td>
+                                    <td>
+                                        <span  class="label" ng-class="{'bg-info': item.active == 0, 'bg-primary' : item.active != 0}"> {{is_active[item.active] || ''}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row" ng-show="totalItems > 0 && !waiting">
+                        <div class="col-sm-3 wrapper-md pull-left">
+                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> bản ghi
+                        </div>
+                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage()"></pagination>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

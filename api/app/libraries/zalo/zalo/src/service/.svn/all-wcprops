@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn_zplatform/!svn/ver/4099/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service
+END
+ZaloQueryService.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn_zplatform/!svn/ver/4011/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloQueryService.php
+END
+ZaloQueryServiceImpl.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn_zplatform/!svn/ver/4823/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloQueryServiceImpl.php
+END
+ZaloMessageService.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn_zplatform/!svn/ver/6048/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloMessageService.php
+END
+ZaloMessageServiceImpl.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn_zplatform/!svn/ver/6048/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloMessageServiceImpl.php
+END
+ZaloUploadService.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn_zplatform/!svn/ver/4011/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloUploadService.php
+END
+ZaloUploadServiceImpl.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn_zplatform/!svn/ver/4823/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloUploadServiceImpl.php
+END
+ZaloServiceConfigure.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn_zplatform/!svn/ver/4044/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloServiceConfigure.php
+END
+ZaloFanService.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn_zplatform/!svn/ver/5184/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloFanService.php
+END
+ZaloFanServiceImpl.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn_zplatform/!svn/ver/5184/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloFanServiceImpl.php
+END
+ZaloSocialService.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn_zplatform/!svn/ver/4011/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloSocialService.php
+END
+ZaloSocialServiceImpl.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn_zplatform/!svn/ver/4823/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloSocialServiceImpl.php
+END
+ZaloServiceFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn_zplatform/!svn/ver/6210/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/ZaloServiceFactory.php
+END

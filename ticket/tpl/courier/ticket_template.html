@@ -1,0 +1,31 @@
+<table class="table table-striped m-b-none">
+    <thead>
+    <tr>
+    <th>Yêu cầu</th>
+    <th>Trạng thái</th>
+    </tr>
+    </thead>
+    <tbody ng-show="loading.ticket">
+    <td colspan="20" class="text-center">
+        <i class="text-3x fa fa-spinner fa-spin"></i>
+    </td>
+    </tbody>
+    <tbody ng-show="ticket.length == 0 && !loading.ticket">
+        <tr >
+            <td colspan="7" class="text-center">
+                Không có dữ liệu
+            </td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr ng-repeat="item in ticket">
+            <td>
+                <a ng-href="http://ticket.shipchung.vn/#/ticket/request/management/7day/{{item.id}}" target="_blank">#{{item.id}} - {{item.title}}</a>
+            </td>
+            <td>
+                <span class="label ng-binding " ng-class="ticket_btn[item.status].bg">{{ticket_btn[item.status].name}}</span>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

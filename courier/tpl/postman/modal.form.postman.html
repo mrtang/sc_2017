@@ -1,0 +1,39 @@
+<div class="modal-body wrapper-md">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="m-t-none m-b font-thin">Add New</h3>
+      <p> </p>
+      <form role="form" name="postmanForm" class="form-validation">
+        <div class="form-group">
+          <label>Họ tên</label>
+          <input type="text" class="form-control" placeholder="Enter name" name="name" ng-model="postman.name">
+        </div>
+        <div class="form-group">
+          <label>Số điện thoại</label>
+          <input type="text" class="form-control" placeholder="Phone..." name="phone" ng-model="postman.phone">
+        </div>
+        <div class="form-group">
+          <label>Mã nhân viên</label>
+          <input type="text" class="form-control" placeholder="Code..." name="code" ng-model="postman.code">
+        </div>
+        <div class="form-group">
+            <label>Hãng vận chuyển</label>
+                <select class="form-control m-b" name="courier_id" ng-model="postman.courier_id" ng-options="cour.id as cour.name for cour in listCourier" class="form-control">
+                    <option value="">Chọn hãng vận chuyển</option>
+                </select>
+        </div>
+        <div class="form-group">
+            <label>Active</label>
+            <div class="checkbox">
+                <label class="i-checks"> 
+                  <input type="checkbox" value="1" checked="checked" ng-model="postman.active"><i></i>
+                </label>
+            </div>
+        </div>
+        <div class="checkbox m-t-lg">
+          <button type="submit" class="btn btn-sm btn-success pull-left text-uc m-t-n-xs" ng-click="savePostmanBtn(postman)" ng-disabled='postmanForm.$invalid'>Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

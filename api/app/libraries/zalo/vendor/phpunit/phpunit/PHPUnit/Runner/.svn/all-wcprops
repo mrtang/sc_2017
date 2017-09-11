@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/PHPUnit/Runner
+END
+TestSuiteLoader.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/PHPUnit/Runner/TestSuiteLoader.php
+END
+StandardTestSuiteLoader.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/PHPUnit/Runner/StandardTestSuiteLoader.php
+END
+BaseTestRunner.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/PHPUnit/Runner/BaseTestRunner.php
+END
+Version.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn_zplatform/!svn/ver/3065/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/PHPUnit/Runner/Version.php
+END

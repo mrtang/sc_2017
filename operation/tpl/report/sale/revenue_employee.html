@@ -1,0 +1,145 @@
+<div ng-controller="ReportRevenueEmployeeCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"> Revenue Of Employee</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b"
+                                            ng-model="frm.country_id"
+                                            ng-options="key as value for (key , value) in venture"
+                                            ng-disabled="1"
+                                    >
+                                        <option value="">Venture</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select ui-jq="chosen"
+                                            multiple class="w-md"
+                                            data-ng-model="frm.team"
+                                            data-placeholder="Select Team"
+                                            ng-options="item.id as item.name for item in team"
+                                    >
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.period" ng-options="key as value for (key , value) in period">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group controls padder" ui-module="select2">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Employee email"
+                                            ui-select2="select2Options"
+                                            ng-model="frm.email"
+                                            class="form-control w-md"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                    <button type="button" class="btn m-b-xs btn-success" ng-disabled="waiting_export" ng-click="exportExcelItem('export')">
+                                        <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                        <i ng-show="waiting_export" class="fa fa-spinner fa-spin"></i>
+                                        Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table b-light w-full table-bordered">
+                                <thead>
+                                    <td width="2%">
+                                        #
+                                    </td>
+                                    <td colspan="2" class="text-center">
+                                        Emplyoee
+                                    </td>
+                                    <td colspan="10" class="text-center">
+                                        Revenue {{period[frm.period] || 'by month'}}
+                                    </td>
+                                </thead>
+                                <thead class="bg-gd">
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        Name
+                                    </td>
+                                    <td>
+                                        Level
+                                    </td>
+                                    <td ng-repeat="(key, val) in list_period">{{val}}</td>
+                                </thead>
+                                <tbody >
+                                    <tr ng-show="waiting">
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-show="totalItems == 0 && !waiting">
+                                        <td colspan="30" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-repeat="item in list_data" class="b-b">
+                                        <td>
+                                            <div
+                                                    ui-jq="sparkline"
+                                                    ui-options="{{__convert_to_array(revenue_employee[item.user_id])}}, {type:'line', height:19, width:100, lineColor:'{{app.color.primary}}', fillColor:'#fff'}"
+                                                    class="sparkline inline">
+                                                loading...
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a class="text-info" ui-sref="report.sale.customer_by_employee({email: item.email})">
+                                                {{item.__user.fullname || item.email}}
+                                            </a>
+
+                                        </td>
+                                        <td>
+                                            {{item.level || '0'}}
+                                        </td>
+                                        <td ng-repeat="(key, val) in list_period">
+                                            {{revenue_employee[item.user_id][val] || '0' | vnNumber}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="clearfix">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

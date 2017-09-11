@@ -1,0 +1,61 @@
+<div class="fade-in-right" ng-controller="IndemnifyActionCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="wrapper-md bg-light">
+        <h1 class="m-n font-thin h3"><i class="fa fa-edit"></i> Danh sách bồi hoàn cho khách hàng</h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+    	<div class="col wrapper-sm">
+    		<div class="clearfix m-b">
+    			<div class="panel">
+    				<div class="panel-heading">
+                        <div class="row" >
+                            <div class="col-lg-6">
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <button class="btn bg-orange btn-lg pull-right" type="button" ng-disabled="update_all" ng-click="action_update(list_data)">Thực hiện</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                    	 <progressbar ng-if="update_all" max="totalItems" value="dynamic" type="info" class="progress-md m-t-sm"><span style="white-space:nowrap;">{{dynamic}}/{{totalItems}}</span></progressbar> 
+                        <div ng-show="listExcelLoading" class="text-center">
+
+                            <div class="text-center sc-loading-icon">
+                                <div class="loader">
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
+                                <p>Đang tải dữ liệu ...</p>
+                            </div>
+                            
+                        </div>
+
+                    	<table class="table b-t b-light table-hover table-condensed" ng-show="!listExcelLoading">
+                            <thead>
+                                <th>#</th>
+                                <th>Mã vận đơn</th>
+                                <th>Hãng vận chuyển</th>
+                                <th>Lý do bồi hoàn</th>
+                                <th>Mức độ bồi hoàn</th>
+                            </thead>
+                            <tbody class="text-sm">
+                            	<tr ng-repeat="value in list_data">
+                                    <td>{{$index + 1}}</td>
+                            		<td><a href="http://seller.shipchung.vn/#/detail//{{value.tracking_code}}" target="_blank" class="text-info">{{value.tracking_code}}</a></td>
+                            		<td>{{value.courier_name}}</td>
+                            		<td>{{value.description}}</td>
+                            		<td>{{value.level}}</td>
+                            	</tr>
+                            </tbody>
+                        </table>
+                    </div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>

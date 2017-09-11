@@ -1,0 +1,355 @@
+<div ng-controller="MerchantListCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-gift text-info"></i> Danh sách khách hàng {{typeName}}</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation form-horizontal" ng-submit="setPage(1)">
+                      <div class="row">
+                        <div class="col-lg-3">
+                          <div class="form-group controls padder">
+                              <input type="text" placeholder="Nhập email, sđt, mã vận đơn, domain" class="form-control" ng-model="frm.search"  />
+                          </div>
+                        </div>
+                        
+                        <div class="col-lg-3">
+                            <div class="form-group controls input-group">
+                                <input type="text" class="form-control" placeholder="Cập nhật từ ngày ..."
+                                       ng-model="time.time_update_start"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       
+                                       close-text="Đóng"
+                                        />
+                                <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group controls input-group">
+                                <input type="text" class="form-control" placeholder="Phát sinh vận đơn đầu tiên ..."
+                                       ng-model="time.first_order_start"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       
+                                       
+                                       close-text="Đóng"
+                                        />
+                                <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group controls input-group">
+                                <input type="text" class="form-control" placeholder="Phát sinh vận đơn cuối cùng ..."
+                                       ng-model="time.last_order_start"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       
+                                       
+                                       close-text="Đóng"
+                                        />
+                                <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                </span>
+                            </div>
+                        </div>
+
+
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-3">
+                           <div class="form-group controls padder">
+                               <select class="form-control" ng-model="frm.search_type">
+                                    <option value="">- Lọc theo -</option>
+                                    <option value="1">Khách hàng</option>
+                                    <option value="2">Người quản lý</option>
+                                </select>
+                           </div>
+                        </div>
+                        
+
+                        <div class="col-lg-3">
+                            <div class="form-group controls input-group">
+                                <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                       ng-model="time.time_update_end"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       close-text="Đóng"
+                                        />
+                                <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group controls input-group">
+                                <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                       ng-model="time.first_order_end"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       close-text="Đóng"
+                                        />
+                                <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <div class="form-group controls input-group">
+                                <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                       ng-model="time.last_order_end"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       close-text="Đóng"
+                                        />
+                                <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+
+                        <div class="col-lg-3">
+                           <div class="form-group controls padder">
+                               <select class="form-control " ng-model="frm.business_model">
+                                    <option value="">- Mặt hàng kinh doanh -</option>
+                                    <option ng-repeat="item in list_business_model" value="{{item.id}}">{{item.name}}</option>
+                                </select>
+                           </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                           <div class="form-group controls padder" style="padding-left:0!important">
+                                <select name="" class="form-control " ng-model="frm.place_city">
+                                    <option value="">Tỉnh/TP</option>
+                                    <option value="{{item.id}}" ng-repeat='item in list_city'>{{item.city_name}}</option>
+                                </select>
+                           </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                           <div class="form-group controls padder" style="padding-left:0!important">
+                                <input type="text" class="form-control p-l-0" placeholder="Vận đơn trung bình từ" ng-model="frm.avg_lading_start">
+                           </div>
+                        </div>
+
+                      </div>
+
+
+                      <div class="row">
+
+                        <div class="col-lg-3">
+                            <div class="form-group controls padder">
+                               <select class="form-control" ng-model="frm.limit">
+                                    <option value="">- Số bản ghi -</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="200">200</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                           <div class="form-group controls padder" style="padding-left:0!important">
+                                <select name="" class="form-control"  ng-model="frm.place_district">
+                                    <option value="">Quận/huyện</option>
+                                    <option value="{{item.id}}" ng-repeat='item in list_district'>{{item.district_name}}</option>
+                                </select>
+                           </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                           <div class="form-group controls padder" style="padding-left:0!important">
+                                <input type="text" class="form-control p-l-0" placeholder="Vận đơn trung bình đến" ng-model="frm.avg_lading_end">
+                           </div>
+                        </div>
+                        
+                      </div>
+
+                        <div class="row m-b-md">
+                            <div class="col-lg-12">
+                                <div class="checkbox padder">
+                                    <label class="i-checks padder-md padder-xs" ng-repeat="item in list_merchant[1*frm.group_process]" ng-if="item.active == 1">
+                                        <input type="checkbox"
+                                               ng-model="check"
+                                               ng-change="toggleSelection(item.status)" /><i></i>
+                                        {{item.name || 'Trạng thái'}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-xs-12">
+                              <button class="btn btn-info" type="submit">Tìm kiếm</button>
+                              <a class="btn btn-success"  ng-click="setPage(1, 'export')">Xuất excel</a>
+                            </div>
+                        </div>
+                  </form>
+                </div>
+
+
+<!-- 
+<div class="col-lg-3">
+    <div class="form-group controls padder">
+       <select class="form-control" ng-model="frm.limit">
+            <option value="">- Số bản ghi -</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+        </select>
+    </div>
+</div>
+ -->
+
+
+                <div class="panel-body">
+                    <div class="tab-container">
+                        <div class=" tab-fake">
+                            <div class="table-responsive">
+                                    <table class="table-condensed table-hover w-full">
+                                        <thead>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                <i class="fa fa-clock-o"></i> Thông tin KH
+                                            </th>
+                                            <th>
+                                                <i class="fa fa-database"></i> Thông tin đơn hàng
+                                            </th>
+
+                                            <th>
+                                                <i class="fa fa-database"></i> Thông tin sale cam kết
+                                            </th>
+
+                                            <th>
+                                                <i class="fa fa-barcode"></i>&nbsp; Thanh toán
+                                            </th>
+                                            <th>
+                                                <i class="fa fa-home"></i> Thông tin số dư
+                                            </th>
+                                            <!-- <th>
+                                                <i class="fa fa-home"></i> Trạng thái hiện tại
+                                            </th> -->
+                                           <!--  <th>
+                                               <i class="fa fa-dollar"></i> Người quản lý
+                                           </th> -->
+                                            <!-- <th>
+                                                <i class="fa fa-mail-forward"></i>
+                                                Hành động
+                                            </th> -->
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-show="waiting">
+                                            <td colspan="7" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="totalItems == 0 && !waiting">
+                                            <td colspan="7" class="text-center">
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody ng-repeat="item in list_data">
+                                            <tr >
+                                                <td>{{item_stt + $index + 1}}</td>
+                                                <td>
+                                                    <p >Họ tên :{{ item.user.fullname}}</p>
+                                                    <p >Email : <a target="_blank" ui-sref="_search({search:item.user.email})">{{ item.user.email}}</a></p>
+                                                    <p >Số ĐT : <a href="callto:{{ item.user.phone}}" class="text-info">{{ item.user.phone}}</a></p>
+                                                    <p ng-show="item.user.time_create > 0">Ngày đăng ký : {{ item.user.time_create * 1000 | date : "dd/MM/yy"}}</p>
+                                                </td>
+                                                <td>
+                                                    <p ng-if="!item.order_info.avg_lading">Không có dữ liệu</p>
+                                                    <p ng-show="item.order_info.avg_lading > 0" >Số đơn trung bình : {{ item.order_info.avg_lading}}</p>
+                                                    <p ng-show="item.order_info.place_city > 0">Địa điểm kinh doanh :{{ city[item.order_info.place_city]}}, {{district[item.order_info.place_district]}}</p>
+                                                    <p ng-show="item.order_info.business_model > 0">{{business_model[item.order_info.business_model]}}</p>
+                                                </td>
+
+                                                <td>
+                                                    <p >Số đơn trung bình : {{ item.order_info.num_order_avg || '0'}}</p>
+                                                    <p ng-show="item.order_info.first_time_pickup > 0">Vận đơn đầu tiền :{{ item.order_info.first_time_pickup * 1000 | date : "dd/MM/yy"}}</p>
+                                                    <p ng-show="item.order_info.last_time_pickup > 0">Vận đơn cuối :{{ item.order_info.last_time_pickup * 1000 | date : "dd/MM/yy"}}</p>
+                                                </td>
+                                                <td>
+                                                    <p >Hình thức : {{ item.payment_priority == 1 ? 'Thanh toán qua Ngân Lượng' : 'Thanh toán qua Ngân Hàng' }}</p>
+                                                    <p >Ngân hàng : {{ item.bank_info.bank_code}}</p>
+                                                    <p >Chủ thẻ : {{ item.bank_info.account_name}}</p>
+                                                    <p >Số thẻ : {{ item.bank_info.account_number}}</p>
+                                                    <p >Email NLượng : {{ item.email_nl}}</p>
+                                                </td>
+                                                <td>
+                                                    <p >Số dư hiện tại :{{ item.merchant.balance || '0' | vnNumber }}</p>
+                                                    <p >Tiền thu hộ tạm tính : {{ item.merchant.provisional || '0' | vnNumber}}</p>
+                                                    <p >Phí vận chuyển tạm tính : {{ item.merchant.freeze || '0' | vnNumber}}</p>
+                                                    <p >Số dư khả dụng : {{ item.merchant.balance + item.merchant.provisional - item.merchant.freeze || '0' | vnNumber}}</p>
+                                                </td>
+                                                <!-- <td>
+                                                    Trạng thái hiện tại: <strong>{{item.pipe_status.name }}</strong> <br/>
+                                                
+                                                    <ol class="timeline timeline--summary">
+                                                        <li class="timeline__step" ng-class="checkStepClass(item, status.status) ? 'done' : ''" ng-repeat="status in group_process_seller[item.pipe_status.group_status].pipe_status" ng-click="openActionPop(item, status)">
+                                                            <input class="timeline__step-radio" id="trigger1{{status.id}}" name="trigger1{{status.id}}" type="radio">
+                                                            
+                                                            <span class="timeline__step-title">
+                                                                {{status.name}} </span>
+                                                            <i class="timeline__step-marker">1</i>
+                                                        </li>
+                                                        
+                                                    </ol><br/>
+                                                </td> -->
+                                            </tr>
+                                            <tr>
+                                                <td colspan="7" class="text-left">
+                                                    <ul class="breadcrumb bg-white m-n">
+                                                        <li><a href="javascript:;"><i class="fa fa-flag"></i> {{list_process_2[1*item.pipe_status] || 'Trạng thái'}}</a></li>
+                                                        <li ng-repeat="it in item.pipe_journey" ng-class="{'active':$last}" tooltip-html-unsafe="{{it.note || ''}} <br /> {{ it.time_create * 1000 | date : 'dd-MM-yyyy  HH:mm' }}" tooltip-placement="top">
+                                                            <a href="javascript:;">
+                                                                {{list_status_2[1*item.pipe_status][1*it.pipe_status]['name'] || 'Hành trình'}}
+                                                            </a>
+                                                        </li>
+                                                        <li ng-click="action(item, list_merchant[1*frm.group_process], list_status_2[1*item.pipe_status][1*item.status_journey]['priority'] || 0, 2, groupCode)" class="pointer"><i class="text-success text-lg fa  fa-plus"></i></li>
+                                                        <progressbar value="(pipe_priority[item.pipe_status.status]/pipe_limit)*100 || '0'" class="progress-xs bg-light m-n" animate="true" type="success">
+                                                        </progressbar>
+                                                    </ul>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="row" ng-show="list_data.length">
+                                        <div class="col-sm-3 wrapper-md pull-left">
+                                            Tổng số : <i class="text-danger">{{totalItems || '0'}}</i> khách hàng
+                                        </div>
+                                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="ModalAdd.html" type="text/ng-template">
+    <div ng-include="'tpl/pickup/modal.add.html'"></div>
+</script>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn_zplatform/!svn/ver/3067/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/build
+END
+phar-autoload.php.in
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/build/phar-autoload.php.in
+END
+assertions.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/build/assertions.php
+END
+travis-ci.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/build/travis-ci.xml
+END
+phpmd.xml
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn_zplatform/!svn/ver/3064/Oauth/SDK/Web/PHP/ZaloPageSDK/vendor/phpunit/phpunit/build/phpmd.xml
+END

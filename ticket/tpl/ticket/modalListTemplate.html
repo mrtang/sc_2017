@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            Quản lý câu trả lời mẫu
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+    <button type="button" class="btn btn-info" data-ng-click="openEdit()" style="margin-bottom:10px;">Thêm mới</button>
+    <div class="table-responsive">
+        <table class="table table-bordered tablesorter bg-white">
+            <thead>
+                <tr>
+                    <th style="width:20px;">#</th>
+                    <th>Trường hợp</th>
+                    <th>Tin nhắn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="(i,item) in listData">
+                    <td>{{item_stt + i + 1}}</td>
+                    <td>{{item.type.type_name}}</td>
+                    <td><a data-ng-click="openEdit(item.id)">{{item.message}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-right">
+            <pagination total-items="totalItems" ng-model="currentPage" max-size="5" items-per-page="10" ng-change="page(currentPage)"></pagination>
+        </div>
+        
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="close()">Đóng</button>
+</div>

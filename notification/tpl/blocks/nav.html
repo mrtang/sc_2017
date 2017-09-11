@@ -1,0 +1,60 @@
+<!-- first -->
+<ul class="nav">
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="aside.nav.HEADER">Navigation</span>
+  </li>
+  <li>
+    <a ui-sref="app.dashboard">
+      <i class="glyphicon glyphicon-stats icon text-primary-dker text-success"></i>
+      <span class="font-bold" translate="aside.nav.DASHBOARD">Dashboard</span>
+    </a>
+  </li>
+  
+  <li ng-class="{active:$state.includes('app.template')}">
+    <a ui-sref="app.template.list">
+      <i class="fa fa-text-height icon text-success"></i>
+      <span class="font-bold" translate="">Template</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a ui-sref="app.template.add">
+          <span translate="">Create</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.template.list">
+          <span translate="">List</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.scenario')}">
+    <a ui-sref="app.scenario.list">
+      <i class="fa fa-book icon text-success"></i>
+      <span class="font-bold" translate="">Scenario</span>
+    </a>
+  </li>
+  <li ng-class="{active:$state.includes('app.system')}">
+    <a ui-sref="app.system">
+      <i class="fa fa-desktop icon text-success"></i>
+      <span class="font-bold" translate="">System</span>
+    </a>
+  </li>
+  <li ng-class="{active:$state.includes('app.user')}">
+    <a ui-sref="app.user">
+      <i class="fa fa-user icon text-success"></i>
+      <span class="font-bold" translate="">User config</span>
+    </a>
+  </li>
+  <li ng-class="{active:$state.includes('app.queue')}">
+    <a ui-sref="app.queue">
+      <i class="fa fa-navicon icon text-success"></i>
+      <span class="font-bold" translate="">Queue</span>
+    </a>
+  </li>
+  <li class="line dk"></li>
+
+  
+  
+</ul>
+<!-- / third -->

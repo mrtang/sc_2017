@@ -1,0 +1,82 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-bar-chart text-info"></i> Thống kê</h1>
+  <small class="text-muted">
+  </small>
+</div>
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="LogStatisticCtrl">
+	<div class="col wrapper-sm">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<form class="form-validation form-horizontal" ng-submit="setPage(type,time_start,time_end)">
+		            <div class="row">
+		            	<div class="col-md-3">
+		                    <div class="form-group controls padder input-group">
+		                        <input type="text" class="form-control" placeholder="Từ ngày ..."
+                                       ng-model="time_start"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       is-open="time_accept_start_open"
+                                       datepicker-options="dateOptions"
+                                       close-text="Close"
+                                        />
+                              <span class="input-group-btn icon-input">
+                                <i class="btn fa fa-calendar "></i>
+                              </span>
+		                    </div>
+		                </div>
+		                <div class="col-md-3">
+		                	<div class="form-group controls padder input-group">
+		                        <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                       ng-model="time_end"
+                                       datepicker-popup="dd-MM-yyyy"
+                                       is-open="time_accept_end_open"
+                                       datepicker-options="dateOptions"
+                                       close-text="Close"
+                                        />
+                              <span class="input-group-btn icon-input">
+                                <i class="btn fa fa-calendar "></i>
+                              </span>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-xs-12">
+		                  <button class="btn btn-info" type="submit">Tìm kiếm</button>
+		                </div>
+		            </div>
+		        </form>
+			</div>
+			<div class="wrapper bg-white b-b">
+			      <ul class="nav nav-pills nav-sm">
+			      	<li ng-class="type === 'app' ? 'active' : ''"><a href="#/shipchung/log/statistic?type=app" ng-click="setPage('app',time_start,time_end)">App</a></li>
+			      	<li ng-class="type === 'email' ? 'active' : ''"><a href="#/shipchung/log/statistic?type=email" ng-click="setPage('email',time_start,time_end)">Email</a></li>
+			        <li ng-class="type === 'sms' ? 'active' : ''"><a href="#/shipchung/log/statistic?type=sms" ng-click="setPage('sms',time_start,time_end)">Sms</a></li>
+			        <li ng-class="type === 'zalo' ? 'active' : ''"><a href="#/shipchung/log/statistic?type=zalo" ng-click="setPage('zalo',time_start,time_end)">Zalo</a></li>
+			      </ul>
+		    </div>
+			<div class="panel-body">
+          		<div class="table-responsive">
+          			<table class="table table-condensed table-hover w-full">
+	          			<thead>
+	          				<tr>
+	          					<th>Stt</th>
+		                        <th>Hành động</th>
+		                        <th>Số lượng tạo</th>
+		                        <th>Số lượng gửi</th>
+		                        <th>Đã mở</th>
+		                    </tr>	
+	          			</thead>
+	          			<tbody>
+	          				<tr ng-repeat="key in listData">
+	          					<td>{{$index + 1}}</td>
+	          					<td class="col-lg-6"><a href="#/shipchung/log/statisticlist/{{key['id']}}?from_date={{fromDate}}&to_date={{toDate}}" class="text-info">{{key['title']}}</a></td>
+	          					<td><b ng-if="listCreated[key['id']]>0">{{listCreated[key['id']]}}</b></td>
+	          					<td><b >{{listSent[key['id']]}}</b></td>
+	          					<td></td>
+	          				</tr>
+	          			</tbody>
+          			</table>
+          		</div>
+          	</div>
+		</div>
+	</div>
+</div>

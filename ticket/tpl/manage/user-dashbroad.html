@@ -1,0 +1,267 @@
+<div class="hbox hbox-auto-xs text-sm hbox-auto-sm" ng-controller="UserDashbroadCtrl">
+    <div class="wrapper-sm bg-light b-b">
+        <span class="m-n h3"><i class="fa fa-tachometer"></i> Bạn cần làm gì hôm nay ?</span>
+
+    </div>
+
+    <div class="m-sm wrapper-sm bg-white-only b-b">
+     
+        <div class="row text-center padder">
+            <div class="col-md-12">
+                
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <blockquote class="text-left bg-info">
+                            <!-- <div class="pull-right">
+                                <button class="btn btn-default btn-xs dropdown-toggle" data-ng-click="loadReDelivery(selectedCity, selectedDistrict, 'export');"> <i class="fa fa-file-excel-o"></i> Xuất Excel </button>
+                            </div> -->
+                            <p>
+                                <div class="h1 m-b-sm"><a >{{total_waiting || 0 | vnNumber}} </a><i class="fa fa-spinner fa-spin" ng-if="loading.redelivery"></i></div>
+                                <strong> Nhắc nhở đang chờ</strong><br/>
+                            </p>
+                        </blockquote>
+                    </div>
+                    <div class="col-md-3">
+                        <blockquote class="text-left bg-warning">
+                            <p>
+                                <div class="h1 m-b-sm"><a >{{TicketTotal.overdue || 0 | vnNumber}}</a> <i class="fa fa-spinner fa-spin" ng-if="loading.slowdelivery"></i></div>
+                                <strong>Yêu cầu quá hạn </strong><br/>
+                            </p>
+                        </blockquote>
+                    </div>
+                    <div class="col-md-3">
+                        <blockquote class="text-left bg-dark">
+                            <p>
+                                <div class="h1 m-b-sm"><a >{{TicketTotal.overing_due || 0 | vnNumber}} </a><i class="fa fa-spinner fa-spin" ng-if="loading.return"></i></div>
+                                <strong>Yêu cầu sắp quá hạn </strong><br/>
+                            </p>
+                        </blockquote>
+                    </div>
+                    <div class="col-md-3">
+                        <blockquote class="text-left bg-primary">
+                            <p>
+                                <div class="h1 m-b-sm"><a >{{TicketTotal.priority || 0 | vnNumber}} </a><i class="fa fa-spinner fa-spin" ng-if="loading.slowpickup"></i></div>
+                                <strong>Yêu cầu quan trọng cần xử lý </strong><br/>
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default text-left">
+                            <div class="panel-heading">
+                                <!-- <span class="label bg-danger pull-right m-t-xs">4 left</span> -->
+                                15 nhắc nhở gần nhất
+                            </div>
+                            <table class="table table-striped m-b-none">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nội dung</th>
+                                    <th>Mã yêu cầu</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                                </thead>
+                                <tbody ng-show="reminderLoading">
+                                    <td colspan="20" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tbody>
+                                 <tbody ng-show="list_reminder.length == 0 && !reminderLoading">
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="text-left">
+                                    <tr ng-repeat="item in list_reminder">
+                                        <td>
+                                            {{$index + 1}}
+                                        </td>
+                                        <td>
+                                            {{item.name}}
+                                        </td>
+                                        <td>
+                                            <a href="/#/ticket/request/management/30/{{item.ticket_id}}" target="_blank"><span class="text-info">#{{item.ticket_id}}</span></a>
+                                        </td>
+                                        <td>
+                                            <label  class="label label-success" ng-if="isReminded(item.time_reminder)">Đã nhắc nhở</label>
+                                            <label  class="label label-warning" ng-if="!isReminded(item.time_reminder)">{{timeAgo(item.time_reminder)}}</label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="panel panel-default text-left" >
+                            <div class="panel-heading">
+                                <!-- <span class="label bg-danger pull-right m-t-xs">4 left</span> -->
+                                15 yêu cầu gần hết hạn
+                            </div>
+                            <table class="table table-striped m-b-none" class="text-left">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thời hạn</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-show="TicketLoading.overing_due">
+                                    <td colspan="20" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tbody>
+                                 <tbody ng-show="TicketData.overing_due.length == 0 && !TicketLoading.overing_due">
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr ng-repeat="item in TicketData.overing_due ">
+                                        <td>
+                                            <a href="/#/ticket/request/management/30/{{item.id}}" target="_blank" title="{{item.content}}"><span class="text-info">#{{item.id}}</span></a>
+                                        </td>
+
+                                        <td>
+                                            <a href="/#/ticket/request/management/30/{{item.id}}" title="{{item.content}}" target="_blank"><span class="text-info">{{item.title}}</span></a>
+                                        </td>
+
+                                        <td>
+                                            <a><span class="label " ng-class="data_status[item.status].bg">{{data_status[item.status].name}} </span></a>
+                                        </td>
+                                        <td>
+                                            <a ng-if="item.time_over > 0">{{ timeAgo(item.time_over * 1000) }}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-6">
+                        <div class="panel panel-default text-left">
+                            <div class="panel-heading">
+                                <!-- <span class="label bg-danger pull-right m-t-xs">4 left</span> -->
+                                15 yêu cầu hết hạn
+                            </div>
+                            <table class="table table-striped m-b-none">
+                                <thead>
+                                <tr>
+                                <th>#</th>
+                                <th>Tiêu đề</th>
+                                <th>Trạng thái</th>
+                                <th>Thời hạn</th>
+                                </tr>
+                                </thead>
+                                <tbody ng-show="TicketLoading.overdue">
+                                    <td colspan="20" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tbody>
+                                 <tbody ng-show="TicketData.overdue.length == 0 && !TicketLoading.overdue">
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr ng-repeat="item in TicketData.overdue ">
+                                        <td>
+                                            <a href="/#/ticket/request/management/30/{{item.id}}" target="_blank" title="{{item.content}}"><span class="text-info">#{{item.id}}</span></a>
+                                        </td>
+
+                                        <td>
+                                            <a href="/#/ticket/request/management/30/{{item.id}}" title="{{item.content}}" target="_blank"><span class="text-info">{{item.title}}</span></a>
+                                        </td>
+
+                                        <td>
+                                            <a><span class="label " ng-class="data_status[item.status].bg">{{data_status[item.status].name}} </span></a>
+                                        </td>
+                                        <td>
+                                            <a ng-if="item.time_over > 0">{{ timeAgo(item.time_over * 1000) }}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="panel panel-default text-left">
+                            <div class="panel-heading">
+                                15 yêu cầu quan trọng cần xử lý
+                            </div>
+                            <table class="table table-striped m-b-none">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thời hạn</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-show="TicketLoading.priority">
+                                    <td colspan="20" class="text-center">
+                                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                                    </td>
+                                </tbody>
+                                 <tbody ng-show="TicketData.priority.length == 0 && !TicketLoading.priority">
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr ng-repeat="item in TicketData.priority ">
+                                        <td>
+                                            <a href="/#/ticket/request/management/30/{{item.id}}" title="{{item.content}}" target="_blank"><span class="text-info">#{{item.id}}</span></a>
+                                        </td>
+
+                                        <td>
+                                            <a href="/#/ticket/request/management/30/{{item.id}}" title="{{item.content}}" target="_blank"><span class="text-info">{{item.title}}</span></a>
+                                        </td>
+
+                                        <td>
+                                            <a><span class="label " ng-class="data_status[item.status].bg">{{data_status[item.status].name}} </span></a>
+                                        </td>
+                                        <td>
+                                            <a ng-if="item.time_over > 0">{{ timeAgo(item.time_over * 1000) }}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+
+
+                   
+
+
+
+                </div>
+             
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .bg-orange{
+        background: orange;
+    }
+</style>

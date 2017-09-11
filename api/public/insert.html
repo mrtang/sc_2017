@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+  *{margin:0;padding:0;}
+    input{
+      margin:0px 10px;
+      display: block;
+      border: 1px solid #cdcdcd;
+      border-radius: 3px;
+      height:30px;
+      width: 300px;
+    }
+    .pull-left{
+        float: left;
+        width:400px;
+    }
+    .pull-right{
+        float: left;
+        width:400px;
+    }
+    .wrapper{
+        width:800px;
+        margin:30px auto;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <form action="">
+    <div class="pull-left">
+
+      <input type="text" name="input1" class="url"> <br />
+      <input type="text" name="input2" class="url"> <br />
+      <input type="text" name="input3" class="url"> <br />
+      <input type="text" name="input4" class="url"> <br />
+      <input type="text" name="input5" class="url"> <br />
+      <input type="text" name="input6" class="url"> <br />
+    </div>
+    <div class="pull-right">
+      <input type="text" name="input7" class="url"> <br />
+      <input type="text" name="input8" class="url"> <br />
+      <input type="text" name="input9" class="url"> <br />
+      <input type="text" name="input10" class="url"> <br />
+      <input type="text" name="input11" class="url"> <br />
+      <input type="text" name="input12" class="url"> <br />
+    </div>
+    </form>
+    <div>
+        <button>Send</button>
+    </div>
+
+    <ul id="listUrlSuccess">
+
+    </ul>
+  </div>
+
+  
+
+
+  
+
+</body>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script>
+var urlSuccess = {};
+  $(document).ready(function (){
+    var sendRequest;
+    
+    $('button').click(function (){
+      $('input[type=text]').each(function (index, element){
+        if (element.value) {
+            sendRequest(element.value);
+        };
+
+      });
+    });
+
+
+    sendRequest = function(link) {
+        $.get(link, function(data, status){
+            if(!urlSuccess.hasOwnProperty(link)){
+                urlSuccess[link] = true;
+                $("#listUrlSuccess").append("<li>[OK] ---- " + link + "</li>");
+            }
+            sendRequest(link);
+        })
+        .error(function(jqXHR, textStatus, errorThrown) {
+            $("#listUrlSuccess").append("<li><span style='color:red;'>[FAIL]</span> ---- " + link + "</li>");
+            if (textStatus == 'timeout')
+                console.log('The server is not responding');
+            
+            if (textStatus == 'error')
+                console.log(errorThrown);
+            
+            sendRequest(link);
+          // Etc
+        });
+    }
+  })
+</script>
+</html>

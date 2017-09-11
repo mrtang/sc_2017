@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            Đổi người quản lý khách hàng
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+    <p>Chọn quản lý mới :</p>
+    <div >
+        <div class="col-md-12">
+            <select name="" id="" class="form-control"  required ng-model="seller">
+                <option value="">-- Chọn người quản lý --</option>
+                <option value="{{user.user_id}}" ng-repeat='user in list_user'>{{user.user.fullname}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <p>Lý do đổi :</p>
+    <div >
+        <div class="col-md-12">
+            <textarea name="" id="" class="form-control" ng-model="note"></textarea>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-disabled="submit_load" ng-click="change(seller, note)">Đồng ý</button>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Đóng</button>
+</div>

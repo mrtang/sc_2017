@@ -1,0 +1,491 @@
+<div ng-controller="ReturnSlowCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-truck text-info"></i> Đơn hàng hoàn chậm</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1);setCountGroup()" name="frmSearch">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Mã vận đơn hoặc mã hvc ..."
+                                           ng-model="frm.tracking_code"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Duyệt từ ngày ..."
+                                           ng-model="time.accept_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_accept_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Duyệt hoàn từ ngày ..."
+                                           ng-model="time.accept_return_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="accept_return_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                            />
+                                    <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Thành công từ ngày ..."
+                                           ng-model="time.success_start"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="success_start_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                    />
+                                    <span class="input-group-btn icon-input">
+                                        <i class="btn fa fa-calendar "></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Họ tên, email hoặc sđt người tạo ..."
+                                           ng-model="frm.keyword"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_accept_end_open"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           close-text="Close"
+                                           ng-model="time.accept_end"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="accept_return_end_open"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           close-text="Close"
+                                           ng-model="time.accept_return_end"
+                                            />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="success_end_open"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           close-text="Close"
+                                           ng-model="time.success_end"
+                                    />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Họ tên, email hoặc sđt người nhận"
+                                           ng-model="frm.to_user"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.courier" ng-options="key as value.name for (key , value) in list_courier">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control"
+                                            ng-model="frm.from_city"
+                                            ng-options="item.id as item.city_name for item in list_city"
+                                            ng-disabled = "userInfo.country_id != 237"
+                                    >
+                                        <option value="">Tỉnh/Thành Phố gửi</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control"
+                                            ng-model="frm.to_city"
+                                            ng-options="item.id as item.city_name for item in list_city"
+                                            ng-disabled = "userInfo.country_id != 237 || frm.global == 1"
+                                    >
+                                        <option value="">Tỉnh/Thành Phố nhận</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="chodientu.vn, shipchung.vn"
+                                           ng-model="frm.domain"
+                                            />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.return_slow">
+                                        <option value="0">Tất cả</option>
+                                        <option value="1">1 ngày</option>
+                                        <option value="2">2 ngày</option>
+                                        <option value="3">3,4 ngày</option>
+                                        <option value="4">Quá 4 ngày</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select
+                                            boxme-district-by-province
+                                            province-id="frm.from_city"
+                                            district-id="frm.from_district"
+                                            default-label="Quận/Huyện"
+                                            ng-model="frm.from_district"
+                                            ng-disabled="userInfo.country_id != 237"
+                                            class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select
+                                            boxme-district-by-province
+                                            province-id="frm.to_city"
+                                            district-id="frm.to_district"
+                                            default-label="Quận/Huyện"
+                                            ng-model="frm.to_district"
+                                            ng-disabled="userInfo.country_id != 237 || frm.global == 1"
+                                            class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.service" ng-options="key as value for (key , value) in service">
+                                        <option value="">Dịch vụ</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control m-b" ng-model="frm.tag">
+                                        <option value="">Liên quan đến</option>
+                                        <option ng-repeat="itm in list_tag" value="{{itm.code}}">{{itm.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls">
+                                    <select class="form-control" ng-model="frm.loyalty">
+                                        <option value="">Khách hàng thân thiết</option>
+                                        <option ng-repeat="(key,value) in sc_loyalty_level" value="{{key}}">{{value.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control m-b" ng-model="frm.is_weship">
+                                        <option value="">-- Đơn hàng, Weship -- </option>
+                                        <option value="1">Weship</option>
+                                        <option value="0">Đơn hàng bình thường</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs">
+                                        <input type="checkbox" ng-model="frm.global" ng-true-value="1" ng-false-value="0" /><i></i>
+                                        Chuyển phát quốc tế
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span class="label bg-info inline m-l">Trạng thái</span>
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs" ng-repeat="item in group_order_status[tab]">
+                                        <input type="checkbox"
+                                               ng-model="check"
+                                               ng-change="toggleSelectionStatus(item)" /><i></i>
+                                        {{(list_status[item].split('/').length > 1) ? list_status[item].split('/')[1] :  list_status[item]}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="list_pipe_status">
+                            <div class="col-lg-12">
+                                <span class="label bg-primary inline m-l">Trạng thái xử lý</span>
+                                <div class="checkbox padder m-t-xs">
+                                    <label class="i-checks padder-md padder-xs" ng-repeat="item in list_pipe_status">
+                                        <input type="checkbox"
+                                               ng-model="check"
+                                               ng-change="toggleSelection(item.status)" /><i></i>
+                                        {{item.name || 'Trạng thái'}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6">
+                                <a href="javascript:;" ng-if="check_privilege('PRIVILEGE_DELIVERY','export')" ng-disabled="waiting_export" class="btn btn-success pull-right" ng-click="export_excel()">
+                                    <i ng-show="!waiting_export" class="fa fa-file-excel-o"></i>
+                                    <i ng-show="waiting_export" class="fa fa-spinner"></i>
+                                    Excel
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <tabset class="tab-container tab-inside text-xs" justified="true">
+                         <tab ng-repeat="(key, value) in group_status" ng-if="[30,31,32,36].indexOf(1*key) != -1" ng-click="ChangeTab(key);">
+                            <tab-heading>
+                                &nbsp;{{value}} <!--({{total_group[key] || '0'}})&nbsp;-->
+                            </tab-heading>
+                        </tab>
+                    </tabset>
+
+                    <div class="tab-container">
+                        <div class="tab-content tab-fake">
+                            <div class="table-responsive">
+                                    <table class="table-condensed table-hover w-full">
+                                        <thead>
+                                            <td>
+                                                #
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-barcode"></i>&nbsp; Đơn hàng
+                                            </td>
+                                            <td>
+                                               Trạng thái
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-home"></i> Người gửi
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-home"></i> Người nhận
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-clock-o"></i> Cam kết
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-clock-o"></i> Hoàn chậm
+                                            </td>
+                                        </thead>
+                                        <tbody ng-show="waiting">
+                                            <tr>
+                                                <td colspan="30" class="text-center">
+                                                    <i class="text-3x fa fa-spinner fa-spin"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody ng-show="totalItems == 0 && !waiting">
+                                            <tr >
+                                                <td colspan="30" class="text-center">
+                                                    Không có dữ liệu
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                        <tbody ng-repeat="item in list_data" class="b-b">
+                                        <tr>
+                                            <td>{{item_stt + $index + 1}}</td>
+                                            <td>
+                                                <p>
+                                                    <a ng-href="{{link_seller}}#/detail/{{item.tracking_code}}" target="_blank" class="label bg-light text-base text-info">{{item.tracking_code}}</a>
+                                                </p>
+                                                <p ng-if="item.time_accept > 0" class="text-info">{{ item.time_accept * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                                                <p ng-if="item.time_pickup > 0" class="text-warning">{{ item.time_pickup * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                                                <p ng-if="item.time_success > 0" class="text-success">{{ item.time_success * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                                            </td>
+                                            <td>
+                                                <p ng-if="item.status == 38"> <!-- khách yêu cầu phát lại -->
+                                                    <span class="label text-xs pointer {{list_color[status_group[item.status]] || ''}}" ng-mouseover="getReponse(item, status_group[item.status])" popover-trigger="mouseenter"
+                                                          popover-placement="top" popover="{{(item.waiting) ? 'Đang tải dữ liệu ...' : list_reponse[item.id]  || 'Không có dữ liệu'}}" >
+                                                        {{(list_status[item.status].split('/').length > 1) ? list_status[item.status].split('/')[1] :  list_status[item.status]}}{{item.num_pick > 0 ? '('+item.num_pick+' lần)' : ''}} <i class="fa fa-edit pointer" ng-if="check_privilege('PRIVILEGE_PICKUP','edit')" ng-click="change_status(item)"></i>
+                                                    </span>
+                                                </p>
+
+                                                <p ng-if="item.status != 38">
+                                                    <span class="label text-xs {{list_color[status_group[item.status]] || ''}}">{{(list_status[item.status].split('/').length > 1) ? list_status[item.status].split('/')[1] :  list_status[item.status]}}{{item.num_pick > 0 ? '(lần '+item.num_pick+') ' : ''}}<i class="fa fa-edit pointer" ng-if="check_privilege('PRIVILEGE_PICKUP','edit')" ng-click="change_status(item)"></i></span>
+                                                </p>
+                                                <p>
+                                                    <i class="fa" ng-class="{'fa-truck': ([1,3].indexOf(item.service_id) != -1),'fa-plane': ([2,4].indexOf(item.service_id) != -1)}"></i>
+                                                    <a class="text-info" href="{{link_hvc(item.courier_id, item.courier_tracking_code, item.tracking_code)}}" target="_blank">{{courier[item.courier_id] || 'Hãng vận chuyển'}}</a>
+                                                </p>
+                                                <p ng-show="item.courier_tracking_code">
+                                                    <a ng-href="{{link_hvc(item.courier_id, item.courier_tracking_code, item.tracking_code)}}" target="_blank" class="label bg-light text-base text-warning">{{item.courier_tracking_code}}</a>
+                                                </p>
+                                                <p>
+                                                    <i class="fa fa-globe"></i> {{item.domain || 'domain'}}
+                                                </p>
+                                                <p ng-show="item.verify_id > 0">
+                                                    <a class="label bg-light text-base text-info"><i class="fa fa-lock text-base text-warning"></i> {{item.verify_id}}</a>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    <i class="fa" ng-class="{'fa-user' : list_vip.indexOf(item['from_user_id']) == -1, 'fa-star text-lgx text-warning' : list_vip.indexOf(item['from_user_id']) != -1}"></i>
+                                                    {{(list_location.list_from_address[item.from_address_id] ? list_location.list_from_address[item.from_address_id]['user_name'] : item['from_user']['fullname']) || 'Họ tên' | limitTo : 30}}
+                                                </p>
+                                                <p>
+                                                    <i class="fa fa-envelope-o"></i> {{item['from_user']['email'] || 'email'}} <i class="fa fa-phone"></i>{{(list_location.list_from_address[item.from_address_id] ? list_location.list_from_address[item.from_address_id]['phone'] : item['from_user']['phone']) || 'Điện thoại' | limitTo : 30}}
+                                                </p>
+                                                <p>
+                                                        <span>
+                                                            <i class="fa fa-home"></i>
+                                                            {{list_location['list_district'][1*item.from_district_id] || 'Quận huyện'}} *
+                                                            {{list_location['list_city'][1*item.from_city_id] || 'Thành phố' }} *
+                                                            {{country[item.from_country_id] || 'Quốc gia'}}
+                                                        </span>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    <i class="fa fa-user"></i> {{item.to_name || 'Người nhận'}}
+                                                </p>
+                                                <p>
+                                                    <span ng-show="item['to_email']"><i class="fa fa-envelope-o"></i> {{item['to_email'] || ''}}</span> <a href="callto:{{item['to_phone'] || 'Điện thoại'}}">
+                                                    <i class="fa fa-phone"></i>{{item['to_phone'] || 'Điện thoại'}}
+                                                </a>
+                                                </p>
+                                                <p>
+                                                    <i class="fa fa-home"></i>
+                                                    {{list_location['list_district'][1*item.to_district_id] || 'Quận huyện'}} *
+                                                    {{list_location['list_city'][1*item.to_city_id] || 'Thành phố'}} *
+                                                    {{country[item.to_country_id] || 'Quốc gia'}}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p>HVC Cam kết : <i class="text-info">{{ item.courier_estimate }} giờ</i></p>
+                                                <p class="text-info"> {{item.promise_time * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                                            </td>
+                                            <td>
+                                                <p ng-if="item.time_success > 0" ng-init="time_slow = __get_time_slow(item.time_success, item.promise_time)">
+                                                    <i class="text-info">
+                                                    {{time_slow > 24 ? (time_slow/24) : time_slow || '0' | number:0}}
+                                                    <span ng-show="time_slow > 24"> (ngày)</span>
+                                                    <span ng-show="time_slow <= 24"> (h)</span></i>
+                                                </p>
+                                                <p ng-if="item.time_success === 0" ng-init="time_slow = __get_time_slow('',item.promise_time)">
+                                                    <span ng-show="time_slow > 0">
+                                                        Lần 3 : <i class="text-info">
+                                                        {{(time_slow > 24) ? (time_slow/24) : time_slow || '0' | number:0}}
+                                                        <span ng-show="time_slow > 24"> (ngày)</span>
+                                                        <span ng-show="time_slow <= 24"> (h)</span></i>
+                                                    </span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <!--tr>
+                                            <td colspan="7" class="text-left">
+                                                <ul class="breadcrumb bg-white m-n">
+                                                    <li><a href="javascript:;"><i class="fa fa-flag"></i> Đơn hàng hoàn chậm</a></li>
+                                                    <li ng-repeat="it in item.pipe_journey" ng-class="{'active':$last}" tooltip-html-unsafe="{{it.note || ''}} <br /> {{ it.time_create * 1000 | date : 'dd-MM-yyyy  HH:mm' }}" tooltip-placement="top">
+                                                        <a href="javascript:;">
+                                                            {{pipe_status[it.pipe_status] || 'Hành trình'}}
+                                                        </a>
+                                                    </li>
+                                                    <li ng-click="action(item, list_pipe_status, pipe_priority[item.pipe_status], 5, 103)" class="pointer"><i class="text-success text-lg fa  fa-plus"></i></li>
+                                                    <progressbar value="(pipe_priority[item.pipe_status]/pipe_limit)*100 || '0'" class="progress-xs bg-light m-n" animate="true" type="success">
+                                                    </progressbar>
+                                                </ul>
+
+                                            </td>
+                                        </tr-->
+                                        </tbody>
+                                    </table>
+
+                                    <div class="row" ng-show="list_data.length">
+                                        <div class="col-sm-3 wrapper-md pull-left">
+                                            <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> đơn hàng
+                                        </div>
+                                        <div class="col-sm-4 text-right text-center-xs pull-right">
+                                            <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                        </div>
+                                    </div>
+                                    <script id="ModalAdd.html" type="text/ng-template">
+                                        <div ng-include="'tpl/pickup/modal.add.html'"></div>
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

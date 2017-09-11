@@ -1,0 +1,221 @@
+<div ng-controller="GroupUserCtrl">
+    <div class="bg-light lter b-b wrapper-md ng-scope">
+        <div class="row">
+            <h1 class="m-n font-thin h3 col-md-5">Quản lý nhóm thành viên</h1>
+            <div class="pull-right">
+                <a class="btn btn-sm btn-success" href="javascript:;" ng-click="openSaveModal()">Tạo nhóm mới</a>
+            </div>
+        </div>
+    </div>
+    <div class="col wrapper-sm ng-scope">
+        <div class="panel panel-default ">
+            <div class="table-responsive col-md-12" >
+                
+                <table class="table table-striped b-t b-light">
+                  <thead>
+                    <tr>
+                      <th style="width:20px;">#</th>
+                      <th>Tên nhóm</th>
+                      <th class="text-right">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr ng-repeat="item in list_data">
+                      <td>{{$index + 1}}</td>
+                      <td><a >{{item.name}}</a></td>
+                      <td class="text-right">
+                          <a class="btn btn-sm btn-info" href="javascript:;" ng-click="openSaveModal(item)">Chỉnh sửa</a>
+                          <a class="btn btn-sm btn-danger" ng-disabled="load_remove" href="javascript:;" ng-click="remove(item, $index)">Xóa</a>
+                      </td>
+
+                        <tr>
+                           <td colspan="4" class="text-center">
+                                <div class="loading" ng-if="load_process">
+                                    <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i>
+                                    <p>Đang tải dữ liêu</p> 
+                                </div>
+                                <p ng-if="list_data.length == 0 && !load_process">Không có dữ liệu</p>
+                           </td> 
+                        </tr>
+                  </tbody>
+                </table>
+                <div class="text-right text-center-xs pull-left m-l-sm" ng-if="list_data.length">
+                    <pagination total-items="totalItems" ng-model="page" data-max-size="max_size" items-per-page="{{item_page}}" ng-change="load(page)"></pagination>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+<!--             <div class="col-md-4">
+                <h4 class="text-center">{{selectedItem.id ? 'Cập nhật' : 'Thêm mới'}}</h4>
+                <form role="form" name="add_group_form" class="form-horizontal form-validation">
+                    <div class="form-group form-inline row">
+                      <label class="col-sm-3 col-md-3 col-lg-2 control-label">Tên group</label>
+                      <div class="col-sm-9 col-md-9 col-lg-10">
+                          <input type="text" class="form-control" placeholder="Nhập tên nhóm" name="name" ng-model="selectedItem.name" style="width:100%" required>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group form-inline row" >
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Chức năng</label>
+                        <div class="col-sm-9 col-md-9 col-lg-10">
+                            <div class="">
+                                <select name="" ng-model="privilege_selected" class="form-control" style="width:100%" ng-change="change_privilege(privilege_selected)">
+                                    <option value="">- Chức năng cần phần quyền -</option>
+                                    <option value="{{item.id}}" ng-repeat="item in list_privilege">{{item.description}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="form-group form-inline row" >
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Hành động</label>
+                        <div class="col-sm-6 col-md-6 col-lg-5 m-l-sm">
+                            <div class="checkbox ">
+            
+                                <label class="i-checks m-r-sm"> 
+                                    <input type="checkbox" ng-model="selectedItem.group_privilege[privilege_selected].view" ng-checked="selectedItem.group_privilege[privilege_selected].view == 1" ng-true-value="1" ng-false-value="0" ng-disabled="privilege_selected == ''"><i></i> Xem <br/>
+                                </label>
+            
+                                <label class="i-checks m-r-sm"> 
+                                    <input type="checkbox" ng-model="selectedItem.group_privilege[privilege_selected].add" ng-checked="selectedItem.group_privilege[privilege_selected].add == 1" ng-true-value="1" ng-false-value="0" ng-disabled="privilege_selected == ''"><i></i> Thêm <br/>
+                                </label>
+            
+                                <label class="i-checks m-r-sm"> 
+                                    <input type="checkbox" ng-model="selectedItem.group_privilege[privilege_selected].edit" ng-checked="selectedItem.group_privilege[privilege_selected].edit == 1" ng-true-value="1" ng-false-value="0" ng-disabled="privilege_selected == ''"><i></i> Sửa 
+                                </label>
+                                <label class="i-checks m-r-sm"> 
+                                    <input type="checkbox" ng-model="selectedItem.group_privilege[privilege_selected].del" ng-checked="selectedItem.group_privilege[privilege_selected].del == 1" ng-true-value="1" ng-false-value="0" ng-disabled="privilege_selected == ''"><i></i> Xóa <br/>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="form-group form-inline row" >
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Trạng thái</label>
+                        <div class="col-sm-6 col-md-6 col-lg-5 m-l-sm">
+                            <div class="checkbox ">
+                                <label class="i-checks"> 
+            
+                                    <input type="checkbox" ng-model="selectedItem.active" ng-checked="selectedItem.active == 1" ng-true-value="1" ng-false-value="0" checked="checked"><i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="form-group form-inline">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">&nbsp;</label>
+                        <div class="col-sm-6 col-md-6 col-lg-5 m-l-sm">
+                            <button type="submit" class="btn btn-md btn-success pull-left text-uc m-t-n-xs m-r-sm" ng-click="save()" ng-disabled="add_group_form.$invalid || load_submit"><i class="fa fa-spinner fa-spin fa-fw margin-bottom" ng-if="load_submit"></i> Lưu lại</button> 
+                            <button type="button" class="btn btn-md btn-danger pull-left text-uc m-t-n-xs" ng-click="reset_form()">Hủy</button>
+                        </div>
+                    </div>
+            
+                </form>
+            </div>end
+             -->
+             <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="GroupUserSave.html">
+    
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12 text-center">
+              <h4>{{selectedItem.id ? 'Cập quyền nhóm '+ selectedItem.name  : ''}} </h4>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal form-validation" name="frm_edit">
+        <div class="modal-body wrapper-md">
+            
+            <div class="form-group col-md-12" >
+                <label class="col-lg-2 control-label" style="padding-top:0">Tên nhóm</label>
+                <div class="col-lg-10">
+                    <input class="form-control"  ng-model="selectedItem.name"/>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-12">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                          <tr>
+
+                            <th>Tên quyền</th>
+                            <th>Mã quyền</th>
+                            <th>Xem</th>
+                            <th>Thêm</th>
+                            <th>Sửa</th>
+                            <th>Xóa</th>
+                            <th>Xuất excel</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="item in list_privilege" ng-init="selectedItem.group_privilege[item.id] = (selectedItem.group_privilege[item.id]) ? selectedItem.group_privilege[item.id] : {}">
+
+                            <td>{{item.description}}</td>
+                            <td>{{item.code}}</td>
+
+                            <td>
+                                <div class="checkbox ">
+                                    <label class="i-checks"> 
+                
+                                        <input type="checkbox" ng-model="selectedItem.group_privilege[item.id].view" ng-checked="selectedItem.group_privilege[item.id].view == 1" ng-true-value="1" ng-false-value="0"><i></i>
+                                    </label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="checkbox ">
+                                    <label class="i-checks">
+
+                                        <input type="checkbox" ng-model="selectedItem.group_privilege[item.id].add" ng-checked="selectedItem.group_privilege[item.id].add == 1" ng-true-value="1" ng-false-value="0"><i></i>
+                                    </label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="checkbox ">
+                                    <label class="i-checks">
+
+                                        <input type="checkbox" ng-model="selectedItem.group_privilege[item.id].edit" ng-checked="selectedItem.group_privilege[item.id].edit == 1" ng-true-value="1" ng-false-value="0" ><i></i>
+                                    </label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="checkbox ">
+                                    <label class="i-checks">
+
+                                        <input type="checkbox" ng-model="selectedItem.group_privilege[item.id].del" ng-checked="selectedItem.group_privilege[item.id].del == 1" ng-true-value="1" ng-false-value="0" ><i></i>
+                                    </label>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="checkbox ">
+                                    <label class="i-checks">
+
+                                        <input type="checkbox" ng-model="selectedItem.group_privilege[item.id].export" ng-checked="selectedItem.group_privilege[item.id].export == 1" ng-true-value="1" ng-false-value="0" ><i></i>
+                                    </label>
+                                </div>
+                            </td>
+
+                          </tr>
+                          
+                        </tbody>
+                    </table>
+                    </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+            <button class="btn btn-success" ng-disabled="frm_edit.$invalid || load_submit" ng-click="save()">Cập nhật</button>
+            <button class="btn btn-info" ng-click="close()">Đóng</button>
+        </div>
+    </form>
+</script>

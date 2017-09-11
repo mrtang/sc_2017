@@ -1,0 +1,320 @@
+<div ng-controller="AddProductController">
+	<div class="wrapper-md bg-light b-b">
+		<!-- <h1 class="m-n font-thin h3">{{product.ProductId ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm mới'}}</h1> -->
+		<h1 class="m-n font-thin h3" ng-if="!product.ProductId">{{ 'PROA_h1_themsanphammoi' | translate }}</h1>
+		<h1 class="m-n font-thin h3" ng-if="product.ProductId">{{'PROA_h1_capnhatsanpham' | translate }}</h1>
+	</div>
+	<div class="hbox hbox-auto-xs hbox-auto-sm">
+		<div class="col wrapper-sm">
+			<div class="clearfix m-b">
+				<div class="panel panel-default">
+					<div class="panel-heading font-bold" translate>PROA_h1_thongtinsanpham</div> <!-- Thông tin sản phẩm -->
+					<div class="panel-body">
+						<form ng-submit="saveProduct()" name="formAddEditProduct" role="form"
+							class="form-horizontal form-validation ng-invalid ng-invalid-required ng-invalid-validator
+							ng-invalid-b ng-invalid-a ng-dirty ng-invalid-number">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_h1_tensanpham' | translate }}
+										<boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required></label><!-- Tên sản phẩm -->
+										<div class="col-sm-7 col-md-7 col-lg-7" ng-class="{'open':checkSugest}" >
+											<input ng-disabled="product.EditSku" tabindex="1" boxme-enter="resetSugest()" ng-forcus="setSugest()" ng-change ="showSugest()" ng-model="product.Name" type="text" class="form-control" placeholder="{{'PROA_h1_nhaptensanphamtheogoiy' | translate }}" required>
+											<ul class="dropdown-menu m-l">
+												<li ng-repeat="fullmodel in listProductsMetadata" ng-mouseover="setSugest()" ng-mouseleave="resetSugest()"><a ng-click="seleteSugest(fullmodel)"> {{fullmodel.model.name}}</a></li>
+											</ul>
+											<sub class="text-danger" ng-show='formAddEditProduct.product_name.$dirty && formAddEditProduct.product_name.$invalid'> Bạn vui lòng nhập tên sản phẩm!</sub>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_h1_danhmucsanpham' | translate }} 
+										<boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required></label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<div ui-module="select2" ng-mouseover="resetSugest()">
+												<input tabindex="2" ui-select2="select2OptionsCategory" ng-model="listCateId" 
+													class="form-control" name="listCateId" ng-disabled="product.ProductId || product.ModelId" 
+													placeholder="Nhập tên danh mục chọn theo gợi ý"
+													required>
+												<sub class="text-danger" ng-show='formAddEditProduct.listCateId.$dirty && formAddEditProduct.listCateId.$invalid'>
+													{{'PROA_p_banvuilongnhapdanhmucsanpham' | translate }}<!-- Bạn vui lòng nhập Danh mục sản phẩm! -->
+												</sub>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label" tooltip="{{'PROA_p_bancothenhaphangnguoibankhac' | translate }}">{{'PROA_nhacungcap' | translate }}<!-- Nhà cung cấp  -->
+										<boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required></label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<div>
+												<input ng-model="listProviderId" class="form-control">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label" tooltip="{{'PROA_boxmeseduavaokhoiluongdetinhphi' | translate }}">{{'PROA_khoiluong' | translate }}<!-- Khối lượng --> <boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required> </label>
+										<div class="col-sm-4 col-md-4 col-lg-4 m-b-xs"> <!-- ng-disabled="product.ModelName" -->
+											<input  ng-mouseover="resetSugest()" name="product_weight" ng-model="product.Weight"	 ng-init="product.Weight=250;" min="0" type="number" class="form-control" required>
+											<sub class="text-danger" ng-show='formAddEditProduct.product_weight.$dirty && formAddEditProduct.product_weight.$invalid'> {{'PROA_banvuiongnhapkhoiluonglonhon0' | translate }}<!-- Bạn vui lòng nhập khối lượng lớn hơn 0! --></sub>
+										</div>
+										<div class="col-sm-3 col-md-3 col-lg-3">
+											<select name="product_weight_unit" ng-init="product.WeightUnit=1;" ng-model="product.WeightUnit" class="form-control">
+													<option value="{{weight.id}}" ng-selected="weight.id==product.WeightUnit" ng-repeat="weight in weights">{{weight.name}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_motasanpham' | translate }} <!-- Mô tả sản phẩm --> <boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required>
+										</label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<textarea tabindex="3" required class="form-control" rows="3" name="product_detail"
+												boxme-focus-on-change="product.ModelId" ng-model="product.Description"
+												ng-init="product.Description='';" placeholder="{{'PROA_baogomcacdieukiendonggoiHsd' | translate }}"></textarea>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label" tooltip="{{'PROA_phailadangtextvietlien' | translate }}">{{'PROA_masanphamskucuaban' | translate }}
+										<boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required><!-- Mã sản phẩm (SKU) của bạn --> </label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<input name="product_sku_code" ng-model="product.SellerSKU" ng-init="product.ManufactureBarcode='';" ng-class="errro1" type="text" class="form-control"  ng-change="check_change_sku_seller()"	ng-disabled="product.ProductId">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_soluong' | translate }}<!-- Số lượng  -->
+										<boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required></label>
+										<div class="col-sm-4 col-md-4 col-lg-4 m-b-xs" ng-init="min=min||1">
+											<input tabindex="4" ng-if="product.ProductId" name="product_quantity" type="number"
+												class="form-control" ng-disabled="product.InventoryType=='BOXME'"
+												ng-model="product.Quantity" min="{{min}}" max="10000" >
+											<input tabindex="4" ng-if="!product.ProductId" name="product_quantity" type="number"
+												class="form-control" ng-disabled="product.InventoryType=='BOXME'"
+												ng-model="product.Quantity" min="1" max="1000" required>
+											<sub class="text-danger" ng-if='formAddEditProduct.product_quantity.$error.min&&!product.ProductId' translate>PROA_banvuilongnhaptoithieu</sub> <!-- Bạn vui lòng nhập tối thiếu <strong>1</strong> sản phẩm! -->
+                                            <sub class="text-danger" ng-if='formAddEditProduct.product_quantity.$error.min&&product.ProductId'> {{'PROA_banvuilongnhaplonghonsoluongtrongkho' | translate }}<!-- Bạn vui lòng nhập lớn hơn hoặc bằng số lượng sản phẩm đang có trong kho {{app.name}}! --></sub>
+											<sub class="text-danger" ng-if='formAddEditProduct.product_quantity.$error.max'> {{'PROA_banvuilongnhaptoida1000' | translate }}<!-- Bạn vui lòng nhập tối đa <strong>1000</strong> sản phẩm --></sub>
+										</div>
+										<div class="col-sm-3 col-md-3 col-lg-3">
+											<select class="form-control" name="product_unit" ng-init="product.QuantityUnit='';"
+											ng-model="product.QuantityUnit">
+												<option value=""></option>
+												<option ng-selected="unit.id==product.QuantityUnit" value="{{unit.id}}"
+													ng-repeat="unit in units">{{unit.name}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_giasanpham' | translate }}<!-- Giá sản phẩm (vnđ) -->
+										<boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required></label>
+										
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<div class="row" >
+												<div class="col-sm-12 col-md-12 col-lg-4">
+												<label tooltip="{{'PROA_Boxmeseduavaogiabanledetinhphi' | translate }}">{{'PROA_giabanle' | translate }} ({{viewCurrency}})<!-- Giá bán lẻ --> <boxme-input-required/></label>
+												<input  ng-if="ViewHomeCurrency == viewCurrency" required tabindex="5" name="product_cost" ng-model="product.SalePrice"
+													ng-init="product.SalePrice=0" class="form-control text-right" boxme-number-format>
+												<input ng-if="ViewHomeCurrency != viewCurrency"  required tabindex="5"  placeholder="{{'PROA_giabanle' | translate}} ({{viewCurrency}})" type="text" 
+												ng-model="product.SalePrice_currency_2"  ng-init="product.SalePrice_currency_2=0" ng-change="product.SalePrice=convert_currency_to_home_currency(product.SalePrice_currency_2)"  class="form-control" >	
+												<span  ng-if="ViewHomeCurrency !=viewCurrency">
+										              {{product.SalePrice || '0' | number:0}}{{ViewHomeCurrency}}
+									            </span>
+												<sub class="text-danger" ng-show='formAddEditProduct.product_cost.$dirty && formAddEditProduct.product_cost.$invalid'> {{'PROA_banvuilongnhapdulieukieuso' | translate }} <!-- Bạn vui lòng nhập dữ liệu kiểu số! --></sub>
+												</div>
+												<div class="col-sm-12 col-md-12 col-lg-4">
+													<label tooltip="{{'PROA_Neubancungcaphangchocacdaily' | translate }}"> {{'PROA_giabansi' | translate }} ({{viewCurrency}})<!-- Giá bán sỉ --> </label>
+													<input ng-if="ViewHomeCurrency == viewCurrency" placeholder="{{'PROA_giabansi' | translate}} ({{viewCurrency}})" tabindex="6" name="product_cost" ng-model="product.WholeSalePrice"
+														ng-init="product.WholeSalePrice=0" class="form-control text-right" boxme-number-format>
+													<input ng-if="ViewHomeCurrency != viewCurrency" placeholder="{{'PROA_giabansi' | translate}}({{viewCurrency}})" type="text" 
+													 ng-model="product.WholeSalePrice_currency_2" ng-init="product.WholeSalePrice_currency_2=0" ng-change="product.WholeSalePrice=convert_currency_to_home_currency(product.WholeSalePrice_currency_2)"  class="form-control"  ng-minlength="1" >	
+													<span  ng-if="ViewHomeCurrency !=viewCurrency">
+											              {{product.WholeSalePrice || '0' | number:0}}{{ViewHomeCurrency}}
+										            </span>
+													<sub class="text-danger" ng-show='formAddEditProduct.product_cost.$dirty && formAddEditProduct.product_cost.$invalid'> {{'PROA_banvuilongnhapdulieukieuso' | translate }} <!-- Bạn vui lòng nhập dữ liệu kiểu số!< -->/sub>
+												</div>
+												<div class="col-sm-12 col-md-12 col-lg-4">
+													<label tooltip="{{'PROA_giupbancapnhattinhtoandcuochiphi' | translate }}">{{'PROA_Giagoc' | translate }} ({{viewCurrency}})</label>
+													<input ng-if="ViewHomeCurrency == viewCurrency" tabindex="7" name="product_cost" ng-model="product.BasePrice"
+														ng-init="product.BasePrice=0" class="form-control text-right" boxme-number-format>
+													<input tabindex="7" name="product_cost" ng-if="ViewHomeCurrency != viewCurrency"  required tabindex="5"  placeholder="{{'PROA_Giagoc' | translate}} ({{viewCurrency}})" type="text" 
+													ng-model="product.BasePrice_currency_2" ng-init="product.BasePrice_currency_2=0" ng-change="product.BasePrice=convert_currency_to_home_currency(product.BasePrice_currency_2)"  class="form-control" >	
+													<span  ng-if="ViewHomeCurrency !=viewCurrency">
+											              {{product.BasePrice || '0' | number:0}}{{ViewHomeCurrency}}
+										            </span>
+													<sub class="text-danger" ng-show='formAddEditProduct.product_cost.$dirty && formAddEditProduct.product_cost.$invalid'> {{'PROA_banvuilongnhapdulieukieuso' | translate }} <!-- Bạn vui lòng nhập dữ liệu kiểu số! --></sub>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_anhsanpham' | translate }}<!-- Ảnh sản phẩm --> <span class="help-block m-b-none block">{{'PROA_bancothekeothanhieuhanhanh' | translate }} <!-- Bạn có thể kéo thả nhiều hình ảnh sản phẩm vào ô bên cạnh. --></span></label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<div boxme-dropzone3 ng-model="product.ProductImages" preload="imagePromise"
+												class="dropzone" style="min-height:120px; background-image:initial">
+												<div class="dz-message" data-dz-message><span><i class="fa fa-picture-o fa-lg"></i> {{'PROA_nhanhoackeothahinhanhdeupload' | translate }} <!-- Nhấn hoặc kéo thả hình ảnh để upload --></span></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_tenmodel' | translate }}<!-- Tên Model -->
+										</label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<input ng-mouseover="resetSugest()" typeahead="fullmodel as fullmodel.model.name for fullmodel in ProductsMetadata.getModels($viewValue)"
+												typeahead-on-select="extractProductMetaByModel($item, $model, $label)"
+												typeahead-editable='false' typeahead-loading="isLoading"
+												ng-model="product.ModelName" type="text" class="form-control"
+												name="suggestionModel" ng-disabled="product.ProductId"
+												ng-change="clearSync()">
+											<sub class="text-danger" ng-show="formAddEditProduct.suggestionModel.$dirty &&
+											formAddEditProduct.suggestionModel.$invalid && !isLoading">
+												{{'PROA_banvuilongchonmodeltheodanhsach' | translate }}<!-- Bạn vui lòng chọn model từ danh sách gợi ý! -->
+											</sub>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_linksanpham' | translate }}<!-- Link sản phẩm --></label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<input type="url" ng-model="product.ExternalUrl" ng-init="product.ExternalUrl='';" name="ExternalUrl"  class="form-control" placeholder="Nhập đường link sản phẩm trên website">
+											<sub class="text-danger" ng-show='formAddEditProduct.ExternalUrl.$dirty && formAddEditProduct.ExternalUrl.$invalid'> {{'PROA_Banvuilongnhapkieulink' | translate }}<!-- Bạn vui lòng nhập kiểu link! --></sub>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label">{{'PROA_khohang' | translate }}<!-- Kho hàng --> 
+										<boxme-input-required><sup><i style="font-size: 0.5em" class="fa fa-circle text-danger"></i></sup></boxme-input-required></label>
+										<div class="col-sm-4 col-md-4 col-lg-4 m-b-xs">
+											<select class="form-control" name="product_inventory"
+												ng-model="product.InventoryId" >
+												<option value="">{{'PROA_chonkhohang' | translate }}<!-- Chọn kho hàng --></option>
+												<option type="number" ng-selected="warehouse.InventoryId==product.InventoryId" value="{{warehouse.InventoryId}}" ng-repeat="warehouse in listWareHouse">{{warehouse.Name}}</option>
+											</select>
+											<sub class="text-danger" ng-show='formAddEditProduct.product_inventory.$dirty && formAddEditProduct.product_inventory.$invalid'>{{'PROA_banvuilongchonkhohang' | translate }} <!-- Bạn vui lòng chọn kho hàng! --></sub>
+										</div>
+										<div class="col-sm-3 col-md-3 col-lg-3">
+										   <a  ui-sref="app.config.inventory" class="btn btn-default" >{{'PROA_taokho' | translate }}<!-- Tạo kho --></a>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label" tooltip="{{'PROA_Boxmeseduavaothetichnaydetinhphi' | translate }}"> {{'PROA_thetich' | translate }}<!-- Thể tích --> (cm<sup>3</sup>) </label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<input name="product_volume" ng-init="product.Volume='';" ng-model="product.Volume" type="text" class="form-control" placeholder="10x20x30 (DàixRộngxCao)" ng-pattern="/^\d+x\d+x\d+$/">
+											<sub class="text-danger" ng-show='formAddEditProduct.product_volume.$dirty && formAddEditProduct.product_volume.$invalid'>{{'PROA_Banvuilongnhapchuoidang' | translate}} <!-- Bạn vui lòng nhập chuỗi dạng DàixRộngxCao như sau: 10x20x30 --></sub>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 col-md-4 col-lg-4 control-label"> {{'PROA_Motakiemtrakhinhapkho' | translate }} <!-- Mô tả kiểm tra khi nhập kho -->
+										</label>
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<textarea class="form-control" rows="3" name="product_detail"
+												ng-model="product.DescriptionTest"
+												ng-init="product.DescriptionBeforeInbound='';" placeholder="{{'PROA_Banvuilongmotacactieuchuan' | translate }}"></textarea> <!-- Bạn vui lòng mô tả các tiêu chuẩn khi nhập hàng vào trong kho. -->
+										</div>
+									</div>
+								</div>
+							</div> <!--/ row-->
+							<div class="row">
+								<!-- Nhiều mẫu/kiểu dáng -->
+								<div class="col-sm-12 line line-dashed b-b line-lg"></div>
+								<div class="col-sm-12"><h4>{{'PROA_NhieumauKieudang' | translate }}<!-- Nhiều mẫu/kiểu dáng --></h4></div>
+								<div class="col-sm-12 line line-dashed b-b line-lg"></div>
+								<div class="col-sm-12">
+									<p>{{'PROA_Neusanphamcuabanconhieuloai' | translate }}<!-- Nếu sản phẩm của bạn có nhiều loại khác nhau vui lòng ấn vào dấu tích bên dưới. --></p>
+									<p>{{'PROA_ViduAothuntrang' | translate }}<!-- Ví dụ: Áo thun trắng,xanh, size S,M,L,XL --></p>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										<div class="col-sm-12">
+											<div class="checkbox">
+												<label class="i-checks i-checks-sm">
+													<input name="product_prototype_other" ng-model="product.product_prototype_other" type="checkbox" ng-if="!product.AttrList" >
+													<i></i>
+													{{'PROA_TaonhieumauKieusanpham' | translate }} <!-- Tạo nhiều mẫu/kiểu sản phẩm --> 
+												</label>
+											</div>
+										</div>
+									</div>
+									<div ng-show="product.product_prototype_other" class="form-group" ng-repeat="(key,attr) in products_attrs" ng-init="">
+										<div class="col-sm-3 col-md-3 col-lg-2 m-b-xs">
+											<select  ng-model="attr.type" ng-options="attr for attr in properties"
+												class="form-control" ng-change="changeSuggestTest(key,attr.type)"></select>
+											<!-- <select ng-if="keyLang!='vi'"  ng-model="attr.type" ng-options="attr for attr in properties_en" class="form-control" ng-change="changeSuggestTest(key,attr.type)"></select> -->
+										</div>
+										<div class="col-sm-5 col-md-5 col-lg-4 m-t-n-xs">
+											<tags-input min-length=1 ng-model="attr.name"></tags-input>
+											<p >{{'PROA_NhanEnterdethemcactruongcuaban' | translate }} <!-- Nhấn Enter để thêm các trường của bạn --></p>
+											{{suggestTest[key]}}
+											{{suggestTestProduct}}
+										</div>
+										<div class="col-sm-2">
+											<a class="btn btn-sm btn-danger"  ng-click="delProperty(attr)">{{'Btt_cancel' | translate }} <!-- Hủy --></a>
+										</div>
+									</div>
+									<div ng-show="product.product_prototype_other" >
+										<button type="button"  ng-click="addProperty()" class="btn btn-sm btn-default m-r-sm">{{'PROA_Themthuoctinhkhac' | translate }} <!-- Thêm thuộc tính khác --></button>
+										<button type="button"  ng-click="generateProperty()" class="btn btn-sm btn-info">{{'PROA_Taocacmausanpham' | translate }}<!-- Tạo các mẫu sản phẩm --></button>
+									</div>
+									<div ng-show="product.product_prototype_other">
+										<h5>{{'PROA_Bangdanhsachcacmau' | translate }}<!-- Bảng danh sách các mẫu --></h5>
+										<table class="table table-striped table-bordered b-t b-light">
+											<thead>
+												<tr>
+													<th>{{'PROA_Thuoctinh' | translate}} <!-- Thuộc tính --></th>
+													<th class="text-center">{{'PROA_MaSKUcuaban' | translate }}<!-- Mã SKU của bạn --> <boxme-input-required/></th>
+													<th class="text-center">{{'PROA_Soluong' | translate }}<!-- Số lượng --> <boxme-input-required/></th>
+													<th class="text-center">{{'PROA_Giagoc' | translate }}<!-- Giá gốc --></th>
+													<th class="text-center">{{'PROA_giabansi' | translate }} <!-- Giá bán sỉ --></th>
+													<th class="text-center">{{'PROA_giabanle' | translate }}<!-- Giá bán lẻ  --><boxme-input-required/></th>
+													<th class="text-center">{{'PROA_Anhsanpham' | translate }}<!-- Ảnh sản phẩm --></th>
+													<th class="text-center">{{'PROA_Hanhdong' | translate }}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="prototype in prototypes">
+													<td>{{mapKey(prototype)}}</td>
+													<td class="text-center"><input ng-class="errro2" class="form-control" type="text"  ng-model="prototype.sku_code_seller" ng-change="check_sku_code_sellers(prototype.sku_code_seller)"></td>
+													<td class="text-center"><input class="w-xs form-control text-right" type="text"  ng-model="prototype.quantity" ></td>
+													<td class="text-center"><input class="w-xs form-control text-right" type="text"  ng-model="prototype.price" boxme-number-format></td>
+													<td class="text-center"><input class="w-xs form-control text-right" type="text"  ng-model="prototype.whole_price" boxme-number-format></td>
+													<td class="text-center"><input class="w-xs form-control text-right" type="text"  ng-model="prototype.cost" boxme-number-format></td>
+													<td class="text-center">
+														<div boxme-dropzone3 ng-model="prototype.image" style="min-height:80px;" class="dropzone">
+															<div class="dz-message" data-dz-message>
+																<span><i class="fa fa-picture-o fa-lg"></i> {{'PROA_nhanhoackeothahinhanhdeupload' | translate }}<!-- Nhấn hoặc kéo thả hình ảnh để upload --></span>
+															</div>
+														</div>
+													</td>
+													<td class="text-center">
+														<button ng-click="removeProperty(prototype)" type="submit" class="btn btn-sm btn-danger">{{'Btt_cancel' | translate }}<!-- Hủy --></button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="col-sm-12 line line-dashed b-b line-lg"></div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										<div class="col-sm-7 col-md-7 col-lg-7">
+											<button ng-show="product.ProductId" type="submit" class="btn btn-success" ng-disabled="formAddEditProduct.$invalid || formAddEditProduct.OnProccess" >
+												{{'PROA_Capnhat' | translate }}<!-- {{product.ProductId ? 'Cập nhật' : 'Tạo mới'}} -->
+												 <span ng-show="formAddEditProduct.OnProccess"><i class="fa fa-spin fa-spinner"></i></span>
+											</button>
+											<button ng-show="!product.ProductId" type="submit" class="btn btn-success" ng-disabled="formAddEditProduct.$invalid || formAddEditProduct.OnProccess" >
+												<!-- {{product.ProductId ? 'Cập nhật' : 'Tạo mới'}} -->
+												{{'PROA_Taomoi' | translate }}
+												 <span ng-show="formAddEditProduct.OnProccess"><i class="fa fa-spin fa-spinner"></i></span>
+											</button>
+											<p>
+												<small ng-if="formAddEditProduct.$invalid" class="text-danger">
+													{{'PROA_Banvuilongnhapduthongtin' | translate }}<!-- Bạn vui lòng nhập đủ các thông tin ở trên -->
+												</small>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div> <!--/ row-->
+						</form>
+					</div> <!--/ Panel body-->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

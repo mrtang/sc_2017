@@ -1,0 +1,104 @@
+<div ng-controller="RefuseCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="bg-light lter b-b wrapper-md col-sm-12 ">
+        <span class="m-n text-title text-size col-sm-3 no-padder font-thick"><i class="fa fa-cogs text-muted"></i> Refuse Managemant</span>
+        <div class="pull-right">
+            <a class="btn btn-info btn-addon" ng-click="open_popup('')" ><i class="fa fa-plus"></i> Add</a>
+            
+            <script id="ModalCreate.html" type="text/ng-template">
+                <div ng-include="'tpl/location/modal.form.create_refuse.html'"></div>
+            </script>
+        </div>
+    </div>
+    
+    <div class="wrapper-md  col-sm-12">
+        <div class="panel panel-default">
+        
+        <div class="row wrapper">
+            <div class="col-sm-3">
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" ng-model="search_city" typeahead="state as state.city_name for state in list_city | filter:{city_name:$viewValue} | limitTo:8" 
+                         typeahead-on-select='onSelectCity($item, $model, $label)' placeholder="Tỉnh/Thành phố ..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-sm btn-primary" ng-click="getRefuse()" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                  </span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" ng-model="search_district" typeahead-on-select='loadWard($item.id)' typeahead="state as state.district_name for state in list_district | filter:{district_name:$viewValue} | limitTo:8" placeholder="Quận/Huyện ..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-sm btn-primary" ng-click="getRefuse()" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                  </span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+                <div class="input-group">
+                    <input type="text" class="input-sm form-control" ng-model="search_ward"  placeholder="Phường xã ..." typeahead="state as state.ward_name for state in list_ward_table | filter:{ward_name : $viewValue} | limitTo:8" />
+                    
+                      <span class="input-group-btn">
+                        <button class="btn btn-sm btn-primary" ng-click="getRefuse()" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                      </span>
+                </div>
+            </div>
+        </div>
+
+            <div class="row wrapper">
+                <div class="col-lg-3 col-lg-offset-9">
+                    <button type="button" class="btn m-b-xs btn-success pull-right" ng-click="getRefuseExcel()"><i class="fa fa-file-excel-o"></i> Xuất Excel</button>
+                </div>
+            </div>
+        
+            <div class="table-responsive">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr>
+                    <th class="text-left">#</th>
+                    <th class="text-left">City</th>
+                    <th class="text-left">District</th>
+                    <th class="text-left">Ward</th>
+                    <th class="text-left">Courier</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="value in list_refuse">
+                    <td class="text-left">{{item_stt + $index + 1}}</td>
+                    
+                    <td class="text-left">               
+                        <a href="javascript:;" >
+                                 {{ city[value.province_id]['city_name'] || empty }}
+                        </a>
+                    </td>
+                    <td class="text-left">  
+                        <a href="javascript:;" >                
+                            {{ district[value.district_id]['district_name'] || value.district_name || empty}}
+                        </a>
+                    </td>
+                    <td class="text-left">
+                    <a href="javascript:;" editable-select="value.ward_id" onshow="loadWard(value.district_id)" e-ng-options="state.id as state.ward_name for state in list_ward_table" onbeforesave="change(value.id,$data,'ward_id', value)">{{ value.ward_name || 'empty' }}</a>
+                    </td>
+
+                    <td class="text-left">
+                    
+                    <a href="javascript:;" editable-select="value.courier_id" e-ng-options="item.id as item.name for item in list_courier_table" onbeforesave="change(value.id, $data, 'courier_id', value)">{{courier[value.courier_id].name}}</a>
+                    </td>
+                    
+                    <td class="text-center">
+                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="del(value.id, $index)"><i class="fa fa-times-circle"></i> &nbsp;DEL </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-4 text-right text-center-xs pull-right">                
+                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="getRefuse()"></pagination>
+                </div>
+              </div>
+            </footer>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,135 @@
+<toaster-container toaster-options="{'time-out': 0, 'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div class="wrapper-md bg-light b-b">
+	<h1 class="m-n font-thin h3 text-black"><i class="fa fa-shopping-cart text-info"></i> Xác thực Vimo &nbsp;&nbsp;</h1>
+</div>
+<div class="col wrapper-sm" ng-controller="VimoCreateController">
+    <div class="panel panel-default " ><!-- ng-controller="PickupLateCtrl" -->
+        <form class="form-horizontal form-validation" name="form_vimo" ng-submit="save(vimo,'vimo')" role="form">
+            <div class="panel-heading font-bold" tour-step order="13" content="Tài khoản ngân hàng để phục vụ việc thanh toán" placement="top" on-next="onTourEnd()" >Nhận tiền trực tiếp vào tài khoản ngân hàng (hoạt động từ 1/6/2015)</div> 
+            <div class="panel-body">
+                <div >
+                    <div class="form-group" ng-if="savedVimo" >
+                        <span class="col-sm-12">
+                        Chúng tôi đã gửi một email xác nhận cấu hình tài khoản ngân hàng tới địa chỉ email của bạn. <br/> Xin vui lòng kiểm tra hòm thư để hoàn tất việc xác nhận thông tin trên.
+                        <span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Email khách hàng</label>
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            <input type="text" class="form-control" ng-model="vimo.email" placeholder="Email khách hàng">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Ngân hàng</label>
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            <select ng-model="vimo.bank_code"  class="form-control" ng-options="item.code as item.name for item in list_bank" required />
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Họ tên chủ thẻ</label>
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            <input  ng-model="vimo.account_name" name="v_account_name" type="text" class="form-control" placeholder="Tên chủ thẻ " required >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Số thẻ</label>
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            <input ng-model="vimo.account_number" name="v_account_number" type="text" class="form-control" placeholder="Số thẻ " required  ng-pattern="/^\d+$/"/>
+                            <span class="text-info">(Chỉ áp dụng với khách hàng có thẻ ATM, Visa Debit hoặc Visa Credit)</span> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Ảnh mặt trước của thẻ 
+
+                        </label>
+                        
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            <label >
+                                <input
+                                    type="file"
+                                    nv-file-select 
+                                    uploader="uploaderPopup"
+                                        ><i></i> 
+                            </label>
+                            <p ng-if="loading.atm"><i class="fa fa-spinner fa-spin"></i> Đang tải lên</p>
+                            <a href="{{ApiStorage + vimo.atm_image}}"  target="_blank" ng-if="vimo.atm_image"><span class="text-info">Xem ảnh</span></a>
+                            <br/>
+                            <span class="text-info"><strong>Lưu ý</strong>: Không upload ảnh mặt sau của thẻ</span> 
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Ảnh mặt trước CMTND</label>
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            <label >
+                                <input
+                                    type="file"
+                                    nv-file-select
+                                    uploader="uploaderCMNDBefore"
+                                        ><i></i> 
+                            </label>
+                            <p ng-if="loading.cmnd_before"><i class="fa fa-spinner fa-spin"></i> Đang tải lên</p>
+                            <a href="{{ApiStorage + vimo.cmnd_before_image}}" target="_blank" ng-if="vimo.cmnd_before_image"><span class="text-info">Xem ảnh</span></a>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">Ảnh mặt sau CMTND</label>
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            <label >
+                                <input
+                                    type="file"
+                                    nv-file-select
+                                    uploader="uploaderCMNDAfter"
+                                        ><i></i> 
+                            </label>
+                            <p ng-if="loading.cmnd_after"><i class="fa fa-spinner fa-spin"></i> Đang tải lên</p>
+                            <a href="{{ApiStorage + vimo.cmnd_after_image}}" target="_blank" ng-if="vimo.cmnd_after_image">
+                            <span class="text-info">Xem ảnh</span></a>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:0px;">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">&nbsp;</label>
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            
+                            <p ng-if="vimo.id && vimo.active == 0" class="text-info"><strong>Đang chờ xác thực từ Shipchung.vn</strong></p>
+                            <p ng-if="vimo.id && vimo.active == 1" class="text-success"><strong>Đã xác thực</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label">&nbsp;</label>
+                        <div class="col-sm-9 col-md-9 col-lg-5">
+                            <div class="checkbox">
+                                <label class="i-checks" ng-init="_checkbox = true">
+                                    <input
+                                        type="checkbox"
+                                        ng-checked="true"
+                                        ng-model="_checkbox"
+                                        name="check"
+                                        required
+                                            ><i></i> Tôi đồng ý và chấp nhận những <a href="https://www.shipchung.vn/thong-bao-ap-dung-hinh-thuc-thanh-toan-tien-thu-ho-cod-truc-tiep-qua-tai-khoan-ngan-hang-cua-nguoi-gui-tu-ngay-162015/" target="_blank"><span class="text-info">điều khoản thanh toán</span></a> của Shipchung.vn.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-2 control-label"></label>
+                        <div class="col-sm-4 col-md-4 col-lg-2">
+                            <button ng-disabled="form_vimo.$invalid || !vimo.atm_image || !vimo.cmnd_before_image || !vimo.cmnd_after_image || processLoading" type="submit" class="btn btn-info btn-sm">Cập nhật</button>
+                        </div>
+                    </div>
+
+                </div>
+                
+                
+
+            </div>
+    </form>
+    </div>
+</div>

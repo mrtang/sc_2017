@@ -1,0 +1,83 @@
+<div class="modal-body wrapper-md">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="m-t-none m-b font-thin">Add New</h3>
+      <p> </p>
+      <form role="form" name="comissionForm" class="form-validation">
+      	<div class="form-group">
+            <label class="col-md-2">Hãng VC</label>
+            <div class="row">
+            	<div class="col-md-5">
+	            	<select class="form-control m-b" name="courier_id" ng-model="commission.courier_id" ng-options="cour.id as cour.name for cour in listCourier" class="form-control">
+	                    <option value="">Chọn hãng vận chuyển</option>
+	                </select>
+            	</div>
+            </div>
+        </div>
+        <div class="row">
+	        <div class="form-group col-md-6">
+	            <label class="col-md-4">Định mức</label>
+	            <div class="row">
+	            	<div class="col-md-7">
+		            	<input type="text" class="form-control" placeholder="Định mức" ng-model="commission.quota">
+	            	</div>
+	            </div>
+	        </div>
+	        <div class="form-group col-md-6">
+	            <label class="col-md-4 m-t-xs">Giá giảm</label>
+	            <div class="row">
+	            	<div class="col-md-6">
+		            	<input type="text" class="form-control" placeholder="Giá giảm" ng-model="commission.discount">
+	            	</div>
+	            </div>
+	        </div>
+	    </div>
+        <div class="row">
+	        <div class="form-group col-md-6" ng-controller="DatepickerCtrl">
+	            <label class="col-md-4 m-t-md">Từ ngày</label>
+	            <div class="row m-l-sm">
+	            	<div class="col-md-8">
+		            	<p class="input-group">
+			          		<p class="input-group">
+                              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="commission.from_date" is-open="opened" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                            </p>
+			       		</p>
+	            	</div>
+	            </div>
+	        </div>
+	        <div class="form-group col-md-6" ng-controller="DatepickerCtrl">
+	            <label class="col-md-4 m-t-md">Đến ngày</label>
+	            <div class="row m-l-sm m-t-sm">
+	            	<div class="col-md-8">
+		            	<p class="input-group">
+                          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="commission.to_date" is-open="opened" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                        </p>
+	            	</div>
+	            </div>
+	        </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-md-2">Kích hoạt</label>
+            <div class="row">
+	            <div class="checkbox col-md-3 m-n">
+	                <label class="i-checks"> 
+	                  <input type="checkbox" value="1" checked="checked" ng-model="commission.status"><i></i>
+	                </label>
+	            </div>
+            </div>
+        </div>
+        
+        <div class="checkbox m-t-lg">
+          <button type="submit" class="btn btn-sm btn-success pull-left text-uc m-t-n-xs" ng-click="saveCommissionBtn(commission)" ng-disabled='comissionForm.$invalid'>Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

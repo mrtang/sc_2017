@@ -1,0 +1,33 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Funnel Conversion Rate</div>
+    <table class="table table-striped m-b-none">
+        <thead>
+            <tr>
+                <th style="width:60px;" class="text-center">Graph</th>
+                <th>Index</th>
+                <th>Qty</th>
+                <th>% Conversion</th>
+                <th>Target</th>
+                <th>% Target</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>updating</td>
+                <td>Opportunity</td>
+                <td>{{employee_statistic['opps'] || '0'}}</td>
+                <td></td>
+                <td>{{employee_target['opps']['succeed_target'] || '0'}}</td>
+                <td>{{employee_target['opps']['percent_target']*100 || '0'}} %</td>
+            </tr>
+            <tr>
+                <td>updating</td>
+                <td>Won</td>
+                <td>{{employee_statistic['won'] || '0'}}</td>
+                <td>{{(employee_statistic['won']/employee_statistic['opps'])*100 || '0' | number:0}}%</td>
+                <td>{{employee_target['won']['succeed_target'] || '0'}}</td>
+                <td>{{employee_target['won']['percent_target']*100 || '0'}} %</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

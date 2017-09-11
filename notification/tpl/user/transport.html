@@ -1,0 +1,43 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div class="bg-light lter b-b wrapper-md ng-scope">
+  <div class="row">
+    <h1 class="m-n font-thin h3 col-md-4">Config User Transport</h1>
+  </div>
+</div>
+<div class="panel panel-default" ng-controller="UserTransportCtrl">
+	<form>
+		<div class="panel-body">
+			<div class="row">
+			    <div class="form-group">
+			        <label class="col-sm-1 control-label">User Name</label>
+			         <div class="col-sm-4">
+			            <b>{{info_user['fullname']}}</b>
+			        </div>
+			    </div>
+			</div>
+			<div class="line line-dashed b-b line-lg pull-in"></div>
+			<div class="row">
+			    <div class="form-group">
+	          		<label class="col-sm-1 control-label">Active</label>
+	          		<div class="col-sm-7">
+			            <label class="i-switch bg-primary m-t-xs m-r">
+		                    <input type="checkbox" ng-model="active" ng-true-value="1" ng-false-value="0" ng-checked="true">
+		                    <i></i>
+		                </label>
+	                </div>
+			    </div>
+			</div>
+			<div class="line line-dashed b-b line-lg pull-in"></div>
+			<div class="row">
+			    <div class="form-group">
+	          		<label class="col-sm-1 control-label">Transport</label>
+	          		<div class="col-sm-10">
+			            <label class="checkbox-inline i-checks m-r-md" ng-repeat="val in list_transport_user">
+			              <input type="checkbox" ng-model="val.id" ng-click="setAction(val.id,active)" ng-checked="val.checked == 1" ng-true-value="1" ng-false-value="0"><i></i>{{val.name}}
+			            </label>
+	                </div>
+			    </div>
+			</div>
+		</div>
+	</form>
+</div>

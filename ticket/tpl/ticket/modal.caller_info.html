@@ -1,0 +1,219 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-11 pull-left no-padder">
+                <h4 class="modal-title">Thông tin khách hàng <strong>{{user.fullname}}</strong></h4>
+            </div>
+            <button type="button" class="pull-right close" ng-click="cancel()"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <li class="list-group-item" href="">
+                <i class="fa fa-phone fa-fw text-muted"></i>
+                SĐT : <a href="callto:{{user.phone}}">{{user.phone}}</a>
+            </li>
+
+            <li class="list-group-item" href="">
+                <!-- <span class="badge bg-info">16</span> -->
+                <i class="fa fa-envelope fa-fw text-muted"></i>
+                Email : <a target="_blank" ui-sref="_search({search:user.email})">{{user.email}}</a>
+            </li>
+
+            <li class="list-group-item" href="" >
+                <i class="fa fa-dot-circle-o fa-fw text-muted"></i>
+                Ngân lượng : {{user.email_nl}}
+            </li>
+
+            <li class="list-group-item" href="" >
+                <i class="fa fa-university fa-fw text-muted"></i>
+                Ngân hàng : {{bank[user.bank_code]}}
+            </li>
+            <li class="list-group-item" href=""
+                tooltip-html-unsafe="Ảnh ATM : {{user.atm_image ? 'có' : 'chưa có'}}<br/>Ảnh mặt trước CMTND : {{user.cmnd_before_image ? 'có' : 'chưa có'}}<br/>Ảnh mặt sau CMTND: {{user.cmnd_after_image ? 'có' : 'chưa có'}}<br/>"
+                tooltip-placement="top" >
+                <i class="fa fa-user fa-fw text-muted"></i>
+                Chủ thẻ : {{user.account_name}} <i
+                    class="fa fa-check-circle {{user.vimo_active == 1 ? 'text-success' : ''}}"></i>
+            </li>
+            <li class="list-group-item" href="" >
+                <i class="fa fa-barcode fa-fw text-muted"></i>
+                Số thẻ : {{user.account_number}}
+            </li>
+            <li class="list-group-item" href="" >
+                <i class="fa fa-code-fork fa-fw text-muted"></i>
+                Phương thức TT : {{user.priority_payment == 1 ? 'Ngân hàng' : 'Ngân lượng'}}
+            </li>
+
+        </div>
+        <div class="col-md-6">
+            <li class="list-group-item" href="" >
+                <i class="fa fa-eye fa-fw text-muted"></i>
+                Số dư hiện tại : <strong class="text-danger">{{user.balance || '0' | vnNumber}} đ</strong>
+            </li>
+            <li class="list-group-item" href="" >
+                <i class="fa fa-eye fa-fw text-muted"></i>
+                Phí vận chuyển tạm tính : <strong class="text-danger">{{user.freeze || '0' | vnNumber}} đ</strong>
+            </li>
+            <li class="list-group-item" href="" >
+                <i class="fa fa-eye fa-fw text-muted"></i>
+                Thu hộ tạm tính : <strong class="text-danger">{{user.provisional || '0' | vnNumber}} đ</strong>
+            </li>
+
+            <li class="list-group-item" href="" >
+                <i class="fa fa-eye fa-fw text-muted"></i>
+                Số dư khả dụng : <strong class="text-danger"> {{(+user.balance + user.provisional - user.freeze) || '0'
+                | vnNumber}}đ</strong><br/>
+                <!--span class="text-info">(Xem chi tiết)</span-->
+
+            </li>
+
+            <li class="list-group-item" href="" >
+                <i class="fa fa-eye fa-fw text-muted"></i>
+                Hạn mức : <strong class="text-danger">{{user.quota || '0' | vnNumber}} đ</strong>
+            </li>
+
+            <li class="list-group-item" href="" >
+                <i class="fa fa-eye fa-fw text-muted"></i>
+                Trạng thái hiện tại : <strong>{{user.currentStatus }} </strong>
+            </li>
+
+            <li class="list-group-item" href="" >
+                <i class="fa fa-eye fa-fw text-muted"></i>
+                Nhân viên QL : <strong>{{user.manager.fullname || 'Chưa ai quản lý khách hàng này'}}</strong> <span
+                    ng-if="user.time_manager && user.time_manager > 0 && user.manager.fullname">({{user.time_manager * 1000  | date : "dd-MM-yyyy  HH:mm" }})</span>
+            </li>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <tabset class="m-t-md">
+        <tab>
+            <tab-heading>
+                <i class="glyphicon glyphicon-bell"></i> Cuộc gọi gần đây
+            </tab-heading>
+            <div class="m-t-md">
+                <table class="table table-striped m-b-none">
+                    <thead>
+                    <tr>
+                        <th>Loại cuộc gọi</th>
+                        <th>Thời gian</th>
+                        <th>Người gọi</th>
+                        <th>Người nhận</th>
+                        <th>Thời gian đàm thoại</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-if="loading.call_history">
+                    <td colspan="20" class="text-center">
+                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                    </td>
+                    </tbody>
+                    <tbody ng-if="call_history.length == 0 && !loading.call_history">
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            Không có dữ liệu
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+
+                    <tr ng-repeat="item in call_history |limitTo: 10">
+                        <td>
+                            <label class="label label-success" data-ng-if="call_phonenumber == item.src">Gọi đi</label>
+                            <label class="label label-info" data-ng-if="call_phonenumber !== item.src">Gọi đến</label>
+                        </td>
+                        <td>
+                            {{item.calldate}}
+                        </td>
+                        <td>
+                            {{item.src}}
+                        </td>
+                        <td>
+                            {{item.dst}}
+                        </td>
+                        <td>
+                            {{item.billsec || 0}} giây
+                        </td>
+                        <td>
+                            <label class="label label-success" ng-if="item.disposition == 'ANSWERED'">Đã trả lời</label>
+                            <label class="label label-danger" ng-if="item.disposition == 'BUSY'">Bận</label>
+                            <label class="label label-warning" ng-if="item.disposition == 'NO ANSWER'">Không trả
+                                lời</label>
+
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </tab>
+
+        <tab>
+            <tab-heading>
+                <i class="glyphicon glyphicon-bell"></i> Yêu cầu gần đây
+            </tab-heading>
+            <div class="m-t-md">
+                <table class="table table-striped m-b-none">
+                    <thead>
+                    <tr>
+                        <th>Yêu cầu</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-if="loading.newest_ticket">
+                    <td colspan="20" class="text-center">
+                        <i class="text-3x fa fa-spinner fa-spin"></i>
+                    </td>
+                    </tbody>
+                    <tbody ng-if="newest_ticket.length == 0 && !loading.newest_ticket">
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            Không có dữ liệu
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr ng-repeat="item in newest_ticket |limitTo: 10">
+                        <td>
+                            <a ng-href="http://ticket.shipchung.vn/#/ticket/request/management/7day/{{item.id}}"
+                               target="_blank">#{{item.id}} - {{item.title}}</a>
+                        </td>
+                        <td>
+                            <span class="label ng-binding " ng-class="ticket_btn[item.status].bg">{{ticket_btn[item.status].name}}</span>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </tab>
+
+        <tab>
+            <tab-heading>
+                <i class="glyphicon glyphicon-bell"></i> Vận đơn gần đây
+            </tab-heading>
+            <div class="m-t-md">
+                <div class="m-b" data-ng-repeat="item in listOrder" data-ng-if="listOrder.length > 0">
+                    <span class="label text-base bg-warning pos-rlt m-r"><i class="arrow right arrow-warning"></i> <span
+                            tooltip="{{(item.time_accept > 0) ? 'Duyệt lúc ' + (item.time_accept*1000 | date : 'HH:mm dd-MM-yyyy') :  'Chưa duyệt'}}">Tạo lúc {{item.time_create*1000 | date : 'HH:mm dd-MM-yyyy'}}</span></span>
+                    <a href="http://seller.shipchung.vn/#/detail/{{item.tracking_code}}" target="_blank">{{item.tracking_code}}</a>
+                        <span class="label text-xs pull-right bg-info bg">
+                            {{item.meta_status.name}}
+                        </span>
+                </div>
+            </div>
+
+        </tab>
+    </tabset>
+</div>
+
+<div class="modal-footer">
+    <button type="button" ng-if="!list_data.length && !waiting" class="btn btn-success" ng-click="open_create_ticket()">
+        Tạo yêu cầu mới
+    </button>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+</div>

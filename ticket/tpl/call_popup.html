@@ -1,0 +1,51 @@
+
+<div id="sessions">
+    <div id="call-widget" ng-show="showCallSession" >
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-body session effect8" >
+                    <a href="" class="thumb pull-right m-l m-t-xs avatar">
+                        <img src="img/a0.jpg" alt="">
+                        <i class="on md b-white bottom"></i>
+                    </a>
+
+                    <div class="clear call inactive">
+                        <div class="peer">
+                            {{call_info.direction == "incoming" ? "Cuộc gọi đến" : "Đang gọi đến"}}: <a href="" class="text-info block m-b-xs" ng-click="show_info('lg',call_info.user)"> 
+                            <span ng-if="call_info.user">{{call_info.user.identifier ? "(" + call_info.user.identifier + ")" : ""}}  {{call_info.user.fullname }} <br/>{{call_info.user.email}}</span> 
+                            <span ng-if="!call_info.user">Ẩn danh</span>
+                             - <span class="display-name">{{call_info.display_name}}</span> <i class="icon-twitter"></i></a>
+                            <span class="text-success call-status">Đang kết nối</span>
+                        </div>
+                        <div class="direction">
+                            <div class="row">
+
+                                <div class="col-md-3 ">
+                                    <a class="btn button btn-block btn-success m-t-xs dial"><i class="fa fa-phone"></i></a>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a class="btn  button btn-block btn-danger m-t-xs hangup"><i class="fa fa-tty"></i></a>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a class="btn  button btn-block btn-info m-t-xs hold"><i class="fa fa-pause"></i></a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn  button btn-block btn-info m-t-xs resume"><i class="fa fa-play"></i></a>
+                                </div>
+                            </div>
+
+                            <!--<a class="btn  button btn-sm btn-success m-t-xs dial"><i class="fa fa-phone"></i></a> &nbsp;
+                            <a class="btn  button btn-sm btn-danger m-t-xs hangup"><i class="fa fa-tty"></i></a> &nbsp;
+                            <a class="btn  button btn-sm btn-info m-t-xs hold"><i class="fa fa-pause"></i></a> &nbsp;
+                            <a class="btn  button btn-sm btn-info m-t-xs resume"><i class="fa fa-play"></i></a> &nbsp;-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>      
+</div>
+

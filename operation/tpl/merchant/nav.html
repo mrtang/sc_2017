@@ -1,0 +1,31 @@
+<!-- first -->
+<ul class="nav">
+    <li ng-class="{active:$state.includes('delivery.merchant.list')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-users"></i>
+            <span translate="">Khách hàng</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" ng-repeat="(key,value) in list_process_2">
+                <a ui-sref="delivery.merchant.list({group_code: key})">
+                    <span translate="">{{value}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ui-sref-active="active">
+        <a ui-sref="delivery.merchant.vip_list">
+            <i class="fa fa-trophy"></i>
+            <span translate="">Khách hàng VIP</span>
+        </a>
+        
+    </li>
+
+    <li class="line dk"></li>
+</ul>
+<!-- / third -->

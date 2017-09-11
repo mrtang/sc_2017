@@ -1,0 +1,153 @@
+<div ng-controller="ConfigInfoCtrl">
+	<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+	<div class="bg-light lter b-b wrapper-md col-sm-12">
+        <h1 class="m-n text-title text-size font-thin h3 pull-left"><i class="fa fa-cogs text-muted"></i> Config Info</h1>
+        <div class="clearfix"></div>
+    </div>
+    <div class="wrapper-md col-sm-12">
+    	<div class="row">
+    		<div class="col-md-6">
+    			<div class="panel panel-default">
+    				<div class="panel-heading">
+		                <span class="h4">Location</span>
+	                </div>
+	                <div class="panel-body">
+	                	<div class="col-md-12 badge-empty bg-light wrapper-xs">
+			                <form role="form" name="AddLocationForm" class="form-inline ng-pristine ng-valid">
+			                    <div class="form-group">
+			                        <input type="text" placeholder="Name" ng-model="data.name" name="name" class="form-control ng-pristine ng-valid">
+			                    </div>
+			                    <button ng-disabled="AddLocationForm.$invalid" ng-click="SaveLocationBtn(data)" class="btn btn-success pull-right" type="button"><i class="fa fa-check"></i> Save</button>
+			                </form>
+			            </div>
+			            <div class="col-md-12 no-padder m-t-md">
+                			<div class="table-responsive">
+              					<table class="table table-striped b-t b-light">
+					                <thead>
+					                  <tr class="bg-light lt">
+					                    <th class="text-left">Name</th>
+					                    <th class="text-left">Status</th>
+					                    <th class="text-center">Action</th>
+					                  </tr>
+					                </thead>
+					                <tbody>
+					                  <tr ng-repeat="value in list_location">
+					                    <td class="text-left"><a href="javascript:;" editable-text="value.name" onbeforesave="changeLocation(value.id,$data,'name')">{{ value.name }}</a></td>
+					                    <td class="text-left">
+					                    	<label class="i-switch bg-primary m-t-xs m-r">
+							                    <input type="checkbox" ng-model="active" ng-change="changeLocation(value.id,active,'active')" ng-checked="value.active == 1" ng-true-value="1" ng-false-value="0" />
+							                    <i></i>
+							                </label>
+					                    </td>
+					                    <td class="text-center">
+					                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="delLocation(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+					                    </td>
+					                  </tr>
+					                </tbody>
+              					</table>
+            				</div>
+            			</div>
+	                </div>
+    			</div>
+    		</div>
+    		<div class="col-md-6">
+    			<div class="panel panel-default">
+    				<div class="panel-heading">
+		                <span class="h4">VAS</span>
+	                </div>
+	                <div class="panel-body">
+	                	<div class="col-md-12 badge-empty bg-light wrapper-xs">
+			                <form role="form" name="AddStageForm" class="form-inline ng-pristine ng-valid">
+			                    <div class="form-group">
+			                        <input type="text" placeholder="Name" ng-model="data.name_vas" name="name" class="form-control ng-pristine ng-valid">&nbsp;&nbsp;
+			                        <input type="text" placeholder="Code" ng-model="data.code" name="code" class="form-control ng-pristine ng-valid">
+			                        <select class="form-control" ng-model="data.vas_value_type" ng-options="type.id as type.name for type in listType" class="form-control">
+					                    <option value="">Type</option>
+					                </select>
+			                    </div>
+			                    <button ng-disabled="AddStageForm.$invalid" ng-click="SaveVasBtn(data)" class="btn btn-success pull-right" type="button"><i class="fa fa-check"></i> Save</button>
+			                </form>
+			            </div>
+			            <div class="col-md-12 no-padder m-t-md">
+                			<div class="table-responsive">
+              					<table class="table table-striped b-t b-light">
+					                <thead>
+					                  <tr class="bg-light lt">
+					                    <th class="text-left">Name</th>
+					                    <th class="text-left">Code</th>
+					                    <th class="text-left">Type</th>
+					                    <th class="text-left">Status</th>
+					                    <th class="text-center">Action</th>
+					                  </tr>
+					                </thead>
+					                <tbody>
+					                  <tr ng-repeat="value in list_vas">
+					                    <td class="text-left"><a href="javascript:;" editable-text="value.name" onbeforesave="changeVas(value.id,$data,'name')">{{ value.name }}</a></td>
+					                    <td class="text-left"><a href="javascript:;" editable-text="value.code" onbeforesave="changeVas(value.id,$data,'code')">{{ value.code }}</a></td>
+
+					                    <td class="text-left"><a href="javascript:;" editable-select="{{value.vas_value_type}}" e-ng-options="type.id as type.name for type in listType" onbeforesave="changeVas(value.id,$data,'vas_value_type')">{{ listType[value.vas_value_type - 1]['name'] }}</a></td>
+
+					                    <td class="text-left">
+					                    	<label class="i-switch bg-primary m-t-xs m-r">
+							                    <input type="checkbox" ng-model="active" ng-change="changeVas(value.id,active,'active')" ng-checked="value.active == 1" ng-true-value="1" ng-false-value="0" />
+							                    <i></i>
+							                </label>
+					                    </td>
+					                    <td class="text-center">
+					                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="delVas(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+					                    </td>
+					                  </tr>
+					                </tbody>
+              					</table>
+            				</div>
+            			</div>
+	                </div>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="row">
+    		<div class="col-md-6">
+    			<div class="panel panel-default">
+    				<div class="panel-heading">
+		                <span class="h4">Area</span>
+	                </div>
+	                <div class="panel-body">
+	                	<div class="col-md-12 badge-empty bg-light wrapper-xs">
+			                <form role="form" name="AddAreaForm" class="form-inline ng-pristine ng-valid">
+			                    <div class="form-group">
+			                        <input type="text" placeholder="Name" ng-model="data.name_area" class="form-control ng-pristine ng-valid">&nbsp;&nbsp;
+			                        <select class="form-control" ng-model="data.courier_id" ng-options="cour.id as cour.name for cour in listCourier" class="form-control">
+					                    <option value="">Chọn hãng vận chuyển</option>
+					                </select>
+			                    </div>
+			                    <button ng-disabled="AddAreaForm.$invalid" ng-click="SaveAreaBtn(data)" class="btn btn-success pull-right" type="button"><i class="fa fa-check"></i> Save</button>
+			                </form>
+			            </div>
+			            <div class="col-md-12 no-padder m-t-md">
+                			<div class="table-responsive">
+              					<table class="table table-striped b-t b-light">
+					                <thead>
+					                  <tr class="bg-light lt">
+					                    <th class="text-left">Name</th>
+					                    <th class="text-left">Courier</th>
+					                    <th class="text-center">Action</th>
+					                  </tr>
+					                </thead>
+					                <tbody>
+					                  <tr ng-repeat="value in list_area">
+					                    <td class="text-left"><a href="javascript:;" editable-text="value.name" onbeforesave="changeArea(value.id,$data,'name')">{{ value.name }}</a></td>
+					                    <td class="text-left"><a href="javascript:;" editable-select="value.courier_id" e-ng-options="cour.id as cour.name for cour in listCourier" onbeforesave="changeArea(value.id,$data,'courier_id')">{{value.courier_name}}</a></td>
+					                    <td class="text-center">
+					                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="delArea(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+					                    </td>
+					                  </tr>
+					                </tbody>
+              					</table>
+            				</div>
+            			</div>
+	                </div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>

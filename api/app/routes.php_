@@ -1,0 +1,604 @@
+<?php
+date_default_timezone_set("Asia/Ho_Chi_Minh");
+require app_path().'/libraries/php-jwt/vendor/autoload.php';
+use \Firebase\JWT\JWT;
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the Closure to execute when that URI is requested.
+|
+*/
+
+Route::filter('check_login', function($route, $request)
+{
+    if (!Request::is('*/*/app/*')){
+        if(!Session::has('user_info')){ // Chua dang nh?p
+            $contents   = array(
+                'error'         => true,
+                'message'       => 'login timeout'
+            );
+            return Response::json($contents, 440);
+        }
+		
+	 // filter csrf_token
+         if(!(Request::method() == 'GET' && Input::has('cmd'))){
+            $headers = getallheaders();
+
+            if(!isset($headers['Authorization']) || empty($headers['Authorization'])){
+                return Response::json(['error'=> true, 'message'=> 'UNSUPPORT'], 403);
+            }
+
+            if(Session::token() != $headers['Authorization']){
+                return Response::json(['error'=> true, 'message'=> 'UNSUPPORT'], 403);
+            }
+        }
+	
+        $User = Session::get('user_info');
+        if(isset($User['time_over']) && $User['time_over'] > 0 && $User['time_over'] < time()){ // black list
+            $contents   = array(
+                'error'         => true,
+                'message'       => 'login timeout'
+            );
+            return Response::json($contents, 440);
+        }
+    }
+    return;
+});
+
+Route::filter('check_permission', function($route, $request)
+{
+    $permissionCanAccess = Config::get('auth.privilege_id');
+    $groupCanAccess = Config::get('auth.group_id');
+    if (!Session::has('user_info') || (!in_array(Session::get('user_info')['group'],$groupCanAccess) && !in_array(Session::get('user_info')['privilege'],$permissionCanAccess))) {
+        $contents   = array(
+            'error'         => true,
+            'message'       => 'login timeout'
+        );
+        return Response::json($contents, 440);
+    }
+});
+
+Route::filter('check_token', function($route, $request)
+{
+    $headers = getallheaders();
+
+
+    if(empty($headers['Authorization'])){
+        return Response::json(['error'=> true, 'error_message'=> 'Bạn không có quyền sử dụng chức năng này, vui lòng liên hệ bộ phận CSKH để được hỗ trợ.'], 403);
+    }
+    /*$Model = sellermodel\UserInfoModel::where('api_access_token', $headers['Authorization'])->first();
+    if(!$Model){
+        return Response::json(['error'=> true, 'error_message'=> 'Bạn không có quyền sử dụng chức năng này, vui lòng liên hệ bộ phận CSKH để được hỗ trợ.', 'message'=>'TOKEN_NOT_FOUND'], 403);
+    }*/
+
+    $access_token = $headers['Authorization'];
+
+    try {
+        $decoded = JWT::decode($access_token, Config::get('app.key'), array('HS256'));
+    } catch (Exception $e) {
+        return Response::json(['error'=> true, 'error_message'=> 'Bạn không có quyền sử dụng chức năng này, vui lòng liên hệ bộ phận CSKH để được hỗ trợ.', 'message'=>'TOKEN_INVALID'], 403);
+    }
+
+    if ($decoded->exp < time()) {
+        return Response::json(['error'=> true, 'error_message'=> 'Bạn không có quyền sử dụng chức năng này, vui lòng liên hệ bộ phận CSKH để được hỗ trợ', 'message'=>'TOKEN_EXPIRED'], 403);
+    }
+
+
+
+    /*if(Input::has("Domain") && Input::get("Domain") == "shipchung.vn"){
+        $_Payment              = Input::has('Config.Payment')          ? (int)Input::get('Config.Payment')     : 0;
+        $_Discount             = Input::has('Order.Discount')          ? (int)Input::get('Order.Discount')     : 0;
+        $_MoneyCollect        = Input::has('Order.Collect')            ? (int)Input::get('Order.Collect')      : null;
+
+
+        
+        if($_Payment == 1){
+
+            if($_Discount > 0 && $_MoneyCollect > 0){
+
+                $formarted  = number_format($_MoneyCollect);
+                $tmp        = explode(',', $formarted);
+                $SoThua     = (int)end($tmp);
+                
+                if($SoThua > 0 && $SoThua < 1000){
+                    
+                    $_Discount += $SoThua;
+                    $_MoneyCollect -= $SoThua;
+
+                    
+                    Input::merge(array('Order.Discount'=> $_Discount, 'Order.Collect'=> $_MoneyCollect));
+                }
+            }
+        }
+    }*/
+
+    
+	Input::merge(array('App'=> true, 'Domain'=> 'app.shipchung.vn'));
+    Session::put('user_info',(array) $decoded->data);
+});
+
+
+Route::group(array('prefix'=> 'api/public/v1', 'before' => ['check_token'] ), function (){
+    Route::controller('inventory-config'        , 'mobile_seller\UserInventoryController');
+    Route::controller('merchant'                , 'mobile_seller\MerchantCtr');
+    Route::controller('user'                    , 'mobile\UserController');
+    Route::post('courier/calculate'             , 'ApiCourierCtrl@postCalculate');
+    Route::post('courier/create'                , 'ApiCourierCtrl@postCreate');
+    Route::controller('fee-config'              , 'mobile_seller\FeeController');
+    Route::controller('user-info'               , 'mobile_seller\UserInfoController');
+    Route::controller('bank-config'             , 'mobile_seller\VimoController');
+    Route::controller('order'                   , 'mobile_order\OrderController');
+    Route::controller('order-change'            , 'order\ChangeOrderCtrl');
+    Route::controller('order-verify'            , 'mobile_order\VerifyController');
+    Route::controller('upload'                  , 'mobile\UploadController');
+    Route::controller('statistic'               , 'mobile\StatisticController');
+
+    Route::controller('ticket-case-type'        , 'mobile_ticket\CaseTypeController');
+    Route::controller('ticket-request'          , 'mobile_ticket\RequestController');
+    Route::controller('ticket-feedback'         , 'mobile_ticket\FeedbackController');
+
+    Route::controller('post-office'             , 'mobile\PostOfficeController');
+
+    Route::get('location/city'                  , array('uses' => 'ApiMerchantCtrl@getCity'));
+    Route::get('location/district'              , array('uses' => 'ApiMerchantCtrl@getProvince'));
+    Route::get('location/ward'                  , array('uses' => 'ApiMerchantCtrl@getWard'));
+
+    Route::post('pipe-journey/create'           , 'oms\PipeJourneyCtrl@postCreate');
+    Route::controller('journey' , 'trigger\CourierAcceptJourney');
+    Route::controller('config-transport'                 , 'mobile\UserConfigTransportController');
+    Route::controller('coupon'                  , 'seller\CouponController');
+});
+
+
+Route::get('/', function()
+{
+    //echo DNS1D::getBarcodePNG('SC51614725103', "EAN8",1.5,40);
+//    echo DNS1D::getBarcodeHTML("51614725103", "EAN13");
+//    echo DNS1D::getBarcodeHTML("SC51614725103", "C128");
+//    echo DNS1D::getBarcodeHTML("SC51614725103", "C128A");
+//    echo DNS1D::getBarcodeHTML("SC51614725103", "C128B");
+//    echo DNS1D::getBarcodeHTML("51614725103", "EAN2");
+    echo DNS1D::getBarcodeHTML("51614725103", "EAN5");
+    //echo 'Hello World';
+});
+
+Route::group(array('prefix' => 'oauth'), function()
+{
+    Route::controller('token', 'OauthCtrl');
+});
+
+Route::group(array('prefix' => 'api/v1'), function() {
+    Route::controller('app'                     , 'AppController');
+    Route::controller('mobile'                  , 'mobile\AppController');
+});
+
+
+Route::group(array('prefix' => 'api/v1','before'    =>  'check_oms'), function() {
+    Route::controller('user-group'              , 'UserGroupController');
+    Route::controller('user-privilege'          , 'UserPrivilegeController');
+    Route::controller('group'              		, 'GroupController');
+    Route::controller('group-privilege'         , 'GroupPrivilegeController');
+    Route::controller('cashin'                  , 'oms\CashInController');
+});
+
+Route::group(array('prefix' => 'api/v1','before' => 'check_login'), function()
+{
+    Route::controller('user'                    , 'UserController');
+    Route::controller('locate'                  , 'LocateController');
+    Route::controller('postman'                 , 'PostManController');
+    Route::controller('postman-care'            , 'PostManCareController');
+    Route::controller('courier-promise'         , 'CourierPromiseController');
+    Route::controller('courier-comission'       , 'CourierComissionController');
+    Route::controller('courier-service'         , 'CourierServiceController');
+    Route::controller('courier-service-group'   , 'CourierServiceGroupController');
+    Route::controller('courier-type'            , 'CourierTypeController');
+    Route::controller('courier-status'          , 'CourierStatusController');
+    Route::controller('courier-vas'             , 'CourierVasController');
+    Route::controller('courier-area'            , 'CourierAreaController');
+    Route::controller('area-location'           , 'AreaLocationController');
+    Route::controller('courier-fee'             , 'CourierFeeController');
+    Route::controller('courier-vas-fee'         , 'CourierFeeVasController');
+    Route::controller('api-key'                 , 'ApiKeyController');
+    Route::controller('fee-pickup'              , 'oms\FeePickupController');
+    Route::controller('fee-delivery'            , 'oms\FeeDeliveryController');
+    Route::controller('post-office'             , 'oms\PostOfficeController');
+    Route::controller('status-accept'           , 'oms\StatusAcceptController');
+    Route::controller('courier-estimate'        , 'CourierEstimateController');
+    
+    //Notification 
+    Route::controller('transport'               , 'TransportController');
+    Route::controller('template'                , 'TemplateController');
+    Route::controller('scenario'                , 'ScenarioController');
+    Route::controller('scenario-template'       , 'ScenarioTemplateController');
+    Route::controller('discount-config'         , 'DiscountConfigController');
+    Route::controller('system-scenario-config'  , 'SystemScenarioConfigController');
+    Route::controller('user-config-transport'   , 'UserConfigTransportController');
+    Route::controller('user-scenario-config'    , 'UserScenarioConfigController');
+    Route::controller('queue'               	, 'QueueController');
+    Route::controller('ticket-notification'     , 'TicketNotificationController');
+    Route::controller('order-notification'      , 'OrderNotificationController');
+    Route::controller('notice'     			    , 'NoticeController');
+    
+    // Upload
+    Route::controller('upload'     			    , 'UploadController');
+    
+    //seller
+    Route::controller('bussiness-info'          , 'seller\BussinessInfoController');
+    Route::controller('inventory-config'        , 'seller\UserInventoryController');
+    Route::controller('banking-config'          , 'seller\BankingController');
+    Route::controller('vimo-config'             , 'seller\VimoController');
+    Route::controller('fee-config'              , 'seller\FeeController');
+    Route::controller('courier-config'          , 'seller\CourierController');
+    Route::controller('child-config'            , 'seller\ChildInfoController');
+    Route::controller('user-info'               , 'seller\UserInfoController');
+    Route::controller('user-cash-in'            , 'seller\CashInController');
+    Route::controller('coupon'                  , 'seller\CouponController');
+    
+    Route::controller('merchant'                , 'seller\MerchantCtrl');
+    Route::controller('transaction'             , 'seller\TransactionCtrl');
+
+    Route::controller('dashbroad'               , 'DashbroadCtrl');
+
+    // ticket
+    Route::controller('ticket-request'          , 'ticket\RequestController');
+    Route::controller('ticket-feedback'         , 'ticket\FeedbackController');
+    Route::controller('ticket-rating'           , 'ticket\RatingController');
+    Route::controller('ticket-question'         , 'ticket\QuestionController');
+    Route::controller('ticket-refer'            , 'ticket\ReferController');
+    Route::controller('ticket-case-ticket'      , 'ticket\CaseTicketController');
+    Route::controller('ticket-assign'           , 'ticket\AssignController');
+    Route::controller('ticket-case'             , 'ticket\CaseController');
+    Route::controller('ticket-case-type'        , 'ticket\CaseTypeController');
+    Route::controller('statistic'               , 'ticket\StatisticController');
+    Route::controller('reply-template'          , 'ticket\ReplyTemplateController');
+    Route::controller('ticket-extend-time'      , 'ticket\RequestExtendTimeController');
+    Route::controller('ticket-dashbroad'        , 'ticket\DashbroadController');
+    Route::controller('call-center'             , 'ticket\AsteriskController');
+
+    // order
+    Route::controller('order-verify'            , 'order\VerifyController');
+    Route::controller('order-invoice'           , 'order\InvoiceController');
+    Route::controller('order-change'            , 'order\ChangeOrderCtrl');
+    Route::controller('order'                   , 'order\OrderController');
+    Route::controller('order-address'           , 'order\OrderAddressController');
+    Route::controller('order-provide'           , 'order\AccountingController');
+    Route::controller('order-process'           , 'order\OrderProcessController');
+
+    Route::controller('mailchimp'               , 'MailchimpController');
+
+    //OMS
+    Route::controller('customer'                , 'oms\CustomerController');
+    Route::controller('customer-admin'          , 'oms\CustomerAdminController');
+    Route::controller('excel-update'            , 'oms\ExcelUpdateController');
+    Route::controller('overweight-excel-update' , 'oms\OverWeightExcelUpdateController');
+    
+    Route::controller('seller'                  , 'oms\SellerController');
+    Route::controller('log'                     , 'oms\LogController');
+    Route::controller('fb'                     , 'oms\FbController');
+
+    //Pickup,Delivery,Return,Complain
+    Route::controller('pickup'                  , 'PickupController');
+    Route::controller('delivery'                , 'DeliveryController');
+    Route::controller('return'                  , 'ReturnController');
+    //Route::controller('complain'                , 'ComplainController');
+    Route::controller('request-delivery'        , 'oms\RequestDeliveryController');
+
+    //SMS
+    Route::controller('sms'                     , 'SmsController');
+    //search
+    Route::controller('search'                  , 'SearchController');
+    // Elasticsearch 
+    Route::controller('_search'                 , 'ElasticSearchController');
+    
+    Route::controller('export'                  , 'oms\ExportController');
+    Route::controller('facebook'                , 'FacebookController');	
+    Route::get('pipe-status/pipebygroup'        , 'oms\PipeStatusController@getPipebygroup');	
+    Route::post('pipe-journey/create'           , 'oms\PipeJourneyCtrl@postCreate');
+    /// New oms routes 
+
+    Route::controller('group-user'               , 'oms\GroupUserController');    
+    Route::controller('privilege'                , 'oms\PrivilegeController');    
+    Route::controller('pipe-status'              , 'oms\PipeStatusController');    
+
+    Route::controller('/oms/merchant'            , 'oms\MerchantController');
+
+
+    Route::controller('tasks'                   , 'oms\TasksController');
+    Route::controller('ticket-reminder'                   , 'ticket\TicketReminderController');
+
+    Route::controller('ticket-user-dashbroad'        , 'ticket\DashbroadUserController');
+    Route::controller('ops-dashboard'  , 'ops\UserDashboardCtrl');
+
+    Route::controller('product-trading'             , 'seller\ProductTradingController');
+
+});
+
+Route::group(array('prefix' => 'api/v1'), function()
+{
+    Route::controller('city'                    , 'CityController');
+    Route::controller('district'                , 'DistrictController');
+    Route::controller('ward'                    , 'WardController');
+    Route::controller('location'                , 'LocationController');
+    Route::controller('courier'                 , 'CourierController');
+    Route::get('list_status'                    , 'BaseController@getStatus');
+    Route::controller('public-order'            , 'order\PublicOrderController');
+    Route::controller('order-status'            , 'order\StatusOrderCtrl');
+    Route::get('user_vip'                       , 'oms\UserCtrl@getVip');
+    Route::get('order-oms/tag'                  , 'oms\OrderCtrl@getTag');
+    Route::get('group-process'                  , 'oms\PipeStatusController@getGroupProcess');
+    Route::get('pipestatus/pipegroup'          , 'oms\PipeStatusController@getPipebygroup');
+});
+
+Route::group(array('prefix' => 'cronjob'), function()
+{   
+    Route::get('sync-latlng-inventory'   		, 'seller\UserInventoryController@getSyncLatlng');
+    Route::controller('ticket-notification'      , 'TicketNotificationController');
+    Route::controller('order-notification'      	, 'OrderNotificationController');
+    Route::controller('user-notification'      	, 'UserNotificationController');
+    Route::controller('verify-notification'      , 'VerifyNotificationController');
+    Route::controller('notice'                  	, 'NoticeController');
+    Route::controller('app'                     , 'AppNotificationController');
+    Route::controller('convert'                 	, 'ConvertController');
+    Route::controller('facebook'             	, 'FacebookNotificationController');
+    Route::controller('order-buyer'             	, 'OrderBuyerController');
+    Route::controller('order-item'             	, 'OrderItemController');
+    Route::get('ticket/autoclose-ticket'        , 'ticket\RequestController@getAutocloseTicket');
+    Route::get('call-center/sync'             , 'ticket\AsteriskController@getSyncCdr');
+
+});
+
+Route::group(array('prefix' => 'api/rest'), function()
+{   
+    Route::post('courier/calculate'      , 'ApiCourierCtrl@postCalculate');
+    Route::get('courier/calculate_courier'      	, 'ApiCourierCtrl@getCaculaterCourier');
+
+    Route::post('courier/checkoutnganluong/{token?}'        , 'ApiCourierCtrl@postCheckoutnganluong');
+    Route::post('courier/create'        , 'ApiCourierCtrl@postCreate');
+    Route::post('lading/create', array('uses' => 'ApiDispatcherCtrl@postCreate'));
+    Route::post('lading/createformulti', array('uses' => 'ApiDispatcherCtrl@postCreateformulti'));
+    Route::controller('lading'      , 'ApiDispatcherCtrl');
+    Route::controller('crawl'      , 'trigger\CourierCrawlJourney');
+    // Update lich trinh
+    Route::post('courier/journey/v1', array('uses' => 'ApiJourneyCtrl@postJourneyv1'));
+    Route::post('courier/journey', array('before' => 'oauth', 'uses' => 'ApiJourneyCtrl@postJourney'));
+
+    //đồng bộ live chat
+    Route::controller('migrate-live-chat'      , 'api\MigrateLiveChatCtrl');
+
+    //đồng bộ ticket
+    Route::controller('report',     'api\SyncReportCtrl');
+
+    //luu thong ke van don
+    Route::controller('order',     'api\ApiOrderCtrl');
+
+    /**
+    * @desc API tra cứu hóa đơn 
+    * ThinhNV
+    */
+
+    Route::get('invoice', array('uses' => 'order\InvoiceController@InvoiceAPI'));
+    Route::get('transaction', array('uses' => 'ApiDispatcherCtrl@TransactionAPI'));
+    Route::get('verify', array('uses' => 'order\VerifyController@VerifyAPI'));
+    Route::post('courier/accept'        , 'ApiMerchantCtrl@postAccept');
+
+
+    Route::controller('ticket-rating'           , 'ticket\RatingController');
+});
+
+Route::group(array('prefix' => 'api/merchant/rest'), function()
+{   
+    Route::post('lading/create', array('uses' => 'ApiMerchantCtrl@postCreate'));
+    Route::post('lading/createformulti', array('uses' => 'ApiMerchantCtrl@postCreateformulti'));
+    Route::controller('lading'      , 'ApiMerchantCtrl'); 
+    Route::post('upload_exchange', array('uses' => 'UploadController@postExchange'));
+
+    //
+    Route::get('invoice', array('uses' => 'order\InvoiceController@InvoiceAPI'));
+    Route::get('transaction', array('uses' => 'accounting\TransactionController@TransactionAPI'));
+    Route::get('verify', array('uses' => 'order\VerifyController@VerifyAPI'));
+    Route::post('box-order', array('uses' => 'WebServiceCtrl@postBoxOrder'));
+    Route::post('upload_logo', array('uses' => 'WebServiceCtrl@postUploadLogo'));
+
+});
+        
+Route::group(array('prefix' => 'adapter'), function()
+{   
+    Route::controller('soap'      , 'ApiSoapCtrl');
+});
+
+Route::group(array('prefix' => 'trigger'), function()
+{   
+    Route::controller('courier' , 'trigger\CourierAcceptLadingCtrl');
+    Route::controller('journey' , 'trigger\CourierAcceptJourney');
+    Route::controller('crawl' , 'trigger\CourierCrawlJourney');
+});
+
+Route::group(array('prefix' => 'popup'), function()
+{   
+    Route::get('nganluong', array('uses' => 'WebServiceCtrl@VerifyNganLuong'));
+    Route::controller('/'      , 'WebServiceCtrl');
+});
+
+
+
+
+
+// Check Privilege Accounting
+Route::filter('check_accounting', function($route, $request)
+{
+    $UserInfo   = Session::get('user_info');
+    if($UserInfo['privilege'] != 2  && (!isset($UserInfo['group_privilege']['PRIVILEGE_ACCOUNTING']) || $UserInfo['group_privilege']['PRIVILEGE_ACCOUNTING']['view'] != 1)){
+        return Response::json([
+            'error'     => true,
+            'message'   => 'USER_NOT_ALLOW'
+        ], 200);
+    }
+});
+
+// Check permission ops
+Route::filter('check_operation_system', function($route, $request)
+{
+    $UserInfo   = Session::get('user_info');
+    if($UserInfo['privilege'] != 2  && (!isset($UserInfo['group_privilege']['PRIVILEGE_OPERATION_SYSTEM']) || $UserInfo['group_privilege']['PRIVILEGE_OPERATION_SYSTEM']['view'] != 1)){
+        return Response::json([
+            'error'     => true,
+            'message'   => 'USER_NOT_ALLOW'
+        ], 200);
+    }
+});
+
+// Check permission oms
+Route::filter('check_oms', function($route, $request)
+{
+    $UserInfo   = Session::get('user_info');
+    if(!in_array((int)$UserInfo['privilege'], [1,2,3]) && $UserInfo['group'] == 0){
+        return Response::json([
+            'error'     => true,
+            'message'   => 'USER_NOT_ALLOW'
+        ], 200);
+    }
+});
+
+// Check permission ticket
+Route::filter('check_ticket', function($route, $request)
+{
+    $UserInfo   = Session::get('user_info');
+    if($UserInfo['privilege']   == 0){
+        return Response::json([
+            'error'     => true,
+            'message'   => 'USER_NOT_ALLOW'
+        ], 200);
+    }
+});
+
+// Check accounting boxme
+Route::filter('check_accounting_bm', function($route, $request)
+{
+    $UserInfo   = Session::get('user_info');
+    if($UserInfo['privilege'] != 2  && (!isset($UserInfo['group_privilege']['PRIVILEGE_BOXME_ACCOUNTING']) || $UserInfo['group_privilege']['PRIVILEGE_BOXME_ACCOUNTING']['view'] != 1)){
+        return Response::json([
+            'error'     => true,
+            'message'   => 'USER_NOT_ALLOW'
+        ], 200);
+    }
+});
+
+
+/**
+ * router Base
+ */
+Route::group(array('prefix' => 'api/base'), function()
+{
+    Route::controller('/' , 'BaseCtrl');
+});
+
+/**
+ * router Seller
+ */
+Route::group(array('prefix' => 'api/seller'), function()
+{
+    Route::controller('base' 	, 'seller\BaseCtrl');
+    Route::controller('config' 	, 'seller\CourierConfigCtrl');
+	
+    Route::controller('order' 	, 'seller\OrderDetailCtrl');
+    Route::controller('exchange' 	, 'seller\ExchangeCtrl');
+    Route::controller('verify' 	, 'seller\VerifyCtrl');
+    Route::post('exchange_create'	, array('uses' => 'exchange\ExchangeCtrl@postCreate'));
+});
+
+
+/**
+ * router Ticket
+ */
+Route::group(array('prefix' => 'ticket','before' => 'check_login|check_ticket'), function()
+{
+    Route::controller('base' 	    , 'ticket\BaseCtrl');
+});
+
+
+/**
+ * router Accounting
+ */
+Route::group(array('prefix' => 'accounting','before' => 'check_login|check_accounting'), function()
+{
+    Route::controller('order' 			, 'accounting\OrderCtrl');
+    Route::controller('report'         		, 'accounting\ReportCtrl');
+    Route::controller('transaction'              , 'accounting\TransactionCtrl');
+    Route::controller('merchant'                 , 'accounting\MerchantCtrl');
+    Route::controller('cash-out'                 , 'accounting\CashOutController');
+    Route::controller('cash-in'                  , 'accounting\CashInController');
+    Route::controller('invoice'                  , 'accounting\InvoiceCtrl');
+    Route::controller('verify'                   , 'accounting\VerifyCtrl');
+    Route::controller('courier-verify'     	, 'accounting\CourierVerifyCtrl');
+}); 
+
+/**
+ * router OPS
+ */
+Route::group(array('prefix' => 'ops','before' => 'check_login|check_operation_system'), function()
+{
+    Route::controller('base'            	, 'ops\BaseCtrl');
+    Route::controller('order'            	, 'ops\OrderCtrl');
+    Route::controller('log'               , 'ops\LogCtrl');
+});
+
+/**
+ * router OMS
+ */
+
+Route::group(array('prefix' => 'api/oms','before' => 'check_login|check_oms'), function()
+{
+    Route::controller('order'           , 'oms\OrderCtrl');
+    Route::controller('pipe-journey'    , 'oms\PipeJourneyCtrl');
+    Route::controller('inventory'       , 'oms\InventoryCtrl');
+    Route::controller('user'            , 'oms\UserCtrl');
+    Route::controller('upload'          , 'oms\UploadCtrl');
+});
+
+
+/**
+ * Api Public
+ */
+Route::group(array('prefix' => '/'), function()
+{
+    Route::controller('public'           , 'ApiPublicCtrl');
+
+    // push status
+    Route::controller('push'    , 'trigger\PushStatusCtrl');
+
+    // k�o tr?ng th�i vtp
+    Route::get('upload/status-verify/{params}'    , 'oms\UploadCtrl@getStatusVerify');
+});
+
+/**
+ * Api Boxme
+ */
+Route::group(array('prefix' => 'boxme'), function()
+{
+    Route::get('create_verify'  , 'ApiBoxmeCtrl@getCreateVerify');
+    Route::get('verify',        'ApiBoxmeCtrl@getVerify');
+    Route::get('cash_in',               'ApiBoxmeCtrl@getCroncashin');
+    Route::get('seller-verify', 	array('uses' => 'bm_accounting\VerifyCtrl@getIndex'));
+    Route::get('seller-verify-order', 	array('uses' => 'bm_accounting\VerifyCtrl@getVerifyDetail'));
+    Route::get('seller-verify-item', 	array('uses' => 'bm_accounting\VerifyCtrl@getVerifyItemDetail'));
+    Route::get('merchant-detail',     	array('uses' => 'bm_accounting\MerchantCtrl@getDetail'));
+    Route::get('partner-verify',        array('uses' => 'bm_accounting\VerifyPartnerCtrl@getIndex'));
+    Route::get('partner-verify-order',  array('uses' => 'bm_accounting\VerifyPartnerCtrl@getVerifyDetail'));
+    Route::get('partner-verify-item',   array('uses' => 'bm_accounting\VerifyPartnerCtrl@getVerifyItemDetail'));
+    Route::get('transaction',           array('uses' => 'bm_accounting\TransactionCtrl@getIndex')); 
+});
+
+
+Route::group(array('prefix' => 'api/bm_accounting','before' => 'check_login|check_accounting_bm'), function()
+{
+    Route::controller('merchant'            , 'bm_accounting\MerchantCtrl');
+    Route::controller('transaction'         , 'bm_accounting\TransactionCtrl');
+    Route::controller('verify'              , 'bm_accounting\VerifyCtrl');
+    Route::controller('verify-partner'      , 'bm_accounting\VerifyPartnerCtrl');
+    Route::controller('items'               , 'bm_accounting\ItemsCtrl');
+    Route::controller('cash_in'             , 'bm_accounting\CashInCtrl');
+});

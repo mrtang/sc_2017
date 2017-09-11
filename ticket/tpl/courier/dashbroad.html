@@ -1,0 +1,98 @@
+<div class="hbox hbox-auto-xs text-sm hbox-auto-sm" ng-controller="DashbroadCtrl">
+    <div class="wrapper-sm bg-light b-b">
+        <span class="m-n h3"><i class="fa fa-tachometer"></i> Tổng quan</span>
+
+    </div>
+
+    <div class="m-sm wrapper-sm bg-white-only b-b">
+     
+        <div class="row text-center padder">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td><strong>Tỉnh thành nhận</strong></td>
+                        </tr>
+                        <tr data-ng-repeat="item in cities">
+                            <td><a href="" data-ng-click="loadDistrict(item.id)" class="text-info {{selectedCity == item.id ? 'font-bold' : ''}}" ><i class="fa fa-check" ng-if="selectedCity == item.id "></i> {{item.city_name}}</a></td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td><strong>Quận/huyện nhận</strong></td>
+                        </tr>
+                        <tr data-ng-repeat="item in district">
+                            <td><a href="" data-ng-click="countByDistrict(item.id)" class="text-info {{selectedDistrict == item.id ? 'font-bold' : ''}}"><i class="fa fa-check" ng-if="selectedDistrict == item.id "></i> {{item.district_name}} (Đã xử lý hôm nay: <strong>{{processInDay[item.id] || 0}}</strong>)</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <blockquote class="text-left b-info">
+                                <div class="pull-right">
+                                    <button class="btn btn-default btn-xs dropdown-toggle" data-ng-click="loadReDelivery(selectedCity, selectedDistrict, 'export');"> <i class="fa fa-file-excel-o"></i> Xuất Excel </button>
+                                </div>
+                                <p>
+                                <div class="h1 m-b-sm"><a data-ng-click="openModal('redelivery', selectedCity, selectedDistrict)">{{redelivery_total || 0 | vnNumber}} </a><i class="fa fa-spinner fa-spin" ng-if="loading.redelivery"></i></div>
+                                <strong>Đơn hàng cần phát lại </strong><br/>
+                                Đã cập nhật <strong>{{redelivery_total_done || 0}}</strong> đơn - tồn <strong>{{redelivery_total - redelivery_total_done}}</strong> đơn
+                                </p>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6">
+                            <blockquote class="text-left b-warning">
+                                <div class="pull-right">
+                                    <button class="btn btn-default btn-xs dropdown-toggle" data-ng-click="loadSlowDelivery(selectedCity, selectedDistrict, 'export');"> <i class="fa fa-file-excel-o"></i> Xuất Excel </button>
+                                </div>
+
+                                <p>
+                                <div class="h1 m-b-sm"><a data-ng-click="openModal('slowdelivery', selectedCity, selectedDistrict)">{{slowdelivery_total || 0 | vnNumber}}</a> <i class="fa fa-spinner fa-spin" ng-if="loading.slowdelivery"></i></div>
+                                <strong>Đơn hàng phát chậm </strong><br/>
+                                Đã xử lý <strong>{{slowdelivery_total_done || 0 }}</strong> đơn - tồn <strong>{{slowdelivery_total - slowdelivery_total_done || 0}}</strong> đơn
+                                </p>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6">
+                            <blockquote class="text-left b-dark">
+                                <div class="pull-right">
+                                    <button class="btn btn-default btn-xs dropdown-toggle" data-ng-click="loadReturn(selectedCity, selectedDistrict, 'export');"> <i class="fa fa-file-excel-o"></i> Xuất Excel </button>
+                                </div>
+
+                                <p>
+                                <div class="h1 m-b-sm"><a data-ng-click="openModal('return', selectedCity, selectedDistrict)">{{return_total || 0 | vnNumber}} </a><i class="fa fa-spinner fa-spin" ng-if="loading.return"></i></div>
+                                <strong>Đơn chuyển hoàn </strong><br/>
+                                Đã xử lý <strong>{{return_total_done || 0}}</strong> đơn - tồn <strong>{{return_total - return_total_done || 0}}</strong> đơn
+                                </p>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6">
+                            <blockquote class="text-left b-primary">
+                                <div class="pull-right">
+                                    <button class="btn btn-default btn-xs dropdown-toggle" data-ng-click="loadSlowPickup(selectedCity, selectedDistrict, 'export');"> <i class="fa fa-file-excel-o"></i> Xuất Excel </button>
+                                </div>
+                                <p>
+                                <div class="h1 m-b-sm"><a data-ng-click="openModal('slowpickup', selectedCity, selectedDistrict)">{{slowpickup_total || 0 | vnNumber}} </a><i class="fa fa-spinner fa-spin" ng-if="loading.slowpickup"></i></div>
+                                <strong>Đơn hàng lấy chậm </strong><br/>
+                                Đã xử lý <strong>{{slowpickup_total_done || 0}}</strong> đơn - tồn <strong>{{slowpickup_total - slowpickup_total_done || 0}}</strong> đơn
+                                </p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .bg-orange{
+        background: orange;
+    }
+</style>

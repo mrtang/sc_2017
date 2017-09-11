@@ -1,0 +1,190 @@
+<div class="wrapper-md bg-light ">
+  <div class="">
+    <h1 class="m-n font-thin h3 text-black pull-left"><i class="fa fa-shopping-cart text-info"></i> Quản lý liên kết Vimo &nbsp;&nbsp;</h1>
+    <div class="pull-right">
+      <button class="btn btn-primary" ui-sref="delivery.accounting.vimo-create">Up ảnh xác thực</button>
+    </div>
+  </div>
+  
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="VimoVerifyController">
+  <div class="col wrapper-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+        <form class="form-validation form-horizontal">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <input type="text" placeholder="Email khách hàng" class="form-control" ng-model="email" ng-enter="load(1, email, active, from_date, to_date, deleted)">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <p class="input-group">
+                        <input type="text" class="form-control" placeholder=" từ ngày ..."
+                         ng-model="from_date"
+                         datepicker-popup="dd-MM-yyyy"
+                         is-open="from_date_open"
+                         close-text="Close"
+                          />
+                        <!-- <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="from_date" is-open="from_date_open" placeholder="Từ ngày ..." datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" ng-enter="load(1, email  , active, from_date, to_date)"/> -->
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event,'from_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <select class="form-control" ng-model="active">
+                          <option value="">---- Trạng thái ----</option>
+                          <option value="1" selected="selected"> Đã xác thực</option>
+                          <option value="2" selected="selected"> Chưa xác thực</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group controls padder">
+                      <p class="input-group">
+                        <input type="text" class="form-control" placeholder=" Đến ngày ..."
+                         ng-model="to_date"
+                         datepicker-popup="dd-MM-yyyy"
+                         is-open="to_date_open"
+                         close-text="Close"
+                          />
+                       <!--  <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="to_date" is-open="to_date_open" placeholder="Đến ngày ..." datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" ng-enter="load(1, email, active, from_date, to_date)"/> -->
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event,'to_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                  <div class="checkbox padder">
+                    <label class="i-checks padder-md padder-xs" >
+                        <input type="checkbox"
+                               ng-model="deleted"
+                               ng-true-value='1' 
+                               ng-false-value='2'
+                                /><i></i>
+                        Thông tin đã xóa
+                    </label>
+                  </div>
+              </div>
+
+              <div class="row m-t-sm">
+                <div class="col-xs-12">
+                  <button class="btn btn-info" ng-click="load(1, email, active, from_date, to_date, deleted)" ><i class="fa fa-search"></i> Tìm kiếm</button>
+                  <button class="btn btn-primary" ng-click="load(1, email, active, from_date, to_date, deleted, 'export')" ><i class="fa fa-excel-o"></i> Xuất Excel</button>
+                </div>
+              </div>
+                  
+          </form>
+      </div>
+
+      <div class="panel-body">
+          <table class="table table-bordered tablesorter bg-white">
+              <thead>
+                <tr>
+                    <th style="width:20px;">#</th>
+                    <th>Email</th>
+                    <th>Ngân hàng</th>
+                    <th>Thông tin thẻ</th>
+                    <th>Ảnh mặt trước ATM</th>
+                    <th>Ảnh mặt trước CMTND</th>
+                    <th>Ảnh mặt sau CMTND</th>
+                    <th>Trạng thái</th>
+                    <th>Lý do</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="stateLoading">
+                  <td colspan="20" class="text-center">
+                      <i class="text-3x fa fa-spinner fa-spin"></i> Đang tải dữ liệu
+                  </td>
+              </tr>
+              <tr ng-if="totalItems == 0 && !stateLoading">
+                  <td colspan="20" class="text-center">Không có dữ liệu</td>
+              </tr>
+
+              <tr ng-repeat="item in list_data" ng-if="!stateLoading">
+                    <td>{{$index + 1}}</td>
+                    <td>
+                      {{item.user.fullname}}<br/>
+                      <p>{{item.user.email}}</p>
+                      <a><a href="callto:{{item.user.phone}}">{{item.user.phone}}</a></p>
+                    </td>
+
+                    <td>
+                      <p>Ngân hàng : {{vimo[item.bank_code] + ' (' + item.bank_code +')'}}</p>
+                      <p>Cập nhật : <span ng-if="item.time_update">{{item.time_update * 1000| date : 'dd/MM/yy HH:mm'}}</span><span ng-if="!item.time_update">{{item.time_create * 1000 | date : 'dd/MM/yy HH:mm'}}</span></p>
+                    </td>
+                    <td>
+                      <p>Loại thẻ : <strong>{{item.account_type}}</strong></p>
+                      <p>Tên chủ thẻ : {{item.account_name}}</p>
+                      <p>Số thẻ : {{item.account_number}}</p>
+                    </td>
+                    <td>
+                      <a ng-if="item.atm_image" href="{{ApiStorage + item.atm_image }}" target="_blank"><span class="text-info">Xem ảnh</span></a></td>
+                    <td>
+                      <a ng-if="item.cmnd_before_image" href="{{ApiStorage + item.cmnd_before_image }}" target="_blank"><span class="text-info">Xem ảnh</span></a></td>
+                    <td>
+                      <a ng-if="item.cmnd_after_image" href="{{ApiStorage + item.cmnd_after_image }}" target="_blank"><span class="text-info">Xem ảnh</span></a></td>
+                    <td>
+                      <div  
+                            popover-placement="bottom" 
+                            popover-trigger="mouseenter"
+                            popover="Lịch sử : <br/> {{loadingLog ? 'Đang tải dữ liệu..' : ''}}{{logHTML}}"
+                            ng-mouseover="getLogs(item.id)">
+                        <i class="fa fa-check-circle" ng-class="item.active ? 'text-success' : ''"></i> {{item.active ? 'Đã xác thực' : 'Chưa xác thực'}}
+                        <p ><span ng-if="item.time_accept">{{item.time_accept * 1000| date : 'dd/MM/yy HH:mm'}}</span></p>
+                      </div>
+                      
+                    </td>
+                    <td>
+                        {{item.note || ''}}
+                    </td>
+                <td>
+                  
+
+                    <div class="btn-group" >
+                        <button ng-disabled="item.active == 1" class="btn btn-success" ng-click="verify(item)">Xác thực</button> 
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li ng-if="item.active == 1"><a ng-click="unverify(item)">Hủy xác thực</a></li>
+                            <li><a ng-click="openCreateNote(item)">Ghi chú</a></li>
+                            <li><a ng-click="openDeleteVimo(item)" ng-if="!item.active">Xóa thông tin </a></li>
+                            
+                        </ul>
+                    </div>
+                  <br/>
+                </td>
+                
+                
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- pagination -->
+          <div ng-show="list_data.length > 0" class="row">
+                  <div class="col-sm-3 wrapper-md pull-left">
+                      <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                  </div>
+                  <div class="col-sm-4 text-right text-center-xs pull-right">
+                    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="load(currentPage, email, active, from_date, to_date,deleted)" next-text="Next"></pagination>
+                  </div>
+              </div>
+      </div>
+    </div>
+  </div>
+</div>

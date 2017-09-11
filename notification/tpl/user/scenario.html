@@ -1,0 +1,87 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div class="bg-light lter b-b wrapper-md ng-scope">
+  <div class="row">
+    <h1 class="m-n font-thin h3 col-md-4">Config User Scenario</h1>
+  </div>
+</div>
+<div class="panel panel-default" ng-controller="UserScenarioCtrl">
+	<form>
+		<div class="panel-body">
+			<div class="row">
+			    <div class="form-group">
+			        <label class="col-sm-1 control-label">User Name</label>
+			         <div class="col-sm-4">
+			            <b>{{info_user[0]['fullname']}}</b>
+			        </div>
+			    </div>
+			</div>
+			<div class="line line-dashed b-b line-lg pull-in"></div>
+			<div class="row">
+			    <div class="form-group">
+	          		<label class="col-sm-1 control-label">Scenario</label>
+	          		<div class="col-sm-10">
+	          			<div class="radio">
+			              	<label class="i-checks m-r-md" ng-repeat="val in listScenario">
+				                <input type="radio" ng-model="$parent.scenario" ng-value="val.id" name="scenario">
+				                <i></i>
+				                {{val.name}}
+			              	</label>
+			            </div>
+	                </div>
+			    </div>
+			</div>
+			<div class="line line-dashed b-b line-lg pull-in"></div>
+			<div class="row">
+			    <div class="form-group">
+	          		<label class="col-sm-1 control-label">Transport</label>
+	          		<div class="col-sm-10">
+	          			<div class="radio">
+			              	<label class="i-checks m-r-md" ng-repeat="value in listTransport">
+				                <input type="radio" ng-model="$parent.transport" ng-click="saveUserScenario(scenario,value.id)" ng-value="value.id" name="transport">
+				                <i></i>
+				                {{value.name}}
+			              	</label>
+			            </div>
+	                </div>
+			    </div>
+			</div>
+			<div class="line line-dashed b-b line-lg pull-in"></div>
+			<div class="row">
+				<div class="form-group">
+	          		<label class="col-sm-1 control-label">Added</label>
+			        <div class="col-sm-6">
+			        	<div class="table-responsive">
+					      <table class="table table-striped b-t b-light">
+					        <thead>
+					          <tr>
+					            <th style="width:20px;">#</th>
+					            <th>Scenario</th>
+					            <th>Transport</th>
+					            <th style="width:30px;">Active</th>
+					            <th>Action</th>
+					          </tr>
+					        </thead>
+					        <tbody>
+					          <tr ng-repeat="value in list_scenario_user">
+					            <td>{{ item_stt + $index + 1}}</td>
+					            <td>{{ value.scenario_name }}</td>
+					            <td>{{ value.transport_name }}</td>
+					            <td>
+					                <label class="i-switch bg-primary m-t-xs m-r">
+					                    <input type="checkbox" ng-model="active" ng-change="setActive(active,'active',value.id)" ng-checked="value.active == 1" ng-true-value="1" ng-false-value="0" />
+					                    <i></i>
+					                </label>
+					            </td>
+					            <td>
+					                <button class="btn btn-sm btn-danger" ng-click="delScenarioConfig(value.id,$index)"><i class="fa fa-trash-o"></i></button>
+					            </td>
+					          </tr>
+					        </tbody>
+					      </table>
+					    </div>
+			        </div>
+	        	</div>
+			</div>
+		</div>
+	</form>
+</div>

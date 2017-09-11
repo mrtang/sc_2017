@@ -1,0 +1,172 @@
+<div ng-controller="LoyHistoryCtrl">
+<div class="wrapper-md bg-light b-b">
+        <span class="m-n h2"><i class="fa fa-history text-info"></i> Lịch sử thăng hạng</span>
+    </div>
+    
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <form class="form-validation" role="form" ng-submit="setPage(1)" name="frmSearch">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group controls padder">
+                                    <input type="text" class="form-control" placeholder="Họ tên, email hoặc sđt khách hàng ..."
+                                    ng-model="frm.keyword"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls padder">
+                                    <select class="form-control" ng-model="frm.level">
+                                        <option value="">Level</option>
+                                        <option ng-repeat="(key,value) in sc_loyalty_level" value="{{key}}">{{value.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="from_month" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input month-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.time_start"
+                                                       placeholder="Từ tháng"
+                                                ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.time_start"
+                                                    datetimepicker-config="{ dropdownSelector: '#from_month' ,startView:'month', minView:'month'}"
+                                            >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="to_month" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                                            <div class="input-group">
+                                                <input month-input type="text"
+                                                       class="form-control"
+                                                       ng-model="time.time_end"
+                                                       placeholder="Tới tháng"
+                                                ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <datetimepicker
+                                                    ng-model="time.time_end"
+                                                    datetimepicker-config="{ dropdownSelector: '#to_month' ,startView:'month', minView:'month'}"
+                                            >
+                                            </datetimepicker>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="row">
+                            <div class="col-lg-3 padder-lg">
+                                <button type="submit" class="btn m-b-xs btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                            <table class="table-condensed table-hover w-full">
+                                <thead>
+                                    <td>
+                                        #
+                                    </td>
+                                    <td>
+                                        Thời gian
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-user"></i>&nbsp; Khách hàng
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-gift"></i> Thứ hạng
+                                    </td>
+                                    <td>
+                                        Tích lũy
+                                    </td>
+                                    <td>
+                                        Yêu cầu
+                                    </td>
+                                </thead>
+                                <tbody ng-show="waiting">
+                                    <tr>
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-show="totalItems == 0 && !waiting">
+                                    <tr>
+                                        <td colspan="30" class="text-center">
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-repeat="item in list_data">
+                                <tr>
+                                    <td>{{item_stt + $index + 1}}</td>
+                                    <td>
+                                        Tháng : {{item.month}} <br />
+                                        Năm : {{item.year}}
+                                    </td>
+                                    <td>
+                                        <p>
+                                            {{(item['get_user']['fullname']) || 'Họ tên' | limitTo : 30}}
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-envelope-o"></i> {{item['get_user']['email'] || 'email'}}
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-phone"></i>{{item['get_user']['phone'] || 'Điện thoại' | limitTo : 30}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            <span class="label text-xs {{sc_loyalty_level[item.level]['bg_color'] || ''}}">{{sc_loyalty_level[item.level]['name'] || 'Thứ hạng'}}</span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        {{item.current_point | vnNumber}}
+                                    </td>
+                                    <td>
+                                        {{item.point | vnNumber}}
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row" ng-show="list_data.length">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> khách hàng
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

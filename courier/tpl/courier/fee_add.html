@@ -1,0 +1,139 @@
+<div ng-controller="CourierFeeActionCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="bg-light lter b-b wrapper-md col-sm-12" ng-if="!CourierFeeId">
+        <h1 class="m-n text-title text-size font-thin h3 pull-left"><i class="fa fa-truck text-muted"></i> Add Courier Fee</h1>
+    </div>
+    
+    <div class="bg-light lter b-b wrapper-md col-sm-12" ng-if="CourierFeeId > 0">
+        <h1 class="m-n text-title text-size font-thin h3 pull-left"><i class="fa fa-truck text-muted"></i> Edit Courier Fee</h1>
+    </div>
+    
+    <div class="wrapper-md col-sm-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <form name="form" class="form-validation">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span class="h4">Advance</span>
+                  <label class="i-switch i-switch-md bg-success pull-right" tooltip-placement="left" tooltip="Active">
+                      <input type="checkbox" ng-model="form.active" ng-checked="(form.active == 1) || (!CourierFeeId)" ng-true-value="1" ng-false-value="0"/>
+                      <i></i>
+                  </label>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>Courier</label>
+                            <select class="form-control" ng-model="form.courier_id" ng-disabled="CourierFeeId > 0" ng-options="type.id as type.name for type in listCourier" ng-change="change_courier()">
+                              <option value="">Select Courier</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Stage</label>
+                            <select class="form-control" ng-model="form.stage_id" ng-options="type.id as type.name for type in liststate">
+                              <option value="">Select Stage</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>From Area</label>
+                            <select class="form-control" ng-model="form.from_area_id" ng-options="type.id as type.name for type in listArea | filter:{courier_id:form.courier_id}" ng-change="DistrictByArea(form.from_area_id)">
+                              <option value="">Select From Area</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>To Area</label>
+                            <select class="form-control" ng-model="form.to_area_id" ng-options="type.id as type.name for type in listArea | filter:{courier_id:form.courier_id}">
+                              <option value="">Select To Area</option>
+                            </select>
+                        </div>
+                    </div>                    
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>From District</label>
+                            <select class="form-control" ng-model="form.from_district_id" ng-options="type.district_id as type.district_name for type in listDistrict">
+                              <option value="">Select District</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Service</label>
+                            <select class="form-control" ng-model="form.service_id" ng-options="type.id as type.name for type in listService | filter:{active:1}">
+                              <option value="">Select Service</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <label>VAT</label>
+                            <input type="text" class="form-control text-right" ng-model="form.vat" ng-init="form.vat = 10" ng-pattern="/^[0-9 .]{1,3}$/"/> 
+                        </div>
+                    </div>
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <button class="btn btn-success btn-addon" ng-click="updateCourierFee(form)"><i class="fa fa-plus"></i> UPDATE</button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-sm-6" ng-if="CourierFeeId > 0">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span class="h4">Imposition</span>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped b-t b-light">
+                        <thead>
+                          <tr>
+                            <th class="text-left">Weight Start</th>
+                            <th class="text-left">Weight End</th>
+                            <th class="text-left">Money</th>
+                            <th class="text-left">Surcharge</th>
+                            <th class="text-center">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="value in form.fee_detail">
+                            <td class="text-left">
+                                <a href="javascript:;" editable-text="value.weight_start" onbeforesave="change(value.id,$data,'weight_start')"> {{value.weight_start|number:0 || 0}} </a>
+                            </td>
+                            
+                            <td class="text-left">
+                                <a href="javascript:;" editable-text="value.weight_end" onbeforesave="change(value.id,$data,'weight_end')"> {{value.weight_end|number:0 || 0}} </a>
+                            </td>
+                            
+                            <td>
+                                <a href="javascript:;" editable-text="value.money" onbeforesave="change(value.id,$data,'money')"> {{value.money|number:0 || 0}} </a>
+                            </td>
+                            
+                            <td>
+                                <a href="javascript:;" editable-text="value.surcharge" onbeforesave="change(value.id,$data,'surcharge')"> {{value.surcharge|number:0 || 0}} </a>
+                            </td>
+                            
+                            <td class="text-center">
+                                <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="del(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="form-group pull-in clearfix">
+                        <div class="col-sm-6">
+                            <div class="btn-group">
+                                <a ng-href="{{link_download}}" class="btn btn-primary"><i class="icon-cloud-download"></i></a>
+                                <button class="btn btn-info" ng-click="open_popup()">&nbsp;Upload&nbsp;</button>
+                            </div>
+                        </div>
+                        <script id="ModalUploadFeeCtrl.html" type="text/ng-template">
+                            <div ng-include="'tpl/courier/modal.form.upload_fee.html'"></div>
+                        </script>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>

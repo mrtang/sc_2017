@@ -1,0 +1,66 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div class="bg-light lter b-b wrapper-md ng-scope">
+  <div class="row">
+    <h1 class="m-n font-thin h3 col-md-2">Create Template</h1>
+  </div>
+</div>
+<div class="panel panel-default" ng-controller="TemplateActionCtrl">
+<form>
+	<div class="panel-body">
+		<div class="row">
+		    <div class="form-group">
+		        <label class="col-sm-1 control-label">Title</label>
+		         <div class="col-sm-4">
+		            <input type="text" class="form-control" placeholder="Title..." ng-model="template.title">
+		        </div>
+		    </div>
+		</div>
+		<div class="line line-dashed b-b line-lg pull-in"></div>
+		<div class="row">
+		    <div class="form-group">
+		        <label class="col-sm-1 control-label">Code</label>
+		         <div class="col-sm-4">
+		            <input type="text" class="form-control" placeholder="Code..." ng-model="template.code">
+		        </div>
+		    </div>
+		</div>
+		<div class="line line-dashed b-b line-lg pull-in"></div>
+		<div class="row">
+		    <div class="form-group">
+		        <label class="col-sm-1 control-label">Transport</label>
+		         <div class="col-sm-2">
+		            <select class="form-control" ng-model="template.transport_id" ng-options="trans.id as trans.name for trans in list_transport" class="form-control">
+	                    <option value="">Transport</option>
+	                </select>
+		        </div>
+		    </div>
+		</div>
+		<div class="line line-dashed b-b line-lg pull-in"></div>
+		<div class="row">
+		    <div class="form-group">
+		        <label class="col-sm-1 control-label">Description</label>
+		         <div class="col-sm-6">
+		            <textarea class="form-control" ng-model="template.description"></textarea>
+		        </div>
+		    </div>
+		</div>
+		<div class="line line-dashed b-b line-lg pull-in"></div>
+		<div class="row">
+		    <div class="form-group">
+		        <label class="col-sm-1 control-label">Content</label>
+		         <div class="col-sm-10">
+		            <textarea class="form-control" ng-model="template.content" ui-codemirror="{lineNumbers: true,theme:'twilight',lineWrapping : true,mode: 'text/x-php'}">dsdsfasfasffas</textarea>
+		        </div>
+		    </div>
+		</div>
+		<div class="line line-dashed b-b line-lg pull-in"></div>
+		<div class="row">
+			<div class="form-group pull-left">
+		        <div class="col-sm-6 col-sm-offset-2">
+		            <button class="btn btn-primary" ng-click="saveTemplate(template)">Save</button>
+		        </div>
+	        </div>
+		</div>
+	</div>
+</form>
+</div>

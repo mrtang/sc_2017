@@ -1,0 +1,64 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div ng-controller="FeePickupCtrl">
+	<div class="bg-light lter b-b wrapper-md col-sm-12">
+        <h1 class="m-n text-title text-size font-thin h3 pull-left"><i class="fa fa-truck text-muted"></i> List Pickup Fee</h1>
+        <div class="pull-right">            
+	            <a ui-sref="app.fee_pickup.add" class="btn btn-sm btn-success">ADD</a>
+	        </span>
+	    </div>
+    </div>
+    <div class="col">
+    	<div class="clearfix">
+	        <div class="col-md-3 m-t-md">
+                <select ng-options="courier.id as courier.name for courier in listCourierSelect" class="form-control"
+                      ng-model="courier">
+                    <option value="">Hãng vận chuyển</option>
+                </select>
+	        </div>
+	        <div class="col-md-1 m-t-md">
+	        	<button class="btn btn-sm btn-success" ng-click="setPage(currentPage,courier)">Search</button>
+	        </div>
+	    </div>
+    </div>
+	<div class="col wrapper-sm">
+		<div class="clearfix m-b">
+			<div class="panel">
+			    <div class="panel-body">
+			    	<table class="table table-striped b-t b-light table-hover">
+			            <thead>
+			            	<th>#</th>
+			                <th>Hãng vận chuyển</th>
+			                <th width="15%">Dịch vụ</th>
+			                <th>Điểm đi lấy hàng</th>
+			                <th>Điểm giao hàng</th>
+			                <th>Phí lấy hàng</th>
+			                <th>Thao tác</th>
+			            </thead>
+			            <tbody class="text-sm">
+			            	<tr ng-repeat="value in listData">
+			            		<td>{{ item_stt + $index + 1}}</td>
+			            		<td>{{listCourier[value.courier_id]}}</td>
+			            		<td>{{listService[value.service_id]}}</td>
+			            		<td>{{listFrom[value.from_location]}}</td>
+			            		<td>{{listTo[value.to_location]}}</td>
+			                    <td><a href="#" editable-text="value.fee" onbeforesave="updateData($data,'fee',value.id)">{{value.fee}}</a></td>
+			            		<td>
+			            			<div class="btn-group">
+			                            <a ng-click="delFee(value.id,$index)" class="btn btn-sm btn-danger" href="javascript:;">Xoá</a>
+			                        </div>
+			            		</td>
+			            	</tr>
+			            </tbody>
+			        </table>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<footer class="panel-footer">
+      <div class="row">
+        <div class="col-sm-4 text-right text-center-xs pull-right">                
+            <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage,courier)"></pagination>
+        </div>
+      </div>
+    </footer>
+</div>

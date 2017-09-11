@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Cấu hình API nhận trạng thái Shipchung</strong>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body wrapper-md">
+    <form>
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="frm.link" placeholder="Link get api">
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="accept(frm)">{{'Btt_update' | translate}}</button>
+    <button type="button" class="btn btn-default" ng-click="cancel()">{{'Btt_close' | translate}}</button>
+</div>

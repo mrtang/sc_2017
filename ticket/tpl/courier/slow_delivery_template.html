@@ -1,0 +1,100 @@
+<table class="table  table-hover m-b-none">
+                        <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Sản phẩm</th>
+                            <th>Người gửi</th>
+                            <th>Người nhận</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-show="loading.slowdelivery">
+	                        <td colspan="20" class="text-center">
+	                            <i class="text-3x fa fa-spinner fa-spin"></i>
+	                        </td>
+                        </tbody>
+                        <tbody ng-show="slowdelivery.length == 0 && !loading.slowdelivery">
+                            <tr >   
+                                <td colspan="7" class="text-center">
+                                    Không có dữ liệu
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-repeat="item in slowdelivery">
+                            <tr 
+                            
+                            popover-trigger="mouseenter"
+                            popover-placement="top"
+                            popover="{{genHTMLVerify(item)}}" 
+                          >
+                                <td > 
+                                    <p><a href="http://seller.shipchung.vn/#/detail/{{item.tracking_code}}" target="_blank" tooltip-html-unsafe="Thời gian tạo : {{item.time_create * 1000 | date : 'dd-MM-yyyy  HH:mm'}} <br/>Thời gian lấy : {{item.time_pickup * 1000 | date : 'dd-MM-yyyy  HH:mm'}} <br/> Thời gian giao dự kiến: {{(item.time_pickup + item.estimate_delivery * 3600) * 1000 | date : 'dd-MM-yyyy  HH:mm'}}" tooltip-placement="top" class="label bg-light text-base text-info ">
+                                        {{item.tracking_code}}
+                                    </a></p>
+                                    <p>
+                                        <span class="label text-xs {{list_color[status_group[item.status]] || ''}}">{{list_status[item.status]}} </span>
+                                    </p>
+
+                                    <p><i class="fa" ng-class="{'fa-truck': ([1,3].indexOf(item.service_id) != -1),'fa-plane': ([2,4].indexOf(item.service_id) != 1)}"></i> {{[1,3].indexOf(item.service_id) != -1 ? 'Chuyển phát thường' : 'Chuyển phát nhanh'}}</p>
+                                </td>
+                                <td>
+                                    <p tooltip-html-unsafe="{{item.product_name}}" tooltip-placement="top"><i class="fa fa-shopping-cart"></i> {{item.product_name | limitTo : 30 || 'Tên sản phẩm'}}</p>
+                                    <p>
+                                        <i class="fa fa-tags"></i> {{item.total_amount | vnNumber}} đ
+                                    </p>
+                                    <p>
+                                        <i class="fa fa-shopping-cart"></i> {{item.total_weight | vnNumber}} gram
+                                    </p>
+                                </td>
+
+                                <td>
+                                    <p><i class="fa fa-user"></i> {{item.from_user.fullname | limitTo : 30 || 'Tên KH'}}</p>
+                                    <p>
+                                        <i class="fa fa-envelope-o"></i> {{item['from_user']['email'] || 'email'}}
+                                    </p>
+                                    <p>
+                                    <i class="fa fa-phone"></i> {{(item['from_user']['phone']) || 'Điện thoại' | limitTo : 30}}
+                                    </p>
+                                    <p>
+                                        <span>
+                                            <i class="fa fa-home"></i>
+
+                                            {{item.from_district || 'Quận huyện'}} *
+                                            {{item.from_city || 'Thành phố' }} <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="{{item.from_address || 'Địa chỉ'}} "></i>
+                                        </span>
+                                    </p>
+                                </td>
+
+                                <td>
+                                    <p><i class="fa fa-user"></i> {{item.to_name | limitTo : 30 || 'Tên KH'}}</p>
+                                    <p ng-if="item.to_email">
+                                        <i class="fa fa-envelope-o"></i> {{item.to_email }}
+                                    </p>
+                                <p>
+                                <i class="fa fa-phone"></i> {{item.to_phone || 'Điện thoại' | limitTo : 30}}
+                                </p>
+                                <p>
+                                    <span>
+                                        <i class="fa fa-home"></i>
+                                        {{item.to_district || 'Quận huyện'}} *
+                                        {{item.to_city || 'Thành phố' }} <i class="fa fa-angle-double-down text-info pointer" popover-placement="bottom" popover="{{item.to_address || 'Địa chỉ'}} "></i>
+                                    </span>
+                                </p>
+                                </td>
+                            </tr>
+
+                            <td colspan="20" class="text-left">
+                                <ul class="breadcrumb bg-white m-n">
+                                    <li><a href="javascript:;"><i class="fa fa-flag"></i> {{list_status[item.status] || 'Trạng thái'}}</a></li>
+                                    <li ng-repeat="it in item.pipe_journey" ng-class="{'active':$last}" popover-placement="bottom" popover="{{ item.time_create * 1000 | date : 'dd-MM-yyyy  HH:mm' }} - {{it.note || ''}}">
+                                        <a href="javascript:;">
+                                            {{pipe_status[it.pipe_status] || 'Hành trình'}}
+                                        </a>
+                                    </li>
+                                    <li ng-click="action(item, list_pipe_status, pipe_priority[item.pipe_status], 1, 28)" class="pointer"><i class="text-success text-lg fa  fa-plus"></i></li>
+                                    
+                                    <progressbar value="(pipe_priority[item.pipe_status]/pipe_limit) * 100 || '0'" class="progress-xs bg-light m-n" animate="true" type="success"></progressbar>
+                                </ul>
+                            </td>
+
+                        </tbody>
+                    </table>

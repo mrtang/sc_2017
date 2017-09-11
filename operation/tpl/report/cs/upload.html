@@ -1,0 +1,49 @@
+<div class="fade-in-right" ng-controller="CSUploadCtrl">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default">
+                    <div class="panel-heading h2">
+                        <i class="fa fa-upload text-info"></i>
+                        Upload KPI
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-12">
+                            <div class="col-lg-4 no-padder">
+                                <input type="file" tabindex="-1"
+                                    style="position: absolute; clip: rect(0px 0px 0px 0px);"
+                                    ui-jq="filestyle"
+                                    nv-file-select
+                                    uploader="uploader"
+                                    data-icon="false"
+                                    data-classbutton="btn btn-default"
+                                    data-classinput="form-control inline v-middle input-s"
+                                />
+                                <p class="m-t-xs">
+                                    <a target="_blank" ng-href="{{link_storage}}template/Template_KPI_CS.xls" class="text-info"><i class="fa fa-upload"></i> Download Template</a>
+                                </p>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group controls input-group">
+                                    <input type="text" class="form-control" placeholder="Thời gian"
+                                           ng-model="time_create"
+                                           datepicker-popup="dd-MM-yyyy"
+                                           is-open="time_create_open"
+                                           datepicker-options="dateOptions"
+                                           close-text="Close"
+                                    />
+                                  <span class="input-group-btn icon-input">
+                                    <i class="btn fa fa-calendar "></i>
+                                  </span>
+                                </div>
+                            </div>
+                            <button class="btn btn-info m-l-md" type="button" ng-click="uploader.uploadAll()"><i class="fa fa-upload"></i> Upload</button>
+                        </div>
+                    </div>
+                </div> 
+                <!--/ Panel-->
+            </div>
+        </div>
+    </div>
+</div>

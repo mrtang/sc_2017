@@ -1,0 +1,207 @@
+<style>
+    .col-sm-36    {
+        width:36% !important;
+        float: left;
+        min-height: 1px;
+        position:relative;
+        padding: 10px 15px;
+    }
+    .col-sm-46    {
+        width:46% !important;
+        float: left;
+        min-height: 1px;
+        position:relative;
+    }
+</style>
+<!-- navbar -->
+<div data-ng-include=" 'tpl/blocks/header_ticket.html' " class="app-header navbar">
+</div>
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<!-- / navbar -->
+
+<!-- menu
+<div data-ng-include=" 'tpl/blocks/aside.html' " class="app-aside hidden-xs {{app.settings.asideColor}}">
+</div>
+/ menu -->
+
+<!-- content -->
+<div class="app-content" ng-controller="RequestExtendTimeCtrl">
+    <div ui-butterbar></div>
+    <a href class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside" ></a>
+    <div class="app-content-body fade-in-up" >
+        <div class="hbox hbox-auto-xs hbox-auto-sm" >
+            <!-- main -->
+            <div class="col">
+                <!-- main header -->
+                <div class="bg-light lter b-b wrapper-md">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-8">
+                            <h1 class="m-n font-thin h3 text-black">Danh sách yêu cầu gia hạn</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="panel padder-v item padder">
+                        <div class="text-responsive"> 
+                            <tabset class=" tab-inside  text-sm" justified="false" >
+                                <tab ng-click="refresh();setPage(1, '')">
+                                    <tab-heading>Tất cả
+                                        <small></small>
+                                    </tab-heading>
+
+                                </tab>
+                                
+                                <tab ng-click="refresh();setPage(1, 0)">
+                                    <tab-heading>Chưa duyệt
+                                        <small></small>
+                                    </tab-heading>
+                                </tab>
+
+                                <tab ng-click="refresh();setPage(1, 1)">
+                                    <tab-heading>Đã duyệt
+                                        <small></small>
+                                    </tab-heading>
+                                </tab>
+
+                                <tab ng-click="refresh();setPage(1, 2)">
+                                    <tab-heading>Yêu cầu bị từ chối
+                                        <small></small>
+                                    </tab-heading>
+                                </tab>
+                            </tabset>
+                            <div class="tab-container">
+                                <div class="tab-content tab-fake">
+                                    <form class="form-validation" role="form" ng-submit="setPage(1, current_status, frm)" name="frmSearch">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group controls padder">
+                                                    <input type="text" class="form-control" placeholder="Nhập mã ticket cần tra"
+                                                    ng-model="frm.keyword"
+                                                    />
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group controls input-group">
+                                                    <input type="text" class="form-control" placeholder="Từ ngày ..."
+                                                           ng-model="frm.time_start"
+                                                           datepicker-popup="dd-MM-yyyy"
+                                                           is-open="time_create_start_open"
+                                                           close-text="Đóng"
+                                                            />
+                                                    <span class="input-group-btn icon-input">
+                                                        <i class="btn fa fa-calendar "></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-4">
+                                                <div class="form-group controls input-group">
+                                                  <input type="text" class="form-control" placeholder="Đến ngày ..."
+                                                    ng-model="frm.time_end"
+                                                    datepicker-popup="dd-MM-yyyy"
+                                                    is-open="time_create_end_open"
+                                                    close-text="Đóng"
+                                                   />
+                                                  <span class="input-group-btn icon-input">
+                                                    <i class="btn fa fa-calendar "></i>
+                                                  </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row">
+                                            <div class="col-lg-3 padder-lg">
+                                                <button type="submit" class="btn m-b-xs  btn-info" ng-disabled="frmSearch.$invalid"><i class="fa fa-search"></i> Tìm kiếm &nbsp;</button>
+
+                                                <button type="button" ng-click="setPage(currentPage, current_status, frm, 'export')" class="btn m-b-xs btn-primary" ><i class="fa fa-excel"></i> Xuất Excel &nbsp;</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <table class="table table-full">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Ticket</th>
+                                                <th>Nội dung yêu cầu</th>
+                                                <th>Người yêu cầu</th>
+                                                <th>Số giờ muốn gia hạn</th>
+                                                <th>Thời gian gửi yêu cầu gia hạn</th>
+                                                <th>Trạng thái</th>
+                                                <th style="width:150px!important">Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-show="loadingState">
+                                            <td colspan="20" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tbody>
+                                        <tbody>
+
+                                            <tr ng-repeat="item in list_data">
+                                                <td>{{$index + 1}}</td>
+                                                <td>
+                                                    <p><a href="" ui-sref="ticket.request.management({time_start: 7, id: item.ticket.id})" target="_blank"><span class="text-info">#{{item.ticket.id}} - {{item.ticket.title}}</span></a></p>
+                                                    <p tooltip-placement="top" tooltip="{{item.ticket.time_over * 1000 | date:'HH:mm:ss dd-MM-yyyy'}}" ><i class="glyphicon glyphicon-time"></i> Hết hạn: {{timeAgo(item.ticket.time_over * 1000)}}</p>
+                                                </td>
+                                                <td>{{item.note}}</td>
+                                                <td>
+                                                    <p>{{item.user.fullname}}</p>
+                                                </td>
+                                                <td>{{item.time}} ngày</td>
+                                                <td><span tooltip-placement="top" tooltip="{{item.time_create * 1000| date:'HH:mm:ss dd-MM-yyyy'}}">{{timeAgo(item.time_create * 1000)}}</span></td>
+                                                <td>
+                                                    {{item.status == 1 ? 'Đã xác nhận yêu cầu' : ''}}
+                                                    {{item.status == 0 ? 'Yêu cầu mới gửi' : ''}}
+                                                    {{item.status == 2 ? 'Yêu cầu đã bị hủy' : ''}}
+
+                                                    <p tooltip-placement="top" ng-if="item.time_update > 0" tooltip="{{item.time_update * 1000 | date:'HH:mm:ss dd-MM-yyyy'}}" ><i class="glyphicon glyphicon-time"></i> Cập nhật: {{timeAgo(item.time_update * 1000)}}</p>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-success" ng-disabled="accept_process || item.status == 1 ||item.status == 2 " ng-click="acceptRequest(item)">Đồng ý</button>
+                                                        <button type="button" class="btn btn-success dropdown-toggle" ng-disabled="accept_process || item.status == 1 || item.status == 2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="caret"></span>
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li ng-click="rejectRequest(item)"><a href="">Hủy</a></li> 
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="row" ng-show="list_data.length">
+                                        <div class="col-sm-3 wrapper-md pull-left">
+                                            <strong>Tổng số</strong> : <i class="text-danger">{{total_record || '0'}}</i> yêu cầu
+                                        </div>
+                                        <div class="col-sm-4 text-right text-center-xs pull-right m-r-md">
+                                            <pagination total-items="total_record" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage, current_status, frm)"></pagination>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- / main -->
+        </div>
+    </div>
+</div>
+<!-- /content -->
+
+
+<!-- footer -->
+<div class="app-footer wrapper b-t bg-light">
+    <span class="pull-right">{{app.version}} <a href ui-scroll="app" class="m-l-sm text-muted"><i class="fa fa-long-arrow-up"></i></a></span>
+    &copy; 2014 Copyright.
+</div>
+<!-- / footer -->

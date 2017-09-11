@@ -1,0 +1,59 @@
+ <div class="modal-header">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                  <h4 ng-if="!selectedItem.id">Tạo campaign</h4>
+                  <h4 ng-if="selectedItem.id">Cập nhật campaign</h4>
+                </div>
+            </div>
+        </div>
+        <form class="form-horizontal form-validation" name="frm_edit">
+            <div class="modal-body wrapper-md">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Tên campaign</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" ng-model="selectedItem.name" required/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Miêu tả</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control" ng-model="selectedItem.description" >{{selectedItem.description}}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Bắt đầu từ</label>
+                    <div class="col-lg-9">
+                        <div class="dropdown">
+                          <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                            <div class="input-group"><input type="text" class="form-control" value="{{selectedItem.time_start | date:'yyyy-MM-dd HH:mm a'}}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="selectedItem.time_start" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" required/>
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Kết thúc</label>
+                    <div class="col-lg-9">
+                        <div class="dropdown">
+                          <a class="dropdown-toggle" id="dropdown3" role="button" data-toggle="dropdown" data-target="#" href="#">
+                            <div class="input-group"><input type="text" class="form-control" value="{{selectedItem.time_end | date:'yyyy-MM-dd HH:mm a'}}" ><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="selectedItem.time_end" data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }" required/>
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" ng-disabled="frm_edit.$invalid || frm_submit" ng-click="save(selectedItem)"><span ng-if="selectedItem.id">Cập nhật</span><span ng-if="!selectedItem.id">Thêm mới</span></button>
+                <button class="btn btn-info" ng-click="close()">Đóng</button>
+            </div>
+        </form>

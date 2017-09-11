@@ -1,0 +1,165 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="ReportInsightCtrl">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-8">
+                    <h1 class="m-n font-thin h3 text-black">Báo cáo ticket theo nhân viên</h1>
+                </div>
+            </div>
+        </div>
+        <!-- / main header -->
+        <div class="wrapper">
+            <!-- stats -->
+                <div class="panel padder-v item">
+                    <form data-ng-submit="statistic(1)">
+                    <div class="row padder m-t-md">
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <select class="form-control" ng-model="SearchData.case_id">
+                                <option value="">Tất cả các loại</option>
+                                <option ng-repeat="case in listCase" value="{{case.id}}">{{case.name}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <select class="form-control" ng-model="SearchData.type_id">
+                                <option value="">Tất cả các trường hợp</option>
+                                <option ng-repeat="item in listCaseType[SearchData.case_id]" value="{{item.id}}">{{item.type_name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <p class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="f_date" is-open="from_date_open" placeholder="Từ ngày ..." datepicker-options="dateOptions"  close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event,'from_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                            <p class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="t_date" is-open="to_date_open" placeholder="Đến ngày ..." datepicker-options="dateOptions" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event,'to_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row padder">
+                        <div class="form-group col-xs-12">
+                            <button class="btn btn-info" type="submit">Thống kê</button>
+                        </div>
+                    </div>
+                    </form>
+
+                    <div class="row padder m-t-md">
+                        <div class="row row-sm text-center">
+                            <div class="col-xs-6 col-sm-4 col-md-2 col-md-offset-1">
+                                <div class="panel padder-v item bg-info">
+                                    <div class="text-white font-thin h3">{{statisticData.number_of_waiting || 0 | vnNumber }}</div>
+                                    <span class="text-muted text-xs">Yêu cầu chờ xử lý</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-4 col-md-2">
+                                <a href class="block panel padder-v bg-primary item">
+                                    <div class="text-white font-thin h3">{{statisticData.number_of_response || 0 | vnNumber }}</div>
+                                    <span class="text-muted text-xs">Yêu cầu chờ phản hồi</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-sm-4 col-md-2">
+                                <a href class="block panel padder-v bg-warning item">
+                                    <div class="text-white font-thin h3">{{statisticData.number_of_close || 0 | vnNumber }}</div>
+                                    <span class="text-muted text-xs">Yêu cầu chờ đóng</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-sm-4 col-md-2">
+                                <div class="panel padder-v item bg-danger">
+                                    <div class="font-thin h3">{{statisticData.time_reply || 0 | time }}</div>
+                                    <span class="text-muted text-xs">Có trả lời</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-4 col-md-2">
+                                <div class="panel padder-v item bg-info">
+                                    <div class="font-thin h3">{{statisticData.time_process || 0 | time }}</div>
+                                    <span class="text-muted text-xs">Xử lý xong</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row padder m-t-md">
+
+                        <div class="text-center sc-loading-icon" ng-show="stateLoading">
+                            <div class="loader">
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
+                            <p>Đang tải dữ liệu ...</p>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped b-t b-light">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20px;">#</th>
+                                        <th>
+                                            Nhân viên
+                                        </th>
+                                        <th>Chờ xử lý</th>
+                                        <th>Chờ phản hồi</th>
+                                        <th>Chờ đóng</th>
+                                        <th>Đã đóng</th>
+                                        <th>Số ticket quá hạn</th>
+                                        <th>Quá hạn theo thời gian xử lý</th>
+                                        <th>Trả lời sau</th>
+                                        <th>Xử lý trong</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="(i,item) in SearchResultData">
+                                        <td>{{item_stt + i + 1}}</td>
+                                        <td>{{item.user.fullname}}
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="text-info" href="{{link_export}}ticket-request/excel?status=ASSIGNED&time_start={{SearchData.from_date}}&time_end={{SearchData.to_date}}&user_id=assign_id&case={{SearchData.case_id || '0'}}&type_ticket={{SearchData.type_id || '0'}}" target="_blank">
+                                                {{item.status.ASSIGNED[1] || 0 |vnNumber }}/{{item.status.ASSIGNED[1] + item.status.ASSIGNED[0] || 0 | vnNumber}}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="text-info" href="{{link_export}}ticket-request/excel?status=PENDING_FOR_CUSTOMER&time_start={{SearchData.from_date}}&time_end={{SearchData.to_date}}&user_id={{item.assign_id}}&case={{SearchData.case_id || '0'}}&type_ticket={{SearchData.type_id || '0'}}" target="_blank">
+                                            {{item.status.PENDING_FOR_CUSTOMER[1] || 0 |vnNumber }}/{{item.status.PENDING_FOR_CUSTOMER[1] + item.status.PENDING_FOR_CUSTOMER[0] || 0 | vnNumber}}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="text-info" href="{{link_export}}ticket-request/excel?status=PROCESSED&time_start={{SearchData.from_date}}&time_end={{SearchData.to_date}}&user_id={{item.assign_id}}&case={{SearchData.case_id || '0'}}&type_ticket={{SearchData.type_id || '0'}}" target="_blank">
+                                                {{item.status.PROCESSED[1] || 0 |vnNumber }}/{{item.status.PROCESSED[1] + item.status.PROCESSED[0] || 0 | vnNumber}}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="text-info" href="{{link_export}}ticket-request/excel?status=CLOSED&time_start={{SearchData.from_date}}&time_end={{SearchData.to_date}}&user_id={{item.assign_id}}&case={{SearchData.case_id || '0'}}&type_ticket={{SearchData.type_id || '0'}}" target="_blank">
+                                                {{item.status.CLOSED[1] || 0 |vnNumber }}/{{item.status.CLOSED[1] + item.status.CLOSED[0] || 0 | vnNumber}}
+                                            </a>
+                                        <td>
+                                            <a class="text-info" href="{{link_export}}ticket-request/excel?status=CLOSED&time_start={{SearchData.from_date}}&time_end={{SearchData.to_date}}&user_id={{item.assign_id}}&case={{SearchData.case_id || '0'}}&type_ticket={{SearchData.type_id || '0'}}&over_time=1" target="_blank">
+                                                {{item.outOfDatePercent || 0}}%
+                                            </a>
+                                        </td>
+                                        <td>{{item.realOutOfDatePercent || 0}}%</td>
+                                        <td>{{item.per_time_reply || 0 | time }}</td>
+                                        <td>{{item.total_time_process || 0 | time }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <!-- / stats -->
+
+        </div>
+    </div>
+    <!-- / main -->
+</div>

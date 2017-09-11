@@ -1,0 +1,132 @@
+
+.scroller-con{
+	
+	position: relative;
+	overflow: hidden;
+	margin: 10px 0;
+}
+
+.scroller-con .scroller{
+	overflow: hidden;
+	position: relative;
+}
+.scroller-con .inner{
+	position: absolute;
+	padding-left: 0;
+}
+
+
+/*Skin 1*/
+.scroller-con .simple-scrollbary{
+	position: absolute;
+	width: 7px;
+	height: 60px;
+	top: 0;
+	right: 0;
+	background: #5896c6;
+	border-radius:2px;
+	cursor: pointer;
+}
+.scroller-con .simple-scrollbary-bg{
+	position: absolute;
+	width: 7px;
+	top: 0;
+	right: 0;
+	background: #eee;
+	border-radius:5px;
+	cursor: pointer;
+}
+.scroller-con .simple-scrollbarx{
+	position: absolute;
+	width: 60px;
+	height: 7px;
+	left: 0;
+	bottom: -10px;
+	background: #5896c6;
+	border-radius:2px;
+	cursor: pointer;
+}
+.scroller-con .simple-scrollbarx-bg{
+	position: absolute;
+	height: 7px;
+	left: 0;
+	bottom: -10px;
+	background: #eee;
+	border-radius:5px;
+	cursor: pointer;
+}
+
+
+/*Skin 2*/
+.scroller-con .s2-scrollbary{
+	position: absolute;
+	width: 7px;
+	height: 60px;
+	top: 0;
+	right: -10px;
+	background: transparent url('styleimg/scroller1.png');
+}
+.scroller-con .s2-scrollbary-bg{
+	position: absolute;
+	width: 7px;
+	top: 0;
+	right: -10px;
+	background: #eee;
+}
+.scroller-con .s2-scrollbarx{
+	position: absolute;
+	width: 60px;
+	height: 30px;
+	left: 0;
+	bottom: -30px;
+	background: yellow;
+	cursor: pointer;
+}
+.scroller-con .s2-scrollbarx-bg{
+	position: absolute;
+	height: 30px;
+	left: 0;
+	bottom: -30px;
+	background: #000;
+	cursor: pointer;
+}
+
+
+
+
+/*Skin 3*/
+.scroller-con .s3-scrollbary{
+	position: absolute;
+	width: 10px;
+	height: 35px;
+	top: 0;
+	right: -15px;
+	background: url('styleimg/s3scrollery.png');
+	cursor: pointer;
+}
+.scroller-con .s3-scrollbary-bg{
+	position: absolute;
+	width: 1px;
+	top: 0;
+	right: -10px;
+	background: #fff;
+	cursor: pointer;
+}
+
+.scroller-con .s3-scrollbarx{
+	position: absolute;
+	width: 35px;
+	height: 10px;
+	left: 0;
+	bottom: -15px;
+	background: url('styleimg/s3scrollerx.png');
+	cursor: pointer;
+}
+.scroller-con .s3-scrollbarx-bg{
+	position: absolute;
+	height: 1px;
+	left: 0;
+	bottom: -10px;
+	background: #eee;
+	cursor: pointer;
+}

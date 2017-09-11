@@ -1,0 +1,79 @@
+<div ng-controller="DistrictCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+    <div class="bg-light lter b-b wrapper-md col-sm-12 ">
+        <span class="m-n text-title text-size col-sm-3 no-padder font-thick"><i class="fa fa-cogs text-muted"></i> District Managemant</span>
+        <div class="pull-right">
+            <a class="btn btn-info btn-addon" ng-click="open_popup('')" ><i class="fa fa-plus"></i> ADD</a>
+            
+            <script id="ModalCreate.html" type="text/ng-template">
+                <div ng-include="'tpl/location/modal.form.create_district.html'"></div>
+            </script>
+        </div>
+    </div>
+    
+    <div class="wrapper-md  col-sm-12">
+        <div class="panel panel-default">
+        
+        <div class="row wrapper">
+            <div class="col-sm-3 col-sm-offset-5">
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" ng-model="search_city" typeahead="state as state.city_name for state in list_city | filter:{city_name:$viewValue} | limitTo:8" placeholder="Tỉnh/Thành phố" />
+                  <span class="input-group-btn">
+                    <button class="btn btn-sm btn-primary" ng-click="GetDistrict()" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                  </span>
+                </div>
+            </div>
+            <div class="col-sm-3 pull-right">
+                <div class="input-group">
+                    <input type="text" ng-model="search_district" placeholder=" Tên quận huyện ..." class="form-control text-sm" />
+                      <span class="input-group-btn">
+                        <button class="btn btn-sm btn-primary" ng-click="GetDistrict()" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                      </span>
+                </div>
+            </div>
+        </div>
+        
+            <div class="table-responsive">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr>
+                    <th class="text-left">#</th>
+                    <th class="text-left">City</th>
+                    <th class="text-left">District</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="value in list_district">
+                    <td class="text-left">{{item_stt + $index + 1}}</td>
+                    
+                    <td class="text-left">                                
+                        <a href="javascript:;" editable-select="value.city_id" e-ng-options="state.id as state.city_name for state in list_city" onbeforesave="change(value.id,$data,'city_id')">
+                                 {{ city[value.city_id]['city_name'] || empty }}
+                        </a>
+                    </td>
+                    
+                    <td class="text-left">
+                    <a href="javascript:;" editable-text="value.district_name" onbeforesave="change(value.id,$data,'district_name')">{{ value.district_name || 'empty' }}</a>
+                    
+                    </td>
+                    
+                    <td class="text-center">
+                        <a href="javascript:;" class="btn btn-sm btn-danger" ng-click="del(value.id,$index)"><i class="fa  fa-times-circle"></i> &nbsp;DEL </a>
+                        <a href="javascript:;" class="btn btn-sm btn-info" ui-sref="app.location.ward({city_id:value.city_id,district_id:value.id})"><i class="fa  fa-long-arrow-right"></i> &nbsp;Ward </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-4 text-right text-center-xs pull-right">                
+                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="GetDistrict()"></pagination>
+                </div>
+              </div>
+            </footer>
+        </div>
+    </div>
+</div>

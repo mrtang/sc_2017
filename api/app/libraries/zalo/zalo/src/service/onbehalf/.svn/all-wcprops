@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn_zplatform/!svn/ver/6210/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/onbehalf
+END
+ZaloOnBehalfMessageService.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/6239/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/onbehalf/ZaloOnBehalfMessageService.php
+END
+ZaloOnBehalfMessageServiceImpl.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn_zplatform/!svn/ver/6239/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/onbehalf/ZaloOnBehalfMessageServiceImpl.php
+END
+ZaloOnBehalfServiceConfigure.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn_zplatform/!svn/ver/6210/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/onbehalf/ZaloOnBehalfServiceConfigure.php
+END
+ZaloOnBehalfServiceFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn_zplatform/!svn/ver/6210/Oauth/SDK/Web/PHP/ZaloPageSDK/src/service/onbehalf/ZaloOnBehalfServiceFactory.php
+END

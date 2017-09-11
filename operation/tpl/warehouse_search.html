@@ -1,0 +1,151 @@
+<!-- navbar -->
+<div data-ng-include=" 'tpl/blocks/warehouse_header.html' " class="app-header navbar" ng-init="app.settings.asideFolded = false">
+</div>
+<!-- / navbar -->
+
+<div class="app-content-body fade-in-up">
+    <div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="WareHouseSearchCtrl">
+        <div class="col wrapper-sm ">
+            <div class="row text-center" ng-show="waiting">
+                <i class="text-3x fa fa-spinner fa-spin"></i>
+            </div>
+            <div class="row text-center" ng-show="total == 0 && !waiting">
+                <h5> Không có dữ liệu </h5>
+            </div>
+            <div ng-if="total > 0 && !waiting" class="row">
+                <div class="col-md-3 col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="clearfix">
+                                <a href="" class="pull-left thumb-md avatar b-3x m-r">
+                                    <img ng-src="http://www.gravatar.com/avatar/{{item.avatar}}" title="{{item.fullname}}'s Avatar" />
+                                </a>
+                                <div class="clear">
+                                    <div class="h4 m-t-xs m-b-xs">
+                                    {{item.fullname || item.fullname}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="panel-footer bg-info text-center no-padder">
+                            <div class="row no-gutter">
+                                <div class="col-xs-4">
+                                    <div class="wrapper" ng-class="{'bg-primary': item.wms_type == 0}">
+                                        <span class="m-b-xs h5 block text-white" >{{item.freeze.item || '0' | vnNumber}}</span>
+                                        <small class="text-muted">
+                                            <a class="text-info" ui-sref="boxme.merchant.freeze_item({merchant:item.user_id})" target="_blank">Sản phẩm<br />
+                                                <i class="fa fa-external-link" ng-class="{'text-info': item.wms_type == 0}" tooltip="Chi tiết"></i></a>
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 dk">
+                                    <div class="wrapper" ng-class="{'bg-primary': item.wms_type == 2}">
+                                        <span class="m-b-xs h5 block text-white">{{item.freeze.m3 || '0' | vnNumber}}</span>
+                                        <small class="text-muted">
+                                            <a class="text-info" ui-sref="boxme.merchant.freeze({merchant:item.user_id})" target="_blank">Giá kệ <br />
+                                                <i class="fa fa-external-link" ng-class="{'text-info': item.wms_type == 2}" tooltip="Chi tiết"></i></a>
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="wrapper" ng-class="{'bg-primary': item.wms_type == 1}">
+                                        <span class="m-b-xs h5 block text-white">{{item.freeze.m2 || '0' | vnNumber}}</span>
+                                        <small class="text-muted">
+                                            <a class="text-info" ui-sref="boxme.merchant.freeze_pallet({merchant:item.user_id})" target="_blank">Pallets <br />
+                                                <i class="fa fa-external-link" ng-class="{'text-info': item.wms_type == 1}" tooltip="Chi tiết"></i></a>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                        <ul class="list-group no-radius alt">
+                            <li class="list-group-item">
+                                <i class="fa fa-clock-o fa-fw text-muted"></i>
+                                Ngày đăng ký : <strong class="text-info">{{ item.time_create * 1000  | date : "dd-MM-yyyy  HH:mm"}} </strong>
+                            </li>
+                            <li class="list-group-item" ng-show="item.first_shipment_time > 0">
+                                <i class="fa fa-clock-o fa-fw text-muted"></i>
+                                Ngày nhập kho : <strong class="text-info">{{ item.first_shipment_time * 1000  | date : "dd-MM-yyyy  HH:mm"}} </strong>
+                            </li>
+
+                            <li class="list-group-item" href="" ng-show="item.phone">
+                                <i class="fa fa-phone fa-fw text-muted"></i> 
+                                <a href="callto:{{item.phone}}" class="text-info">{{item.phone}}</a>
+                            </li>
+
+                            <li class="list-group-item" href="" ng-show="item.email">
+                                <!-- <span class="badge bg-info">16</span> -->
+                                <i class="fa fa-envelope fa-fw text-muted"></i> 
+                                <a target="_blank" ui-sref="warehouse.search({keyword:item.email})" class="text-info">{{item.email}}</a>
+                            </li>
+
+                            <li class="list-group-item">
+                                <i class="fa fa-eye fa-fw text-muted"></i>
+                                Sản phẩm đã nhập kho : <strong class="text-info">{{list_freeze.total_items || '0' | vnNumber}} </strong>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-eye fa-fw text-muted"></i>
+                                Sản phẩm có thể xuất hàng : <strong class="text-info">{{item.statistic.inventory || '0' | vnNumber}} </strong>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-eye fa-fw text-muted"></i>
+                                Sản phẩm không đủ điều kiện : <strong class="text-info">{{item.statistic.inventory_damaged || '0' | vnNumber}} </strong>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-eye fa-fw text-muted"></i>
+                                Sản phẩm đang xử lý : <strong class="text-info">{{item.statistic.inventory_wait || '0' | vnNumber}} </strong>
+                            </li>
+                             <li class="list-group-item">
+                                <i class="fa fa-eye fa-fw text-muted"></i> 
+                                Số dư hiện tại : <strong class="text-danger">{{item.mechant.balance || '0' | vnNumber}} đ</strong>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-eye fa-fw text-muted"></i>
+                                Hạn mức : <strong class="text-danger">{{item.mechant.quota || '0' | vnNumber}} đ</strong>
+                            </li>
+                            <li class="list-group-item" href="">
+                                <i class="fa fa-eye fa-fw text-muted"></i>
+                                Thu hộ tạm tính : <strong class="text-danger"> {{item.mechant.provisional || '0' | vnNumber}}đ</strong><br/>
+                            </li>
+                            <li class="list-group-item" href="">
+                                <i class="fa fa-eye fa-fw text-muted"></i>
+                                Phí vận chuyển tạm tính : <strong class="text-danger"> {{item.mechant.freeze || '0' | vnNumber}}đ</strong><br/>
+                            </li>
+                            <li class="list-group-item" href="">
+                                <i class="fa fa-eye fa-fw text-muted"></i>
+                                Số dư khả dụng : <strong class="text-danger"> {{calculate_balance(item.mechant) || '0' | vnNumber}}đ</strong><br/>
+                            </li>
+                        </ul>
+                    </div> <!-- End profile -->
+                </div> <!--End row -->
+
+                <div class="col-lg-9"> <!-- List Item -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div ng-include="'tpl/warehouse_search/verify.html'"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div ng-include="'tpl/warehouse_search/verify_warehouse.html'"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div ng-if="item.list_shipment != null" ng-include="'tpl/warehouse_search/list_shipment.html'"></div>
+                            <div ng-if="item.list_order != null" ng-include="'tpl/warehouse_search/list_order.html'"></div>
+                            <div ng-if="item.list_dr != null" ng-include="'tpl/warehouse_search/list_dr.html'"></div>
+                            <div ng-if="item.list_putaway.length > 0" ng-include="'tpl/warehouse_search/list_putaway.html'"></div>
+                            <div ng-if="item.list_pickup.length > 0" ng-include="'tpl/warehouse_search/list_pickup.html'"></div>
+                            <div ng-if="item.list_package != null" ng-include="'tpl/warehouse_search/list_package.html'"></div>
+                            <div ng-if="item.list_return.length > 0" ng-include="'tpl/warehouse_search/list_return.html'"></div>
+                            <div ng-if="item.list_item.length > 0" ng-include="'tpl/warehouse_search/list_item.html'"></div>
+                            <div ng-if="item.list_data.length > 0" ng-include="'tpl/warehouse_search/list_data.html'"></div>
+                            <div ng-if="item.uid" ng-include="'tpl/warehouse_search/uid.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end row-->
+        </div>
+    </div>
+            
+</div>

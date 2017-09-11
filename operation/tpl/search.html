@@ -1,0 +1,383 @@
+<!-- navbar -->
+<div data-ng-include=" 'tpl/blocks/header.html' " class="app-header navbar" ng-init="app.settings.asideFolded = false">
+</div>
+<!-- / navbar -->
+
+<div class="app-content-body fade-in-up">
+    <div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="SearchCtrl">
+      <div class="col wrapper-sm">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <form class="form-validation form-horizontal">
+                    <!--user profile -->
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12" ng-switch="object">
+                                <h3 ng-switch-when="seller">Thông tin nhân viên</h3>
+                                <h3 ng-switch-when="receiver">Thông tin người nhận</h3>
+                                <h3 ng-switch-default>Thông tin người gửi</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Họ tên : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.fullname || 'Họ tên'}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Email : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.email || '...'}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Số điện thoại : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.phone || '090.......'}}
+                                    </div>
+                                </div>
+
+
+                            <div ng-show="['sender','order'].indexOf(object) != -1">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Thông báo : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.email_notice || 'Email'}} - {{user.phone_notice || 'Số điện thoại'}}
+                                    </div>
+                                </div>
+                                <div class="row prefix">
+                                    &nbsp;
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Email Ngân lượng : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.email_nl || '....@gmail.com'}} ({{user.user_nl_id || '0'}})
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Id Ngân lượng : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.user_nl_id || '...'}}
+                                    </div>
+                                </div>
+
+                                <!-- Bank -->
+                                <div class="row prefix">
+                                    &nbsp;
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Ngân hàng : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{bank[user.bank_code] || '...'}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Tên tài khoản : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.account_name || '...'}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Số tài khoản : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.account_number || '...'}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Địa chỉ : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.bank_address || '...'}}
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="col-md-6" ng-show="['sender','order'].indexOf(object) != -1">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Số dư hiện tại : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.balance || '0' | vnNumber}} vnđ
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Số dư tạm giữ : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.freeze || '0' | vnNumber}} vnđ
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Thu hộ tạm tính : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.provisional || '0' | vnNumber}} vnđ
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Hạn mức : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.quota || '0' | vnNumber}} vnđ
+                                    </div>
+                                </div>
+
+                                <div class="row prefix">
+                                    &nbsp;
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Số dư cấu hình : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{user.freeze_money || '0' | vnNumber}} vnđ
+                                    </div>
+                                </div>
+                                <div class="row prefix">
+                                    &nbsp;
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Thanh toán : </strong>
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{(user.priority_payment == 1) ? 'Thanh toán Vimo' : 'Thanh toán Ngân Lượng'}}
+                                    </div>
+                                </div>
+
+                                <!-- Bank -->
+                                <div class="row prefix">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              </form>
+          </div>
+
+          <div class="panel-body">
+              <tabset class="tab-container tab-inside h80 text-sm" justified="true" ng-if="['sender','receiver'].indexOf(object) != -1">
+
+                    <tab ng-click="ChangeTab('ALL')">
+                        <tab-heading>Tất cả
+                            <small>({{total_all || 0}})</small>
+                        </tab-heading>
+                    </tab>
+
+                    <tab ng-repeat="(key,item) in group_status" ng-click="ChangeTab(key)">
+                        <tab-heading>{{item}}
+                            <small>({{total_group[key] || 0}})</small>
+                        </tab-heading>
+                    </tab>
+                </tabset>
+
+              <div class="tab-container">
+                        <div class="tab-content tab-fake">
+                            <div class="table-responsive">
+                                <table class="table-condensed table-hover w-full" ng-if="object != 'seller'">
+                                    <thead>
+                                        <td>
+                                            #
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-barcode"></i>&nbsp; Đơn hàng
+                                        </td>
+                                        <td>
+                                            Trạng thái
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-gift"></i>&nbsp; Sản phẩm
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-home"></i> Người gửi
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-home"></i> Người nhận
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-dollar"></i> Phí & Thu hộ
+                                        </td>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr ng-show="list_waiting">
+                                            <td colspan="8" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="totalItems == 0 && !list_waiting">
+                                            <td colspan="8" class="text-center">
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in list_data">
+                                            <td>{{item_stt + $index + 1}}</td>
+                                            <td>
+                                                <p>
+                                                    <a class="label bg-light text-base text-info">{{item.tracking_code}}</a>
+                                                </p>
+                                                <p ng-if="item.time_create > 0" class="text-primary">{{ item.time_create * 1000  | date : "dd-MM-yyyy  HH:mm"}}</p>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    <span class="label text-xs {{list_color[status_group[item.status]] || ''}}">{{list_status[item.status]}}</span>
+                                                </p>
+                                                <p>
+                                                    <i class="fa" ng-class="{'fa-truck': ([1,3].indexOf(item.service_id) != -1),'fa-plane': ([2,4].indexOf(item.service_id) != 1)}"></i> {{courier[item.courier_id] || 'Hãng vận chuyển'}} <br />
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <span ng-show="item.order_code" ><i class="fa fa-code" ></i> {{item.order_code || ''}}<br /></span>
+                                                <i class="fa fa-shopping-cart"></i> {{item.product_name | limitTo : 30 || 'Tên sản phẩm'}}<br />
+                                                <i class="fa fa-tags"></i> {{item.total_amount | vnNumber}} đ *
+                                                <i class="fa fa-shopping-cart"></i> {{item.total_weight | vnNumber}} gram
+                                            </td>
+                                            <td>
+                                                <p>
+                                                       <span tooltip-html-unsafe="{{(list_from_address[item.from_address_id] ? list_from_address[item.from_address_id]['user_name'] : item['from_user']['fullname']) || 'Họ tên' | limitTo : 30}} <br /> {{(list_from_address[item.from_address_id] ? list_from_address[item.from_address_id]['phone'] : item['from_user']['phone']) || 'Điện thoại' | limitTo : 30}}" tooltip-placement="top">
+                                                            <i class="fa" ng-class="{'fa-user' : list_vip.indexOf(item['from_user_id']) == -1, 'fa-star text-lgx text-warning' : list_vip.indexOf(item['from_user_id']) != -1}"></i> {{item['from_user']['email'] || 'email'}}
+                                                       </span>
+                                                </p>
+                                                <p>
+                                                        <span tooltip="{{item.from_address || 'Địa chỉ'}}" tooltip-placement="top">
+                                                            <i class="fa fa-home"></i>
+                                                            {{list_ward[item.from_ward_id] || ''}}
+                                                            {{list_district[item.from_district_id] || 'Quận huyện'}} *
+                                                            {{city[item.from_city_id] || 'Thành phố' }}
+                                                        </span>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                       <span tooltip-html-unsafe="{{item['to_phone'] || ''}} <br /> {{item['to_email'] || ''}}" tooltip-placement="top">
+                                                            <i class="fa fa-user"></i> {{item.to_name || 'Người nhận'}}
+                                                       </span>
+                                                </p>
+                                                <p>
+                                                        <span tooltip="{{list_to_address[item.to_address_id]['address'] || 'Địa chỉ'}}" tooltip-placement="top">
+                                                            <i class="fa fa-home"></i>
+                                                            {{list_to_address[item.to_address_id] ? list_ward[list_to_address[item.to_address_id].ward_id] : '' || ''}}
+                                                            {{list_to_address[item.to_address_id] ? list_district[list_to_address[item.to_address_id].province_id] : 'Quận huyện' || 'Quận huyện'}} *
+                                                            {{list_to_address[item.to_address_id] ? city[list_to_address[item.to_address_id].city_id] : 'Thành phố' || 'Thành phố'}}
+                                                        </span>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    Tổng phí  : {{(item.order_detail.sc_pvc + item.order_detail.sc_cod + item.order_detail.sc_pbh + item.order_detail.sc_pvk + item.order_detail.sc_pch - item.order_detail.sc_discount_pvc - item.order_detail.sc_discount_cod) || '0' | vnNumber}}
+                                                </p>
+                                                <p>
+                                                    Thu hộ : {{item.order_detail.money_collect || '0' | vnNumber}}
+                                                </p>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="table-condensed table-hover w-full" ng-if="object == 'seller'">
+                                    <thead>
+                                        <th>#</th>
+                                        <th><i class="fa fa-user"></i> Khách hàng</th>
+                                        <th><i class="fa fa-clock-o"></i> Thời gian</th>
+                                        <th>Vận đơn đầu tiên</th>
+                                        <th>Vận đơn cuối cùng</th>
+                                        <th>Doanh thu đầu tháng</th>
+                                        <th>Doanh thu lũy kế</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="list_waiting">
+                                            <td colspan="8" class="text-center">
+                                                <i class="text-3x fa fa-spinner fa-spin"></i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="totalItems == 0 && !list_waiting">
+                                            <td colspan="8" class="text-center">
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in list_data">
+                                            <td>{{item_stt + $index + 1}}</td>
+                                            <td>
+                                                <p ng-show="list_user[item.user_id].fullname">
+                                                    {{list_user[item.user_id].fullname}}
+                                                </p>
+                                                <p ng-show="list_user[item.user_id].email">
+                                                    {{list_user[item.user_id].email}}
+                                                </p>
+                                                <p ng-show="list_user[item.user_id].phone">
+                                                    {{list_user[item.user_id].phone}}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <span ng-if="item.time_create > 0" class="text-info">{{ item.time_create * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+                                            <td>
+                                                <span ng-if="item.new_customer.first_order_time > 0" class="text-success">{{ item.new_customer.first_order_time * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+                                            <td>
+                                                <span ng-if="item.new_customer.last_order_time > 0" class="text-success">{{ item.new_customer.last_order_time * 1000  | date : "dd-MM-yyyy  HH:mm"}}</span>
+                                            </td>
+                                            <td>
+                                                {{total_firstmonth  || '0' | vnNumber}} vnđ
+                                            </td>
+                                            <td>
+                                                {{total_nextmonth || '0' | vnNumber}} vnđ
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="row" ng-show="totalItems > 0 && !list_waiting">
+                                    <div class="col-sm-3 wrapper-md pull-left">
+                                        <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> {{(object == 'seller') ? 'khách hàng' : 'đơn hàng'}}
+                                    </div>
+                                    <div class="col-sm-4 text-right text-center-xs pull-right">
+                                        <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="getMerchant(currentPage)"></pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

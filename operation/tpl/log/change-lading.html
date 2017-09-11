@@ -1,0 +1,98 @@
+<div class="wrapper-md bg-light b-b">
+  <h1 class="m-n font-thin h3 text-black"><i class="fa fa-retweet text-info"></i> Log thay đổi</h1>
+  <small class="text-muted">
+  </small>
+
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" data-ng-controller="LogChangeLadingCtrl">
+  <div class="col wrapper-sm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <form class="form-validation form-horizontal" ng-submit="setPage(1)">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group controls padder">
+                        <input type="text" placeholder="Mã vận đơn ..." class="form-control" ng-model="sc_code">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                  <button class="btn btn-info" type="submit">Tìm kiếm</button>
+                </div>
+            </div>
+                  
+        </form>
+      </div>
+
+      <div class="panel-body">
+          <div class="table-responsive">
+              <table class="table table-condensed table-hover w-full">
+                  <thead>
+                    <tr>
+                        <th style="width:20px;">#</th>
+                        <th>Mã vận đơn</th>
+                        <th>Thay đổi</th>
+                        <th>Thời cập nhật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="stateLoading">
+                      <td colspan="20" class="text-center">
+                          <i class="text-3x fa fa-spinner fa-spin"></i>
+                      </td>
+                  </tr>
+                  <tr ng-if="totalItems == 0 && !stateLoading">
+                      <td colspan="20" class="text-center">Không có dữ liệu</td>
+                  </tr>
+
+                    <tr ng-repeat="key in keys(listData)">
+                        <td>{{ item_stt + $index + 1}}</td>
+                        <td><a ng-href="{{link_seller}}#/detail/{{order[listData[key]['order_id']] || ''}}" target="_blank"  class="label bg-light text-sm text-info">{{order[listData[key]['order_id']] || 'Mã đơn'}}</a></td>
+                        <td >
+                          <span ng-if="listData[key][0]">
+                            <p ng-show="listData[key][0]['type']">
+                                <strong>{{type[listData[key][0]['type']] || 'Thay đổi'}}</strong> : {{listData[key][0]['old']}} => {{listData[key][0]['new']}} 
+                            </p>
+                              <p ng-show="listData[key][1]['type']">
+                                  <strong>{{type[listData[key][1]['type']] || 'Thay đổi'}}</strong> : {{listData[key][1]['old']}} => {{listData[key][1]['new']}} 
+                              </p>
+                              <p ng-show="listData[key][2]['type']">
+                                  <strong>{{type[listData[key][2]['type']] || 'Thay đổi'}}</strong> : {{listData[key][2]['old']}} => {{listData[key][2]['new']}} 
+                              </p>
+                              <p ng-show="listData[key][3]['type']">
+                                  <strong>{{type[listData[key][3]['type']] || 'Thay đổi'}}</strong> : {{listData[key][3]['old']}} => {{listData[key][3]['new']}} 
+                              </p>
+                              <p ng-show="listData[key][4]['type']">
+                                  <strong>{{type[listData[key][4]['type']] || 'Thay đổi'}}</strong> : {{listData[key][4]['old']}} => {{listData[key][4]['new']}} 
+                              </p>
+
+                          </span>
+
+                          <p ng-repeat="(k, item) in type" ng-show="listData[key][k]">
+                              <strong>{{item}}</strong> : {{listData[key][k]['old']}} => {{listData[key][k]['new']}} (người thay đổi: <em>{{user[listData[key]['user_id']]['fullname']}}</em>)
+
+
+                          </p>
+                        </td>
+                        <td>{{listData[key]['time_create'] * 1000 | date : 'dd/MM/yy HH:mm'}}</td>
+                    </tr>
+                </tbody>
+              </table>
+
+          <!-- pagination -->
+                <div ng-show="totalItems > 0 && !stateLoading" class="row">
+                  <div class="col-sm-3 wrapper-md pull-left">
+                      <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                  </div>
+                  <div class="col-sm-4 text-right text-center-xs pull-right">
+                    <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(currentPage)" next-text="Next"></pagination>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

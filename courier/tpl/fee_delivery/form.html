@@ -1,0 +1,92 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div ng-controller="FeeDeliveryActionCtrl">
+	<div class="wrapper-md bg-light b-b">
+        <h1 class="m-n font-thin h3"><i class="fa fa-truck text-muted"></i> Cấu hình phí giao hàng</h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default" style="height:400px;">
+                    <div class="panel-body">
+                    	<div class="col-md-2">
+	                        <h4>Hãng vận chuyển</h4>
+	                        <select ng-options="courier.id as courier.name for courier in listCourier" class="form-control"
+			                      ng-model="data.courier" ng-change="loadFee(data.courier);loadArea(data.courier)">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+			            <div class="col-md-2">
+	                        <h4>Dịch vụ</h4>
+	                        <select ng-options="service.id as service.name for service in listService" class="form-control"
+			                      ng-model="data.service">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+			            <div class="col-md-2">
+	                        <h4>Phí</h4>
+	                        <select ng-options="fee.id as fee.name for fee in listFee" class="form-control"
+			                      ng-model="data.fee">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+			            <div class="col-md-3">
+	                        <h4>Tỉnh gửi</h4>
+	                        <div style="height:100px; height: 300px;width: 200px;background: #F5F5F5;overflow-y: scroll; position: absolute;">
+	                        	<div ng-repeat="city in listCityFrom" class="radio">
+			                        <label class="i-checks">
+			                            <input type="radio" value="{{city.id}}" name="from_city" 
+                                           ng-model="data.from_city"/>
+			                            <i></i> {{city.city_name}}
+			                        </label>
+			                    </div>
+		                    </div>
+			            </div>
+			            <div class="col-md-3">
+	                        <h4>Tỉnh nhận</h4>
+	                        <div style="height:100px; height: 300px;width: 200px;background: #F5F5F5;overflow-y: scroll; position: absolute;">
+		                        <div ng-repeat="(key,item) in listArea">
+			                        <label class="i-checks">
+			                          <input type="checkbox" 
+			                          	   ng-change="toggleSelectionAll(item,item.check)"
+                                           ng-checked="false"
+                                           ng-true-value="1"  
+                                           ng-false-value="0"
+                                           ng-model="item.check"
+			                          />
+			                          <i></i> {{item[0]['area_name']}}
+			                        </label>
+			                        <div class="m-l-lg" ng-repeat="one in item">
+			                        	<label class="i-checks">
+				                            <input type="checkbox" 
+				                          		ng-model="city_id"
+                                                ng-change="toggleSelection(one.city_id)"
+                                                ng-checked="check_list(one.city_id)"
+				                            />
+				                        <i></i> {{listCityTo[one.city_id]}}
+				                        </label>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+                    </div>
+                    <div class="panel-body">
+			            <div class="col-md-3 pull-left">
+	                        <h4>VAT</h4>
+	                        <input class="form-control" ng-model="data.vat">
+			            </div>
+			            <div class="col-md-3">
+	                        <h4>Phụ phí xăng dầu</h4>
+	                        <input class="form-control" ng-model="data.oil">
+			            </div>
+			        </div>
+			        <div class="panel-body">
+			            <div class="col-md-3 pull-left">
+            				<button class="btn btn-sm btn-success" ng-click="saveData(data)">Save</button>
+			            </div>
+			        </div>
+                </div> 
+                <!--/ Panel -->
+            </div>
+        </div>
+    </div>
+</div>

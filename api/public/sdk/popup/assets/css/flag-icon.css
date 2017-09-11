@@ -1,0 +1,35 @@
+.flag-icon {
+  position: relative;
+  display: inline-block;
+  width: 1.3333333333333333em;
+  line-height: 1em;
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+.flag-icon:before {
+  content: "\00a0";
+}
+.flag-icon.flag-icon-squared {
+  width: 1em;
+}
+.flag-icon-background {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+.flag-icon-vn {
+  /* background-image: url(http://localhost:8001/assets/css/flags/4x3/vn.svg); */
+    background-image: url(http://lipis.github.io/flag-icon-css/flags/4x3/vn.svg); 
+  
+}
+.flag-icon-vn.flag-icon-squared {
+  background-image: url(http://lipis.github.io/flag-icon-css/flags/1x1/vn.svg);
+}
+
+.flag-icon-us {
+  background-image: url(http://lipis.github.io/flag-icon-css/flags/4x3/us.svg);
+}
+.flag-icon-us.flag-icon-squared {
+  background-image: url(http://lipis.github.io/flag-icon-css/flags/1x1/us.svg);
+}

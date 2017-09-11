@@ -1,0 +1,132 @@
+<div class="fade-in-right" ng-controller="VerifyCtrl">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default">
+                    <div class="panel-heading h2">
+                        <i class="fa fa-upload text-info"></i>
+                        Đối soát bảng kê
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <div class="col-lg-4 no-padder">
+                                <input type="file" tabindex="-1"
+                                       style="position: absolute; clip: rect(0px 0px 0px 0px);"
+                                       ui-jq="filestyle"
+                                       nv-file-select
+                                       uploader="uploader"
+                                       data-icon="false"
+                                       data-classbutton="btn btn-default"
+                                       data-classinput="form-control inline v-middle input-s"
+                                        />
+                            </div>
+                            <button class="btn btn-info m-l-md" type="button" ng-click="uploader.uploadAll()"><i class="fa fa-upload"></i> Upload</button>
+                            <button ng-if="check_privilege('PRIVILEGE_VERIFY','edit') && NewTotal > 0" type="button" class="btn m-b-xs w-xs btn-primary pull-right" ng-click="Verify()">Đối soát</button>
+                        </div>
+                        <p class="m-t-xs">
+                            <a class="text-info" ng-href="{{link_storage}}template/Verify.xls" target="_blank"><i class="fa fa-upload"></i> Download Template</a>
+                        </p>
+
+                        <tabset class="tab-container tab-inside" ng-if="$stateParams.id">
+                            <tab ng-click="ChangeTab('ALL')">
+                                <tab-heading>
+                                    &nbsp;Tất cả&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('NOT_ACTIVE')">
+                                <tab-heading>
+                                    &nbsp;Mới tạo&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('SUCCESS')">
+                                <tab-heading>
+                                    &nbsp;Đã xử lý&nbsp;
+                                </tab-heading>
+                            </tab>
+                            <tab ng-click="ChangeTab('MISMATCH')">
+                                <tab-heading>
+                                    &nbsp;Sai lệch&nbsp;
+                                </tab-heading>
+                            </tab>
+                        </tabset>
+
+                        <div class="tab-container" ng-if="$stateParams.id">
+                            <progressbar ng-if="dynamic != 0 && dynamic != 100" value="dynamic" type="success">{{dynamic || '0'}}%</progressbar>
+                            <div class="tab-content tab-fake table-responsive">
+                                <table class="table-condensed w-full table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th width="5%">
+                                            STT
+                                        </th>
+                                        <th class="text-center">
+                                            Mã bản kê
+                                        </th>
+                                        <th class="text-center">
+                                            Account Number
+                                        </th>
+                                        <th class="text-center">
+                                            Account
+                                        </th>
+                                        <th class="text-center">
+                                            Mã giao dịch
+                                        </th>
+                                        <th class="text-center">Tổng tiền</th>
+                                        <th class="text-center">Trạng thái</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-if="waiting">
+                                        <td colspan="30" class="text-center">
+                                            <i class="text-3x fa fa-spinner fa-spin"></i>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="totalItems > 0 && !waiting" class="bg-orange">
+                                        <td colspan="5"></td>
+                                        <td>
+                                            {{data_sum || '0' | vnNumber }}
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="item in list_data">
+                                        <td>
+                                            {{item_stt + $index + 1}}
+                                        </td>
+                                        <td>
+                                            {{item.request_id}}
+                                        </td>
+                                        <td>
+                                            {{item.acc_number}}
+                                        </td>
+                                        <td>
+                                            {{item.account}}
+                                        </td>
+                                        <td>
+                                            {{item.transaction_id}}
+                                        </td>
+                                        <td>{{item.amount | vnNumber}}</td>
+                                        <td class="text-center"><span class="label text-base ng-binding {{list_status[item.status].color}}">{{list_status[item.status].text}}</span></td>
+                                    </tr>
+                                    <tr ng-show="totalItems == 0 && !waiting">
+                                        <td colspan="30" class="text-center">Không có dữ liệu</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row" ng-show="totalItems > 0 && !waiting">
+                                <div class="col-sm-3 wrapper-md pull-left">
+                                    <strong>Tổng số</strong> : <i class="text-danger">{{totalItems || '0'}}</i> vận đơn
+                                </div>
+                                <div class="col-sm-4 text-right text-center-xs pull-right">
+                                    <pagination total-items="totalItems" ng-model="currentPage" data-max-size="maxSize" items-per-page="{{item_page}}" ng-change="load(currentPage)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Panel-->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<div data-ng-controller="CouponsReferListCtrl">
+    <div class="wrapper-md bg-light b-b">
+      <h1 class="m-n font-thin h3 text-black pull-left"><i class="fa fa-shopping-cart text-info"></i> Danh sách coupons giới thiệu khách hàng</h1>
+
+      <small class="text-muted pull-right">
+      <button class="btn btn-success"  ng-click="openCreateCoupon()">Tạo coupons</button>
+      </small>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="hbox hbox-auto-xs hbox-auto-sm" >
+      <div class="col wrapper-sm">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <form class="form-validation form-horizontal" ng-submit="setPage(1,coupon_code,email)">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group controls padder">
+                            <input type="text" placeholder="Nhập mã coupon cần tìm " class="form-control" ng-model="coupon_code">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group controls padder">
+                            <input type="text" placeholder="Nhập email cần tìm " class="form-control" ng-model="email">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                      <button class="btn btn-info" type="submit">Tìm kiếm</button>
+                    </div>
+                </div>
+                      
+            </form>
+          </div>
+
+          <div class="panel-body">
+              <table class="table table-bordered tablesorter bg-white">
+                  <thead>
+                    <tr>
+                        <th style="width:20px;">#</th>
+                        <th>Mã code</th>
+                        <th>Mã giới thiệu</th>
+                        <th>Giảm</th>
+                        <th>Kiểu coupon</th>
+                        <th>Số lần có thể sử dụng</th>
+                        <th>Đã sử dụng</th>
+                        <th>Mã đơn sử dụng</th>
+                        <th>Thời hạn sử dụng</th>
+                        <th>Email khách hàng được giới thiệu</th>
+                        <th>Email người giới thiệu</th>
+                        <!--th>Hành động</th-->
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="stateLoading">
+                      <td colspan="20" class="text-center">
+                          <i class="text-3x fa fa-spinner fa-spin"></i>
+                      </td>
+                  </tr>
+                  <tr ng-if="totalItems == 0 && !stateLoading">
+                      <td colspan="20" class="text-center">Không có dữ liệu</td>
+                  </tr>
+                  
+                    <tr ng-repeat="one in listData">
+                        <td>{{ item_stt + $index + 1}}</td>
+                        <td>{{one.coupon }} </td>
+                        <td>{{one.refer_code }} </td>
+                        <td>{{one.amount | number}} vnđ</td>
+                        <td>
+                          <a href="" ng-click="openCouponMembers(coupons[one.coupon]['id'])"><span class="text-info">Danh sách khách hàng sử dụng</span></a>
+                        </td>
+                        <td >1 </td>
+                        <td>
+                            {{coupons[one.coupon]['usaged'] == 1 ? 'Đã xử dụng' : 'Chưa xử dụng'}}
+                        </td>
+                        <td>
+                              {{listOrder[one.coupon]['tracking_code']}}<br>
+                              <span ng-show="listOrder[one.coupon]['time_used'] > 0">{{listOrder[one.coupon]['time_used'] * 1000 | date:'dd-MM-yyyy HH:mm a'}}</span>
+                        </td>
+                        <td>
+                            {{one.time_expired * 1000 | date:'dd-MM-yyyy HH:mm a'}} <br/>
+                            <strong ng-if="checkExpired(one.time_expired * 1000)" class="text-danger">Đã hết hạn</strong>
+                        </td>
+                        <td>{{users[one.user_id]}}</td>
+                        <td>{{refers[one.refer_id]}}</td>
+                        <!--td >
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary" ng-click="openCreateCoupon(one)">Xóa</button>
+                            </div>
+                        </td-->
+                    </tr>
+                </tbody>
+              </table>
+
+              <!-- pagination -->
+              <div ng-show="totalItems > 0" class="row">
+                      <div class="col-sm-3 wrapper-md pull-left">
+                          <strong>Tổng số</strong> : <i class="text-danger">{{totalItems}}</i> bản ghi
+                      </div>
+                      <div class="col-sm-4 text-right text-center-xs pull-right">
+                        <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="{{item_page}}" ng-change="setPage(page,code,email)" next-text="Next"></pagination>
+                      </div>
+                  </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

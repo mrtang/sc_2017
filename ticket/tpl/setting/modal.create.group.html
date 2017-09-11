@@ -1,0 +1,25 @@
+<div class="modal-body wrapper-md">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="m-t-none m-b font-thin">Add new group</h3>
+      <p> </p>
+      <form role="form" name="postmanForm" class="form-validation">
+        <div class="form-group form-inline">
+          <label>Tên group</label>
+          <input type="text" class="form-control m-l-sm" size="50" placeholder="Enter name" name="name" ng-model="group.name">
+        </div>
+        <div class="form-group form-inline">
+            <label>Active</label>
+            <div class="checkbox m-l-lg">
+                <label class="i-checks"> 
+                  <input type="checkbox" value="1" ng-checked="true" ng-model="group.active"><i></i>
+                </label>
+            </div>
+        </div>
+        <div class="checkbox m-t-lg">
+          <button type="submit" class="btn btn-sm btn-success pull-left text-uc m-t-n-xs" ng-click="saveBtn(group)" ng-disabled='postmanForm.$invalid'>Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

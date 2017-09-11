@@ -1,0 +1,48 @@
+<toaster-container toaster-options="{'position-class': 'toast-bottom-right', 'close-button':true}"></toaster-container>
+<div ng-controller="StatusActionCtrl">
+	<div class="wrapper-md bg-light b-b">
+        <h1 class="m-n font-thin h3">Quản trị trạng thái</h1>
+    </div>
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col wrapper-sm">
+            <div class="clearfix m-b">
+                <div class="panel panel-default" style="height:400px;">
+                	<div class="panel-body">
+                		<div class="col-md-2">
+	                        <h4>Hãng vận chuyển</h4>
+	                        <select ng-options="courier.id as courier.name for courier in listCourier" class="form-control"
+			                      ng-model="data.courier_id">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+			            <div class="col-md-2">
+			            	<h4>Loại vận đơn</h4>
+			            	<select class="form-control" ng-model="data.type">
+			                    <option value="">Chọn</option>
+			                    <option value="1">Bình thường</option>
+			                    <option value="2">Chuyển tiếp</option>
+			                </select>
+			            </div>
+			            <div class="col-md-3">
+			            	<h4>Trạng thái HVC</h4>
+			            	<input type="text" class="form-control" ng-model="data.courier_status" />
+			            </div>
+			            <div class="col-md-3">
+			            	<h4>Trạng thái SC</h4>
+			            	<select ng-options="sc_status as name for (sc_status,name) in listStatusSC" class="form-control"
+			                      ng-model="data.sc_status">
+			                    <option value="">Chọn</option>
+			                </select>
+			            </div>
+                	</div>
+                	<div class="panel-body">
+                		<div class="col-md-3 pull-left">
+                		<button class="btn btn-sm btn-success" ng-click="saveData(data)" ng-if="!id">Save</button>
+            				<button class="btn btn-sm btn-success" ng-click="saveEdit(data)" ng-if="id > 0">Save</button>
+			            </div>
+                	</div>
+               	</div>
+            </div>
+        </div>
+    </div>
+</div>

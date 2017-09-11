@@ -1,0 +1,68 @@
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="modal-title">Upload File</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-body wrapper-md">
+        <div class="row">
+            <div class="col-md-12 badge-empty bg-light wrapper-xs">
+                    <div class="form-group col-md-6 m-b-none m-t-xs">
+                        <input type="file" nv-file-select="" uploader="uploader" />
+                    </div>
+                    <div ng-if="!id">
+                        <button type="button" class="btn btn-success pull-right" ng-click="uploader.uploadAll()"><i class="fa fa-check"></i> Upload</button>
+                    </div>
+                    <div ng-if="id">
+                        <button type="button" class="btn btn-success pull-right" ng-click="runAccept(form)"><i class="fa fa-check"></i> Accept</button>
+                    </div>
+            </div>
+            
+            <div class="col-md-12 no-padder m-t-md" ng-if="id">
+                <div class="table-responsive">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr class="bg-light lt">
+                    <th class="text-left">#</th>
+                    <th class="text-left">Weight start</th>
+                    <th class="text-center">Weight end</th>
+                    <th class="text-center">Money</th>
+                    <th class="text-center">Surcharge</th>
+                    <th class="text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="(key,value) in list_data">
+                    <td class="text-left">
+                        <div class="checkbox">
+                          <label class="i-checks">
+                            <input type="checkbox" ng-checked="form[key] == 1" ng-model="form[key]" ng-true-value="1" ng-false-value="0" /><i></i>
+                          </label>
+                        </div>
+                    </td>
+                                        
+                    <td class="text-left">
+                        {{ value.weight_start | number:0 }}
+                    </td>
+                    <td class="text-left">
+                        {{ value.weight_end | number:0 }}
+                    </td>
+                    <td>
+                        {{ value.money | number:0 }}
+                    </td>
+                    <td>
+                        {{ value.surcharge | number:0}}
+                    </td>
+                    
+                    <td>
+                        {{list_status[value.status]}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+        </div>
+    </div>

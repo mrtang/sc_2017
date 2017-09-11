@@ -1,0 +1,193 @@
+<!-- first -->
+<ul class="nav">
+    <li ng-class="{active:$state.includes('app.provider') || $state.includes('app.order') || $state.includes('app.report_merchants') || $state.includes('app.report_orders')}">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-inbox"></i>
+            <span translate="">Báo cáo</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.provider">
+                    <span translate="">Hãng vận chuyển</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.order">
+                    <span translate="">Vận đơn</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_REPORT','view')">
+                <a ui-sref="app.report_merchants">
+                    <span translate="">Khách hàng</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_REPORT','view')">
+                <a ui-sref="app.report_orders">
+                    <span translate="">Báo cáo</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{active:$state.includes('app.balance')}" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_BALANCE','view')">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-file-text-o"></i>
+            <span translate="">Báo cáo số dư</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.balance.report">
+                    <span translate="">Số dư khách hàng</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.balance.audit">
+                    <span translate="">Lịch sử</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.balance.cash_in">
+                    <span translate="">Nạp tiền</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.balance.cash_out">
+                    <span translate="">Rút tiền</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{active:$state.includes('app.cash_out') || $state.includes('app.refund') || $state.includes('app.recover')}" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_PAYMENT','view')">
+        <a href class="auto">
+            <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-refresh"></i>
+            <span translate="">Thanh toán</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.cash_out({id: null})">
+                    <span translate="">TT chuyển tiền</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.refund({id: null})">
+                    <span translate="">TT hoàn tiền</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.recover({id: null})">
+                    <span translate="">TT thu hồi</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{active:$state.includes('app.verify')}" ng-show="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','view') || check_privilege('PRIVILEGE_VERIFY','view')">
+        <a href class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-check-circle"></i>
+            <span translate="">Đối soát</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','view')">
+                <a ui-sref="app.verify.money_collect">
+                    <span translate="">Tiền thu hộ</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_VERIFY','view')">
+                <a ui-sref="app.verify.create_verify">
+                    <span translate="">Tạo đối soát</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','view')">
+                <a ui-sref="app.verify.fee">
+                    <span translate="">Phí</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','view')">
+                <a ui-sref="app.verify.service">
+                    <span translate="">Dịch vụ</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{active:$state.includes('app.warehouse')}" ng-show="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','view') || check_privilege('PRIVILEGE_VERIFY','view')">
+        <a href class="auto">
+          <span class="pull-right text-muted">
+            <i class="fa fa-fw fa-angle-right text"></i>
+            <i class="fa fa-fw fa-angle-down text-active"></i>
+          </span>
+            <i class="fa fa-check-circle"></i>
+            <span translate="">Khoang Kệ</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','view')">
+                <a ui-sref="app.warehouse.verify_warehouse">
+                    <span translate="">Đối soát phí lưu kho</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','view')">
+                <a ui-sref="app.warehouse.warehouse_fee">
+                    <span translate="">Lưu kho khoang kệ</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_VERIFY','view')">
+                <a ui-sref="app.warehouse.verify_partner">
+                    <span translate="">Đối tác</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_VERIFY','view')">
+        <a ui-sref="app.payment">
+            <i class="fa fa-file"></i>
+            <span translate="">Bảng kê thanh toán</span>
+        </a>
+    </li>
+
+    <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_INVOICE','view')">
+        <a ui-sref="app.invoice">
+            <i class="fa fa-edit"></i>
+            <span translate="">Hoá đơn</span>
+        </a>
+    </li>
+
+    <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING_TRANSATION','view')">
+        <a ui-sref="app.transaction">
+            <i class="fa fa-file-text-o"></i>
+            <span translate="">Lịch sử giao dịch</span>
+        </a>
+    </li>
+    <li ui-sref-active="active" ng-if="check_privilege('PRIVILEGE_ACCOUNTING','view')">
+        <a ui-sref="app.wmstype">
+            <i class="fa fa-file-text-o"></i>
+            <span translate="">Lịch sử lưu kho</span>
+        </a>
+    </li>
+    <li class="line dk"></li>
+</ul>
+<!-- / third -->
